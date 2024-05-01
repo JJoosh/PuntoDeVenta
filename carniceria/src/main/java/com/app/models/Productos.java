@@ -22,7 +22,8 @@ public class Productos{
     public Productos() {
     }
 
-    public Productos(String nombre, int CategoriaID, float Cantidad, float Precio) {
+    public Productos(long id,String nombre, int CategoriaID, float Cantidad, float Precio) {
+        this.id=id;
         this.nombre = nombre;
         this.CategoriaID= CategoriaID;
         this.cantidad= Cantidad;
@@ -30,7 +31,7 @@ public class Productos{
 
     }   
 
-    // Getters y setters
+   
 
     public Long getId() {
         return id;
