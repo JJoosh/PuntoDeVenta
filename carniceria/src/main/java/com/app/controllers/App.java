@@ -1,18 +1,31 @@
 package com.app.controllers;
-
-import java.io.IOException;
-
+import com.app.models.Productos;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import java.io.IOException;
 
 public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
+        // Inicializar Hibernate
+        Configuration configuration = new Configuration();
+        configuration.configure("/hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+        // Crear una sesión de Hibernate
+        Session session = sessionFactory.openSession();
+        System.out.println(session);
+
+        // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
         Parent root = loader.load();
         scene = new Scene(root, 640, 480);
