@@ -4,6 +4,7 @@ module com.carniceria {
     requires org.hibernate.orm.core;
     requires java.persistence;
     requires java.sql;
+    requires java.naming;
 
     opens com.app.models to org.hibernate.orm.core;
     opens com.app.controllers to javafx.fxml;
