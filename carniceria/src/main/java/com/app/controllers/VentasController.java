@@ -42,8 +42,6 @@ public class VentasController {
     @FXML
     private TableColumn<Productos, BigDecimal> PrecioV;
     @FXML
-    private TableColumn<Productos, BigDecimal> Cantidad;
-    @FXML
     private TableColumn<Productos, BigDecimal> importe;
     @FXML
     private Button btnFinalizarVenta;
@@ -58,8 +56,7 @@ public class VentasController {
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         PrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        Cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        importe.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad())));
+        importe.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio().multiply(new BigDecimal(20))));
 
         productosData = FXCollections.observableArrayList();
         tablaProductos.setItems(productosData);
@@ -93,7 +90,6 @@ public class VentasController {
                 // Cantidad fija de 20 kilogramos
                 BigDecimal cantidad = new BigDecimal(20);
 
-                producto.setCantidad(cantidad);
                 BigDecimal importeProducto = producto.getPrecio().multiply(cantidad);
                 importeTotal = importeTotal.add(importeProducto);
                 totalImporteLabel.setText(importeTotal.toString());
@@ -138,8 +134,7 @@ public class VentasController {
             DetallesVenta detalle = new DetallesVenta();
             detalle.setVenta(venta);
             detalle.setProducto(producto);
-            detalle.setCantidad(producto.getCantidad());
-            detalle.setTotal(producto.getPrecio().multiply(producto.getCantidad()));
+            detalle.setTotal(producto.getPrecio().multiply(new BigDecimal(20)));
             entityManager.persist(detalle);
         }
 
