@@ -22,7 +22,7 @@
       <Label layoutX="101.0" layoutY="283.0" text="Precio venta" />
       <Label layoutX="101.0" layoutY="333.0" text="Precio mayoreo" />
       <Label layoutX="70.0" layoutY="443.0" text="Categoria" />
-      <ComboBox layoutX="253.0" layoutY="438.0" prefHeight="26.0" prefWidth="195.0" />
+      <ComboBox fx:id="categorias" layoutX="253.0" layoutY="438.0" prefHeight="26.0" prefWidth="195.0" />
       <TextField fx:id="layout1" layoutX="253.0" layoutY="94.0" prefHeight="26.0" prefWidth="195.0" />
       <TextField fx:id="layout2" layoutX="253.0" layoutY="140.0" prefHeight="26.0" prefWidth="195.0" />
       <Spinner fx:id="spinner1" editable="true" layoutX="253.0" layoutY="232.0" prefHeight="26.0" prefWidth="195.0" />
