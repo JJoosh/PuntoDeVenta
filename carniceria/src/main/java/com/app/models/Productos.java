@@ -1,34 +1,43 @@
 package com.app.models;
 
-import javax.persistence.*;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "Productos")
-public class Productos{
+public class Productos {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "CategoriaID")
-    private int CategoriaID;
+    @ManyToOne
+    @JoinColumn(name = "Categoria_ID")
+    private Categoria categoria;
 
     @Column(name = "Cantidad")
-    private float cantidad;
+    private BigDecimal cantidad;
 
-    @Column(name="Precio")
-    private float Precio;
+    @Column(name = "Precio")
+    private BigDecimal precio;
+
     public Productos() {
     }
 
-    public Productos(String nombre, int CategoriaID, float Cantidad, float Precio) {
+    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
         this.nombre = nombre;
-        this.CategoriaID= CategoriaID;
-        this.cantidad= Cantidad;
-        this.Precio=Precio;
-
-    }   
+        this.categoria = categoria;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
 
     // Getters y setters
 
@@ -48,29 +57,27 @@ public class Productos{
         this.nombre = nombre;
     }
 
-    public int getCategoria() {
-        return CategoriaID;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategoria(int categoria) {
-        this.CategoriaID = categoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
-    public float getCantidad(){
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(float cantidad){
-        this.cantidad=cantidad;
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public float getPrecio(){
-        return Precio;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrecio(float Precio){
-        this.Precio=Precio;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
-
-    
 }

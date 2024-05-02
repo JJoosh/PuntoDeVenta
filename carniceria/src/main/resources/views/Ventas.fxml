@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.VentasController">
+   <children>
+      <Label layoutX="59.0" layoutY="17.0" text="SuKarne">
+         <font>
+            <Font name="Arial Black" size="34.0" />
+         </font>
+      </Label>
+      <Button layoutX="66.0" layoutY="86.0" mnemonicParsing="false" text="Ventas " />
+      <Button layoutX="207.0" layoutY="86.0" mnemonicParsing="false" text="Inventarios " />
+      <Button layoutX="368.0" layoutY="86.0" mnemonicParsing="false" text="Kardex" />
+      <Button layoutX="497.0" layoutY="86.0" mnemonicParsing="false" text="Devoluciones" />
+      <Label layoutX="649.0" layoutY="21.0" text="le atiende" />
+      <Button layoutX="629.0" layoutY="43.0" mnemonicParsing="false" text="Adm. cambiar " />
+      <Label layoutX="59.0" layoutY="136.0" text="Venta de productos">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="174.0" text="Codigo del producto" />
+      <TextField fx:id="codigoProductoTextField" layoutX="192.0" layoutY="170.0" />
+      <Button fx:id="btnbuscarcode" layoutX="374.0" layoutY="170.0" mnemonicParsing="false" onAction="#agregarProducto" text="Enter -  agregar producto" />
+      <Button layoutX="59.0" layoutY="214.0" mnemonicParsing="false" text="Ingresar varios" />
+      <Button layoutX="220.0" layoutY="214.0" mnemonicParsing="false" text="Buscar" />
+      <Button layoutX="316.0" layoutY="214.0" mnemonicParsing="false" text="Borrar articulo" />
+      <Button layoutX="458.0" layoutY="214.0" mnemonicParsing="false" text="Salida de dinero" />
+      <ScrollPane layoutX="85.0" layoutY="254.0" prefHeight="300.0" prefWidth="600.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="575.0">
+               <children>
+                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="567.0">
+                    <columns>
+                      <TableColumn fx:id="Cbarra" prefWidth="123.99996662139893" text="Codigo de barras" />
+                      <TableColumn fx:id="Descriptions" prefWidth="158.40003967285156" text="Descripcion producto" />
+                        <TableColumn fx:id="PrecioV" prefWidth="88.0" text="Precio venta" />
+                        <TableColumn fx:id="Cantidad" prefWidth="90.39996337890625" text="Cantidad" />
+                        <TableColumn fx:id="importe" prefWidth="117.60003662109375" text="Importe" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Label fx:id="totalImporteLabel" layoutX="564.0" layoutY="597.0" prefHeight="41.0" prefWidth="154.0" text="Importe Total: 0.00" />
+      <TextField layoutX="54.0" layoutY="572.0" prefHeight="26.0" prefWidth="201.0" text="5 productos en venta actual" />
+      <Button layoutX="55.0" layoutY="605.0" mnemonicParsing="false" text="Eliminar articulos" />
+      <Button layoutX="471.0" layoutY="605.0" mnemonicParsing="false" onAction="#finalizarVenta" text="Cobrar" />
+      <Label layoutX="580.0" layoutY="576.0" text="Cantidad a cobrar " />
+      <Button layoutX="413.0" layoutY="668.0" mnemonicParsing="false" text="reimprimir ultimo ticket" />
+      <Label layoutX="52.0" layoutY="651.0" text="Total" />
+      <Label layoutX="144.0" layoutY="651.0" text="Pago con" />
+      <Label layoutX="242.0" layoutY="651.0" text="cambio" />
+      <TextField layoutX="27.0" layoutY="680.0" prefHeight="26.0" prefWidth="78.0" />
+      <TextField layoutX="130.0" layoutY="680.0" prefHeight="26.0" prefWidth="78.0" />
+      <TextField layoutX="233.0" layoutY="680.0" prefHeight="26.0" prefWidth="66.0" />
+   </children>
+</AnchorPane>
