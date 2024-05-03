@@ -12,8 +12,8 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
+    public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
         Parent root = loader.load();
         scene = new Scene(root, 640, 480);
         stage.setScene(scene);
