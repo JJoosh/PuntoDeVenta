@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Productos")
 public class Productos {
+
     @Id
     @Column(name = "ID")
     private Long id;
@@ -29,6 +30,7 @@ public class Productos {
     @Column(name = "Precio")
     private BigDecimal precio;
 
+
     public Productos() {
     }
 
@@ -40,7 +42,6 @@ public class Productos {
     }
 
     // Getters y setters
-
     public Long getId() {
         return id;
     }
@@ -77,7 +78,4 @@ public class Productos {
         return precio;
     }
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
 }
