@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -108,6 +109,51 @@ public class FXMLInventarioController implements Initializable {
         System.out.println("Seleccionaste ventas....");
     }
 
+
+    @FXML
+    private void ModProd() {
+        Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado != null) {
+            
+            long id = productoSeleccionado.getId();
+            String nombre=productoSeleccionado.getNombre();
+            BigDecimal precio=productoSeleccionado.getPrecio();
+            BigDecimal Cantidad=productoSeleccionado.getCantidad();
+            BigDecimal Costo=productoSeleccionado.getCosto();
+            Categoria categoria=productoSeleccionado.getCategoria();
+            
+            
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLModificarProducto.fxml"));
+                Parent root = loader.load();
+                
+                FXML_ModProducto modProductoController = loader.getController();
+                modProductoController.setDatos(nombre, Cantidad, id, precio, categoria.getNombreCategoria());
+                Scene scene = new Scene(root);
+                
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                
+                // Mostrar el escenario
+                stage.show();
+    
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+    
+        } else {
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No se ha seleccionado ningún producto.");
+            alert.showAndWait();
+        }
+    }
+
+
+
     @FXML
     private void addInventario(ActionEvent e) {
         try {
@@ -146,7 +192,7 @@ public class FXMLInventarioController implements Initializable {
             sessionFactory.close();
         }
     }
-
+    
     //LOGICA PARA FILTRAR EN LA TABLA
     public  void filtarCategorias(){
         Categoria id=new Categoria();
@@ -196,6 +242,9 @@ public class FXMLInventarioController implements Initializable {
         cargarCategorias(this.categorias, 1);
         filtarCategorias();
         buscarforID();
+
+        
+
     }
 
     public void agregaraTabla(){

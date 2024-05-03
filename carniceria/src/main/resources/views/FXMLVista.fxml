@@ -48,7 +48,7 @@
       <Label layoutX="60.0" layoutY="298.0" text="Categoria" />
       <ComboBox fx:id="categorias" layoutX="153.0" layoutY="293.0" prefWidth="150.0" />
       
-      <Button layoutX="482.0" layoutY="295.0" mnemonicParsing="false" text="Modificar producto" />
+      <Button layoutX="482.0" layoutY="295.0" mnemonicParsing="false" onAction="#ModProd" text="Modificar producto" />
       <Button layoutX="719.0" layoutY="295.0" mnemonicParsing="false" text="Imprimir" />
       <Button layoutX="629.0" layoutY="295.0" mnemonicParsing="false" text="Exportar" />
       <ScrollPane layoutX="26.0" layoutY="341.0" prefHeight="400.0" prefWidth="600.0">

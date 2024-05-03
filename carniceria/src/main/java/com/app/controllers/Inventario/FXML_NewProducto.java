@@ -14,6 +14,7 @@ import com.app.models.Categoria;
 import com.app.models.Productos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -90,7 +91,17 @@ public class FXML_NewProducto {
                     System.out.println("Categoria: " +Categoria);
         
             inventarioController.actualizarTabla();
-
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            
+            alert.setHeaderText(null);
+            alert.setContentText("Se guardo el producto correctamente\nID:"+productosbd.getId()+"\nNombre: "+productosbd.getNombre());
+            alert.showAndWait();
+                layout1.setText("");
+                layout2.setText("");
+                spinner1.getValueFactory().setValue((double) 0);
+                spinner2.getValueFactory().setValue((double)0);
+                spinner3.getValueFactory().setValue((double) 0);
+                layout4.setText("");;
                     
 
                 } catch (Exception e) {
@@ -103,12 +114,20 @@ public class FXML_NewProducto {
                     sessionFactory.close();
                 }
 
-                System.err.println("Correcto");
+                
             } catch (Exception e) {
-                System.out.println("Por favor escriba los valores correctament " + e);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Por favor escribe los valores correctamente");
+                alert.showAndWait();
             }
         } else {
-            System.out.println("Algo falta");
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Falto algo por escribir");
+            alert.showAndWait();
         }
     }
 
