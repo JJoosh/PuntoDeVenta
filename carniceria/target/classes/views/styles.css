@@ -1,2 +1,14 @@
 
-.b
+.custom-button {
+
+    background-color: #754caf; /* Color de fondo */
+
+    -fx-text-fill: rgb(182, 36, 36); /* Color del texto */
+
+    border-radius: 5px;
+
+    -fx-background-radius: 5px;
+
+    padding: bold;
+
+    }
