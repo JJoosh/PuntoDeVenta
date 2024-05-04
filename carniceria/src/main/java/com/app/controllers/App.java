@@ -1,6 +1,7 @@
 package com.app.controllers;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +16,22 @@ public class App extends Application {
     public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
         Parent root = loader.load();
-        scene = new Scene(root, 640, 480);
+        
+        // Obtén la escena del root cargado
+        Scene scene = new Scene(root, 640, 480);
+        
+        // Agrega la hoja de estilos CSS
+        URL cssUrl = getClass().getResource("/views/styles.css");
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.out.println("No se encontró el archivo CSS: styles.css");
+        }
+    
         stage.setScene(scene);
         stage.show();
     }
+    
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));

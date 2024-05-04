@@ -13,65 +13,67 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button fx:id="BVentas" StyleClass="custom-button" layoutX="26.0" layoutY="107.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Ventas" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Imagen%20de%20WhatsApp%202024-05-02%20a%20las%2012.41.14_63f4c72f.jpg" />
-         </image>
-      </ImageView>
-      <Button layoutX="244.0" layoutY="106.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Inevntario" />
-      <Button layoutX="461.0" layoutY="108.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Kardex" />
-      <Button layoutX="677.0" layoutY="107.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Devoluciones" />
-      <Pane layoutY="160.0" prefHeight="44.0" prefWidth="922.0">
-         <children>
-            <Label layoutX="26.0" layoutY="4.0" text="Inventario">
-               <font>
-                  <Font name="Arial Black" size="31.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Button layoutX="26.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Agregar a inventario" />
-      <Button layoutX="316.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Productos bajos en inventario" />
-      <Button layoutX="597.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Reporte de inventarios" />
-      <Pane layoutY="259.0" prefHeight="46.0" prefWidth="922.0">
-         <children>
-            <Label layoutX="31.0" layoutY="10.0" text="Reporte de inventario">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <ComboBox layoutX="241.0" layoutY="387.0" prefWidth="150.0" promptText="Categorias" />
-      <Button layoutX="478.0" layoutY="386.0" mnemonicParsing="false" text="Modificar producto" />
-      <Button layoutX="667.0" layoutY="386.0" mnemonicParsing="false" text="Exportar" />
-      <Button layoutX="785.0" layoutY="386.0" mnemonicParsing="false" text="Imprimir" />
-      <ScrollPane layoutY="436.0" prefHeight="300.0" prefWidth="920.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="918.0">
-               <children>
-                  <TableView prefHeight="300.0" prefWidth="920.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Codigo" />
-                      <TableColumn prefWidth="180.79998779296875" text="Descripcion del producto" />
-                        <TableColumn prefWidth="94.4000244140625" text="Costo" />
-                        <TableColumn prefWidth="92.0" text="Precio venta" />
-                        <TableColumn prefWidth="100.0" text="Existencia" />
-                        <TableColumn prefWidth="182.4000244140625" text="Inventario minimo" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <Label layoutX="52.0" layoutY="349.0" text="Buscar" />
-      <TextField layoutX="52.0" layoutY="387.0" />
-      <Label layoutX="426.0" layoutY="308.0" text="Costo de inventario" />
-      <Label layoutX="639.0" layoutY="308.0" text="Cantidad productos en inventario" />
-      <TextField layoutX="416.0" layoutY="337.0" prefHeight="26.0" prefWidth="150.0" promptText="costo de inventario" />
-      <TextField layoutX="654.0" layoutY="337.0" prefHeight="26.0" prefWidth="150.0" promptText="Cantidad productos en inventario" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
+
+    <children>
+        <Button fx:id="BVentas" StyleClass="custom-button" layoutX="26.0" layoutY="107.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Ventas" />
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Imagen%20de%20WhatsApp%202024-05-02%20a%20las%2012.41.14_63f4c72f.jpg" />
+            </image>
+        </ImageView>
+        <Button StyleClass="custom-button" fx:id="BInventario" layoutX="244.0" layoutY="106.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Inventario" />
+        <Button StyleClass="custom-button" fx:id="BKardex" layoutX="461.0" layoutY="108.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Kardex" />
+        <Button StyleClass="custom-button" fx:id="BDevolucion" layoutX="677.0" layoutY="107.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Devoluciones" />
+        <Pane layoutY="160.0" prefHeight="44.0" prefWidth="922.0">
+            <children>
+                <Label layoutX="26.0" layoutY="4.0" text="Inventario">
+                    <font>
+                        <Font name="Arial Black" size="31.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Button layoutX="26.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Agregar a inventario" />
+        <Button layoutX="316.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Productos bajos en inventario" />
+        <Button layoutX="597.0" layoutY="220.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="200.0" text="Reporte de inventarios" />
+        <Pane layoutY="259.0" prefHeight="46.0" prefWidth="922.0">
+            <children>
+                <Label layoutX="31.0" layoutY="10.0" text="Reporte de inventario">
+                    <font>
+                        <Font size="23.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <ComboBox layoutX="241.0" layoutY="387.0" prefWidth="150.0" promptText="Categorías" />
+        <Button layoutX="478.0" layoutY="386.0" mnemonicParsing="false" text="Modificar producto" />
+        <Button layoutX="667.0" layoutY="386.0" mnemonicParsing="false" text="Exportar" />
+        <Button layoutX="785.0" layoutY="386.0" mnemonicParsing="false" text="Imprimir" />
+        <ScrollPane layoutY="436.0" prefHeight="300.0" prefWidth="920.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="918.0">
+                    <children>
+                        <TableView prefHeight="300.0" prefWidth="920.0">
+                            <columns>
+                                <TableColumn prefWidth="75.0" text="Código" />
+                                <TableColumn prefWidth="180.79998779296875" text="Descripción del producto" />
+                                <TableColumn prefWidth="94.4000244140625" text="Costo" />
+                                <TableColumn prefWidth="92.0" text="Precio venta" />
+                                <TableColumn prefWidth="100.0" text="Existencia" />
+                                <TableColumn prefWidth="182.4000244140625" text="Inventario mínimo" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <Label layoutX="52.0" layoutY="349.0" text="Buscar" />
+        <TextField layoutX="52.0" layoutY="387.0" />
+        <Label layoutX="426.0" layoutY="308.0" text="Costo de inventario" />
+        <Label layoutX="639.0" layoutY="308.0" text="Cantidad productos en inventario" />
+        <TextField layoutX="416.0" layoutY="337.0" prefHeight="26.0" prefWidth="150.0" promptText="Costo de inventario" />
+        <TextField layoutX="654.0" layoutY="337.0" prefHeight="26.0" prefWidth="150.0" promptText="Cantidad productos en inventario" />
+    </children>
+
 </AnchorPane>

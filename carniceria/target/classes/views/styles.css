@@ -1,14 +1,22 @@
 
+    /* Estilo base del botón */
 .custom-button {
+    background-color: #c56be5; /* Color de fondo */
+    -fx-text-fill: Black; /* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+    font-family: "Arial"; /* Fuente */
+    padding: 20px 30px; /* Relleno interno */
+    border-radius: 10px; /* Radio de borde */
+    -fx-background-radius: 10px; /* Radio de fondo */
+    cursor: hand; /* Cursor al pasar el mouse */
+}
 
-    background-color: #754caf; /* Color de fondo */
+/* Estilo cuando el mouse está sobre el botón */
+.button:hover {
+    background-color: #45a049; /* Color de fondo al pasar el mouse */
+}
 
-    -fx-text-fill: rgb(182, 36, 36); /* Color del texto */
-
-    border-radius: 5px;
-
-    -fx-background-radius: 5px;
-
-    padding: bold;
-
-    }
+/* Estilo cuando el botón está presionado */
+.button:pressed {
+    background-color: #36802d; /* Color de fondo al presionar */
+}
