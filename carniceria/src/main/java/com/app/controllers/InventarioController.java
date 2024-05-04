@@ -9,4 +9,14 @@ public class InventarioController {
 
     @FXML
     private Button BVentas;
+
+    @FXML
+    private Button BInventario;
+
+    @FXML
+    private Button BKardex;
+
+    @FXML
+    private Button BDevolucion;
+
 }

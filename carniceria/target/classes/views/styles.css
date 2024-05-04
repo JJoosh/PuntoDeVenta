@@ -5,18 +5,24 @@
     -fx-text-fill: Black; /* Color del texto */
     font-size: 14px; /* Tamaño de la fuente */
     font-family: "Arial"; /* Fuente */
-    padding: 20px 30px; /* Relleno interno */
-    border-radius: 10px; /* Radio de borde */
-    -fx-background-radius: 10px; /* Radio de fondo */
+    padding: 40px 60px; /* Relleno interno */
+    border-radius: 15px; /* Radio de borde */
+    -fx-background-radius: 40px; /* Radio de fondo */
     cursor: hand; /* Cursor al pasar el mouse */
 }
 
-/* Estilo cuando el mouse está sobre el botón */
-.button:hover {
-    background-color: #45a049; /* Color de fondo al pasar el mouse */
+
+.top{
+    background-color: #fff;
+    border-color: #000;
+    border-width: .4px .4px .2px .4px;
 }
 
-/* Estilo cuando el botón está presionado */
-.button:pressed {
-    background-color: #36802d; /* Color de fondo al presionar */
+.semi{
+    background-color: #f0f0f0; /* Color de fondo */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+    padding: 20px; /* Espacio interno */
+    box-sizing: border-box;
 }
+
+
