@@ -162,6 +162,21 @@ public class VentasController {
         return producto;
     }
 
+    public void borrarArticulo() {
+        Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado != null) {
+            productosAgregados.remove(productoSeleccionado);
+            actualizarTotalImporte();
+            // actualizarTablaProductosAgregados();
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe seleccionar un artículo para eliminar.");
+            alert.showAndWait();
+        }
+    }
+    
     @FXML
     private void cobrar() {
         try {
@@ -179,6 +194,17 @@ public class VentasController {
         }
     }
 
+
+    public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
+        this.productosData = productosData;
+        this.importeTotal = importeTotal;
+        totalImporteLabel.setText(importeTotal.toString());
+        tablaProductos.setItems(productosData);
+
+    }
+
+
+   
 
 
 

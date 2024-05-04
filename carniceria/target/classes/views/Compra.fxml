@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
     <children>
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="24.0" prefHeight="71.0" prefWidth="339.0" text="SuKarne">
             <font>
@@ -36,9 +36,9 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-        <Label fx:id="ticketLabel" layoutX="423.0" layoutY="490.0" prefHeight="41.0" prefWidth="109.0" text="Ticket: 000001" />
-        <Label fx:id="totalImporteLabel" layoutX="423.0" layoutY="511.0" prefHeight="41.0" prefWidth="109.0" text="Importe Total: 0.00" />
-        <Button layoutX="57.0" layoutY="499.0" mnemonicParsing="false" text="Imprimir comprobante" />
-        <Button layoutX="286.0" layoutY="499.0" mnemonicParsing="false" text="Finalizar" onAction="#finalizarCompra"/>
+        <Label fx:id="ticketLabel" layoutX="239.0" layoutY="463.0" prefHeight="41.0" prefWidth="109.0" text="Ticket: 000001" />
+        <Label fx:id="totalImporteLabel" layoutX="239.0" layoutY="483.0" prefHeight="41.0" prefWidth="109.0" text="Importe Total: 0.00" />
+        <Button layoutX="257.0" layoutY="524.0" mnemonicParsing="false" onAction="#finalizarCompra" text="Finalizar" />
+      <Button layoutX="23.0" layoutY="24.0" mnemonicParsing="false" onAction="regresar" text="&lt;-----" />
     </children>
 </AnchorPane>

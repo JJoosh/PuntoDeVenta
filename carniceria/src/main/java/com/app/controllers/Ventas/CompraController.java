@@ -203,6 +203,25 @@ private void guardarVenta() {
     }
 }
 
+@FXML
+public void regresar(){
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        VentasController ventasController = loader.getController();
+        ventasController.actualizarDatos(productosData, importeTotal);
+
+        Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    } catch ( IOException e ) {
+        e.printStackTrace();
+    }
+}
+
+
+
 
     
 } 
