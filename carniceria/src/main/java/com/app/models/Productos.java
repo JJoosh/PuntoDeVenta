@@ -11,9 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "Productos")
-public class Productos {
+
 
 
 
@@ -112,5 +110,4 @@ public class Productos {
     public void setCosto(BigDecimal Costo){
         this.costo=Costo;
     }
-}
 }
