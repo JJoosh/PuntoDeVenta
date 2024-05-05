@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="640.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="248.0" layoutY="190.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="178.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="554.0" prefWidth="215.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="8.0" layoutY="77.0" prefHeight="554.4" prefWidth="215.2" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0">
+                                 <image>
+                                    <Image url="@../../AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/TempState/C947AF88A298F0F0BCB953B10B83F587/Imagen%20de%20WhatsApp%202024-05-02%20a%20las%2019.41.15_e67a852e.jpg" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="65.0" layoutY="87.0">
+                                 <image>
+                                    <Image url="@../ProyectoCarniceria/456212.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="62.0" layoutY="143.0" text="Bienvenido" />
+                              <Line endX="100.0" layoutX="107.0" layoutY="182.0" startX="-100.0" />
+                              <Button layoutX="33.0" layoutY="211.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="ventas" />
+                              <Button layoutX="33.0" layoutY="261.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Inventario" />
+                              <Button layoutX="32.0" layoutY="311.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Devoluciones" />
+                              <Button layoutX="32.0" layoutY="361.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Kardex" />
+                              <Button layoutX="14.0" layoutY="515.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cambiar usuario" />
+                              <Button layoutX="33.0" layoutY="409.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Productos" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="73.0" layoutY="55.0" prefHeight="554.4" prefWidth="884.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="11.0" layoutY="11.0" prefHeight="582.0" prefWidth="862.0">
+                                 <children>
+                                    <AnchorPane layoutX="15.0" layoutY="14.0" prefHeight="91.0" prefWidth="830.0" styleClass="filter" stylesheets="@../GitHub/PuntoDeVenta/carniceria/src/main/resources/views/Fondo.css">
+                                       <children>
+                                          <Label layoutX="35.0" layoutY="20.0" text="Detalles de su compra ">
+                                             <font>
+                                                <Font size="34.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="657.0" layoutY="14.0" text="Ticket" />
+                                          <TextField layoutX="699.0" layoutY="10.0" prefHeight="26.0" prefWidth="123.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <ScrollPane layoutX="36.0" layoutY="117.0" prefHeight="270.0" prefWidth="819.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="830.0">
+                                             <children>
+                                                <TableView prefHeight="271.0" prefWidth="817.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="243.19996720552444" text="Productos" />
+                                                      <TableColumn minWidth="9.60003662109375" prefWidth="228.0000762939453" text="Precio" />
+                                                      <TableColumn prefWidth="208.7999267578125" text="Cantidad" />
+                                                      <TableColumn prefWidth="135.20001220703125" text="Total" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
+                                    <Button layoutX="680.0" layoutY="515.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="103.0" text="Finalizar venta" />
+                                    <Label layoutX="55.0" layoutY="401.0" text="Importe total" />
+                                    <Label layoutX="55.0" layoutY="464.0" text="Pago con" />
+                                    <Label layoutX="59.0" layoutY="528.0" text="Cambio" />
+                                    <TextField layoutX="171.0" layoutY="397.0" />
+                                    <TextField layoutX="172.0" layoutY="460.0" />
+                                    <TextField layoutX="171.0" layoutY="515.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
