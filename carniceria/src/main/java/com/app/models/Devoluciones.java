@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Devoluciones")
 public class Devoluciones {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_Devolucion")
@@ -42,7 +43,6 @@ public class Devoluciones {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    // Getters y setters
 
     public Long getId() {
         return id;

@@ -1,39 +1,38 @@
 package com.app.models;
 
-
-
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Usuarios")
 public class Usuarios {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   
-    @Column(name = "Fecha_Reporte")
-    private String nombre_usuario;
-    
+    @Column(name = "Nombre_usuario")
+    private String nombreUsuario;
+
     @Column(name = "Contraseña")
-    private String contraseña;
+    private String contrasena;
 
-    @Column(name =  "Rol")
-    private String Rol;
-
+    @Column(name = "Rol")
+    private String rol;
 
     public Usuarios() {
     }
 
-    public Usuarios(long id, String nombre_usser, String password, String Rol) {
-       this.id=id;
-       this.nombre_usuario=nombre_usser;
-       this.contraseña=password;
-       this.Rol=Rol;
-    } 
-
-    // Getters y setters
+    public Usuarios(long id, String nombreUsuario, String contrasena, String rol) {
+        this.id = id;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+        this.rol = rol;
+    }
 
     public Long getId() {
         return id;
@@ -43,27 +42,27 @@ public class Usuarios {
         this.id = id;
     }
 
-    public String getNombre(){
-        return nombre_usuario;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setNombre(String nombre_usuario){
-        this.nombre_usuario=nombre_usuario;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getPassword(){
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setPassword(String password){
-        this.contraseña=password;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public String getRol(){
-        return Rol;
+    public String getRol() {
+        return rol;
     }
 
-    public void setRol(String Rol){
-        this.Rol=Rol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

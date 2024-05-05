@@ -1,4 +1,12 @@
 package com.app.models;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -6,6 +14,14 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "Productos")
 public class Productos {
+
+
+
+@Entity
+@Table(name = "Productos")
+public class Productos {
+
+
     @Id
     @Column(name = "ID")
     private Long id;
@@ -13,8 +29,10 @@ public class Productos {
     @Column(name = "Nombre")
     private String nombre;
 
+
     @Column(name = "Costo")
     private BigDecimal costo;
+
 
     @ManyToOne
     @JoinColumn(name = "Categoria_ID")
@@ -26,19 +44,26 @@ public class Productos {
     @Column(name = "Precio")
     private BigDecimal precio;
 
+
     public Productos() {
     }
+
 
     public Productos(String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
         this.nombre = nombre;
         this.costo=costo;
+
+    }
+    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
+        this.nombre = nombre;
+
         this.categoria = categoria;
         this.cantidad = cantidad;
         this.precio = precio;
     }
 
     // Getters y setters
-  
+
     public Long getId() {
         return id;
     }
@@ -75,6 +100,7 @@ public class Productos {
         return precio;
     }
 
+
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
@@ -86,4 +112,5 @@ public class Productos {
     public void setCosto(BigDecimal Costo){
         this.costo=Costo;
     }
+}
 }
