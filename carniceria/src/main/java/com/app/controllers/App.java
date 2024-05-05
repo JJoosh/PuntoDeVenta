@@ -1,8 +1,9 @@
 package com.app.controllers;
 
 import java.io.IOException;
-import java.net.URL;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,24 +15,22 @@ public class App extends Application {
 
     @Override
     public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+        // Inicializar Hibernate
+        Configuration configuration = new Configuration();
+        configuration.configure("/hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+        // Crear una sesión de Hibernate
+        Session session = sessionFactory.openSession();
+        System.out.println(session);
+
+        // Cargar la vista principal
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
         Parent root = loader.load();
-        
-        // Obtén la escena del root cargado
-        Scene scene = new Scene(root, 640, 480);
-        
-        // Agrega la hoja de estilos CSS
-        URL cssUrl = getClass().getResource("/views/styles.css");
-        if (cssUrl != null) {
-            scene.getStylesheets().add(cssUrl.toExternalForm());
-        } else {
-            System.out.println("No se encontró el archivo CSS: styles.css");
-        }
-    
+        scene = new Scene(root, 1000, 800);
         stage.setScene(scene);
         stage.show();
     }
-    
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -45,4 +44,7 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
+    
 }

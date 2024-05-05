@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+   <children>
+      <Label layoutX="59.0" layoutY="17.0" text="SuKarne">
+         <font>
+            <Font name="Arial Black" size="34.0" />
+         </font>
+      </Label>
+      <Button layoutX="66.0" layoutY="86.0" mnemonicParsing="false" text="Ventas " />
+      <Button layoutX="207.0" layoutY="86.0" mnemonicParsing="false" text="Inventarios " />
+      <Button layoutX="368.0" layoutY="86.0" mnemonicParsing="false" text="Kardex" />
+      <Button layoutX="497.0" layoutY="86.0" mnemonicParsing="false" text="Devoluciones" />
+      <Label layoutX="649.0" layoutY="21.0" text="le atiende" />
+      <Button layoutX="629.0" layoutY="43.0" mnemonicParsing="false" text="Adm. cambiar " />
+      <Label layoutX="59.0" layoutY="136.0" text="Venta de productos">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="85.0" layoutY="152.0" prefHeight="61.0" prefWidth="215.0" text="Codigo del producto o nombre" />
+      <TextField fx:id="codigoProductoTextField" layoutX="300.0" layoutY="171.0" />
+      <Button fx:id="btnbuscarcode" layoutX="502.0" layoutY="171.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar" />
+      <Button layoutX="89.0" layoutY="214.0" mnemonicParsing="false" text="Borrar articulo" onAction="#borrarArticulo"/>
+      <ScrollPane layoutX="85.0" layoutY="254.0" prefHeight="300.0" prefWidth="600.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="575.0">
+               <children>
+                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="567.0">
+                    <columns>
+                      <TableColumn fx:id="Cbarra" prefWidth="123.99996662139893" text="Codigo de barras" />
+                      <TableColumn fx:id="Descriptions" prefWidth="158.40003967285156" text="Descripcion producto" />
+                        <TableColumn fx:id="PrecioV" prefWidth="88.0" text="Precio venta" />
+                        <TableColumn fx:id="Cantidad" prefWidth="90.39996337890625" text="Cantidad" />
+                        <TableColumn fx:id="importe" prefWidth="117.60003662109375" text="Importe" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Label fx:id="totalImporteLabel" layoutX="564.0" layoutY="597.0" prefHeight="41.0" prefWidth="154.0" text="Importe Total: 0.00" />
+      <Button fx:id="btnFinalizarVenta" layoutX="471.0" layoutY="605.0" mnemonicParsing="false" onAction="#cobrar" text="Cobrar" />
+      <Label layoutX="561.0" layoutY="586.0" text="Cantidad a cobrar " />
+      <Label layoutX="89.0" layoutY="586.0" prefWidth="177.0" text="Cantidad de productos: 0" />
+      <Label layoutX="97.0" layoutY="610.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="600.0" text="Modificar producto" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.app.controllers.Inventario.FXML_ModProducto">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="428.0" prefWidth="598.0">
+         <children>
+            <Button layoutX="264.0" layoutY="474.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+            <TextField fx:id="nombre" layoutX="235.0" layoutY="51.0" />
+            <Label layoutX="144.0" layoutY="64.0" text="Nombre:" />
+            <TextField fx:id="precio" layoutX="232.0" layoutY="121.0" />
+            <Label layoutX="144.0" layoutY="138.0" text="Precio:" />
+            <TextField fx:id="id" layoutX="232.0" layoutY="197.0" />
+            <Label layoutX="152.0" layoutY="210.0" text="ID" />
+            <TextField fx:id="cantidad" layoutX="235.0" layoutY="270.0" />
+            <Label layoutX="143.0" layoutY="283.0" text="Cantidad" />
+            <ComboBox fx:id="categoria" layoutX="224.0" layoutY="347.0" prefWidth="150.0" promptText="Categorias" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>
