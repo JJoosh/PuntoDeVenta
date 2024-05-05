@@ -1,40 +1,30 @@
 package com.app.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Ventas")
 public class Ventas {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_Producto")
-    private Productos producto;
-
-    @Column(name = "Cantidad")
-    private float Cantidad;
-
-    @Column(name = "Total")
-    private float Total;
-
-    @Column(name = "Fecha")
+    private String ticket;
     private Date fecha;
+    private float total;
 
-    public Ventas() {
-    }
-
-    public Ventas(Productos producto, float cantidad, float total, Date fecha) {
-        this.producto = producto;
-        this.Cantidad = cantidad;
-        this.Total = total;
-        this.fecha = fecha;
-    } 
-
-    // Getters y setters
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallesVenta> detalles = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -44,30 +34,41 @@ public class Ventas {
         this.id = id;
     }
 
- 
-
-    public float getcantidad(){
-        return Cantidad;
-    }
-    
-    public void setCantidad(float Cantidad){
-        this.Cantidad=Cantidad;
+    public String getTicket() {
+        return ticket;
     }
 
-    public float getTotal(){
-        return Total;
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 
-    public void setTotal(float Total){
-        this.Total=Total;
-    }
-
-    public Date getFecha(){
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha){
-        this.fecha=fecha;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
-    
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public List<DetallesVenta> getDetalles() {
+        return detalles;
+    }
+
+    public void addDetalle(DetallesVenta detalle) {
+        detalles.add(detalle);
+        detalle.setVenta(this);
+    }
+
+    public void removeDetalle(DetallesVenta detalle) {
+        detalles.remove(detalle);
+        detalle.setVenta(null);
+    }
 }
