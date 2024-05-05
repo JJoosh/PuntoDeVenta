@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import com.app.models.Productos;
 
 import javafx.collections.FXCollections;
@@ -203,10 +202,5 @@ public class VentasController {
 
     }
 
-
    
-
-
-
-
 } 
