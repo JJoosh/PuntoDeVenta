@@ -1,172 +1,121 @@
-.top-form{
-    background-color:#fff;
-    border-color:#000;
-    border-width:.4px .4px .2px .4px;
+
+#login_pane {
+    -fx-background-color: #f2f2f2; /* Color de fondo gris claro */
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 20px; /* Espacio interno */
 }
 
-.semi-top-form{
-    background-color:#efefef;
-    border-color:#000;
-    border-width:.2px .4px .8px .4px;
+/* Estilo para etiquetas */
+#label_login {
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-text-fill: #333333; /* Color de texto gris oscuro */
 }
 
-.close{
-    background-color:transparent;
-    cursor:hand;
-}
-.close:hover{
-    background-color:#ff3547;
-}
-
-.minimize{
-    background-color:transparent;
-    cursor:hand;
-}
-.minimize:hover{
-    background-color:#ddd;
+/* Estilo para campos de texto */
+.text-field {
+    -fx-background-color: #ffffff; /* Color de fondo blanco */
+    -fx-border-color: #cccccc; /* Color del borde gris */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-padding: 5px; /* Espacio interno */
 }
 
-.nav-form{
-    background-color:linear-gradient(to bottom right, #272b3f, #256b51);
+/* Estilo para el botón */
+#primaryButton {
+    -fx-background-color: #007bff; /* Color de fondo azul */
+    -fx-text-fill: #ffffff; /* Color de texto blanco */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-padding: 8px 16px; /* Espacio interno */
 }
 
-.nav-btn{
-    background-color:transparent;
-    cursor:hand;
-    font-family:"Arial";
-    font-size:14px;
-    -fx-text-fill:#fff;
-    -fx-alignment:CENTER-LEFT;
+/* Cambiar el color del botón cuando el cursor está sobre él */
+#primaryButton:hover {
+    -fx-background-color: #0056b3; /* Color de fondo azul más oscuro */
 }
 
-.logout{
-    background-color:#219a6a;
-    -fx-background-radius:10px;
-    cursor:hand;
-}
-.logout:hover{
-    background-color:#18a383;
+
+
+#label_login{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment:center
 }
 
-.shadow{
-    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+/* Label para el importe*/
+#importe_total{
+    -fx-text-fill:#332C2C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
 }
 
-.white-bg{
-    background-color:#fff;
-    -fx-background-radius:8px;
+#label_blanco{
+        -fx-text-fill:#FFFFFF;
+        -fx-font-family: "Arial";
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-alignment:center
 }
 
-.card{
-    background-color:linear-gradient(to right, #2b303c, #525968);
-    -fx-background-radius:5px;
+
+
+#Titulo_modulo{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
 }
 
-.table-view{
-    background-color:transparent;
-    border-color:linear-gradient(to bottom right, #272b3f, #256b51);
-    border-radius:8px;
-    padding:0px;
-}
-.table-view .table-column{
-    -fx-alignment:CENTER;
-}
-.table-view .column-header-background{
-    background-color:linear-gradient(to bottom right, #272b3f, #256b51);
-    -fx-background-insets: 0 0 0 0;
-    -f-background-radius:8px 8px 0px 0px;
-}
-.table-view .column-header, .filter{
-    background-color: transparent;
-    size:40px;
-}
-.table-view .column-header .label{
-    -fx-text-fill:#fff;
-    font-family:"Arial";
+.anchor-pane {
+    -fx-background-color: #ac3d45;
 }
 
-.textfield{
-    background-color:linear-gradient(to bottom, #efefef, #eee);
-    border-color:linear-gradient(to bottom right, #272b3f, #256b51);
-    border-width:.8px;
-    font-family:"Tahoma";
-    border-radius:4px;
-}
-.textfield:focused{
-    border-width:1.8px;
-    background-color:#fff;
+#fondo_negro {
+    -fx-background-color: #000000;
 }
 
-.search{
-    background-color:transparent;
-    border-color:linear-gradient(to bottom right, #272b3f, #256b51);
-    border-radius:5px;
-    font-size:13px;
-    font-family:"Arial";
-    border-width:1px;
-    padding:0px 0px 0px 28px;
-}
-.search:focused{
-    border-width:2px;
+#login_pane {
+    -fx-pref-width: 200px; 
+    -fx-pref-height: 200px; 
+    -fx-background-color: blue}
+
+
+#Fondo {
+    -fx-background-image: url('/resources/img/fondo2.png');
+    -fx-background-size: cover; /* Esto ajustará la imagen para cubrir todo el AnchorPane */
+    -fx-background-repeat: no-repeat; /* Esto evitará que la imagen se repita */
+    -fx-background-position: center; /* Esto centrará la imagen */
 }
 
-.import-btn{
-    background-color:#ddd;
-    -fx-text-fill:red;
-    cursor:hand;
+
+.button {
+    -fx-background-color: #D62934;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
 }
 
-.add-btn{
-    background-color:#304575;
-    -fx-background-radius:8px;
-    -fx-text-fill:#fff;
-    font-size:14px;
-    font-family:"Arial";
-    cursor:hand;
-}
-.add-btn:hover{
-    background-color:#3357a4;
+
+#cambio_user{
+        -fx-background-color: #FFFFFF;
+        -fx-text-fill: #000000;
+        -fx-font-family: Arial;
+        -fx-font-weight: bold;
+    }
+
+.button:pressed {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #573C3E;
 }
 
-.update-btn{
-    background-color:#327252;
-    -fx-background-radius:8px;
-    -fx-text-fill:#fff;
-    font-size:14px;
-    font-family:"Arial";
-    cursor:hand;
-}
-.update-btn:hover{
-    background-color:#309a65;
+.button:hover {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: #FFFFFF;
 }
 
-.delete-btn{
-    background-color:#86253f;
-    -fx-background-radius:8px;
-    -fx-text-fill:#fff;
-    font-size:14px;
-    font-family:"Arial";
-    cursor:hand;
-}
-.delete-btn:hover{
-    background-color:#ae1d46;
-}
 
-.clear-btn{
-    background-color:#753566;
-    -fx-background-radius:8px;
-    -fx-text-fill:#fff;
-    font-size:14px;
-    font-family:"Arial";
-    cursor:hand;
-}
-.clear-btn:hover{
-    background-color:#9d3485;
-}
 
-.label-info{
-    background-color:transparent;
-    border-color:linear-gradient(to bottom right, #272b3f, #256b51);
-    border-radius:4px;
-    padding:0px 0px 0px 8px;
-}
+
+
