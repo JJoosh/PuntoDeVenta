@@ -72,9 +72,7 @@
     -fx-background-color: #ac3d45;
 }
 
-#fondo_negro {
-    -fx-background-color: #000000;
-}
+
 
 #login_pane {
     -fx-pref-width: 200px; 

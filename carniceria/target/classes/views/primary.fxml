@@ -1,42 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.PrimaryController">
    <children>
-      <VBox prefHeight="500.0" prefWidth="283.0">
+      <VBox prefHeight="500.0" prefWidth="399.0" style="-fx-background-image: url(&quot;/img/carne.jpg&quot;); -fx-background-color: ac3d45;" HBox.hgrow="ALWAYS">
          <children>
-            <Label prefHeight="17.0" prefWidth="285.0" text="Iniciar sesión">
+            <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="188.0" text="Iniciar sesión" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="20.0" />
+                  <Font name="Arial Black" size="25.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" right="30.0" top="100.0" />
+               </VBox.margin>
             </Label>
-            <VBox prefHeight="500.0" prefWidth="300.0">
+            <VBox prefHeight="303.0" prefWidth="257.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="126.0" text="Usuario" textAlignment="CENTER">
+                  <Label prefHeight="30.0" prefWidth="126.0" text="Usuario:" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="30.0" />
+                     </VBox.margin>
                   </Label>
-                  <TextField />
-                  <Label prefHeight="30.0" prefWidth="123.0" text="Contraseña" textAlignment="CENTER">
+                  <TextField maxHeight="40.0" maxWidth="500.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" promptText="Coloca tu nombre de usuario...">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label prefHeight="30.0" prefWidth="123.0" text="Contraseña:" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="30.0" />
+                     </VBox.margin>
                   </Label>
-                  <PasswordField />
-                  <Button fx:id="primaryButton" maxWidth="1.7976931348623157E308" onAction="#switchToSecondary" prefHeight="33.0" prefWidth="99.0" stylesheets="@../css/Fondo.css" text="Ingresar" />
+                  <PasswordField maxHeight="40.0" maxWidth="500.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
+                     <VBox.margin>
+                        <Insets bottom="40.0" left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Button fx:id="primaryButton" onAction="#switchToSecondary" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50px;" stylesheets="@../css/Fondo.css" text="Ingresar">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>
       </VBox>
-      <VBox prefHeight="500.0" prefWidth="418.0" />
+      <VBox prefHeight="400.0" prefWidth="511.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
+         <children>
+            <StackPane prefHeight="504.0" prefWidth="406.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
+               <children>
+                  <ImageView fitHeight="259.0" fitWidth="408.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/carne.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="134.0" fitWidth="288.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/LOGO.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </children></VBox>
    </children>
 </HBox>
