@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.app.models.Productos;
+import com.fazecast.jSerialComm.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +49,8 @@ public class VentasController {
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
 
+    private bascula basicula;
+
     public void initialize() {
         // Inicialización de la pantalla de ventas
         codigoProductoTextField.setText("");
@@ -63,6 +66,9 @@ public class VentasController {
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
+
+        // Inicializar la instancia de bascula
+        basicula = new bascula();
     }
 
     @FXML
@@ -176,7 +182,7 @@ public class VentasController {
             alert.showAndWait();
         }
     }
-    
+
     @FXML
     private void cobrar() {
         try {
@@ -194,19 +200,22 @@ public class VentasController {
         }
     }
 
-
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
         tablaProductos.setItems(productosData);
-
     }
 
-
-   
-
-
-
-
-} 
+    @FXML
+    private void obtenerPesoBascula() {
+        com.ibm.icu.math.BigDecimal peso = basicula.obtenerPeso();
+        if (peso != null) {
+            // Realizar alguna acción con el peso obtenido
+            System.out.println("Peso obtenido: " + peso);
+        } else {
+            // Manejar el caso en el que no se pudo obtener el peso
+            System.out.println("Error al obtener el peso de la báscula");
+        }
+    }
+}

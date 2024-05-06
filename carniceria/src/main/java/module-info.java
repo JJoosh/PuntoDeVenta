@@ -5,6 +5,9 @@ module com.carniceria {
     requires java.persistence;
     requires java.sql;
     requires javafx.base;
+
+
+ 
     
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     
@@ -18,6 +21,9 @@ module com.carniceria {
     requires org.apache.pdfbox;
     requires  itextpdf;
     requires icu4j;
+    requires com.fazecast.jSerialComm;
+
+    
     opens com.app.controllers.Ventas;
 
 
