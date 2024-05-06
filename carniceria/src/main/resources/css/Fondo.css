@@ -80,7 +80,7 @@
     -fx-text-fill: white; /* Texto blanco dentro del botón */
 }
 
-.menu-button:hover {
+.menu-button:hover{
     -fx-background-color: #FFFFFF;
     -fx-text-fill: cyan; /* Cambia el color del texto al pasar el ratón */
 }
