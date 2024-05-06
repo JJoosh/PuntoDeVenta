@@ -27,8 +27,9 @@ public class App extends Application {
         // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
         Parent root = loader.load();
-        scene = new Scene(root, 1000, 800);
+        scene = new Scene(root, 800, 600);
         stage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         stage.show();
     }
 
@@ -44,7 +45,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
-    
 }

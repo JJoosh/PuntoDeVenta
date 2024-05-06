@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,10 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 
-
 <StackPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="600.0" prefWidth="900.0">
          <children>
             <BorderPane layoutX="248.0" layoutY="190.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -26,7 +28,7 @@
                <left>
                   <AnchorPane prefHeight="554.0" prefWidth="215.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="8.0" layoutY="77.0" prefHeight="554.4" prefWidth="215.2" scaleShape="false" styleClass="nav-form" stylesheets="@Fondo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutX="8.0" layoutY="77.0" prefHeight="554.4" prefWidth="215.2" scaleShape="false" styleClass="b-red" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0">
                                  <image>
@@ -38,14 +40,23 @@
                                     <Image url="@../../../../../../../ProyectoCarniceria/456212.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="62.0" layoutY="143.0" text="Bienvenido" />
-                              <Line endX="100.0" layoutX="107.0" layoutY="182.0" startX="-100.0" />
-                              <Button layoutX="33.0" layoutY="211.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="ventas" />
-                              <Button layoutX="33.0" layoutY="261.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Inventario" />
-                              <Button layoutX="32.0" layoutY="311.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Devoluciones" />
-                              <Button layoutX="32.0" layoutY="361.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Kardex" />
-                              <Button layoutX="14.0" layoutY="515.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cambiar usuario" />
+                              <Label layoutX="67.0" layoutY="143.0" styleClass="text-label" stylesheets="@../css/styles.css" text="Bienvenido" />
+                              <Line endX="100.0" layoutX="119.0" layoutY="182.0" startX="-100.0" />
+                              <Button layoutX="33.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" styleClass="b-white" stylesheets="@../css/styles.css" text="ventas" />
+                              <Button layoutX="33.0" layoutY="278.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" styleClass="b-white" text="Inventario" />
+                              <Button layoutX="32.0" layoutY="337.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" styleClass="b-white" stylesheets="@../css/styles.css" text="Devoluciones" />
+                              <Button layoutX="32.0" layoutY="399.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" styleClass="b-white" stylesheets="@../css/styles.css" text="Kardex" />
+                              <Button layoutX="35.0" layoutY="488.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" styleClass="b-black" stylesheets="@../css/styles.css" text="Cambiar usuario" />
+                              <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="19.0" layoutY="43.0">
+                                 <image>
+                                    <Image url="@../../../../../../../../../Downloads/LogoSuKarne/word/media/image1.png" />
+                                 </image>
+                              </ImageView>
                            </children>
+                           <stylesheets>
+                              <URL value="@Fondo.css" />
+                              <URL value="@../css/styles.css" />
+                           </stylesheets>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
@@ -60,6 +71,22 @@
                                     <String fx:value="shadow" />
                                     <String fx:value="white-bg" />
                                  </styleClass>
+                                 <children>
+                                    <TableView fx:id="tablaDetallesVenta" layoutX="62.0" layoutY="56.0" prefHeight="300.0" prefWidth="459.0" stylesheets="@../css/styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="nombreProductoColumn" prefWidth="135.0" text="Producto:" />
+                                          <TableColumn fx:id="precioColumn" prefWidth="100.0" text="Precio:" />
+                                          <TableColumn fx:id="cantidadColumn" prefWidth="103.0" text="Cantidad:" />
+                                          <TableColumn fx:id="totalColumn" prefWidth="117.60003662109375" text="Total:" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table" />
+                                          <String fx:value="tex-sub" />
+                                       </styleClass>
+                                    </TableView>
+                                    <Button layoutX="150.0" layoutY="387.0" mnemonicParsing="false" styleClass="b-black" stylesheets="@../css/styles.css" text="Nuevo Producto" />
+                                    <Button layoutX="292.0" layoutY="387.0" mnemonicParsing="false" styleClass="b-red" stylesheets="@../css/styles.css" text="Editar Producto" />
+                                 </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
