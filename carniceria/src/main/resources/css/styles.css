@@ -15,6 +15,14 @@
     -fx-font-size: 20px;
 }
 
+.text-white {
+        -fx-text-fill: white;
+}
+
+.text-20 {
+        -fx-font-size: 20px;
+}
+
 .label-icon {
     -fx-text-fill: crimson;
 }
