@@ -5,6 +5,7 @@ module com.carniceria {
     requires java.persistence;
     requires java.sql;
     requires javafx.base;
+    requires org.apache.poi.ooxml;
     
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     
@@ -12,12 +13,15 @@ module com.carniceria {
     opens com.app.controllers.Inventario to javafx.fxml;
     
     exports com.app.controllers;
-
+   
+    
     requires java.naming;
     requires dom4j;
     requires org.apache.pdfbox;
     requires  itextpdf;
     requires icu4j;
+
+
     opens com.app.controllers.Ventas;
 
 

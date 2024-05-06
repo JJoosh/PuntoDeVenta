@@ -7,20 +7,23 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="600.0" text="Modificar producto" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.app.controllers.Inventario.FXML_ModProducto">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="600.0" text="Modificar producto" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_ModProducto">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="428.0" prefWidth="598.0">
-         <children>
+         <children> 
             <Button layoutX="264.0" layoutY="474.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
             <TextField fx:id="nombre" layoutX="235.0" layoutY="51.0" />
             <Label layoutX="144.0" layoutY="64.0" text="Nombre:" />
-            <TextField fx:id="precio" layoutX="232.0" layoutY="121.0" />
-            <Label layoutX="144.0" layoutY="138.0" text="Precio:" />
-            <TextField fx:id="id" layoutX="232.0" layoutY="197.0" />
-            <Label layoutX="152.0" layoutY="210.0" text="ID" />
-            <TextField fx:id="cantidad" layoutX="235.0" layoutY="270.0" />
-            <Label layoutX="143.0" layoutY="283.0" text="Cantidad" />
-            <ComboBox fx:id="categoria" layoutX="224.0" layoutY="347.0" prefWidth="150.0" promptText="Categorias" />
+            <TextField fx:id="precio" layoutX="235.0" layoutY="206.0" />
+            <Label layoutX="149.0" layoutY="219.0" text="Precio:" />
+            <TextField fx:id="id" layoutX="235.0" layoutY="125.0" />
+            <Label layoutX="157.0" layoutY="142.0" text="ID" />
+            <TextField fx:id="cantidad" layoutX="235.0" layoutY="356.0" />
+            <Label layoutX="143.0" layoutY="373.0" text="Cantidad" />
+            <ComboBox fx:id="categoria" layoutX="225.0" layoutY="418.0" prefWidth="150.0" promptText="Categorias" />
+            <Label layoutX="151.0" layoutY="301.0" text="Costo:" />
+            <TextField fx:id="costo" layoutX="235.0" layoutY="297.0" />
+            <Label layoutX="404.0" layoutY="364.0" text="KG" />
          </children></AnchorPane>
   </content>
 </TitledPane>

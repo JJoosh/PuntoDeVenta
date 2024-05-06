@@ -11,12 +11,15 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.app.controllers.Inventario.FXMLInventarioController;
+import com.app.controllers.Inventario.FXML_NewProducto;
 import com.app.models.Productos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -206,6 +209,22 @@ public class VentasController {
 
    
 
+
+    @FXML
+    public void abrirInventario(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLVista.fxml"));
+            Parent root = loader.load();
+            
+            FXMLInventarioController newProductoController = loader.getController();
+        
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 

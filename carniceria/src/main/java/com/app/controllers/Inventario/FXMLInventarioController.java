@@ -2,11 +2,16 @@ package com.app.controllers.Inventario;
 
 import com.app.models.Categoria;
 import com.app.models.Productos;
-
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -23,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Cell;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -113,6 +119,9 @@ public class FXMLInventarioController implements Initializable {
     @FXML
     private void ModProd() {
         Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+
+        
+
         if (productoSeleccionado != null) {
             
             long id = productoSeleccionado.getId();
@@ -128,11 +137,14 @@ public class FXMLInventarioController implements Initializable {
                 Parent root = loader.load();
                 
                 FXML_ModProducto modProductoController = loader.getController();
-                modProductoController.setDatos(nombre, Cantidad, id, precio, categoria.getNombreCategoria());
+             
+                modProductoController.setInventarioController(this);
+                modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria());
                 Scene scene = new Scene(root);
                 
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                modProductoController.setStage(stage);
                 
                 // Mostrar el escenario
                 stage.show();
@@ -201,7 +213,6 @@ public class FXMLInventarioController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String name) {
                 if (name != null) {
                     long idCategoria=0;
-                    
                     if(name.equals("Todos")){
                         agregaraTabla();
                     } else {
@@ -248,7 +259,7 @@ public class FXMLInventarioController implements Initializable {
     }
 
     public void agregaraTabla(){
-        // Configurar las celdas de las columnas
+       
         codigoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descripcionColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         costoColumn.setCellValueFactory(new PropertyValueFactory<>("costo"));
@@ -290,4 +301,69 @@ public class FXMLInventarioController implements Initializable {
         productosData.clear();
         productosData.addAll(productosActualizados);
     }
+
+    //Codigo para exportar todo el inventario a excell
+ 
+     
+    @FXML
+    public void Exportar() {
+        // Obtén la lista observable de la TableView
+        ObservableList<Productos> data = tableView.getItems();
+
+        Date fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaString = formato.format(fecha);
+
+
+        // Crea el libro de trabajo y la hoja de cálculo
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Datos");
+    
+        int rowNum = 0;
+    
+        // Agregar fila de encabezado con los nombres de las columnas
+        Row headerRow = sheet.createRow(rowNum++);
+        String[] columnNames = {"ID","Nombre", "Existencia", "Costo", "Precio Venta"}; // Agrega aquí los nombres de tus columnas
+        int colNum = 0;
+        for (String columnName : columnNames) {
+            org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(colNum++);
+            cell.setCellValue(columnName);
+        }
+    
+        // Iterar sobre los datos y las filas
+        for (Productos producto : data) {
+            Row excelRow = sheet.createRow(rowNum++);
+            colNum = 0;
+            
+            org.apache.poi.ss.usermodel.Cell cellID = excelRow.createCell(colNum++);
+            cellID.setCellValue(producto.getId());
+
+            org.apache.poi.ss.usermodel.Cell cellNombre = excelRow.createCell(colNum++);
+            cellNombre.setCellValue(producto.getNombre());
+    
+            org.apache.poi.ss.usermodel.Cell cellCantidad = excelRow.createCell(colNum++);
+            cellCantidad.setCellValue(producto.getCantidad().doubleValue()); 
+
+            org.apache.poi.ss.usermodel.Cell cellCosto = excelRow.createCell(colNum++);
+            cellCosto.setCellValue(producto.getCosto().doubleValue()); 
+            
+            org.apache.poi.ss.usermodel.Cell cellPrecio = excelRow.createCell(colNum++);
+            cellPrecio.setCellValue(producto.getPrecio().doubleValue()); 
+        }
+        String fechaExcell=fechaString.replace("/", "-");
+        try (FileOutputStream fileOut = new FileOutputStream("Inventario " + (categorias.getValue() != null && !categorias.getValue().equalsIgnoreCase("Todos") ? categorias.getValue() : "Total") +" "+fechaExcell+ ".xlsx")) {
+            workbook.write(fileOut);
+            System.out.println("¡Los datos se han exportado correctamente a Excel!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+    
 }

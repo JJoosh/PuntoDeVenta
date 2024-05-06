@@ -1,19 +1,22 @@
 package com.app.controllers.Inventario;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import javafx.scene.Parent;
-
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.app.models.Categoria;
+import com.app.models.Movimientos;
 import com.app.models.Productos;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
@@ -46,90 +49,104 @@ public class FXML_NewProducto {
     }
 
     @FXML
-    public void agregar() {
-        if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false && layout4.getText().isEmpty() == false
-                && spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
-                && spinner1.getValue() > 0 && spinner2.getValue() > 0 && spinner3.getValue() > 0) {
+    public void agregar() throws ParseException {
+    Date fecha = new Date();
+
+    // Crear un formato de fecha deseado
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    String fechaFormateada = formato.format(fecha);
+
+    // Si necesitas la fecha en formato Date nuevamente, puedes hacerlo más tarde
+    Date fechaNueva = formato.parse(fechaFormateada);
+
+    if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false && layout4.getText().isEmpty() == false
+            && spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
+            && spinner1.getValue() > 0 && spinner2.getValue() > 0 && spinner3.getValue() > 0) {
+        try {
+            long codigoBarras = Integer.parseInt(layout1.getText());
+            String descripcion = layout2.getText();
+            Double precioCosto = spinner1.getValue();
+            double precioVenta = spinner2.getValue();
+            double precioMayoreo = spinner3.getValue();
+            double cantidadKg = Double.parseDouble(layout4.getText());
+
+            String Categoria=categorias.getValue().toString();
+            System.out.println("Categoria: " +Categoria);
+            Categoria id= new Categoria();
+            Long categoriaId = id.getIDconName(Categoria);
+            Categoria categoria = null;
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            Transaction tx = null;
+
             try {
-                long codigoBarras = Integer.parseInt(layout1.getText());
-                String descripcion = layout2.getText();
-                Double precioCosto = spinner1.getValue();
-                double precioVenta = spinner2.getValue();
-                double precioMayoreo = spinner3.getValue();
-                double cantidadKg = Double.parseDouble(layout4.getText());
+                tx = session.beginTransaction();
 
-                String Categoria=categorias.getValue().toString();
-                System.out.println("Categoria: " +Categoria);
-                Categoria id= new Categoria();
-                Long categoriaId = id.getIDconName(Categoria);
-                Categoria categoria = null;
-
-                Configuration configuration = new Configuration().configure();
-                SessionFactory sessionFactory = configuration.buildSessionFactory();
-                Session session = sessionFactory.openSession();
-                Transaction tx = null;
-
-                try {
-                    tx = session.beginTransaction();
-
-                    // Buscar la categoría por su ID
-                    categoria = session.get(Categoria.class, categoriaId);
-                 
+                // Buscar la categoría por su ID
+                categoria = session.get(Categoria.class, categoriaId);
                 
+                Movimientos movimientos=new Movimientos();
 
-                    Productos productosbd = new Productos();
-                    productosbd.setId(codigoBarras);
-                    productosbd.setNombre(descripcion);
-                    productosbd.setCosto(BigDecimal.valueOf(precioCosto));
-                    productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
-                    productosbd.setCantidad(BigDecimal.valueOf(cantidadKg));
-                    productosbd.setCategoria(categoria);
+                Productos productosbd = new Productos();
+                productosbd.setId(codigoBarras);
+                productosbd.setNombre(descripcion);
+                productosbd.setCosto(BigDecimal.valueOf(precioCosto));
+                productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
+                productosbd.setCantidad(BigDecimal.valueOf(cantidadKg));
+                productosbd.setCategoria(categoria);
 
-                    session.save(productosbd);
-                    tx.commit();
-                    System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
-                    System.out.println("Categoria: " +Categoria);
-        
-            inventarioController.actualizarTabla();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            
-            alert.setHeaderText(null);
-            alert.setContentText("Se guardo el producto correctamente\nID:"+productosbd.getId()+"\nNombre: "+productosbd.getNombre());
-            alert.showAndWait();
+                session.save(productosbd);
+
+                movimientos.setIDProducto(productosbd);
+                movimientos.setTipoMovimiento("E");
+                movimientos.setCantidad(BigDecimal.valueOf(cantidadKg));
+                movimientos.setFecha(fechaNueva);
+                session.save(movimientos);
+                tx.commit();
+                System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
+                System.out.println("Categoria: " +Categoria);
+                inventarioController.actualizarTabla();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Se guardo el producto correctamente\nID:"+productosbd.getId()+"\nNombre: "+productosbd.getNombre());
+                alert.showAndWait();
                 layout1.setText("");
                 layout2.setText("");
                 spinner1.getValueFactory().setValue((double) 0);
                 spinner2.getValueFactory().setValue((double)0);
                 spinner3.getValueFactory().setValue((double) 0);
-                layout4.setText("");;
-                    
-
-                } catch (Exception e) {
-                    
-                        System.out.println(e);
-                   
-                    e.printStackTrace();
-                } finally {
-                    session.close();
-                    sessionFactory.close();
-                }
-
-                
-            } catch (Exception e) {
+                layout4.setText("");
+            } catch (ConstraintViolationException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Por favor escribe los valores correctamente");
+                alert.setContentText("El ID del producto ya existe en la base de datos.");
                 alert.showAndWait();
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println(e);
+                e.printStackTrace();
+            } finally {
+                session.close();
+                sessionFactory.close();
             }
-        } else {
-             Alert alert = new Alert(Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Falto algo por escribir");
+            alert.setContentText("Por favor escribe los valores correctamente.");
             alert.showAndWait();
         }
+    } else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Faltó algo por escribir.");
+        alert.showAndWait();
     }
+}
+
 
   
 
