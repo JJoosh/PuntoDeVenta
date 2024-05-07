@@ -110,7 +110,6 @@ public class VentasController {
                     BigDecimal cantidad = new BigDecimal(cantidadTexto);
                     Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
                     nuevoProducto.setCantidad(cantidad); // Establecer la cantidad ingresada
-                    restarDeInventario(productoSeleccionado.getId(), cantidad); // Restar del inventario
                     productosAgregados.add(nuevoProducto);
                     actualizarTotalImporte();
                     cantidadTextField.clear();
@@ -229,53 +228,4 @@ public class VentasController {
         tablaProductos.setItems(productosData);
     }
 
-    private void restarDeInventario(Long codigoProducto, BigDecimal cantidad) {
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(Productos.class);
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
-        EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        try {
-            entityManager.getTransaction().begin();
-
-            // Buscar el producto por su código
-            Productos producto = entityManager.find(Productos.class, codigoProducto);
-
-            if (producto != null) {
-                BigDecimal cantidadActual = producto.getCantidad();
-
-                if (cantidadActual.compareTo(cantidad) >= 0) {
-                    // Si hay suficiente cantidad en el inventario, restar la cantidad
-                    BigDecimal nuevaCantidad = cantidadActual.subtract(cantidad);
-                    producto.setCantidad(nuevaCantidad);
-                    entityManager.merge(producto);
-                } else {
-                    // Si no hay suficiente cantidad en el inventario, mostrar un error
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("No hay suficiente cantidad en el inventario para este producto.");
-                    alert.showAndWait();
-                }
-            } else {
-                // Si no se encuentra el producto, mostrar un error
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("No se encontró el producto con el código especificado.");
-                alert.showAndWait();
-            }
-
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-            entityManagerFactory.close();
-        }
-    }
 }

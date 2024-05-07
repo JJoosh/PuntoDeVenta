@@ -42,6 +42,10 @@ public class CompraController {
     private static final Font TITLE_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font NORMAL_FONT = new Font(Font.FontFamily.COURIER, 3);
 
+    
+
+
+    
     @FXML
     private Label ticketLabel;
     @FXML
@@ -55,17 +59,21 @@ public class CompraController {
     @FXML
     private TableColumn<Productos, BigDecimal> totalColumn;
 
+
     private Ventas venta;
     private BigDecimal importeTotal;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
 
+
     @FXML
     private void initialize() {
+
         nombreProductoColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio().multiply(new BigDecimal(20))));
+        totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad())));
+
     }
 
 
@@ -90,6 +98,8 @@ private void finalizarCompra() {
     guardarVenta();
     generarPDF();
     regresarAVenta();
+
+    
 }
 
 private void guardarVenta() {
@@ -221,6 +231,7 @@ public void regresar(){
 }
 
 
+   
 
 
     

@@ -85,4 +85,9 @@ public class Productos {
     public BigDecimal getPrecio() {
         return precio;
     }
+
+    public BigDecimal getInventario() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getInventario'");
+    }
 }
