@@ -45,7 +45,6 @@ public class VentasController {
     private Label totalImporteLabel;
     @FXML
     private TextField cantidadTextField;
-
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
@@ -73,6 +72,7 @@ public class VentasController {
         String consultaTexto = codigoProductoTextField.getText();
         List<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
         actualizarTablaProductos(productosEncontrados);
+        
     }
 
     private List<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
@@ -107,12 +107,22 @@ public class VentasController {
             String cantidadTexto = cantidadTextField.getText();
             if (!cantidadTexto.isEmpty()) {
                 try {
-                    BigDecimal cantidad = new BigDecimal(cantidadTexto);
-                    Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
-                    nuevoProducto.setCantidad(cantidad); // Establecer la cantidad ingresada
-                    productosAgregados.add(nuevoProducto);
-                    actualizarTotalImporte();
-                    cantidadTextField.clear();
+                    BigDecimal cantidadIngresada = new BigDecimal(cantidadTexto);
+                    BigDecimal cantidadDisponible = productoSeleccionado.getCantidad();
+
+                    if (cantidadIngresada.compareTo(cantidadDisponible) <= 0) {
+                        Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
+                        nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
+                        productosAgregados.add(nuevoProducto);
+                        actualizarTotalImporte();
+                        cantidadTextField.clear();
+                    } else {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("La cantidad ingresada excede la cantidad disponible");
+                        alert.showAndWait();
+                    }
                 } catch (NumberFormatException e) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
@@ -162,6 +172,8 @@ public class VentasController {
             }
         }
     }
+
+
 
     private void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
@@ -225,7 +237,15 @@ public class VentasController {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
-        tablaProductos.setItems(productosData);
+     
     }
 
 }
+
+
+
+
+
+
+
+// totalImporteLabel.setText(importeTotal.toString());

@@ -42,10 +42,11 @@ public class CompraController {
     private static final Font TITLE_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font NORMAL_FONT = new Font(Font.FontFamily.COURIER, 3);
 
-    
+    @FXML
+    private Label totalImporteLabel;
 
-
-    
+    @FXML
+    private Label labelTicketGenerado;
     @FXML
     private Label ticketLabel;
     @FXML
@@ -66,6 +67,8 @@ public class CompraController {
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
 
 
+
+
     @FXML
     private void initialize() {
 
@@ -80,6 +83,9 @@ public class CompraController {
     public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         setProductosData(productosData);
         setImporteTotal(importeTotal);
+
+        totalImporteLabel.setText(importeTotal.toString());
+   
     }
     
     public void setProductosData(ObservableList<Productos> productosData) {
@@ -94,12 +100,11 @@ public class CompraController {
 
 
 @FXML
-private void finalizarCompra() {
-    guardarVenta();
-    generarPDF();
-    regresarAVenta();
-
-    
+ private void finalizarCompra() throws IOException {
+     labelTicketGenerado.setText("");
+        guardarVenta();
+        generarPDF();
+        regresarAVenta();
 }
 
 private void guardarVenta() {
@@ -144,6 +149,10 @@ private void guardarVenta() {
 
     this.venta = venta;
     ticketLabel.setText("Ticket: " + venta.getTicket());
+
+    this.venta = venta;
+    ticketLabel.setText("Ticket: " + venta.getTicket());
+    labelTicketGenerado.setText("Ticket: " + venta.getTicket());
 
     entityManager.close();
     entityManagerFactory.close();
@@ -203,36 +212,29 @@ private void guardarVenta() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Scene scene = new Scene(loader.load());
-
-            VentasController ventasController = loader.getController();
             Stage stage = (Stage) ticketLabel.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
     }
-}
 
-@FXML
-public void regresar(){
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
-        Scene scene = new Scene(loader.load());
+    @FXML
+    public void regresar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            Scene scene = new Scene(loader.load());
 
-        VentasController ventasController = loader.getController();
-        ventasController.actualizarDatos(productosData, importeTotal);
+            VentasController ventasController = loader.getController();
+            ventasController.actualizarDatos(productosData, importeTotal);
 
-        Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    } catch ( IOException e ) {
-        e.printStackTrace();
+            Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
-
-
-   
-
-
-    
+ 
 } 
