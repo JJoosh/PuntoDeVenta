@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Productos")
 public class Productos {
-
     @Id
     @Column(name = "ID")
     private Long id;
@@ -30,7 +29,6 @@ public class Productos {
     @Column(name = "Precio")
     private BigDecimal precio;
 
-
     public Productos() {
     }
 
@@ -41,7 +39,17 @@ public class Productos {
         this.precio = precio;
     }
 
+    // Constructor de copia
+    public Productos(Productos producto) {
+        this.id = producto.id;
+        this.nombre = producto.nombre;
+        this.categoria = producto.categoria;
+        this.cantidad = producto.cantidad;
+        this.precio = producto.precio;
+    }
+
     // Getters y setters
+
     public Long getId() {
         return id;
     }
@@ -77,5 +85,4 @@ public class Productos {
     public BigDecimal getPrecio() {
         return precio;
     }
-
 }

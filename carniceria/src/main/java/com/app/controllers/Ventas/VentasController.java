@@ -43,6 +43,8 @@ public class VentasController {
     private TableColumn<Productos, BigDecimal> Cantidad;
     @FXML
     private Label totalImporteLabel;
+    @FXML
+    private TextField cantidadTextField;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
@@ -51,6 +53,7 @@ public class VentasController {
     public void initialize() {
         // Inicialización de la pantalla de ventas
         codigoProductoTextField.setText("");
+        cantidadTextField.setText(""); // Inicializar el campo de texto vacío
 
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -101,8 +104,30 @@ public class VentasController {
         Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
 
         if (productoSeleccionado != null) {
-            productosAgregados.add(productoSeleccionado);
-            actualizarTotalImporte();
+            String cantidadTexto = cantidadTextField.getText();
+            if (!cantidadTexto.isEmpty()) {
+                try {
+                    BigDecimal cantidad = new BigDecimal(cantidadTexto);
+                    Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
+                    nuevoProducto.setCantidad(cantidad); // Establecer la cantidad ingresada
+                    restarDeInventario(productoSeleccionado.getId(), cantidad); // Restar del inventario
+                    productosAgregados.add(nuevoProducto);
+                    actualizarTotalImporte();
+                    cantidadTextField.clear();
+                } catch (NumberFormatException e) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cantidad inválida");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Debe ingresar una cantidad");
+                alert.showAndWait();
+            }
         } else {
             String codigoProductoTexto = codigoProductoTextField.getText();
 
@@ -142,7 +167,10 @@ public class VentasController {
     private void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
         for (Productos producto : productosAgregados) {
-            total = total.add(producto.getPrecio());
+            BigDecimal cantidad = producto.getCantidad();
+            BigDecimal precio = producto.getPrecio();
+            BigDecimal subtotal = cantidad.multiply(precio);
+            total = total.add(subtotal);
         }
         importeTotal = total;
         totalImporteLabel.setText(importeTotal.toString());
@@ -176,7 +204,7 @@ public class VentasController {
             alert.showAndWait();
         }
     }
-    
+
     @FXML
     private void cobrar() {
         try {
@@ -194,19 +222,60 @@ public class VentasController {
         }
     }
 
-
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
         tablaProductos.setItems(productosData);
-
     }
 
+    private void restarDeInventario(Long codigoProducto, BigDecimal cantidad) {
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(Productos.class);
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-   
+        try {
+            entityManager.getTransaction().begin();
 
+            // Buscar el producto por su código
+            Productos producto = entityManager.find(Productos.class, codigoProducto);
 
+            if (producto != null) {
+                BigDecimal cantidadActual = producto.getCantidad();
 
+                if (cantidadActual.compareTo(cantidad) >= 0) {
+                    // Si hay suficiente cantidad en el inventario, restar la cantidad
+                    BigDecimal nuevaCantidad = cantidadActual.subtract(cantidad);
+                    producto.setCantidad(nuevaCantidad);
+                    entityManager.merge(producto);
+                } else {
+                    // Si no hay suficiente cantidad en el inventario, mostrar un error
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No hay suficiente cantidad en el inventario para este producto.");
+                    alert.showAndWait();
+                }
+            } else {
+                // Si no se encuentra el producto, mostrar un error
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("No se encontró el producto con el código especificado.");
+                alert.showAndWait();
+            }
 
-} 
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+}

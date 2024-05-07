@@ -30,18 +30,17 @@
       <Label layoutX="85.0" layoutY="152.0" prefHeight="61.0" prefWidth="215.0" text="Codigo del producto o nombre" />
       <TextField fx:id="codigoProductoTextField" layoutX="300.0" layoutY="171.0" />
       <Button fx:id="btnbuscarcode" layoutX="502.0" layoutY="171.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar" />
-      <Button layoutX="89.0" layoutY="214.0" mnemonicParsing="false" text="Borrar articulo" onAction="#borrarArticulo"/>
-      <ScrollPane layoutX="85.0" layoutY="254.0" prefHeight="300.0" prefWidth="600.0">
+      <Button layoutX="502.0" layoutY="214.0" mnemonicParsing="false" onAction="#borrarArticulo" text="Borrar articulo" />
+      <ScrollPane layoutX="139.0" layoutY="260.0" prefHeight="300.0" prefWidth="481.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="575.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="486.0">
                <children>
-                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="567.0">
+                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="463.0">
                     <columns>
                       <TableColumn fx:id="Cbarra" prefWidth="123.99996662139893" text="Codigo de barras" />
                       <TableColumn fx:id="Descriptions" prefWidth="158.40003967285156" text="Descripcion producto" />
-                        <TableColumn fx:id="PrecioV" prefWidth="88.0" text="Precio venta" />
                         <TableColumn fx:id="Cantidad" prefWidth="90.39996337890625" text="Cantidad" />
-                        <TableColumn fx:id="importe" prefWidth="117.60003662109375" text="Importe" />
+                        <TableColumn fx:id="PrecioV" prefWidth="88.0" text="Precio venta" />
                     </columns>
                   </TableView>
                </children>
@@ -53,5 +52,8 @@
       <Label layoutX="561.0" layoutY="586.0" text="Cantidad a cobrar " />
       <Label layoutX="89.0" layoutY="586.0" prefWidth="177.0" text="Cantidad de productos: 0" />
       <Label layoutX="97.0" layoutY="610.0" />
+      <Button fx:id="btnbuscarcode1" layoutX="600.0" layoutY="171.0" mnemonicParsing="false" text="Peso" />
+      <TextField fx:id="cantidadTextField" layoutX="300.0" layoutY="214.0" />
+      <Label layoutX="88.0" layoutY="210.0" prefHeight="33.0" prefWidth="134.0" text="Ingresa la cantidad " />
    </children>
 </AnchorPane>
