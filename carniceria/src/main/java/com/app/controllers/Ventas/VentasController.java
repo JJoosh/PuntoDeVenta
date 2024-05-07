@@ -32,6 +32,26 @@ import javafx.stage.Stage;
 
 public class VentasController {
 
+    private static String nombreUsser;
+    private static String rol;
+
+    public void setNombreUsser(String nombreUsser){
+        this.nombreUsser=nombreUsser;
+        
+    }
+
+    public void setRol(String rol){
+        this.rol=rol;
+    }
+
+    public String getNombreUsser(){
+        return this.nombreUsser;
+    }
+
+    public String getRol(){
+        return this.rol;
+    }
+
     @FXML
     private TextField codigoProductoTextField;
     @FXML
@@ -46,14 +66,16 @@ public class VentasController {
     private TableColumn<Productos, BigDecimal> Cantidad;
     @FXML
     private Label totalImporteLabel;
-
+    @FXML
+    private TextField cantidadTextField;
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
 
     public void initialize() {
-        // Inicialización de la pantalla de ventas
+        
         codigoProductoTextField.setText("");
+        cantidadTextField.setText(""); // Inicializar el campo de texto vacío
 
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -62,7 +84,6 @@ public class VentasController {
 
         tablaProductos.setItems(productosData);
         totalImporteLabel.setText("0.00");
-
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
@@ -73,6 +94,7 @@ public class VentasController {
         String consultaTexto = codigoProductoTextField.getText();
         List<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
         actualizarTablaProductos(productosEncontrados);
+        
     }
 
     private List<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
@@ -104,8 +126,39 @@ public class VentasController {
         Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
 
         if (productoSeleccionado != null) {
-            productosAgregados.add(productoSeleccionado);
-            actualizarTotalImporte();
+            String cantidadTexto = cantidadTextField.getText();
+            if (!cantidadTexto.isEmpty()) {
+                try {
+                    BigDecimal cantidadIngresada = new BigDecimal(cantidadTexto);
+                    BigDecimal cantidadDisponible = productoSeleccionado.getCantidad();
+
+                    if (cantidadIngresada.compareTo(cantidadDisponible) <= 0) {
+                        Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
+                        nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
+                        productosAgregados.add(nuevoProducto);
+                        actualizarTotalImporte();
+                        cantidadTextField.clear();
+                    } else {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("La cantidad ingresada excede la cantidad disponible");
+                        alert.showAndWait();
+                    }
+                } catch (NumberFormatException e) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cantidad inválida");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Debe ingresar una cantidad");
+                alert.showAndWait();
+            }
         } else {
             String codigoProductoTexto = codigoProductoTextField.getText();
 
@@ -142,10 +195,15 @@ public class VentasController {
         }
     }
 
+
+
     private void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
         for (Productos producto : productosAgregados) {
-            total = total.add(producto.getPrecio());
+            BigDecimal cantidad = producto.getCantidad();
+            BigDecimal precio = producto.getPrecio();
+            BigDecimal subtotal = cantidad.multiply(precio);
+            total = total.add(subtotal);
         }
         importeTotal = total;
         totalImporteLabel.setText(importeTotal.toString());
@@ -179,7 +237,7 @@ public class VentasController {
             alert.showAndWait();
         }
     }
-    
+
     @FXML
     private void cobrar() {
         try {
@@ -197,17 +255,14 @@ public class VentasController {
         }
     }
 
-
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
-        tablaProductos.setItems(productosData);
-
+     
     }
 
-
-   
+}
 
 
     @FXML
@@ -228,4 +283,7 @@ public class VentasController {
 
 
 
-} 
+
+
+
+// totalImporteLabel.setText(importeTotal.toString());

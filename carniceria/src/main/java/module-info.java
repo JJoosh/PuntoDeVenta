@@ -1,31 +1,26 @@
-module com.carniceria {
+module com.carniceria{
+    
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
     requires java.persistence;
     requires java.sql;
-    requires javafx.base;
-    requires org.apache.poi.ooxml;
-    
-    opens com.app.models to org.hibernate.orm.core, javafx.base;
-    
-    opens com.app.controllers to javafx.fxml;
-    opens com.app.controllers.Inventario to javafx.fxml;
-    
-    exports com.app.controllers;
-   
-    
     requires java.naming;
     requires dom4j;
     requires org.apache.pdfbox;
-    requires  itextpdf;
+    requires itextpdf;
     requires icu4j;
+    requires nrjavaserial;
 
-
+    opens com.app.models to org.hibernate.orm.core, javafx.base;
+    opens com.app.controllers to javafx.fxml;
     opens com.app.controllers.Ventas;
-
-
+    opens com.app.controllers.Login;
     
+
+
+    exports com.app.controllers;
     exports com.app.controllers.Ventas;
+    exports com.app.controllers.Login;
     
 }

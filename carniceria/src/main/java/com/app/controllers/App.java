@@ -25,7 +25,7 @@ public class App extends Application {
         System.out.println(session);
 
         // Cargar la vista principal
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root = loader.load();
         scene = new Scene(root, 1000, 800);
         stage.setScene(scene);
@@ -43,6 +43,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 
 
