@@ -44,9 +44,6 @@ public class CompraController {
 
     @FXML
     private Label totalImporteLabel;
-
-    @FXML
-    private Label labelTicketGenerado;
     @FXML
     private Label ticketLabel;
     @FXML
@@ -83,7 +80,7 @@ public class CompraController {
     public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         setProductosData(productosData);
         setImporteTotal(importeTotal);
-
+   
         totalImporteLabel.setText(importeTotal.toString());
    
     }
@@ -101,7 +98,7 @@ public class CompraController {
 
 @FXML
  private void finalizarCompra() throws IOException {
-     labelTicketGenerado.setText("");
+
         guardarVenta();
         generarPDF();
         regresarAVenta();
@@ -150,9 +147,7 @@ private void guardarVenta() {
     this.venta = venta;
     ticketLabel.setText("Ticket: " + venta.getTicket());
 
-    this.venta = venta;
-    ticketLabel.setText("Ticket: " + venta.getTicket());
-    labelTicketGenerado.setText("Ticket: " + venta.getTicket());
+
 
     entityManager.close();
     entityManagerFactory.close();
