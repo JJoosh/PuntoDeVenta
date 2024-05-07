@@ -1,0 +1,54 @@
+.color-back {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ff6666, #cc3333);
+}
+
+.black-back {
+    -fx-background-color: black;
+}
+
+.text-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.tex-sub {
+    -fx-font-size: 20px;
+}
+
+.text-white {
+        -fx-text-fill: white;
+}
+
+.text-20 {
+        -fx-font-size: 20px;
+}
+
+.label-icon {
+    -fx-text-fill: crimson;
+}
+
+.b-red {
+    -fx-background-color: crimson;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 5px 10px;
+}
+
+.b-black {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 5px 10px;
+}
+
+.b-white {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-padding: 5px 10px;
+}
+
+.table {
+    -fx-selection-bar: crimson;
+}
+

@@ -32,6 +32,7 @@
                                  <stylesheets>
                                     <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                     <URL value="@styles.css" />
+                                    <URL value="@../css/Fondo.css" />
                                  </stylesheets>
                               </Label>
                            </children></AnchorPane>
