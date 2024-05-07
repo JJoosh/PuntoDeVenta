@@ -27,11 +27,11 @@ public class App extends Application {
         // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/primary.fxml"));
         Parent root = loader.load();
+
         scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/css/Fondo.css").toExternalForm());
-
-        stage.setMaximized(false);
         stage.setScene(scene);
+        stage.setMaximized(false);
         stage.show();
     }
 
