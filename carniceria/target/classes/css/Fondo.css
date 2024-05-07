@@ -1,0 +1,113 @@
+/* Estilo del login */
+#login {
+    -fx-background-image: url(/css/img/carne.jpg);
+
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    /* Color de fondo blanco */
+    -fx-border-color: #cccccc;
+    /* Color del borde gris */
+    -fx-border-radius: 3px;
+    /* Bordes redondeados */
+    -fx-padding: 5px;
+    /* Espacio interno */
+}
+
+#primaryButton {
+    -fx-background-color: #007bff;
+    /* Color de fondo azul */
+    -fx-text-fill: #ffffff;
+    /* Color de texto blanco */
+    -fx-border-radius: 3px;
+    /* Bordes redondeados */
+    -fx-padding: 8px 16px;
+    /* Espacio interno */
+}
+
+#primaryButton:hover {
+    -fx-background-color: #0056b3;
+    /* Color de fondo azul más oscuro */
+}
+
+#label_login {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 25px;
+    -fx-alignment: center
+}
+
+/* Importe en Ventas*/
+#importe_total {
+    -fx-text-fill: #332C2C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+#label_blanco {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment: center
+}
+
+
+#Titulo_modulo {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+
+/*Panel del costado*/
+.anchor-pane {
+    -fx-background-color: #ac3d45;
+}
+
+
+.button {
+    -fx-background-color: #D62934;
+}
+
+.label {
+    -fx-text-fill: #332C2C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+}
+
+.Label_asd {
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-text-fill: #000000;
+}
+
+
+
+#importe {
+    -fx-text-fill: #332C2C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+#label_blanco {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment: center
+}
+
+#Titulo_modulo {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}

@@ -1,4 +1,5 @@
 module com.carniceria{
+    
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
@@ -14,9 +15,12 @@ module com.carniceria{
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;
     opens com.app.controllers.Ventas;
+    opens com.app.controllers.Login;
+    
 
 
     exports com.app.controllers;
     exports com.app.controllers.Ventas;
+    exports com.app.controllers.Login;
     
 }
