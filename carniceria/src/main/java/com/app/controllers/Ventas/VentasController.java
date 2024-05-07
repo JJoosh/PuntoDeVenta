@@ -29,6 +29,26 @@ import javafx.stage.Stage;
 
 public class VentasController {
 
+    private static String nombreUsser;
+    private static String rol;
+
+    public void setNombreUsser(String nombreUsser){
+        this.nombreUsser=nombreUsser;
+        
+    }
+
+    public void setRol(String rol){
+        this.rol=rol;
+    }
+
+    public String getNombreUsser(){
+        return this.nombreUsser;
+    }
+
+    public String getRol(){
+        return this.rol;
+    }
+
     @FXML
     private TextField codigoProductoTextField;
     @FXML
@@ -50,7 +70,7 @@ public class VentasController {
     private BigDecimal importeTotal = BigDecimal.ZERO;
 
     public void initialize() {
-        // Inicialización de la pantalla de ventas
+        
         codigoProductoTextField.setText("");
         cantidadTextField.setText(""); // Inicializar el campo de texto vacío
 
@@ -61,7 +81,6 @@ public class VentasController {
 
         tablaProductos.setItems(productosData);
         totalImporteLabel.setText("0.00");
-
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });

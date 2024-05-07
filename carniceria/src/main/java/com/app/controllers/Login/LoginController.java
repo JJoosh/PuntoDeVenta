@@ -51,8 +51,7 @@ public class LoginController {
                 // Obtener el controlador de la vista Ventas.fxml
                 VentasController ventasController = loader.getController();
 
-                // Configurar el controlador de ventas si es necesario
-                // Crear una nueva escena con la vista Ventas.fxml
+                ventasController.setNombreUsser(username);
                 Scene scene = new Scene(root);
 
                 // Obtener la ventana actual
@@ -83,7 +82,7 @@ public class LoginController {
 
             List<Usuarios> usuarios = query.list();
 
-            // Si hay un resultado, las credenciales son válidas
+            
             return !usuarios.isEmpty();
         } catch (Exception e) {
             e.printStackTrace();
