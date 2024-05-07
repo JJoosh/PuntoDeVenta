@@ -13,13 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+<VBox minHeight="650.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="638.0" prefWidth="859.0" stylesheets="@fondo.css">
          <children>
-            <AnchorPane id="fondo_negro" layoutX="255.0" layoutY="3.0" prefHeight="97.0" prefWidth="1004.0" />
-            <Label id="Titulo_modulo" layoutX="255.0" layoutY="14.0" prefHeight="76.0" prefWidth="1030.0" stylesheets="@../css/Fondo.css" text="Venta de productos" textAlignment="CENTER">
+            <Label id="Titulo_modulo" layoutX="247.0" prefHeight="90.0" prefWidth="1038.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Venta de productos" textAlignment="CENTER">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>

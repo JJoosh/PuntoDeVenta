@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,11 +12,11 @@
 
 <HBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.PrimaryController">
    <children>
-      <VBox prefHeight="500.0" prefWidth="399.0" style="-fx-background-image: url(&quot;/img/carne.jpg&quot;); -fx-background-color: ac3d45;" HBox.hgrow="ALWAYS">
+      <VBox id="login" prefHeight="500.0" prefWidth="267.0" stylesheets="@styles.css" HBox.hgrow="ALWAYS">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="188.0" text="Iniciar sesión" textAlignment="CENTER" textFill="WHITE">
+            <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="213.0" text="Iniciar sesión" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="25.0" />
+                  <Font name="Arial Black" size="22.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="20.0" left="30.0" right="30.0" top="100.0" />
@@ -52,7 +50,7 @@
                         <Insets bottom="40.0" left="20.0" right="20.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Button fx:id="primaryButton" onAction="#switchToSecondary" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50px;" stylesheets="@../css/Fondo.css" text="Ingresar">
+                  <Button fx:id="primaryButton" onAction="#switchToSecondary" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50px; -fx-background-image: ./carniceria/src/main/resources/img;" stylesheets="@../css/Fondo.css" text="Ingresar">
                      <VBox.margin>
                         <Insets left="50.0" right="50.0" />
                      </VBox.margin>
@@ -63,20 +61,7 @@
       </VBox>
       <VBox prefHeight="400.0" prefWidth="511.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
          <children>
-            <StackPane prefHeight="504.0" prefWidth="406.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
-               <children>
-                  <ImageView fitHeight="259.0" fitWidth="408.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/carne.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="134.0" fitWidth="288.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/LOGO.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </StackPane>
+            <StackPane prefHeight="500.0" prefWidth="713.0" style="-fx-background-image: url(/css/img/carne.jpg); -fx-background-size: cover;" stylesheets="@../css/Fondo.css" />
          </children></VBox>
    </children>
 </HBox>
