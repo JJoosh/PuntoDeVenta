@@ -21,7 +21,7 @@
       <Button layoutX="196.0" layoutY="162.0" mnemonicParsing="false" text="Ajustes" />
       <Button layoutX="266.0" layoutY="162.0" mnemonicParsing="false" text="Productos bajos en inventario" />
       <Button layoutX="472.0" layoutY="162.0" mnemonicParsing="false" text="Reporte de inventarios" />
-      <Button layoutX="629.0" layoutY="162.0" mnemonicParsing="false" text="Reporte de movimientos" />
+      <Button layoutX="629.0" layoutY="162.0" mnemonicParsing="false"  onAction="#movimientos" text="Reporte de movimientos" />
       <Label layoutX="44.0" layoutY="21.0" text="SuKarne">
          <font>
             <Font name="Arial Black" size="39.0" />

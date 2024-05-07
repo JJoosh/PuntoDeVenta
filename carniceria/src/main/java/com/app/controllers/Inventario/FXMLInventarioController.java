@@ -9,26 +9,20 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Cell;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -77,36 +71,40 @@ public class FXMLInventarioController implements Initializable {
         idP.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                // Crear una nueva lista para almacenar los elementos filtrados
-                ObservableList<Productos> filteredItems = FXCollections.observableArrayList();
-                
-                // Si el texto del TextField está vacío, restaurar la lista original
-                if (newValue == null || newValue.isEmpty()) {
-                    productosData.clear();
-                    productosData.addAll(productosOriginalData);
-                    tableView.setItems(productosData);
-                } else {
-                    // Obtener la categoría seleccionada en el ComboBox
-                    String selectedCategory = categorias.getValue();
-                    
-                    // Iterar sobre la lista original y agregar los elementos que coincidan con el filtro y la categoría seleccionada
-                    for (Productos producto : productosOriginalData) {
-                        String idString = producto.getId().toString();
-                        
-                        // Verificar si la categoría no es nula antes de acceder a su nombre
-                        String category = producto.getCategoria() != null ? producto.getCategoria().getNombreCategoria() : "";
-                        
-                        if ((idString.contains(newValue) || idString.startsWith(newValue))
-                                && (selectedCategory == null || selectedCategory.equals("Todos") || category.equals(selectedCategory))) {
-                            filteredItems.add(producto);
-                            categorias.setValue("Todos");
-                        }
-                    }
-                    
-                    tableView.setItems(filteredItems);
-                }
+                buscar(newValue);
             }
         });
+    }
+
+
+    private void buscar(String consultaTexto) {
+        // Crear una nueva lista para almacenar los elementos filtrados
+        ObservableList<Productos> filteredItems = FXCollections.observableArrayList();
+    
+        // Si el texto de consulta está vacío, restaurar la lista original
+        if (consultaTexto == null || consultaTexto.isEmpty()) {
+            tableView.setItems(productosData);
+        } else {
+            String selectedCategory = categorias.getValue();
+            
+            // Iterar sobre la lista original y agregar los elementos que coincidan con el filtro y la categoría seleccionada
+            for (Productos producto : productosOriginalData) {
+                String idString = producto.getId().toString();
+                String nombreProducto = producto.getNombre(); // Suponiendo que tengas un método `getNombre()` en tu clase `Productos`
+    
+                // Verificar si tanto el ID como el nombre del producto contienen el texto de consulta
+                // y si la categoría seleccionada coincide con la categoría del producto
+                if ((idString.contains(consultaTexto) || nombreProducto.contains(consultaTexto))
+                    && (selectedCategory == null || selectedCategory.equals("Todos") || producto.getCategoria().getNombreCategoria().equals(selectedCategory))) {
+                    filteredItems.add(producto);
+                }
+            }
+    
+            tableView.setItems(filteredItems);
+            if (!filteredItems.isEmpty()) {
+                categorias.setValue("Todos");
+            }
+        }
     }
     
     //LOGICA PARA MANEJAR LOS EVENTOS DE LOS BOTONES
@@ -119,9 +117,6 @@ public class FXMLInventarioController implements Initializable {
     @FXML
     private void ModProd() {
         Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
-
-        
-
         if (productoSeleccionado != null) {
             
             long id = productoSeleccionado.getId();
@@ -230,20 +225,22 @@ public class FXMLInventarioController implements Initializable {
     }
 
     public List<Productos> obtenerProductosF(long id) {
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(Productos.class);
         SessionFactory sessionFactory = configuration.buildSessionFactory();
-        EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
-        EntityManager entityManager = emf.createEntityManager();
-    
-        TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p WHERE p.categoria.id = :id", Productos.class);
-        query.setParameter("id", id);
-    
-        List<Productos> productos = query.getResultList();
-    
+        EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        // Realizar la consulta en la base de datos
+        String query = "SELECT p FROM Productos p WHERE p.id LIKE :consultaTexto OR p.nombre LIKE :consultaTexto";
+        TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
+        typedQuery.setParameter("consultaTexto", "%" + id + "%");
+        List<Productos> productosEncontrados = typedQuery.getResultList();
+
         entityManager.close();
-        emf.close();
+        entityManagerFactory.close();
     
-        return productos;
+        return productosEncontrados;
     }
     
     //LOGICA QUE SE CARGARA AL INICIAR LA PAGINA DE INVENTARIO 
@@ -364,6 +361,26 @@ public class FXMLInventarioController implements Initializable {
             }
         }
         
+    }
+
+
+    //Movimientos
+
+    @FXML
+    public void movimientos(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Movimientos.fxml"));
+            Parent root = loader.load();
+            
+            MovimientosController newMovimientos = loader.getController();
+
+            
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

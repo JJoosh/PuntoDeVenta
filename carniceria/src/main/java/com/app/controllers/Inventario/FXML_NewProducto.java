@@ -3,6 +3,7 @@ package com.app.controllers.Inventario;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -49,15 +50,8 @@ public class FXML_NewProducto {
     }
 
     @FXML
-    public void agregar() throws ParseException {
-    Date fecha = new Date();
-
-    // Crear un formato de fecha deseado
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    String fechaFormateada = formato.format(fecha);
-
-    // Si necesitas la fecha en formato Date nuevamente, puedes hacerlo más tarde
-    Date fechaNueva = formato.parse(fechaFormateada);
+   public void agregar() {
+    LocalDateTime fechaHoraActual = LocalDateTime.now();
 
     if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false && layout4.getText().isEmpty() == false
             && spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
@@ -70,9 +64,9 @@ public class FXML_NewProducto {
             double precioMayoreo = spinner3.getValue();
             double cantidadKg = Double.parseDouble(layout4.getText());
 
-            String Categoria=categorias.getValue().toString();
-            System.out.println("Categoria: " +Categoria);
-            Categoria id= new Categoria();
+            String Categoria = categorias.getValue().toString();
+            System.out.println("Categoria: " + Categoria);
+            Categoria id = new Categoria();
             Long categoriaId = id.getIDconName(Categoria);
             Categoria categoria = null;
             Configuration configuration = new Configuration().configure();
@@ -85,8 +79,8 @@ public class FXML_NewProducto {
 
                 // Buscar la categoría por su ID
                 categoria = session.get(Categoria.class, categoriaId);
-                
-                Movimientos movimientos=new Movimientos();
+
+                Movimientos movimientos = new Movimientos();
 
                 Productos productosbd = new Productos();
                 productosbd.setId(codigoBarras);
@@ -98,23 +92,23 @@ public class FXML_NewProducto {
 
                 session.save(productosbd);
 
-                movimientos.setIDProducto(productosbd);
+                movimientos.setIdProducto(productosbd);
                 movimientos.setTipoMovimiento("E");
                 movimientos.setCantidad(BigDecimal.valueOf(cantidadKg));
-                movimientos.setFecha(fechaNueva);
+                movimientos.setFecha(fechaHoraActual);
                 session.save(movimientos);
                 tx.commit();
                 System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
-                System.out.println("Categoria: " +Categoria);
+                System.out.println("Categoria: " + Categoria);
                 inventarioController.actualizarTabla();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText(null);
-                alert.setContentText("Se guardo el producto correctamente\nID:"+productosbd.getId()+"\nNombre: "+productosbd.getNombre());
+                alert.setContentText("Se guardo el producto correctamente\nID:" + productosbd.getId() + "\nNombre: " + productosbd.getNombre());
                 alert.showAndWait();
                 layout1.setText("");
                 layout2.setText("");
                 spinner1.getValueFactory().setValue((double) 0);
-                spinner2.getValueFactory().setValue((double)0);
+                spinner2.getValueFactory().setValue((double) 0);
                 spinner3.getValueFactory().setValue((double) 0);
                 layout4.setText("");
             } catch (ConstraintViolationException e) {
@@ -146,7 +140,6 @@ public class FXML_NewProducto {
         alert.showAndWait();
     }
 }
-
 
   
 
