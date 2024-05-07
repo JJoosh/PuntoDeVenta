@@ -1,7 +1,7 @@
 /* Estilo del login */
 #login{
     -fx-background-image: url(/css/img/carne.jpg);
-    -fc-background-size: cover;
+    
 }
 
 .text-field {

@@ -5,6 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,56 +15,79 @@
 
 <HBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.PrimaryController">
    <children>
-      <VBox id="login" prefHeight="500.0" prefWidth="267.0" stylesheets="@styles.css" HBox.hgrow="ALWAYS">
+      <AnchorPane cacheShape="false" prefHeight="353.0" prefWidth="760.0" scaleShape="false">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="213.0" text="Iniciar sesión" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Arial Black" size="22.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="30.0" right="30.0" top="100.0" />
-               </VBox.margin>
-            </Label>
-            <VBox prefHeight="303.0" prefWidth="257.0">
+            <StackPane prefHeight="500.0" prefWidth="713.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
                <children>
-                  <Label prefHeight="30.0" prefWidth="126.0" text="Usuario:" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="30.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField maxHeight="40.0" maxWidth="500.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" promptText="Coloca tu nombre de usuario...">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label prefHeight="30.0" prefWidth="123.0" text="Contraseña:" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="30.0" />
-                     </VBox.margin>
-                  </Label>
-                  <PasswordField maxHeight="40.0" maxWidth="500.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
-                     <VBox.margin>
-                        <Insets bottom="40.0" left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button fx:id="primaryButton" onAction="#switchToSecondary" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50px; -fx-background-image: ./carniceria/src/main/resources/img;" stylesheets="@../css/Fondo.css" text="Ingresar">
-                     <VBox.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </VBox.margin>
-                  </Button>
+                  <ImageView blendMode="OVERLAY" fitHeight="491.0" fitWidth="760.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/carne.jpg" />
+                     </image>
+                  </ImageView>
+                  <VBox id="login" prefHeight="500.0" prefWidth="267.0" style="-fx-background-color: blacl;" stylesheets="@styles.css">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/LOGO.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="300.0" top="50.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="213.0" text="Iniciar sesión" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Black" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="30.0" right="30.0" top="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox prefHeight="307.0" prefWidth="760.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="126.0" text="Usuario:" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField maxHeight="30.0" maxWidth="250.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="406.0" promptText="Coloca tu nombre de usuario...">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label prefHeight="30.0" prefWidth="123.0" text="Contraseña:" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <PasswordField maxHeight="40.0" maxWidth="250.0" minHeight="20.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" left="20.0" right="20.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                              <Button fx:id="primaryButton" onAction="#switchToSecondary" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50px; -fx-background-image: ./carniceria/src/main/resources/img;" stylesheets="@../css/Fondo.css" text="Ingresar">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="50.0" right="50.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </StackPane>
          </children>
-      </VBox>
-      <VBox prefHeight="400.0" prefWidth="511.0" style="-fx-background-color: #332C2C;" stylesheets="@../css/Fondo.css">
-         <children>
-            <StackPane prefHeight="500.0" prefWidth="713.0" style="-fx-background-image: url(/css/img/carne.jpg); -fx-background-size: cover;" stylesheets="@../css/Fondo.css" />
-         </children></VBox>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </AnchorPane>
    </children>
 </HBox>
