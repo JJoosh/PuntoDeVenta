@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,7 @@ public class Movimientos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_movimiento")
     private Long id_movimiento;
-
+    
     @ManyToOne
     @JoinColumn(name = "id_producto")
     private Productos id_producto;
@@ -33,7 +35,7 @@ public class Movimientos {
     private BigDecimal cantidad;
 
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private String fecha;
 
     @Column(name = "hora")
     private LocalTime hora;
@@ -71,14 +73,18 @@ public class Movimientos {
         this.tipo_movimiento = tipoMovimiento;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     public void setFecha(LocalDateTime fechaHora) {
         if (fechaHora != null) {
-            this.fecha = fechaHora.toLocalDate();
-            this.hora = fechaHora.toLocalTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            this.fecha = fechaHora.format(formatter);
+            ZoneId zoneId = ZoneId.of("America/Mexico_City"); // Reemplaza con la zona horaria deseada
+        LocalTime horaActual = fechaHora.atZone(zoneId).toLocalTime();
+        LocalTime horaRestada = horaActual.minusHours(1);
+        this.hora = horaRestada;
         }
     }
 

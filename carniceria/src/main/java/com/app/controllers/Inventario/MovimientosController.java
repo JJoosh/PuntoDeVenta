@@ -12,7 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,6 +40,7 @@ public class MovimientosController implements Initializable {
     @FXML private TableColumn<Movimientos, String> columCategoria;
     @FXML private DatePicker fechas;
     @FXML private ComboBox<String> categorias;
+    @FXML private ComboBox<String> boxMovimiento;
 
     private ObservableList<Movimientos> tablaDevoluciones;
 
@@ -63,6 +66,22 @@ public class MovimientosController implements Initializable {
 
         loadCat.cargarCategorias(this.categorias, 1);
         filtrarCategorias();
+        ObservableList<String> movimientos = FXCollections.observableArrayList(
+            "Todos",  "Entrada", "Salida"
+        );
+        boxMovimiento.setItems(movimientos);
+        boxMovimiento.setValue("Todos");
+        LocalDate fechaActual = LocalDate.now();
+        fechas.setValue(fechaActual);
+
+        
+        fechas.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                List<Movimientos> movimientosFiltrados = obtenerMovimientosPorFecha(newValue);
+                tablaDevoluciones.clear();
+                tablaDevoluciones.addAll(movimientosFiltrados);
+            }
+        });
     }
 
     @FXML
@@ -90,6 +109,29 @@ public class MovimientosController implements Initializable {
         return movimientos;
     }
 
+    private List<Movimientos> obtenerMovimientosPorFecha(LocalDate fecha) {
+    Configuration configuration = new Configuration();
+    configuration.configure("hibernate.cfg.xml");
+    configuration.addAnnotatedClass(Movimientos.class);
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
+    EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+    EntityManager entityManager = emf.createEntityManager();
+
+    // Convertir la fecha seleccionada al formato de fecha utilizado en la base de datos
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    String fechaString = fecha.format(formatter);
+
+    TypedQuery<Movimientos> query = entityManager.createQuery(
+        "SELECT m FROM Movimientos m WHERE m.fecha = :fecha", Movimientos.class);
+    query.setParameter("fecha", fechaString);
+
+    List<Movimientos> movimientosFiltrados = query.getResultList();
+
+    entityManager.close();
+    emf.close();
+
+    return movimientosFiltrados;
+}
 
     public void filtrarCategorias() {
         categorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -122,5 +164,4 @@ public class MovimientosController implements Initializable {
     
         return movimientosFiltrados;
     }
-
 }

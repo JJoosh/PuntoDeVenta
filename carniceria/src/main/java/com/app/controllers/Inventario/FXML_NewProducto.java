@@ -91,7 +91,7 @@ public class FXML_NewProducto {
                 productosbd.setCategoria(categoria);
 
                 session.save(productosbd);
-
+                System.out.println("FECHA DE PRUEBA"+fechaHoraActual);
                 movimientos.setIdProducto(productosbd);
                 movimientos.setTipoMovimiento("Entrada");
                 movimientos.setCantidad(BigDecimal.valueOf(cantidadKg));

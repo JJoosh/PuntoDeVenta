@@ -78,7 +78,7 @@
                                           <TextField layoutX="257.0" layoutY="50.0" prefHeight="26.0" prefWidth="225.0" text="Cajero, producto o departamento" />
                                           <Label layoutX="554.0" layoutY="19.0" text="Movimientos" />
                                           <DatePicker fx:id="fechas" layoutX="37.0" layoutY="51.0" />
-                                          <ComboBox layoutX="549.0" layoutY="51.0" prefWidth="150.0" promptText="-Todos-" />
+                                          <ComboBox fx:id="boxMovimiento" layoutX="549.0" layoutY="51.0" prefWidth="150.0" promptText="-Todos-" />
                                        </children>
                                     </AnchorPane>
                                     <ScrollPane layoutX="28.0" layoutY="269.0" prefHeight="270.0" prefWidth="819.0">
