@@ -11,13 +11,18 @@ module com.carniceria{
     requires itextpdf;
     requires icu4j;
     requires nrjavaserial;
+    
+    requires org.apache.poi.poi;
+
+    requires org.apache.poi.ooxml;
 
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;
     opens com.app.controllers.Ventas;
     opens com.app.controllers.Login;
+    opens com.app.controllers.Inventario;
     
-
+    exports com.app.controllers.Inventario;
 
     exports com.app.controllers;
     exports com.app.controllers.Ventas;

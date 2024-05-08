@@ -164,5 +164,12 @@ public class Productos {
             }
         }
     }
+
+    public String getNombreCategoria() {
+        if (categoria != null) {
+            return categoria.getNombreCategoria();
+        }
+        return "";
+    }
     
 }

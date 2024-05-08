@@ -92,8 +92,8 @@
                                                       <TableColumn fx:id="productos" prefWidth="95.20001220703125" text="Producto" />
                                                       <TableColumn fx:id="movimiento" prefWidth="133.5999755859375" text="Tipo de movimiento" />
                                                       <TableColumn fx:id="cantidad" prefWidth="105.5999755859375" text="Cantidad" />
-                                                      <TableColumn prefWidth="95.20001220703125" text="Cajero" />
-                                                      <TableColumn prefWidth="109.59991455078125" text="Departamento" />
+                                                      <TableColumn fx:id="columCategoria" prefWidth="95.20001220703125" text="Categoria" />
+                                                      
                                                    </columns>
                                                 </TableView>
                                              </children>
@@ -103,7 +103,7 @@
                                     <Button layoutX="345.0" layoutY="156.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="139.0"  text="Modificar producto" />
                                     <Button layoutX="515.0" layoutY="158.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="98.0" text="Exportar excel" />
                                     <Button layoutX="645.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="102.0" text="Imprimir pdf" />
-                                    <ComboBox layoutX="99.0" layoutY="159.0" prefHeight="52.0" prefWidth="186.0" promptText="Categorias" />
+                                    <ComboBox fx:id="categorias" layoutX="99.0" layoutY="159.0" prefHeight="52.0" prefWidth="186.0" promptText="Categorias" />
                                     <Label layoutX="76.0" layoutY="550.0" prefHeight="18.0" prefWidth="601.0" text="NOTA: EN TIPO DE MOVIMIENTO DEBE DE IR ESPECIFICADO SI FUE SALIDA, ENTRADA O AJUSTE" />
                                  </children>
                               </AnchorPane>

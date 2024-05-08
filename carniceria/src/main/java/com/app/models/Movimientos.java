@@ -96,4 +96,11 @@ public class Movimientos {
         }
         return "";
     }
+
+    public String getNombreCategoria() {
+        if (id_producto != null) {
+            return id_producto.getNombreCategoria();
+        }
+        return "";
+    }
 }

@@ -93,7 +93,7 @@ public class FXML_NewProducto {
                 session.save(productosbd);
 
                 movimientos.setIdProducto(productosbd);
-                movimientos.setTipoMovimiento("E");
+                movimientos.setTipoMovimiento("Entrada");
                 movimientos.setCantidad(BigDecimal.valueOf(cantidadKg));
                 movimientos.setFecha(fechaHoraActual);
                 session.save(movimientos);

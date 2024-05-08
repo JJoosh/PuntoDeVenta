@@ -133,7 +133,7 @@ public class VentasController {
                     BigDecimal cantidadDisponible = productoSeleccionado.getCantidad();
 
                     if (cantidadIngresada.compareTo(cantidadDisponible) <= 0) {
-                        Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
+                        Productos nuevoProducto = new Productos(); // Crear una copia del producto
                         nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
                         productosAgregados.add(nuevoProducto);
                         actualizarTotalImporte();
@@ -261,10 +261,6 @@ public class VentasController {
         totalImporteLabel.setText(importeTotal.toString());
      
     }
-
-}
-
-
     @FXML
     public void abrirInventario(){
         try {
@@ -280,6 +276,14 @@ public class VentasController {
             ex.printStackTrace();
         }
     }
+
+}
+
+
+ 
+    
+
+
 
 
 
