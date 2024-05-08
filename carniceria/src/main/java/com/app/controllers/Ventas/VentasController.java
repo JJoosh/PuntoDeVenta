@@ -18,6 +18,7 @@ import com.app.models.Productos;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -92,8 +94,19 @@ public class VentasController {
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
+        
+        btnbuscarcode1.setFocusTraversable(false);
+        btnbuscarcode1.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F1) {
+            agregarProducto();
+            }
+        });
 
+        // Enfocar el botón al iniciar
+        Platform.runLater(() -> btnbuscarcode1.requestFocus());
     }
+
+   
 
     @FXML
     private void buscarProductos() {
@@ -202,6 +215,8 @@ public class VentasController {
                 alert.showAndWait();
             }
         }
+
+        Platform.runLater(() -> btnbuscarcode1.requestFocus());
     }
 
     public void actualizarTotalImporte() {
