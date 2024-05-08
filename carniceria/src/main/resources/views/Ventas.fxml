@@ -10,104 +10,101 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+
+<AnchorPane id="barra_menu" prefHeight="620.0" prefWidth="859.0" style="-fx-background-color: white;" stylesheets="@fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="638.0" prefWidth="859.0" style="-fx-background-color: white;" stylesheets="@fondo.css">
-         <children>
-            <Label id="Titulo_modulo" layoutX="247.0" prefHeight="90.0" prefWidth="1038.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Venta de productos" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="20.0" />
-               </font>
-            </Label>
-            
-            <Label layoutX="368.0" layoutY="140.0" prefHeight="41.0" prefWidth="302.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="codigoProductoTextField" layoutX="657.0" layoutY="148.0" prefHeight="25.0" prefWidth="268.0" />
-            
-            <Button fx:id="btnbuscarcode" layoutX="947.0" layoutY="116.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="34.0" prefWidth="129.0" stylesheets="@../css/Fondo.css" text="Agregar" />
-            
-            <Button layoutX="89.0" layoutY="214.0" mnemonicParsing="false" onAction="#borrarArticulo" text="Borrar articulo" />
-            
-            
-            <ScrollPane layoutX="305.0" layoutY="227.0" prefHeight="300.0" prefWidth="773.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="770.0">
-                     <children>
-                        <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="755.0">
-                           <columns>
-                              <TableColumn fx:id="Cbarra" prefWidth="190.6666922569275" resizable="false" text="Código de barras" />
-                              <TableColumn fx:id="Descriptions" maxWidth="7000.0" prefWidth="173.99998474121094" resizable="false" text="Descripción producto" />
-                              <TableColumn fx:id="PrecioV" maxWidth="7000.0" prefWidth="120.0" resizable="false" text="Precio de venta" />
-                              <TableColumn fx:id="Cantidad" prefWidth="144.66671752929688" resizable="false" text="Cantidad" />
-                              <TableColumn fx:id="importe" prefWidth="128.00006103515625" resizable="false" text="Importe" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
+      <Label id="Titulo_modulo" layoutX="247.0" prefHeight="90.0" prefWidth="1038.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Venta de productos" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
       
-            <Label id="importe_total" fx:id="totalImporteLabel" layoutX="868.0" layoutY="576.0" prefHeight="41.0" prefWidth="283.0" stylesheets="@../css/Fondo.css" text="Importe Total: 0.00" />
-            <Button fx:id="btnFinalizarVenta" layoutX="676.0" layoutY="573.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="41.0" prefWidth="166.0" stylesheets="@../css/Fondo.css" text="Cobrar" />
-            <Label layoutX="279.0" layoutY="584.0" prefHeight="25.0" prefWidth="257.0" stylesheets="@../css/Fondo.css" text="Cantidad de productos: 0">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="97.0" layoutY="610.0" />
+            <Label layoutX="285.0" layoutY="116.0" prefHeight="41.0" prefWidth="283.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" layoutX="574.0" layoutY="124.0" prefHeight="25.0" prefWidth="268.0" />
+      <Label layoutX="386.0" layoutY="166.0" prefHeight="41.0" prefWidth="181.0" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
       
-            <AnchorPane id="menuright" layoutY="-8.0" prefHeight="693.0" prefWidth="215.0" scaleShape="true" styleClass="anchor-pane" stylesheets="@../css/Fondo.css">
+            <Button id="bventas_agregar" fx:id="btnbuscarcode" layoutX="859.0" layoutY="116.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="34.0" prefWidth="129.0" stylesheets="@../css/Fondo.css" text="Agregar" />
+      
+            
+      <ScrollPane layoutX="305.0" layoutY="227.0" prefHeight="300.0" prefWidth="773.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="770.0">
                <children>
-                  <Button id="Boton2" layoutX="50.0" layoutY="541.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" text="Cambiar usuario" />
-                  <ImageView fitHeight="54.0" fitWidth="177.0" layoutX="44.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/LOGO.png" />
-                     </image>
-                  </ImageView>
-                  <Label id="label_blanco" layoutX="1.0" layoutY="497.0" prefHeight="25.0" prefWidth="247.0" stylesheets="@../css/Fondo.css" text="Usuario" />
-                  <Button layoutX="26.0" layoutY="162.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Ventas">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <effect>
-                        <Bloom threshold="0.7" />
-                     </effect>
-                  </Button>
-                  <Button layoutX="26.0" layoutY="240.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Inventario">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <effect>
-                        <Bloom threshold="0.7" />
-                     </effect>
-                  </Button>
-                  <Button layoutX="29.0" layoutY="317.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Kardex">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <effect>
-                        <Bloom threshold="0.7" />
-                     </effect>
-                  </Button>
-                  <Button layoutX="29.0" layoutY="395.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Devoluciones">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <effect>
-                        <Bloom threshold="0.7" />
-                     </effect>
-                  </Button>
-                  <Button layoutX="50.0" layoutY="597.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" style="-fx-background-color: black;" text="Cerrar sesión" textAlignment="CENTER" textFill="#790f0f" />
+                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="755.0">
+                     <columns>
+                        <TableColumn fx:id="Cbarra" editable="false" prefWidth="190.6666922569275" resizable="false" text="Código de barras" />
+                        <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="173.99998474121094" resizable="false" text="Descripción producto" />
+                        <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="120.0" resizable="false" text="Precio de venta" />
+                        <TableColumn fx:id="Cantidad" editable="false" prefWidth="144.66671752929688" resizable="false" text="Cantidad" />
+                        <TableColumn fx:id="importe" editable="false" prefWidth="128.00006103515625" resizable="false" text="Importe" />
+                     </columns>
+                  </TableView>
                </children>
             </AnchorPane>
-            <Button fx:id="btnbuscarcode1" layoutX="947.0" layoutY="164.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="34.0" prefWidth="142.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
+        </content>
+      </ScrollPane>
+
+            <Label id="importe_total" fx:id="totalImporteLabel" layoutX="868.0" layoutY="550.0" prefHeight="67.0" prefWidth="213.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
+      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="676.0" layoutY="573.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="41.0" prefWidth="166.0" stylesheets="@../css/Fondo.css" text="Cobrar" />
+      <Label layoutX="97.0" layoutY="610.0" />
+
+            <AnchorPane id="barra_menu" fx:id="barra_menu" layoutY="-8.0" prefHeight="693.0" prefWidth="215.0" scaleShape="true" styleClass="anchor-pane" stylesheets="@../css/Fondo.css">
+         <children>
+            <Button id="cambio_user" layoutX="50.0" layoutY="541.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" text="Cambiar usuario" />
+            <ImageView fitHeight="54.0" fitWidth="177.0" layoutX="44.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/LOGO.png" />
+               </image>
+            </ImageView>
+            <Label id="usuario" layoutX="1.0" layoutY="497.0" prefHeight="25.0" prefWidth="247.0" stylesheets="@../css/Fondo.css" text="Usuario" />
+            <Button id="menu_ventas" layoutX="26.0" layoutY="162.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Ventas">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <effect>
+                  <Bloom threshold="0.7" />
+               </effect>
+            </Button>
+            <Button id="menu_inventario" layoutX="26.0" layoutY="240.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Inventario">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <effect>
+                  <Bloom threshold="0.7" />
+               </effect>
+            </Button>
+            <Button id="menu_kardex" layoutX="29.0" layoutY="317.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Kardex">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <effect>
+                  <Bloom threshold="0.7" />
+               </effect>
+            </Button>
+            <Button id="menu_devoluciones" layoutX="29.0" layoutY="395.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="199.0" style="-fx-border-color: white;" text="Devoluciones">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <effect>
+                  <Bloom threshold="0.7" />
+               </effect>
+            </Button>
+            <Button id="BotonCerrarS" layoutX="50.0" layoutY="597.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="154.0" style="-fx-background-color: black; -fx-border-radius: 100px;" stylesheets="@../css/Fondo.css" text="Cerrar sesión" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
          </children>
       </AnchorPane>
+      <Button id="bventas_borrar" fx:id="btnbuscarcode1" layoutX="1018.0" layoutY="170.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="34.0" prefWidth="142.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
+      <Button id="bventas_peso" layoutX="1052.0" layoutY="116.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="129.0" stylesheets="@../css/Fondo.css" text="Peso" />
+      <TextField id="v_ingreso_cant" fx:id="codigoProductoTextField1" layoutX="574.0" layoutY="174.0" prefHeight="25.0" prefWidth="268.0" />
+      <Label id="importe_total" layoutX="1096.0" layoutY="548.0" prefHeight="67.0" prefWidth="123.0" stylesheets="@../css/Fondo.css" text="0.0" />
    </children>
-</VBox>
+</AnchorPane>

@@ -1,3 +1,15 @@
+#Ventasmenu{
+    -fx-background-color: #D62934;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+}
+
+#ventas_menu:hover {
+-fx-background-color: #FFA500;
+-fx-text-fill: blue;
+}
 
 /* Estilo del login */
 #login{
@@ -80,7 +92,6 @@
 }
 
 
-
 #importe{
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
@@ -88,7 +99,7 @@
     -fx-font-weight: bold;
 }
 
-#label_blanco{
+#usuario{
         -fx-text-fill:#FFFFFF;
         -fx-font-family: "Arial";
         -fx-font-size: 20px;
@@ -123,18 +134,13 @@
     -fx-font-weight: bold;
 }
 
-#Boton2{
-        -fx-background-color: #FFFFFF;
-        -fx-text-fill: #000000;
-        -fx-font-family: Arial;
-        -fx-font-weight: bold;
-    }
 
 .button:pressed {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #573C3E;
 }
 
+/* Boton pa cerrar sesion*/
 #BotonCerrarS{
     -fx-background-color: #000000;
     -fx-text-fill: #ffffff;
@@ -160,6 +166,11 @@
 .button:hover {
     -fx-background-color: #FFA500;
     -fx-text-fill: #FFFFFF;
+}
+
+#BotonCerrarS:hover{
+    -fx-background-color: blue;
+    -fx-text-fill: #ffffff;
 }
 
 
