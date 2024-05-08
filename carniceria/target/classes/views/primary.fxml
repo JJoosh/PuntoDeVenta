@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <HBox prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #332C2C;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.PrimaryController">
    <children>
       <AnchorPane cacheShape="false" prefHeight="353.0" prefWidth="760.0" scaleShape="false">

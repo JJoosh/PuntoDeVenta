@@ -9,47 +9,59 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="Titulo_modulo" prefHeight="610.0" prefWidth="850.0" scaleShape="false" stylesheets="@../css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="90.0" prefHeight="573.0" prefWidth="250.0" styleClass="anchor-pane" stylesheets="@../css/Fondo.css">
+      <AnchorPane id="Titulo_modulo" prefHeight="610.0" prefWidth="850.0" scaleShape="false" style="-fx-background-color: white;" stylesheets="@../css/Fondo.css">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/LOGO.png" />
-               </image>
-            </ImageView>
-         </children></AnchorPane>
-      <Label id="Titulo_modulo" prefHeight="90.0" prefWidth="1283.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Detalles de compra" />
-      <ScrollPane layoutX="391.0" layoutY="116.0" prefHeight="363.0" prefWidth="852.0">
-         <content>
-            <TableView prefHeight="357.0" prefWidth="846.0">
-              <columns>
-                <TableColumn prefWidth="280.0" text="Producto" />
-                <TableColumn prefWidth="146.0" text="Precio" />
-                  <TableColumn prefWidth="135.0" text="Cantidad" />
-                  <TableColumn prefWidth="146.0" text="Peso" />
-                  <TableColumn prefWidth="146.0" text="Total" />
-              </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-      <Label id="osc" layoutX="268.0" layoutY="492.0" prefHeight="41.0" prefWidth="278.0" stylesheets="@../css/Fondo.css" text="Total de la compra:">
-         <font>
-            <Font name="Arial Black" size="35.0" />
-         </font></Label>
-      <Label layoutX="279.0" layoutY="551.0" prefHeight="33.0" prefWidth="111.0" text="Pago con:" />
-      <TextField layoutX="399.0" layoutY="557.0" prefHeight="30.0" prefWidth="200.0" />
-      <Label id="osc" layoutX="618.0" layoutY="550.0" prefHeight="65.0" prefWidth="127.0" text="Cambio:">
-         <font>
-            <Font name="Arial Black" size="35.0" />
-         </font>
-      </Label>
-      <Button id="compra_finalizar" layoutX="1088.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="166.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
-      <Button id="compra_borrar" layoutX="838.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
-      <Button layoutX="61.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="127.0" text="Atras" />
-      <Label id="compra_total" layoutX="557.0" layoutY="495.0" prefHeight="47.0" prefWidth="135.0" text="0.0" />
-      <Label id="compra_cambio" layoutX="745.0" layoutY="565.0" prefHeight="47.0" prefWidth="111.0" text="0.0" />
+            <AnchorPane layoutY="90.0" prefHeight="573.0" prefWidth="250.0" styleClass="anchor-pane" stylesheets="@../css/Fondo.css">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/LOGO.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Label id="Titulo_modulo" prefHeight="90.0" prefWidth="1283.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Detalles de compra" />
+            <ScrollPane layoutX="340.0" layoutY="119.0" prefHeight="271.0" prefWidth="852.0">
+               <content>
+                  <TableView prefHeight="261.0" prefWidth="846.0">
+                    <columns>
+                      <TableColumn prefWidth="280.0" text="Producto" />
+                      <TableColumn prefWidth="146.0" text="Precio" />
+                        <TableColumn editable="false" prefWidth="135.0" resizable="false" sortable="false" text="Cantidad" />
+                        <TableColumn prefWidth="146.0" text="Peso" />
+                        <TableColumn prefWidth="146.0" text="Total" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <Label id="osc" layoutX="282.0" layoutY="414.0" prefHeight="41.0" prefWidth="278.0" stylesheets="@../css/Fondo.css" text="Total de la compra:">
+               <font>
+                  <Font name="Arial Black" size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="282.0" layoutY="480.0" prefHeight="33.0" prefWidth="111.0" text="Pago con:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label id="osc" layoutX="282.0" layoutY="555.0" prefHeight="65.0" prefWidth="127.0" text="Cambio:">
+               <font>
+                  <Font name="Arial Black" size="35.0" />
+               </font>
+            </Label>
+            <Button id="compra_finalizar" layoutX="1088.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="166.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
+            <Button id="compra_borrar" layoutX="838.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
+            <Label id="compra_total" layoutX="560.0" layoutY="407.0" prefHeight="47.0" prefWidth="135.0" text="0.0" />
+            <Label id="compra_cambio" layoutX="421.0" layoutY="564.0" prefHeight="47.0" prefWidth="152.0" text="0.0" />
+            <TextField layoutX="383.0" layoutY="478.0" prefHeight="20.0" prefWidth="278.0" />
+            <Button layoutX="36.0" layoutY="27.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="200.0" text="Atras" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</Pane>

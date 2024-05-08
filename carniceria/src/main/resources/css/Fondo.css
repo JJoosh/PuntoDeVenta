@@ -1,13 +1,16 @@
-#Ventasmenu{
+#menu_ventas , #menu_kardex , #menu_compra, #menu_devoluciones, #menu_inventario{
     -fx-background-color: #D62934;
     -fx-font-family: "Arial";
+    -fx-font-weight: bold;
     -fx-font-size: 20px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #000000;
     -fx-alignment: center;
+    -fx-border-color: white;
 }
 
-#ventas_menu:hover {
+#menu_ventas:hover , #menu_kardex:hover ,#menu_compra:hover , #menu_devoluciones:hover , #menu_inventario:hover{
 -fx-text-fill: white;
+-fx-background-color: #58050B;
 }
 
 /* Estilo del login */
@@ -70,6 +73,19 @@
     -fx-font-weight: bold;
 }
 
+#compra_finalizar{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment:center
+}
+
+#compra_finalizar:hover{
+    -fx-text-fill:black;
+    -fx-background-color: red;
+}
+
 
 #label_blanco{
         -fx-text-fill:#FFFFFF;
@@ -95,8 +111,9 @@
 }
 
 
-.button {
+.button{
     -fx-background-color: #D62934;
+
 }
 
 .label {
@@ -120,7 +137,7 @@
     -fx-font-weight: bold;
 }
 
-#usuario{
+#usuario , #compra_borrar{
         -fx-text-fill:#FFFFFF;
         -fx-font-family: "Arial";
         -fx-font-size: 20px;
@@ -157,18 +174,22 @@
 
 
 /* Boton pa cerrar sesion*/
-#BotonCerrarS{
+#boton_cs{
     -fx-background-color: #000000;
     -fx-text-fill: #ffffff;
     -fx-font-family: Arial;
     -fx-font-weight: bold;
 }
 
+#boton_cs:hover{
+    -fx-background-color: blue;
+    -fx-text-fill: #ffffff;
+}
 
 /*Boton de cambio de usuario*/
 #cambio_user{
-        -fx-background-color: #FFFFFF;
-        -fx-text-fill: #000000;
+        -fx-background-color: white;
+        -fx-text-fill: black;
         -fx-font-family: Arial;
         -fx-font-weight: bold;
     }
@@ -183,12 +204,6 @@
     -fx-background-color: #FFA500;
     -fx-text-fill: #FFFFFF;
 }
-
-#BotonCerrarS:hover{
-    -fx-background-color: blue;
-    -fx-text-fill: #ffffff;
-}
-
 
 
 .menu-button .menu-item:hover {

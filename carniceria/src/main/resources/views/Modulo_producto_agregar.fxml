@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -51,41 +50,17 @@
                               </ImageView>
                               <Label layoutX="62.0" layoutY="143.0" />
                               <Line endX="100.0" layoutX="107.0" layoutY="182.0" startX="-100.0" />
-                              <Button layoutX="32.0" layoutY="232.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-border-color: white;" text="Ventas">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <effect>
-                                    <Bloom threshold="0.7" />
-                                 </effect></Button>
-                              <Button layoutX="29.0" layoutY="294.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-border-color: white;" text="Inventario">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <effect>
-                                    <Bloom threshold="0.7" />
-                                 </effect></Button>
-                              <Button layoutX="29.0" layoutY="356.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-border-color: white;" text="Devoluciones">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <effect>
-                                    <Bloom threshold="0.7" />
-                                 </effect></Button>
-                              <Button layoutX="29.0" layoutY="414.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-border-color: white;" text="Kardex">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <effect>
-                                    <Bloom threshold="0.7" />
-                                 </effect></Button>
-                              <Button id="Boton2" layoutX="45.0" layoutY="590.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cambiar usuario" />
-                              <Button id="BotonCerrarS" layoutX="46.0" layoutY="633.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cerrar sesión" />
-                              <Label id="Label_usuario" layoutX="72.0" layoutY="543.0" stylesheets="@styles.css" text="Usuario" textFill="WHITE">
+                              <Button id="cambio_user" layoutX="45.0" layoutY="590.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cambiar usuario" />
+                              <Button id="boton_cs" layoutX="46.0" layoutY="633.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Cerrar sesión" />
+                              <Label id="usuario" layoutX="72.0" layoutY="543.0" stylesheets="@styles.css" text="Usuario" textFill="WHITE">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
+                              <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="31.0" layoutY="221.0" prefHeight="50.0" prefWidth="155.0" text="Ventas" />
+                              <Label id="menu_inventario" accessibleRole="BUTTON" layoutX="29.0" layoutY="291.0" prefHeight="50.0" prefWidth="155.0" text="Inventario" />
+                              <Label id="menu_kardex" accessibleRole="BUTTON" layoutX="29.0" layoutY="356.0" prefHeight="50.0" prefWidth="155.0" text="Kardex" />
+                              <Label id="menu_devoluciones" accessibleRole="BUTTON" layoutX="29.0" layoutY="426.0" prefHeight="50.0" prefWidth="155.0" text="Devoluciones" />
                            </children>
                            <stylesheets>
                               <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
@@ -120,17 +95,17 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Label>
-                                    <Button layoutX="340.0" layoutY="410.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="142.0" text="Guardar Producto">
+                                    <Button id="bproducto_guardar" layoutX="340.0" layoutY="410.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="142.0" text="Guardar Producto">
                                        <stylesheets>
                                           <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                           <URL value="@../css/Fondo.css" />
                                        </stylesheets></Button>
                                     <Label layoutX="187.0" layoutY="165.0" />
-                                    <TextField layoutX="438.0" layoutY="73.0" />
-                                    <TextField layoutX="438.0" layoutY="123.0" />
-                                    <TextField layoutX="438.0" layoutY="211.0" />
-                                    <TextField layoutX="438.0" layoutY="168.0" text="0.00" />
-                                    <ComboBox layoutX="436.0" layoutY="271.0" prefWidth="150.0" promptText="Cerdo" />
+                                    <TextField id="pro_codigo" layoutX="438.0" layoutY="73.0" />
+                                    <TextField id="pro_descripcion" layoutX="438.0" layoutY="123.0" prefHeight="25.0" prefWidth="264.0" />
+                                    <TextField id="pro_venta" layoutX="438.0" layoutY="211.0" promptText="0.00" />
+                                    <TextField id="pro_costo" layoutX="438.0" layoutY="168.0" promptText="0.00" />
+                                    <ComboBox id="cat_agregar" layoutX="436.0" layoutY="271.0" prefWidth="150.0" promptText="Cerdo" />
                                     <Label layoutX="232.0" layoutY="268.0" text="Categoría">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
@@ -143,8 +118,8 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Label>
-                                    <Spinner layoutX="262.0" layoutY="341.0" />
-                                    <Spinner layoutX="561.0" layoutY="341.0" />
+                                    <Spinner id="pro_cantidad" layoutX="262.0" layoutY="341.0" />
+                                    <Spinner id="pro_min" layoutX="561.0" layoutY="341.0" />
                                  </children>
                               </AnchorPane>
                            </children>
