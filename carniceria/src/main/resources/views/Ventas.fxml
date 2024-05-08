@@ -52,8 +52,8 @@
       <Label layoutX="561.0" layoutY="586.0" text="Cantidad a cobrar " />
       <Label layoutX="89.0" layoutY="586.0" prefWidth="177.0" text="Cantidad de productos: 0" />
       <Label layoutX="97.0" layoutY="610.0" />
-      <Button fx:id="btnbuscarcode1" layoutX="600.0" layoutY="171.0" mnemonicParsing="false" text="Peso" />
-      <TextField fx:id="cantidadTextField" layoutX="300.0" layoutY="214.0" />
+      <Button fx:id="btnbuscarcode1" layoutX="600.0" layoutY="171.0" mnemonicParsing="false" onAction="#obtenerPesobascula" text="Peso" />
+      <TextField fx:id="pesotxt" layoutX="300.0" layoutY="214.0" />
       <Label layoutX="88.0" layoutY="210.0" prefHeight="33.0" prefWidth="134.0" text="Ingresa la cantidad " />
    </children>
 </AnchorPane>
