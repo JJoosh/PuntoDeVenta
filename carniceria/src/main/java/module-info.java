@@ -19,9 +19,11 @@ module com.carniceria {
     requires  itextpdf;
     requires icu4j;
     opens com.app.controllers.Ventas;
+    opens com.app.controllers.devoluciones to javafx.fxml;
 
 
     
     exports com.app.controllers.Ventas;
+    exports com.app.controllers.devoluciones;
     
 }

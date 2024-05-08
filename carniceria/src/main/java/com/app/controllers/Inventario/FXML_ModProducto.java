@@ -30,8 +30,6 @@ public class FXML_ModProducto implements Initializable {
     }
 
     public void setDatos(String nombre, BigDecimal cantidad, long id, BigDecimal precio, String categoria) {
-        
-        
         this.nombre.setText(nombre);
         this.cantidad.setText(String.valueOf(cantidad));
         this.id.setText(String.valueOf(id));

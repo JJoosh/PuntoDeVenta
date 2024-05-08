@@ -123,7 +123,7 @@ public class FXML_NewProducto {
                 alert.showAndWait();
             }
         } else {
-             Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Falto algo por escribir");

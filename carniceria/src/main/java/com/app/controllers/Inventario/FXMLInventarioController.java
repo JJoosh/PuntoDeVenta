@@ -162,7 +162,6 @@ public class FXMLInventarioController implements Initializable {
             
             FXML_NewProducto newProductoController = loader.getController();
             newProductoController.setInventarioController(this);
-            
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

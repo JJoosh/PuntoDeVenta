@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
+   <children>
+      <Label layoutX="36.0" layoutY="35.0" text="Devoluciones">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="79.0" text="Ticket" />
+      <TextField fx:id="ticket" layoutX="104.0" layoutY="75.0" />
+      <Button layoutX="281.0" layoutY="75.0" mnemonicParsing="false" text="Buscar" />
+      <TableView fx:id="tabladev" layoutX="50.0" layoutY="111.0" prefHeight="300.0" prefWidth="587.0">
+         <columns>
+            <TableColumn fx:id="ticket1" prefWidth="70.39992904663086" text="Ticket" />
+            <TableColumn fx:id="fecha" prefWidth="153.59999084472656" text="Fecha" />
+            <TableColumn fx:id="nombre" prefWidth="196.00006103515625" text="Nombre del producto" />
+            <TableColumn fx:id="cantidad" prefWidth="82.39996337890625" text="Cantidad" />
+            <TableColumn fx:id="total" prefWidth="87.20001220703125" text="Total" />
+         </columns>
+      </TableView>
+      <Label layoutX="51.0" layoutY="443.0" text="Cantidad" />
+      <Button layoutX="165.0" layoutY="590.0" mnemonicParsing="false" onAction="#enviar" text="Insertar" />
+      <Label layoutX="52.0" layoutY="495.0" prefHeight="17.0" prefWidth="56.0" text="Motivo" />
+      <TextArea fx:id="textoArea" layoutX="119.0" layoutY="477.0" prefHeight="54.0" prefWidth="241.0" />
+      <Label layoutX="52.0" layoutY="559.0" prefHeight="17.0" prefWidth="56.0" text="Fecha" />
+      <DatePicker fx:id="date" layoutX="119.0" layoutY="555.0" />
+      <Spinner fx:id="spinner" editable="true" layoutX="118.0" layoutY="439.0" />
+      <Button layoutX="413.0" layoutY="75.0" mnemonicParsing="false" text="Tabla Devoluciones" onAction="#vertabla"/>
+   </children>
+</Pane>

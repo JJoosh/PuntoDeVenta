@@ -1,6 +1,7 @@
 package com.app.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,19 +32,17 @@ public class Devoluciones {
     private String motivo;
 
     @Column(name = "Fecha_devolucion")
-    private Date fechaDevolucion;
+    private Timestamp fechaDevolucion;
 
     public Devoluciones() {
     }
 
-    public Devoluciones(Ventas venta, Double cantidadDevuelta, String motivo, Date fechaDevolucion) {
+    public Devoluciones(Ventas venta, Double cantidadDevuelta, String motivo, Timestamp fechaDevolucion) {
         this.venta = venta;
         this.cantidadDevuelta = cantidadDevuelta;
         this.motivo = motivo;
         this.fechaDevolucion = fechaDevolucion;
     }
-
-
     public Long getId() {
         return id;
     }
@@ -76,11 +75,11 @@ public class Devoluciones {
         this.motivo = motivo;
     }
 
-    public Date getFechaDevolucion() {
+    public Timestamp getFechaDevolucion() {
         return fechaDevolucion;
     }
 
-    public void setFechaDevolucion(Date fechaDevolucion) {
+    public void setFechaDevolucion(Timestamp fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
 }

@@ -17,9 +17,9 @@
          </font>
       </Label>
       <Button layoutX="66.0" layoutY="86.0" mnemonicParsing="false" text="Ventas " />
-      <Button layoutX="207.0" layoutY="86.0" mnemonicParsing="false" text="Inventarios " />
+      <Button layoutX="207.0" layoutY="86.0" mnemonicParsing="false" onAction="#abrirInventario" text="Inventarios " />
       <Button layoutX="368.0" layoutY="86.0" mnemonicParsing="false" text="Kardex" />
-      <Button layoutX="497.0" layoutY="86.0" mnemonicParsing="false" text="Devoluciones" />
+      <Button layoutX="497.0" layoutY="86.0" mnemonicParsing="false" onAction="#Devoluciones" text="Devoluciones" />
       <Label layoutX="649.0" layoutY="21.0" text="le atiende" />
       <Button layoutX="629.0" layoutY="43.0" mnemonicParsing="false" text="Adm. cambiar " />
       <Label layoutX="59.0" layoutY="136.0" text="Venta de productos">

@@ -10,6 +10,10 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+
+import com.app.controllers.Inventario.FXMLInventarioController;
+import com.app.controllers.devoluciones.FXMLDevolucionesController;
 import com.app.models.Productos;
 
 import javafx.collections.FXCollections;
@@ -25,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 
 public class VentasController {
 
@@ -202,5 +207,35 @@ public class VentasController {
 
     }
 
-   
+   @FXML
+    public void abrirInventario(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLVista.fxml"));
+            Parent root = loader.load();
+
+            FXMLInventarioController newProductoController = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("dff");
+        }
+    }
+
+    @FXML
+    public void Devoluciones(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
+            Parent root = loader.load();
+            FXMLDevolucionesController newProductoController = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("dff");
+        }
+    }
 } 
