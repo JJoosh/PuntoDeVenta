@@ -35,6 +35,26 @@ import javafx.stage.Stage;
 
 public class VentasController {
 
+    private static String nombreUsser;
+    private static String rol;
+
+    public void setNombreUsser(String nombreUsser){
+        this.nombreUsser=nombreUsser;
+        
+    }
+
+    public void setRol(String rol){
+        this.rol=rol;
+    }
+
+    public String getNombreUsser(){
+        return this.nombreUsser;
+    }
+
+    public String getRol(){
+        return this.rol;
+    }
+
     @FXML
     private Button btnbuscarcode1;     
 
@@ -63,8 +83,12 @@ public class VentasController {
     private bascula peso;
 
     public void initialize() {
+<<<<<<< HEAD
 
         // Inicialización de la pantalla de ventas
+=======
+        
+>>>>>>> bf6e0f5598df43dc237d349c1a75a7a211efa6f2
         codigoProductoTextField.setText("");
 
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -74,7 +98,6 @@ public class VentasController {
 
         tablaProductos.setItems(productosData);
         totalImporteLabel.setText("0.00");
-
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });

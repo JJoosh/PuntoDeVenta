@@ -73,7 +73,9 @@ public class CompraController {
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad())));
+        VentasController usuario=new VentasController();
 
+        System.out.println(usuario.getNombreUsser());
     }
 
 
