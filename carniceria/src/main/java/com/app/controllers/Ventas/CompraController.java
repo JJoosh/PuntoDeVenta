@@ -29,8 +29,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,12 +40,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
 public class CompraController {
 
     private static final Font TITLE_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font NORMAL_FONT = new Font(Font.FontFamily.COURIER, 3);
-
+    private VentasController ventasController1;
     @FXML
     private Label totalImporteLabel;
     @FXML
@@ -62,12 +63,12 @@ public class CompraController {
     @FXML
     private TextField insertarPagoTextField;
 
+    @FXML
+    private Button borrararticulo;
 
     @FXML
     private Label cambioLabel;
 
-
-    
     private Ventas venta;
     private BigDecimal importeTotal;
 
@@ -75,15 +76,12 @@ public class CompraController {
 
     @FXML
     private void initialize() {
-
         nombreProductoColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
                 cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad())));
-        VentasController usuario = new VentasController();
 
-        System.out.println(usuario.getNombreUsser());
         insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             calcularCambio();
         });
@@ -92,9 +90,12 @@ public class CompraController {
     public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         setProductosData(productosData);
         setImporteTotal(importeTotal);
-
+        actualizarTablaDetallesVenta();
         totalImporteLabel.setText(importeTotal.toString());
+    }
 
+    private void actualizarTablaDetallesVenta() {
+        tablaDetallesVenta.setItems(productosData);
     }
 
     public void setProductosData(ObservableList<Productos> productosData) {
@@ -144,19 +145,16 @@ public class CompraController {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
 
-            // Verificar si hay productos en la venta
             if (productosData == null || productosData.isEmpty()) {
                 mostrarAlertaError("Error al guardar la venta", "No se encontraron productos en la venta.");
                 return;
             }
 
-            // Crear una nueva venta con el ticket generado
             Ventas venta = new Ventas();
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
             venta.setFecha(java.sql.Date.valueOf(LocalDate.now()));
             venta.setTotal(importeTotal != null ? importeTotal.floatValue() : 0.0f);
 
-            // Agregar los detalles de la venta
             for (Productos producto : productosData) {
                 if (producto == null) {
                     mostrarAlertaError("Error al guardar la venta", "Se encontró un producto nulo en la venta.");
@@ -186,7 +184,6 @@ public class CompraController {
             entityManager.persist(venta);
             transaction.commit();
 
-            // Mostrar una alerta utilizando JavaFX Alert
             mostrarAlertaInformacion("Venta generada",
                     "La venta se ha generado correctamente. Ticket: " + venta.getTicket());
 
@@ -211,54 +208,41 @@ public class CompraController {
 
     private void generarPDF() {
         try {
-            // Verificar si la venta ha sido inicializada
             if (venta == null) {
                 mostrarAlertaError("Error al generar el PDF",
                         "No se encontró información de la venta. Por favor, intente nuevamente.");
                 return;
             }
 
-            // Crear un nuevo documento PDF con tamaño personalizado (10 x 17 cm)
             Document document = new Document(new Rectangle(100, 170));
-
-            // Obtener el número de ticket
             String numeroTicket = venta.getTicket();
-
-            // Nombre del archivo PDF basado en el número de ticket
             String nombreArchivo = "comprobante_" + numeroTicket + ".pdf";
-
-            // Crear el archivo PDF con el nombre específico
             PdfWriter.getInstance(document, new FileOutputStream(nombreArchivo));
             document.open();
 
-            // Agregar contenido al documento PDF
             Paragraph title = new Paragraph("Comprobante de Venta", TITLE_FONT);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
-            document.add(Chunk.NEWLINE); // Espacio entre el título y los detalles
+            document.add(Chunk.NEWLINE);
 
-            // Información de la venta
             document.add(new Paragraph("Ticket: " + venta.getTicket(), NORMAL_FONT));
             document.add(new Paragraph("Fecha: " + venta.getFecha(), NORMAL_FONT));
             document.add(new Paragraph("Total: " + venta.getTotal(), NORMAL_FONT));
 
-            document.add(Chunk.NEWLINE); // Espacio entre la información general y los detalles de la venta
+            document.add(Chunk.NEWLINE);
 
-            // Agregar detalles de la venta (productos, precios, cantidades y totales)
             List<DetallesVenta> detalles = venta.getDetalles();
             for (DetallesVenta detalle : detalles) {
-                // Concatenar la información del producto en una sola línea
                 String itemInfo = detalle.getProducto().getNombre() + " - Precio: " + detalle.getProducto().getPrecio()
                         +
                         ", Cantidad: " + detalle.getCantidad() + ", Total: " + detalle.getTotal();
 
                 document.add(new Paragraph(itemInfo, NORMAL_FONT));
 
-                document.add(Chunk.NEWLINE); // Espacio entre cada detalle de venta
+                document.add(Chunk.NEWLINE);
             }
 
-            // Cerrar el documento PDF
             document.close();
 
             System.out.println("PDF generado exitosamente con el nombre: " + nombreArchivo);
@@ -270,27 +254,12 @@ public class CompraController {
 
     @FXML
     private void regresarAVenta() {
+        // Cerrar la comunicación con la báscula antes de regresar a la vista de Ventas
+        VentasController ventasController1 = new VentasController();
+        ventasController1.cerrarBascula(); // Asumiendo que tienes un método para cerrar la báscula en VentasController
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Scene scene = new Scene(loader.load());
-            VentasController ventasController = loader.getController();
-            ventasController.actualizarDatos(productosData, importeTotal);
-
-            Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlertaError("Error al regresar a la venta",
-                    "Ocurrió un error al regresar a la venta. Por favor, intente nuevamente.");
-        }
-    }
-    @FXML
-    public void regresar() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
-            Scene scene = new Scene(loader.load());
-
             VentasController ventasController = loader.getController();
             ventasController.actualizarDatos(productosData, importeTotal);
 
@@ -302,6 +271,32 @@ public class CompraController {
             mostrarAlertaError("Error al regresar", "Ocurrió un error al regresar. Por favor, intente nuevamente.");
         }
     }
+
+    @FXML
+    public void regresar() {
+        // Cerrar la comunicación con la báscula antes de regresar a la vista de Ventas
+        VentasController ventasController1 = new VentasController();
+        ventasController1.cerrarBascula(); // Asumiendo que tienes un método para cerrar la báscula en VentasController
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            Scene scene = new Scene(loader.load());
+            VentasController ventasController = loader.getController();
+            ventasController.actualizarDatos(productosData, importeTotal);
+            ventasController.actualizarProductosAgregados(productosData); // Actualizar los productos agregados
+            ventasController.actualizarTotalImporte(); // Actualizar el importe total
+
+            Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error al regresar", "Ocurrió un error al regresar. Por favor, intente nuevamente.");
+        }
+    }
+
+    
+
+    
 
     private void mostrarAlertaInformacion(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -319,7 +314,6 @@ public class CompraController {
         alert.showAndWait();
     }
 
-
     @FXML
     private void calcularCambio() {
         try {
@@ -330,7 +324,6 @@ public class CompraController {
             cambioLabel.setText("0.00");
         }
     }
-
 
     private void actualizarInventario() {
         try {
@@ -350,17 +343,10 @@ public class CompraController {
                 transaction.begin();
 
                 for (Productos producto : productosData) {
-                    // Obtener el producto desde la base de datos para asegurar la última versión
                     Productos productoBD = entityManager.find(Productos.class, producto.getId());
                     BigDecimal cantidadVendida = producto.getCantidad();
-
-                    // Restar la cantidad vendida del inventario actual
                     BigDecimal cantidadActualizada = productoBD.getCantidad().subtract(cantidadVendida);
-
-                    // Actualizar la cantidad en el objeto persistente
                     productoBD.setCantidad(cantidadActualizada);
-
-                    // Actualizar el objeto persistente en la base de datos
                     entityManager.merge(productoBD);
                 }
 
@@ -387,4 +373,21 @@ public class CompraController {
         }
     }
 
+    @FXML
+    public void borrarArticuloSeleccionado() {
+        Productos productoSeleccionado = tablaDetallesVenta.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado != null) {
+            productosData.remove(productoSeleccionado);
+            actualizarTotalImporte();
+            totalImporteLabel.setText(importeTotal.toString());
+        } else {
+            mostrarAlertaError("Error al borrar artículo", "Debe seleccionar un artículo de la tabla para eliminar.");
+        }
+    }
+
+    private void actualizarTotalImporte() {
+        importeTotal = productosData.stream()
+                .map(producto -> producto.getPrecio().multiply(producto.getCantidad()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

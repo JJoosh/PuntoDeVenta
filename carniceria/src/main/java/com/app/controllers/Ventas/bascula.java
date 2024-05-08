@@ -22,8 +22,8 @@ public class bascula implements SerialPortEventListener {
     private BufferedReader reader;
     private VentasController ventasController;
 
-    public bascula(String portName) throws PortInUseException, NoSuchPortException, UnsupportedCommOperationException,
-            IOException, TooManyListenersException {
+    public bascula(String portName) throws PortInUseException, NoSuchPortException,
+            UnsupportedCommOperationException, IOException, TooManyListenersException {
         openSerialPort(portName);
     }
 
@@ -38,6 +38,8 @@ public class bascula implements SerialPortEventListener {
             serialPort.notifyOnDataAvailable(true);
             outputStream = serialPort.getOutputStream();
             reader = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
+
+            System.out.println("Puerto serial abierto: " + portName);
         } else {
             throw new IllegalArgumentException("El puerto " + portName + " no es un puerto serial.");
         }
@@ -46,6 +48,7 @@ public class bascula implements SerialPortEventListener {
     public void close() {
         if (serialPort != null) {
             serialPort.close();
+            System.out.println("Puerto serial cerrado.");
         }
     }
 
@@ -54,6 +57,7 @@ public class bascula implements SerialPortEventListener {
             outputStream.write(command.getBytes());
             outputStream.flush();
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Error al enviar el comando a la báscula: " + e.getMessage());
         }
     }
@@ -68,7 +72,11 @@ public class bascula implements SerialPortEventListener {
                 String peso = inputLine.replace("kg", "").trim();
 
                 Platform.runLater(() -> {
-                    ventasController.actualizarPesoDesdeBascula(peso);
+                    if (ventasController != null) {
+                        ventasController.actualizarPesoDesdeBascula(peso);
+                    } else {
+                        System.out.println("El controlador de ventas no está configurado.");
+                    }
                 });
             } catch (IOException e) {
                 System.out.println("Error al leer la respuesta de la báscula: " + e.getMessage());

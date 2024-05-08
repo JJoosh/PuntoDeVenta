@@ -24,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -205,7 +204,7 @@ public class VentasController {
         }
     }
 
-    private void actualizarTotalImporte() {
+    public void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
         for (Productos producto : productosAgregados) {
             BigDecimal cantidad = producto.getCantidad();
@@ -231,34 +230,36 @@ public class VentasController {
         return producto;
     }
 
+    @FXML
     public void borrarArticulo() {
-        Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
-        if (productoSeleccionado != null) {
-            productosAgregados.remove(productoSeleccionado);
-            actualizarTotalImporte();
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe seleccionar un artículo para eliminar.");
-            alert.showAndWait();
-        }
+        productosAgregados.clear(); // Limpiar la lista de productos agregados
+        actualizarTotalImporte(); // Actualizar el importe total a cero
+        totalImporteLabel.setText("0"); // Limpiar la etiqueta del importe total
     }
 
     @FXML
     private void cobrar() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
-            Scene scene = new Scene(loader.load());
+        cerrarBascula();
+        if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe agregar al menos un producto y su cantidad");
+            alert.showAndWait();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
+                Scene scene = new Scene(loader.load());
 
-            CompraController compraController = loader.getController();
-            compraController.initData(productosAgregados, importeTotal);
+                CompraController compraController = loader.getController();
+                compraController.initData(productosAgregados, importeTotal);
 
-            Stage stage = (Stage) codigoProductoTextField.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = (Stage) codigoProductoTextField.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -266,6 +267,13 @@ public class VentasController {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
+
+        // Actualizar la tabla de productos
+        tablaProductos.setItems(productosData);
+
+        // Actualizar los productos agregados
+        this.productosAgregados.clear();
+        this.productosAgregados.addAll(productosData);
     }
 
     public void obtenerPesoBascula() {
@@ -277,6 +285,7 @@ public class VentasController {
             peso.sendCommand("P");
         } catch (PortInUseException | NoSuchPortException | UnsupportedCommOperationException | IOException
                 | TooManyListenersException e) {
+            e.printStackTrace();
             System.out.println("Error al comunicarse con la báscula: " + e.getMessage());
         }
     }
@@ -288,7 +297,21 @@ public class VentasController {
     public void cerrarBascula() {
         if (peso != null) {
             peso.close();
-            peso = null;
+            System.err.println("No jalo aca");
         }
     }
+
+    public void actualizarProductosAgregados(ObservableList<Productos> productosData) {
+        this.productosAgregados.clear();
+        this.productosAgregados.addAll(productosData);
+    }
+
+    public BigDecimal getImporteTotal() {
+        return this.importeTotal;
+    }
+
+    public ObservableList<Productos> getProductosAgregados() {
+        return productosAgregados;
+    }
+
 }

@@ -45,5 +45,6 @@
       <TextField fx:id="insertarPagoTextField" layoutX="46.0" layoutY="520.0" onAction="#calcularCambio" />
       <Label fx:id="ticketLabel211" layoutX="46.0" layoutY="545.0" prefHeight="23.0" prefWidth="91.0" text="Cambio:" />
       <Label fx:id="cambioLabel" layoutX="145.0" layoutY="544.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
+      <Button fx:id="borrararticulo" layoutX="417.0" layoutY="496.0" mnemonicParsing="false" onAction="#borrarArticuloSeleccionado" text="Borar articulo" />
     </children>
 </AnchorPane>
