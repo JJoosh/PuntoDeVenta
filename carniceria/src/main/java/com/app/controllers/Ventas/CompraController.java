@@ -29,7 +29,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -115,11 +114,14 @@ public class CompraController {
                 mostrarAlertaError("Cambio insuficiente",
                         "El monto ingresado es insuficiente para realizar la compra.");
                 return;
+
             }
             guardarVenta();
             generarPDF();
-            regresarAVenta();
             actualizarInventario();
+            importeTotal = BigDecimal.ZERO;
+            regresarAVenta();
+      // Restablecer el valor del cambio a 0
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlertaError("Error al finalizar la compra",
@@ -256,12 +258,13 @@ public class CompraController {
     private void regresarAVenta() {
         // Cerrar la comunicación con la báscula antes de regresar a la vista de Ventas
         VentasController ventasController1 = new VentasController();
-        ventasController1.cerrarBascula(); // Asumiendo que tienes un método para cerrar la báscula en VentasController
+        ventasController1.cerrarBascula();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Scene scene = new Scene(loader.load());
             VentasController ventasController = loader.getController();
             ventasController.actualizarDatos(productosData, importeTotal);
+            ventasController.cargarProductos(); // Cargar los productos actualizados desde la base de datos
 
             Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
             stage.setScene(scene);
@@ -351,6 +354,7 @@ public class CompraController {
                 }
 
                 transaction.commit();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 mostrarAlertaError("Error al actualizar inventario",

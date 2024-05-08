@@ -314,4 +314,40 @@ public class VentasController {
         return productosAgregados;
     }
 
+    public void cargarProductos() {
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(Productos.class);
+        SessionFactory sessionFactory = null;
+        EntityManagerFactory entityManagerFactory = null;
+        EntityManager entityManager = null;
+
+        try {
+            sessionFactory = configuration.buildSessionFactory();
+            entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+            entityManager = entityManagerFactory.createEntityManager();
+
+            // Realizar la consulta para obtener todos los productos
+            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p", Productos.class);
+            List<Productos> productos = query.getResultList();
+
+            // Actualizar la tabla de productos
+            productosData.clear();
+            productosData.addAll(productos);
+            tablaProductos.setItems(productosData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejar la excepción adecuadamente, mostrar un mensaje de error, etc.
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+            if (entityManagerFactory != null) {
+                entityManagerFactory.close();
+            }
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+    }
+
 }
