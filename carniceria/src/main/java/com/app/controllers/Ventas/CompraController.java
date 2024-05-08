@@ -3,7 +3,9 @@ package com.app.controllers.Ventas;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -38,7 +40,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 public class CompraController {
 
     private static final Font TITLE_FONT = new Font(Font.FontFamily.COURIER, 3);
@@ -84,6 +85,8 @@ public class CompraController {
         insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             calcularCambio();
         });
+
+        
     }
 
     public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {
@@ -154,7 +157,7 @@ public class CompraController {
 
             Ventas venta = new Ventas();
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
-            venta.setFecha(java.sql.Date.valueOf(LocalDate.now()));
+            venta.setFecha(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             venta.setTotal(importeTotal != null ? importeTotal.floatValue() : 0.0f);
 
             for (Productos producto : productosData) {
@@ -229,7 +232,7 @@ public class CompraController {
             document.add(Chunk.NEWLINE);
 
             document.add(new Paragraph("Ticket: " + venta.getTicket(), NORMAL_FONT));
-            document.add(new Paragraph("Fecha: " + venta.getFecha(), NORMAL_FONT));
+            document.add(new Paragraph("Fecha: " + new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(venta.getFecha()), NORMAL_FONT));
             document.add(new Paragraph("Total: " + venta.getTotal(), NORMAL_FONT));
 
             document.add(Chunk.NEWLINE);

@@ -82,7 +82,6 @@ public class VentasController {
 
     public void initialize() {
         codigoProductoTextField.setText("");
-
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         PrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
@@ -93,6 +92,7 @@ public class VentasController {
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
+
     }
 
     @FXML
