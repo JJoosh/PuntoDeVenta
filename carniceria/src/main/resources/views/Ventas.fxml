@@ -50,7 +50,6 @@
       <Label fx:id="totalImporteLabel" layoutX="564.0" layoutY="597.0" prefHeight="41.0" prefWidth="154.0" text="Importe Total: 0.00" />
       <Button fx:id="btnFinalizarVenta" layoutX="471.0" layoutY="605.0" mnemonicParsing="false" onAction="#cobrar" text="Cobrar" />
       <Label layoutX="561.0" layoutY="586.0" text="Cantidad a cobrar " />
-      <Label layoutX="89.0" layoutY="586.0" prefWidth="177.0" text="Cantidad de productos: 0" />
       <Label layoutX="97.0" layoutY="610.0" />
       <Button fx:id="btnbuscarcode1" layoutX="600.0" layoutY="171.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" text="Peso" />
       <TextField fx:id="pesoTextField" layoutX="300.0" layoutY="214.0" />
