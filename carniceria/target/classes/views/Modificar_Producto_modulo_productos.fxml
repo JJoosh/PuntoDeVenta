@@ -81,7 +81,10 @@
                                  </effect></Button>
                               <Button id="Boton2" layoutX="46.0" layoutY="581.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color: white;" stylesheets="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" text="Cambiar usuario" />
                               <Button id="BotonCerrarS" layoutX="46.0" layoutY="623.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color: black;" stylesheets="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" text="Cerrar sesión" />
-                              <Label id="ventas_menu" accessibleRole="BUTTON" layoutX="25.0" layoutY="225.0" prefHeight="50.0" prefWidth="161.0" style="-fx-border-color: white;" stylesheets="@../css/Fondo.css" text="Ventas" textAlignment="CENTER" />
+                              <Label id="ventas_menu" accessibleRole="BUTTON" layoutX="25.0" layoutY="225.0" prefHeight="50.0" prefWidth="161.0" style="-fx-border-color: white; -fx-alignment: center; -fx-background-color: #D62934;" stylesheets="@../css/Fondo.css" text="Ventas" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Black" size="100.0" />
+                                 </font></Label>
                            </children>
                            <stylesheets>
                               <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
