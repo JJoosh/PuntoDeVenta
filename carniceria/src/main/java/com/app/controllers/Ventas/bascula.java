@@ -15,13 +15,12 @@ import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 import javafx.application.Platform;
 
-public class bascula  implements SerialPortEventListener {
-
+public class bascula implements SerialPortEventListener {
     private static final int TIMEOUT = 2000; // Tiempo de espera en milisegundos
-
     private SerialPort serialPort;
     private OutputStream outputStream;
     private BufferedReader reader;
+    private VentasController ventasController;
 
     public bascula(String portName) throws PortInUseException, NoSuchPortException, UnsupportedCommOperationException,
             IOException, TooManyListenersException {
@@ -64,11 +63,13 @@ public class bascula  implements SerialPortEventListener {
             try {
                 String inputLine = reader.readLine();
                 System.out.println("Respuesta de la báscula: " + inputLine);
-                // Platform.runLater(() -> {
-                VentasController v = new VentasController();
-                v.mandartxtfieldpeso(inputLine);
-            // });
-                // Aquí puedes procesar la respuesta de la báscula
+
+                // Eliminar la unidad "kg" de la respuesta de la báscula
+                String peso = inputLine.replace("kg", "").trim();
+
+                Platform.runLater(() -> {
+                    ventasController.actualizarPesoDesdeBascula(peso);
+                });
             } catch (IOException e) {
                 System.out.println("Error al leer la respuesta de la báscula: " + e.getMessage());
             }
@@ -83,5 +84,9 @@ public class bascula  implements SerialPortEventListener {
                 | TooManyListenersException e) {
             System.out.println("Error al volver a abrir el puerto serial: " + e.getMessage());
         }
+    }
+
+    public void setVentasController(VentasController ventasController) {
+        this.ventasController = ventasController;
     }
 }

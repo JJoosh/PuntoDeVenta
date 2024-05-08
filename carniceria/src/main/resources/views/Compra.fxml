@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -36,9 +37,13 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-        <Label fx:id="totalImporteLabel" layoutX="311.0" layoutY="482.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
-        <Button layoutX="264.0" layoutY="515.0" mnemonicParsing="false" onAction="#finalizarCompra" text="Finalizar" />
+        <Label fx:id="totalImporteLabel" layoutX="145.0" layoutY="471.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
+        <Button layoutX="264.0" layoutY="496.0" mnemonicParsing="false" onAction="#finalizarCompra" text="Finalizar" />
       <Button layoutX="23.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" text="&lt;-----" />
-      <Label fx:id="ticketLabel2" layoutX="212.0" layoutY="483.0" prefHeight="23.0" prefWidth="91.0" text="Total de Compra" />
+      <Label fx:id="ticketLabel2" layoutX="46.0" layoutY="472.0" prefHeight="23.0" prefWidth="91.0" text="Total de Compra" />
+      <Label fx:id="ticketLabel21" layoutX="46.0" layoutY="497.0" prefHeight="23.0" prefWidth="91.0" text="Pago con:" />
+      <TextField fx:id="insertarPagoTextField" layoutX="46.0" layoutY="520.0" onAction="#calcularCambio" />
+      <Label fx:id="ticketLabel211" layoutX="46.0" layoutY="545.0" prefHeight="23.0" prefWidth="91.0" text="Cambio:" />
+      <Label fx:id="cambioLabel" layoutX="145.0" layoutY="544.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
     </children>
 </AnchorPane>

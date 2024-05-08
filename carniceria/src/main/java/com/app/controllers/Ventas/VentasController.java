@@ -38,25 +38,24 @@ public class VentasController {
     private static String nombreUsser;
     private static String rol;
 
-    public void setNombreUsser(String nombreUsser){
-        this.nombreUsser=nombreUsser;
-        
+    public void setNombreUsser(String nombreUsser) {
+        this.nombreUsser = nombreUsser;
     }
 
-    public void setRol(String rol){
-        this.rol=rol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    public String getNombreUsser(){
+    public String getNombreUsser() {
         return this.nombreUsser;
     }
 
-    public String getRol(){
+    public String getRol() {
         return this.rol;
     }
 
     @FXML
-    private Button btnbuscarcode1;     
+    private Button btnbuscarcode1;
 
     @FXML
     private TextField codigoProductoTextField;
@@ -73,7 +72,7 @@ public class VentasController {
     @FXML
     private Label totalImporteLabel;
     @FXML
-    private TextField pesotxt;
+    private TextField pesoTextField;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
@@ -83,12 +82,6 @@ public class VentasController {
     private bascula peso;
 
     public void initialize() {
-<<<<<<< HEAD
-
-        // Inicialización de la pantalla de ventas
-=======
-        
->>>>>>> bf6e0f5598df43dc237d349c1a75a7a211efa6f2
         codigoProductoTextField.setText("");
 
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -108,7 +101,6 @@ public class VentasController {
         String consultaTexto = codigoProductoTextField.getText();
         List<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
         actualizarTablaProductos(productosEncontrados);
-        
     }
 
     private List<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
@@ -140,10 +132,10 @@ public class VentasController {
         Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
 
         if (productoSeleccionado != null) {
-            String cantidadTexto = pesotxt.getText();
+            String cantidadTexto = pesoTextField.getText();
             if (cantidadTexto.isEmpty()) {
                 try {
-                    obtenerPesobascula();
+                    obtenerPesoBascula();
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -162,7 +154,6 @@ public class VentasController {
                         nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
                         productosAgregados.add(nuevoProducto);
                         actualizarTotalImporte(); // Actualizar el importe con la cantidad ingresada
-                        // pesotxt.clear();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
@@ -188,8 +179,7 @@ public class VentasController {
 
                     if (producto != null) {
                         productosAgregados.add(producto);
-                        actualizarTotalImporte();  // Actualizar el importe con el precio del producto
-                                                                    
+                        actualizarTotalImporte(); // Actualizar el importe con el precio del producto
                         codigoProductoTextField.clear();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -215,7 +205,6 @@ public class VentasController {
         }
     }
 
-
     private void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
         for (Productos producto : productosAgregados) {
@@ -226,9 +215,7 @@ public class VentasController {
         }
         importeTotal = total;
         totalImporteLabel.setText(importeTotal.toString());
-
     }
-
 
     private Productos buscarProductoPorCodigo(Long codigoProducto) {
         Configuration configuration = new Configuration().configure();
@@ -249,7 +236,6 @@ public class VentasController {
         if (productoSeleccionado != null) {
             productosAgregados.remove(productoSeleccionado);
             actualizarTotalImporte();
-            // actualizarTablaProductosAgregados();
         } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -280,14 +266,13 @@ public class VentasController {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
-     
     }
 
-
-    public void obtenerPesobascula() {
+    public void obtenerPesoBascula() {
         try {
             if (peso == null) {
                 peso = new bascula("COM3"); // Suponiendo que el puerto de la báscula es COM3
+                peso.setVentasController(this); // Establecer la referencia a VentasController en bascula
             }
             peso.sendCommand("P");
         } catch (PortInUseException | NoSuchPortException | UnsupportedCommOperationException | IOException
@@ -296,18 +281,14 @@ public class VentasController {
         }
     }
 
-
-public void mandartxtfieldpeso(String peso){
-    System.err.println("Jala o no?" + peso);
-    pesotxt.setText(""); 
-    pesotxt.setText(peso);
-    
-}
+    public void actualizarPesoDesdeBascula(String peso) {
+        pesoTextField.setText(peso);
+    }
 
     public void cerrarBascula() {
-    if (peso != null) {
-        peso.close();
-        peso = null; // Establecer la referencia a null para indicar que la instancia ya no está en uso
+        if (peso != null) {
+            peso.close();
+            peso = null;
+        }
     }
-}
 }
