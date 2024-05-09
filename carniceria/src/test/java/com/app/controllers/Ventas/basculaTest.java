@@ -10,7 +10,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import static com.app.controllers.Ventas.bascula.getPorts;
+
  
 /**
  *
@@ -56,14 +56,5 @@ public class basculaTest {
     /**
      * Test of getPorts method, of class bascula.
      */
-    @org.junit.jupiter.api.Test
-    public void testGetPorts() {
-        System.out.println("getPorts");
-        HashMap expResult = null;
-        HashMap result = getPorts();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+  
 }

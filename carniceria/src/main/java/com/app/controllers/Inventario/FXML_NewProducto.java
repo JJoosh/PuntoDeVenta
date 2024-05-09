@@ -61,7 +61,7 @@ public class FXML_NewProducto {
             String descripcion = layout2.getText();
             Double precioCosto = spinner1.getValue();
             double precioVenta = spinner2.getValue();
-            double precioMayoreo = spinner3.getValue();
+            double invMinimo = spinner3.getValue();
             double cantidadKg = Double.parseDouble(layout4.getText());
 
             String Categoria = categorias.getValue().toString();
@@ -89,6 +89,7 @@ public class FXML_NewProducto {
                 productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
                 productosbd.setCantidad(BigDecimal.valueOf(cantidadKg));
                 productosbd.setCategoria(categoria);
+                productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
 
                 session.save(productosbd);
                 System.out.println("FECHA DE PRUEBA"+fechaHoraActual);

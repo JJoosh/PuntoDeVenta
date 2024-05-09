@@ -127,13 +127,13 @@
                                                       <URL value="@../css/Fondo.css" />
                                                    </stylesheets>
                                                 </Button>
-                                                <Button id="inv_bajos" layoutX="810.0" layoutY="25.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="203.0" text="Productos bajos en existencias">
+                                                <Button id="inv_bajos" layoutX="810.0" layoutY="25.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="203.0" onAction="#productosBajos" text="Productos bajos en existencias">
                                                    <stylesheets>
                                                       <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                                       <URL value="@../css/Fondo.css" />
                                                    </stylesheets>
                                                 </Button>
-                                                <Button id="inv_eliminar" layoutX="583.0" layoutY="197.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="131.0" text="Eliminar inventario">
+                                                <Button id="inv_eliminar" layoutX="583.0" layoutY="197.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="131.0" onAction="#eliminarProducto" text="Eliminar inventario">
                                                    <stylesheets>
                                                       <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                                       <URL value="@../css/Fondo.css" />

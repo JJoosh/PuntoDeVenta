@@ -140,7 +140,6 @@ public class FXMLInventarioController implements Initializable {
                 Parent root = loader.load();
                 
                 FXML_ModProducto modProductoController = loader.getController();
-             
                 modProductoController.setInventarioController(this);
                 modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria());
                 Scene scene = new Scene(root);
@@ -208,18 +207,15 @@ public class FXMLInventarioController implements Initializable {
     }
     
     //LOGICA PARA FILTRAR EN LA TABLA
-    public  void filtarCategorias(){
-        Categoria id=new Categoria();
+    public void filtarCategorias(){
         categorias.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String name) {
                 if (name != null) {
-                    long idCategoria=0;
                     if(name.equals("Todos")){
                         agregaraTabla();
                     } else {
-                        idCategoria=id.getIDconName(name);
-                        actualizarTablaF(obtenerProductosF(idCategoria));
+                        actualizarTablaF(obtenerProductosF(name));
                     }
                 }
             }
@@ -231,19 +227,19 @@ public class FXMLInventarioController implements Initializable {
         productosData.addAll(productos);
     }
 
-    public List<Productos> obtenerProductosF(long id) {
+    public List<Productos> obtenerProductosF(String nombreCategoria) {
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Productos.class);
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
+    
         // Realizar la consulta en la base de datos
-        String query = "SELECT p FROM Productos p WHERE p.id LIKE :consultaTexto OR p.nombre LIKE :consultaTexto";
+        String query = "SELECT p FROM Productos p WHERE p.categoria.nombreCategoria = :nombreCategoria";
         TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
-        typedQuery.setParameter("consultaTexto", "%" + id + "%");
+        typedQuery.setParameter("nombreCategoria", nombreCategoria);
         List<Productos> productosEncontrados = typedQuery.getResultList();
-
+    
         entityManager.close();
         entityManagerFactory.close();
     
@@ -257,7 +253,6 @@ public class FXMLInventarioController implements Initializable {
         cargarCategorias(this.categorias, 1);
         filtarCategorias();
         buscarforID();
-        
         rootPane.setOnKeyPressed(this::handleKeyPressed);
     }
     
@@ -282,8 +277,7 @@ public class FXMLInventarioController implements Initializable {
         costoColumn.setCellValueFactory(new PropertyValueFactory<>("costo"));
         precioVentaColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         existenciaColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        inventarioMinimoColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-
+        inventarioMinimoColumn.setCellValueFactory(new PropertyValueFactory<>("productosBajos_inventario"));
         // Obtener los productos de la base de datos
         List<Productos> productos = obtenerProductos();
 
@@ -467,13 +461,37 @@ public void abrirVentas() {
         
         // Obtener el controlador del nuevo contenido
         VentasController inventarioController = loader.getController();
-        
-        // Reemplazar el contenido del contenedor principal con el nuevo contenido
+       
         rootPane.getChildren().setAll(nuevoContenido);
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
+
+@FXML
+public void productosBajos() {
+    Configuration configuration = new Configuration();
+    configuration.configure("hibernate.cfg.xml");
+    configuration.addAnnotatedClass(Productos.class);
+
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
+    EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+    EntityManager entityManager = emf.createEntityManager();
+
+    // Realizar la consulta para obtener los productos con cantidad menor o igual al inventario mínimo
+    String query = "SELECT p FROM Productos p WHERE p.cantidad <= p.productosBajos_inventario";
+    TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
+    List<Productos> productosBajos = typedQuery.getResultList();
+
+    entityManager.close();
+    emf.close();
+
+    // Actualizar la tabla con los productos de bajo inventario
+    productosData.clear();
+    productosData.addAll(productosBajos);
+}
+
 
 
 

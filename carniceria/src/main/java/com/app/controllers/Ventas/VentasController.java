@@ -1,8 +1,10 @@
 package com.app.controllers.Ventas;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.TooManyListenersException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,29 +13,25 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.app.controllers.Inventario.FXMLInventarioController;
-import com.app.controllers.Inventario.FXML_NewProducto;
 import com.app.models.Productos;
 
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -41,22 +39,24 @@ public class VentasController {
     private static String nombreUsser;
     private static String rol;
 
-    public void setNombreUsser(String nombreUsser){
-        this.nombreUsser=nombreUsser;
-        
+    public void setNombreUsser(String nombreUsser) {
+        this.nombreUsser = nombreUsser;
     }
 
-    public void setRol(String rol){
-        this.rol=rol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    public String getNombreUsser(){
+    public String getNombreUsser() {
         return this.nombreUsser;
     }
 
-    public String getRol(){
+    public String getRol() {
         return this.rol;
     }
+
+    @FXML
+    private Button btnbuscarcode1;
 
     @FXML
     private TextField codigoProductoTextField;
@@ -71,62 +71,48 @@ public class VentasController {
     @FXML
     private TableColumn<Productos, BigDecimal> Cantidad;
     @FXML
-    private Label importe_total;
+    private Label totalImporteLabel;
     @FXML
-    private TextField cantidadTextField;
-    
-    @FXML private Label menu_ventas;
-    @FXML private Label menu_inventario;
-    @FXML private Label menu_kardex;
-    @FXML private Label menu_devoluciones;
-    @FXML private Label usuario;
-    @FXML private Label importetotal;
+    private TextField pesoTextField;
+
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
+    private BufferedReader reader;
 
-    @FXML 
-    private Pane rootPane;
-    
+    private bascula peso;
 
     public void initialize() {
-        
-        
+        codigoProductoTextField.setText("");
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         PrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
         Cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
         tablaProductos.setItems(productosData);
-        importe_total.setText("0.00");
+        totalImporteLabel.setText("0.00");
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
-        rootPane.setOnKeyPressed(this::handleKeyPressed);
-        menu_inventario.setOnMouseClicked(event -> {
-            // Código que se ejecutará cuando se haga clic en el label
-            abrirInventario();
-        });
-    }
-
-    private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.F2) {
-            
-            abrirInventario();
         
-        }
+        btnbuscarcode1.setFocusTraversable(false);
+        btnbuscarcode1.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F1) {
+            agregarProducto();
+            }
+        });
 
-        if(event.getCode()==KeyCode.F6){
-            System.out.println("F6");
-        }
+        // Enfocar el botón al iniciar
+        Platform.runLater(() -> btnbuscarcode1.requestFocus());
     }
+
+   
 
     @FXML
     private void buscarProductos() {
         String consultaTexto = codigoProductoTextField.getText();
         List<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
         actualizarTablaProductos(productosEncontrados);
-        
     }
 
     private List<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
@@ -158,38 +144,42 @@ public class VentasController {
         Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
 
         if (productoSeleccionado != null) {
-            String cantidadTexto = cantidadTextField.getText();
-            if (!cantidadTexto.isEmpty()) {
+            String cantidadTexto = pesoTextField.getText();
+            if (cantidadTexto.isEmpty()) {
+                try {
+                    obtenerPesoBascula();
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Error al obtener el peso de la báscula: " + e.getMessage());
+                    alert.showAndWait();
+                    return;
+                }
+            } else {
                 try {
                     BigDecimal cantidadIngresada = new BigDecimal(cantidadTexto);
                     BigDecimal cantidadDisponible = productoSeleccionado.getCantidad();
 
                     if (cantidadIngresada.compareTo(cantidadDisponible) <= 0) {
-                        Productos nuevoProducto = new Productos(); // Crear una copia del producto
+                        Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
                         nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
                         productosAgregados.add(nuevoProducto);
-                        actualizarTotalImporte();
-                        cantidadTextField.clear();
+                        actualizarTotalImporte(); // Actualizar el importe con la cantidad ingresada
                     } else {
-                        Alert alert = new Alert(AlertType.ERROR);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
                         alert.setContentText("La cantidad ingresada excede la cantidad disponible");
                         alert.showAndWait();
                     }
                 } catch (NumberFormatException e) {
-                    Alert alert = new Alert(AlertType.ERROR);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.setContentText("Cantidad inválida");
                     alert.showAndWait();
                 }
-            } else {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Debe ingresar una cantidad");
-                alert.showAndWait();
             }
         } else {
             String codigoProductoTexto = codigoProductoTextField.getText();
@@ -201,35 +191,35 @@ public class VentasController {
 
                     if (producto != null) {
                         productosAgregados.add(producto);
-                        actualizarTotalImporte();
+                        actualizarTotalImporte(); // Actualizar el importe con el precio del producto
                         codigoProductoTextField.clear();
                     } else {
-                        Alert alert = new Alert(AlertType.ERROR);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
                         alert.setContentText("Producto no encontrado");
                         alert.showAndWait();
                     }
                 } catch (NumberFormatException e) {
-                    Alert alert = new Alert(AlertType.ERROR);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.setContentText("Código de producto inválido");
                     alert.showAndWait();
                 }
             } else {
-                Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Debe ingresar un código de producto o seleccionar uno de la tabla");
                 alert.showAndWait();
             }
         }
+
+        Platform.runLater(() -> btnbuscarcode1.requestFocus());
     }
 
-
-
-    private void actualizarTotalImporte() {
+    public void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
         for (Productos producto : productosAgregados) {
             BigDecimal cantidad = producto.getCantidad();
@@ -238,7 +228,7 @@ public class VentasController {
             total = total.add(subtotal);
         }
         importeTotal = total;
-        importe_total.setText(importeTotal.toString());
+        totalImporteLabel.setText(importeTotal.toString());
     }
 
     private Productos buscarProductoPorCodigo(Long codigoProducto) {
@@ -255,59 +245,124 @@ public class VentasController {
         return producto;
     }
 
+    @FXML
     public void borrarArticulo() {
-        Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
-        if (productoSeleccionado != null) {
-            productosAgregados.remove(productoSeleccionado);
-            actualizarTotalImporte();
-            // actualizarTablaProductosAgregados();
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe seleccionar un artículo para eliminar.");
-            alert.showAndWait();
-        }
+        productosAgregados.clear(); // Limpiar la lista de productos agregados
+        actualizarTotalImporte(); // Actualizar el importe total a cero
+        totalImporteLabel.setText("0"); // Limpiar la etiqueta del importe total
     }
 
     @FXML
     private void cobrar() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
-            Scene scene = new Scene(loader.load());
+        cerrarBascula();
+        if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe agregar al menos un producto y su cantidad");
+            alert.showAndWait();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
+                Scene scene = new Scene(loader.load());
 
-            CompraController compraController = loader.getController();
-            compraController.initData(productosAgregados, importeTotal);
+                CompraController compraController = loader.getController();
+                compraController.initData(productosAgregados, importeTotal);
 
-            Stage stage = (Stage) codigoProductoTextField.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = (Stage) codigoProductoTextField.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
-        importe_total.setText(importeTotal.toString());
-     
+        totalImporteLabel.setText(importeTotal.toString());
+
+        // Actualizar la tabla de productos
+        tablaProductos.setItems(productosData);
+
+        // Actualizar los productos agregados
+        this.productosAgregados.clear();
+        this.productosAgregados.addAll(productosData);
     }
- 
-    
-    public void abrirInventario() {
+
+    public void obtenerPesoBascula() {
         try {
-            // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
-            Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            FXMLInventarioController inventarioController = loader.getController();
-            
-            // Reemplazar el contenido del contenedor principal con el nuevo contenido
-            rootPane.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
+            if (peso == null) {
+                peso = new bascula("COM3"); // Suponiendo que el puerto de la báscula es COM3
+                peso.setVentasController(this); // Establecer la referencia a VentasController en bascula
+            }
+            peso.sendCommand("P");
+        } catch (PortInUseException | NoSuchPortException | UnsupportedCommOperationException | IOException
+                | TooManyListenersException e) {
             e.printStackTrace();
+            System.out.println("Error al comunicarse con la báscula: " + e.getMessage());
         }
     }
+
+    public void actualizarPesoDesdeBascula(String peso) {
+        pesoTextField.setText(peso);
+    }
+
+    public void cerrarBascula() {
+        if (peso != null) {
+            peso.close();
+            System.err.println("No jalo aca");
+        }
+    }
+
+    public void actualizarProductosAgregados(ObservableList<Productos> productosData) {
+        this.productosAgregados.clear();
+        this.productosAgregados.addAll(productosData);
+    }
+
+    public BigDecimal getImporteTotal() {
+        return this.importeTotal;
+    }
+
+    public ObservableList<Productos> getProductosAgregados() {
+        return productosAgregados;
+    }
+
+    public void cargarProductos() {
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(Productos.class);
+        SessionFactory sessionFactory = null;
+        EntityManagerFactory entityManagerFactory = null;
+        EntityManager entityManager = null;
+
+        try {
+            sessionFactory = configuration.buildSessionFactory();
+            entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+            entityManager = entityManagerFactory.createEntityManager();
+
+            // Realizar la consulta para obtener todos los productos
+            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p", Productos.class);
+            List<Productos> productos = query.getResultList();
+
+            // Actualizar la tabla de productos
+            productosData.clear();
+            productosData.addAll(productos);
+            tablaProductos.setItems(productosData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejar la excepción adecuadamente, mostrar un mensaje de error, etc.
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+            if (entityManagerFactory != null) {
+                entityManagerFactory.close();
+            }
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+    }
+
 }

@@ -1,0 +1,68 @@
+package com.app.controllers;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import com.app.controllers.Inventario.FXMLInventarioController;
+import com.app.controllers.Ventas.VentasController;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import java.net.URL;
+public class HomeController implements Initializable {
+    @FXML
+    Pane rootPane;
+
+    @FXML
+    Label ventas;
+    
+   @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+    }
+    
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.F5) {
+            abrirVentas();    
+            System.err.println("SE PRESIONO PERRA");
+        }
+
+        if(event.getCode()==KeyCode.F6){
+            
+        }
+        if(event.getCode()==KeyCode.F1){
+            
+        }
+    }
+
+    public void abrirVentas() {
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            VentasController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void inventario(){
+
+        System.out.println("PROBANDO FUERA DE HOME");
+
+    }
+}

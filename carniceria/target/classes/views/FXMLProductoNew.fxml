@@ -20,7 +20,7 @@
       <Label layoutX="99.0" layoutY="194.0" text="Cantidad" />
       <Label layoutX="100.0" layoutY="237.0" text="Precio Costo" />
       <Label layoutX="101.0" layoutY="283.0" text="Precio venta" />
-      <Label layoutX="101.0" layoutY="333.0" text="Precio mayoreo" />
+      <Label layoutX="101.0" layoutY="333.0" text="Cantidad minima" />
       <Label layoutX="70.0" layoutY="443.0" text="Categoria" />
       <ComboBox fx:id="categorias" layoutX="253.0" layoutY="438.0" prefHeight="26.0" prefWidth="195.0" />
       <TextField fx:id="layout1" layoutX="253.0" layoutY="94.0" prefHeight="26.0" prefWidth="195.0" />

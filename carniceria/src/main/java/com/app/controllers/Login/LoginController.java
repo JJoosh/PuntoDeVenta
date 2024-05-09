@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import com.app.controllers.HomeController;
+import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.models.Usuarios;
 
@@ -45,11 +47,11 @@ public class LoginController {
         if (isAuthenticated) {
             try {
                 // Cargar la vista Ventas.fxml
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
                 Parent root = loader.load();                
-                VentasController ventasController = loader.getController();
+                FXMLInventarioController ventasController = loader.getController();
 
-                ventasController.setNombreUsser(username);
+                //ventasController.setNombreUsser(username);
                 Scene scene = new Scene(root);
 
                 // Obtener la ventana actual

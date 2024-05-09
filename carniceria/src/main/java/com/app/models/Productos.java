@@ -46,9 +46,16 @@ public class Productos {
     private BigDecimal productosBajos_inventario;
 
 
-    public Productos() {
+    public Productos(){
+        
     }
-
+    public Productos(Productos producto) {
+        this.id = producto.id;
+        this.nombre = producto.nombre;
+        this.categoria = producto.categoria;
+        this.cantidad = producto.cantidad;
+        this.precio = producto.precio;
+    }
 
   
     public Productos(long id, String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio,  BigDecimal productosBajos_inventario) {
@@ -113,10 +120,10 @@ public class Productos {
         this.costo=Costo;
     }
 
-    public BigDecimal getBajoInventario(){
+    public BigDecimal getProductosBajos_inventario(){
         return productosBajos_inventario;
     }
-    public void setBajoInventario(BigDecimal productosBajos){
+    public void setProductosBajos_inventario(BigDecimal productosBajos){
         this.productosBajos_inventario=productosBajos;
     }
 

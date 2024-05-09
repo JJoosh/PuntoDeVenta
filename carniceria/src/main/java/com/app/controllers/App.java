@@ -24,7 +24,7 @@ public class App extends Application {
         Session session = sessionFactory.openSession();
         System.out.println(session);
 
-        // Cargar la vista principal
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root = loader.load();
         scene = new Scene(root, 1000, 800);
