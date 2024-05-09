@@ -1,6 +1,7 @@
 package com.app.controllers.devoluciones;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javafx.scene.control.TableColumn;
@@ -11,18 +12,21 @@ public class tabledata {
     @Column(name = "total")
     private float total;
     @Column(name = "fecha")
-    private Date fecha;
+    private String fecha;
     @Column(name = "ticket1")
     private String ticket1;
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "detalle")
+    private Long detalle;
 
-    public tabledata(String ticket12, java.sql.Date fecha2, float total2, BigDecimal cantidad, String nombre2) {
+    public tabledata(String ticket12, String fechaFormateada, float total, BigDecimal cantidad, String nombre, Long detalle) {
         this.ticket1 = ticket12;
-        this.fecha = fecha2;
-        this.total = total2;
+        this.fecha = fechaFormateada;
+        this.total = total;
         this.cantidad = cantidad;
-        this.nombre = nombre2;
+        this.nombre = nombre;
+        this.detalle = detalle;
     }
 
     public String getTicket1() {
@@ -33,11 +37,11 @@ public class tabledata {
         this.ticket1 = ticket1;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -63,5 +67,12 @@ public class tabledata {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public Long getDetalle() {
+        return detalle;
+    }
+
+    public void setdetalle(Long detalle) {
+        this.detalle = detalle;
     }
 }

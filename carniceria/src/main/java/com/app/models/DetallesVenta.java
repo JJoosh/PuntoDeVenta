@@ -37,7 +37,8 @@ public class DetallesVenta {
     public DetallesVenta() {
     }
 
-    public DetallesVenta(Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total) {
+    public DetallesVenta(Long id,Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total) {
+        this.id = id;
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;

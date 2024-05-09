@@ -37,7 +37,8 @@ public class Devoluciones {
     public Devoluciones() {
     }
 
-    public Devoluciones(Ventas venta, Double cantidadDevuelta, String motivo, Timestamp fechaDevolucion) {
+    public Devoluciones(Long id,Ventas venta, Double cantidadDevuelta, String motivo, Timestamp fechaDevolucion) {
+        this.id = id;
         this.venta = venta;
         this.cantidadDevuelta = cantidadDevuelta;
         this.motivo = motivo;

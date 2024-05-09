@@ -4,6 +4,8 @@ package com.app.controllers.devoluciones;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.app.controllers.Inventario.FXMLInventarioController;
+import com.app.models.Categoria;
 import com.app.models.DetallesVenta;
 import com.app.models.Devoluciones;
 import com.app.models.Productos;
@@ -33,6 +36,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -53,30 +57,65 @@ public class FXMLVerTabla{
     @FXML
     private TableColumn<Devoluciones, Timestamp> fecha;
 
+    @FXML
+    private TextField iddev;
+
+    List<Devoluciones> devolucion;
     private ObservableList<Devoluciones> DevolucionData;
+    List<Devoluciones> devolucionFiltrado;
+    
+
+    @FXML
+
 
      public void setDevolucionesController(FXMLDevolucionesController devolucionesController) {
         this.devolucionesController = devolucionesController;
+     }
+    public void initialize() {
+        devolucion = obtenerdevolucion();
+        devolucionFiltrado = new ArrayList<>(); // Inicializar la lista
+        compararTicketConTextField(devolucion);
+        mostartabla(devolucion);
     }
-     public void initialize() {
-        mostartabla();
+
+    public void compararTicketConTextField(List<Devoluciones> devolucion){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        iddev.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                // Mostrar todos los datos cuando el campo de texto está vacío
+                mostartabla(devolucion);
+            } else {
+                devolucionFiltrado.clear();
+
+                for (Devoluciones devoluciones : devolucion) {
+                    Long idDevolucion = devoluciones.getId();
+                    java.sql.Timestamp fecha=devoluciones.getFechaDevolucion();
+                    String fechaString = sdf.format(fecha);
+                    String Solofecha = fechaString.substring(0, Math.min(fechaString.length(), 10));
+                    String idString = idDevolucion.toString(); // Convertir Long a String
+                    if (idString.startsWith(newValue) || Solofecha.endsWith(newValue)) {
+                       Ventas venta =  devoluciones.getVenta();
+                       Double Cantidad= devoluciones.getCantidadDevuelta();
+                       String motivo= devoluciones.getMotivo();
+                       Devoluciones devn = new Devoluciones(idDevolucion,venta,Cantidad,motivo,fecha);
+                       devolucionFiltrado.add(devn);
+                    }
+                }
+
+                mostartabla(devolucionFiltrado);
+            }
+        });
     }
-    public void mostartabla(){
+    public void mostartabla(List<Devoluciones> lista){
         venta.setCellValueFactory(cellData -> {
-    return new SimpleLongProperty(cellData.getValue().getVenta().getId()).asObject();
-});
+            return new SimpleLongProperty(cellData.getValue().getVenta().getId()).asObject();
+        });
 
         IdDevoluciones.setCellValueFactory(new PropertyValueFactory<>("id"));
         cantidadDevuelta.setCellValueFactory(new PropertyValueFactory<>("cantidadDevuelta"));
         Motivo.setCellValueFactory(new PropertyValueFactory<>("Motivo"));
         fecha.setCellValueFactory(new PropertyValueFactory<>("fechaDevolucion"));
-
-        // Obtener los productos de la base de datos
-        List<Devoluciones> devolucion = obtenerdevolucion();
-
-        // Crear una lista observable a partir de la lista de productos
-        
-        DevolucionData = FXCollections.observableArrayList(devolucion);
+        DevolucionData = FXCollections.observableArrayList(lista);
 
         Devoluciones.setItems(DevolucionData);
         
@@ -95,7 +134,6 @@ public class FXMLVerTabla{
         // Suponiendo que ventas es una lista de objetos Ventas
         entityManager.close();
         emf.close();
-
         return devolucion;
     }
 @FXML

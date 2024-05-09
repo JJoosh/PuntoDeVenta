@@ -1,8 +1,13 @@
 package com.app.controllers.devoluciones;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +45,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
@@ -76,6 +82,9 @@ public class FXMLDevolucionesController implements Initializable {
     private TableColumn<tabledata, String> nombre;
 
     @FXML
+    private TableColumn<tabledata, Long> detalles;
+
+    @FXML
     private Spinner<Double> spinner;
 
     @FXML
@@ -91,28 +100,32 @@ public class FXMLDevolucionesController implements Initializable {
     List<DetallesVenta> Listadetalles;
     List<DetallesVenta> detallesventasfiltrado;
     List<Ventas> ventasfiltrado;
+    List<Productos> productofiltrado;
     String ticketglobal="";
 
+   
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        ticket1.setCellValueFactory(new PropertyValueFactory<>("ticket1"));
-        fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        total.setCellValueFactory(new PropertyValueFactory<>("total"));
-        cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
+public void initialize(URL url, ResourceBundle rb) {
+    
+    ticket1.setCellValueFactory(new PropertyValueFactory<>("ticket1"));
+    fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    total.setCellValueFactory(new PropertyValueFactory<>("total"));
+    cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    detalles.setCellValueFactory(new PropertyValueFactory<>("detalle"));
+    iniciarcomponentes();
+    SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
+            Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
+    spinner.setValueFactory(valueFactory1);
+}
+    public void iniciarcomponentes() { 
         listaVentas = obtenerListaDeVentas();
         ListaProducto = obtenerListaDeProductos();
         Listadetalles = obtenerListaDeDetalleVentas();
         compararTicketConTextField(listaVentas, ListaProducto, Listadetalles);
         mostartabla(listaVentas, Listadetalles, ListaProducto);
-
-        SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-                Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
-        spinner.setValueFactory(valueFactory1);
     }
 
-    @SuppressWarnings("exports")
     public List<Ventas> obtenerListaDeVentas() {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -120,15 +133,9 @@ public class FXMLDevolucionesController implements Initializable {
         EntityManager entityManager = emf.createEntityManager();
         TypedQuery<Ventas> query = entityManager.createQuery("SELECT v FROM Ventas v", Ventas.class);
         List<Ventas> ventas = query.getResultList();
-
-        for (Ventas venta : ventas) {
-            Date fechaTimestamp = venta.getFecha();
-            Date fechaDate = new Date(fechaTimestamp.getTime());
-            venta.setFecha(fechaDate);
-        }
         entityManager.close();
         emf.close();
-
+    
         return ventas;
     }
 
@@ -169,7 +176,7 @@ public class FXMLDevolucionesController implements Initializable {
                 mostartabla(listaVentas, listaDetalles, listaProductos);
             } else {
                 // Filtrar los datos según el valor del campo de texto
-                List<Productos> productofiltrado = new ArrayList<>();
+                productofiltrado = new ArrayList<>();
                 detallesventasfiltrado = new ArrayList<>();
                 ventasfiltrado = new ArrayList<>();
 
@@ -177,21 +184,21 @@ public class FXMLDevolucionesController implements Initializable {
                     String ticketVenta = venta.getTicket();
                     if (ticketVenta.startsWith(newValue)) {
                         Long idVenta = venta.getId();
-                        Date fechaVenta = venta.getFecha();
+                        LocalDateTime fechaVenta = venta.getFecha();
                         String ticket = venta.getTicket();
                         float totalVenta = venta.getTotal();
 
                         Ventas ventasn = new Ventas(idVenta, ticket, fechaVenta, totalVenta);
                         ventasfiltrado.add(ventasn);
-
                         for (DetallesVenta detalles : listaDetalles) {
                             Ventas idventasDetalle = detalles.getVenta();
                             if (idVenta.equals(idventasDetalle.getId())) {
+                                Long id= detalles.getId();
                                 Productos idproductoDetalle = detalles.getProducto();
                                 BigDecimal cantidad = detalles.getCantidad();
                                 BigDecimal totalDetallesVenta = detalles.getTotal();
 
-                                DetallesVenta detallesn = new DetallesVenta(idventasDetalle, idproductoDetalle, cantidad, totalDetallesVenta);
+                                DetallesVenta detallesn = new DetallesVenta(id,idventasDetalle, idproductoDetalle, cantidad, totalDetallesVenta);
                                 detallesventasfiltrado.add(detallesn);
 
                                 for (Productos producto : listaProductos) {
@@ -220,13 +227,15 @@ public class FXMLDevolucionesController implements Initializable {
 
         for (Ventas venta : ventasfiltrado) {
             String ticket1 = venta.getTicket();
-            Date fecha = venta.getFecha();
+            LocalDateTime fecha = venta.getFecha();
             float total = venta.getTotal();
-            ticketglobal=ticket1;
 
             String nombre = "";
+            Long id=null;
             BigDecimal cantidadventa = null;
             for (DetallesVenta detalle : detallesventasfiltrado) {
+                id = detalle.getId();
+                
                 if (detalle.getVenta().getId().equals(venta.getId())) {
                     Productos producto = detalle.getProducto();
                     nombre = producto.getNombre();
@@ -234,31 +243,36 @@ public class FXMLDevolucionesController implements Initializable {
                     break;
                 }
             }
-
-            datosTabla.add(new tabledata(ticket1, fecha, total, cantidadventa, nombre));
+            DateTimeFormatter formatoSinT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String fechaFormateada = fecha.format(formatoSinT);
+            datosTabla.add(new tabledata(ticket1, fechaFormateada, total, cantidadventa, nombre,id));
+            tabladev.setItems(datosTabla);
         }
 
-        tabladev.setItems(datosTabla);
+        
     }
 
-    public void calculo(BigDecimal cantidadventa,Long idVenta) {
+    public void calculo(BigDecimal cantidadventa, Long idVenta, Long idDetalle) {
         LocalDate fechaSeleccionada = date.getValue();
-        Date fechaSQL = Date.valueOf(fechaSeleccionada);
+       
         String texto = textoArea.getText();
         Double Devolucion = spinner.getValue();
         BigDecimal resultadoResta = cantidadventa.subtract(BigDecimal.valueOf(Devolucion));
-        actualizarCantidadDetalleVenta(idVenta,resultadoResta);
-        llenartabladevolucion(resultadoResta,fechaSQL,texto,idVenta);
+        System.out.println(Devolucion+"---------");
+        actualizarCantidadDetalleVenta(idVenta, idDetalle, resultadoResta);
+        llenartabladevolucion(resultadoResta, fechaSeleccionada, texto, idVenta);
     }
 
-    private void llenartabladevolucion(BigDecimal resultadoResta, Date fechaSQL, String texto, Long idVenta) {
+    private void llenartabladevolucion(BigDecimal resultadoResta,LocalDate fechaSQL, String texto, Long idVenta) {
         double doubleValue = resultadoResta.doubleValue();
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
-        Timestamp timestamp = new Timestamp(fechaSQL.getTime());
+        LocalDate localDate = LocalDate.now();
+LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
+Timestamp timestamp = Timestamp.valueOf(localDateTime);
         try {
             // Buscar la entidad Ventas por su ID
             Ventas venta = entityManager.find(Ventas.class, idVenta);
@@ -283,25 +297,26 @@ public class FXMLDevolucionesController implements Initializable {
             emf.close();
         }
     }
-    private void actualizarCantidadDetalleVenta(Long idVenta, BigDecimal nuevaCantidad) {
+    private void actualizarCantidadDetalleVenta(Long idVenta, Long idDetalle, BigDecimal nuevaCantidad) {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
-        
+        System.out.println(nuevaCantidad+"-------------");
         try {
-            // Buscar el detalle de venta por ID_Venta
+            // Buscar el detalle de venta por ID_Venta e ID_Detalle
             TypedQuery<DetallesVenta> query = entityManager.createQuery(
-                "SELECT dv FROM DetallesVenta dv WHERE dv.venta.id = :idVenta",
+                "SELECT dv FROM DetallesVenta dv WHERE dv.venta.id = :idVenta AND dv.id = :idDetalle",
                 DetallesVenta.class);
             query.setParameter("idVenta", idVenta);
+            query.setParameter("idDetalle", idDetalle);
             DetallesVenta detalleVenta = query.getSingleResult();
-            
+    
             // Actualizar la cantidad del detalle de venta
             detalleVenta.setCantidad(nuevaCantidad);
             entityManager.merge(detalleVenta);
-            
+    
             // Guardar los cambios en la base de datos
             entityManager.getTransaction().commit();
             System.out.println("Actualización realizada correctamente");
@@ -313,63 +328,66 @@ public class FXMLDevolucionesController implements Initializable {
             emf.close();
         }
     }
-    
     @FXML
     private void enviar(ActionEvent event) {
         tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
-
-        if (ticketseleccionado  != null && ticket.getText().isEmpty()==true) {
-            String ticket = ticketseleccionado.getTicket1();
-            ticketglobal= ticket;
-
-        } 
-        if (ticketseleccionado  == null && ticket.getText().isEmpty()==true) {
+    
+        if (ticketseleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("ningun campo o ticket seleccionado");
+            alert.setContentText("campo o valor no seleccionado");
+            alert.showAndWait();
+            return;
         }
-        if (ticketseleccionado  == null && ticket.getText().isEmpty()==true) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("campo o valor no seleccionado");
-        }
-        else{
-
-        } 
-        if(date.getValue() != null && textoArea.getText().isEmpty() == false &&spinner.getValue()>0 && ticket.getText().isEmpty()==false) {
+    
+        ticketglobal = ticketseleccionado.getTicket1();
+        Long idDetalle = ticketseleccionado.getDetalle();
+        BigDecimal cantidadVenta = ticketseleccionado.getCantidad();
+    
+        if (date.getValue() != null && !textoArea.getText().isEmpty() && spinner.getValue()>0) {
+            // Establecer el valor máximo del spinner como la cantidad actual
     
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exitosa");
             alert.setHeaderText(null);
-            alert.setContentText("seguro? el siguiente ticket "+ticketglobal+" se le aplicara una devolucion");
-
+            alert.setContentText("seguro? el siguiente ticket " + ticketglobal + " se le aplicara una devolucion con la id " + idDetalle);
+    
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
-                secondAlert.setTitle("Devolucion exitosa");
-                secondAlert.setHeaderText(null);
-                secondAlert.setContentText("ticket "+ticketglobal);
-                secondAlert.showAndWait();
-
-                for(Ventas venta : ventasfiltrado){
-                    Long idVenta = venta.getId();
-                    for (DetallesVenta detalle : detallesventasfiltrado){
-                        BigDecimal cantidadventa= detalle.getCantidad();
-                        calculo(cantidadventa, idVenta);
-                    }
+                Long idVenta = buscarIdVentaPorDetalle(idDetalle);
+                if (idVenta != null) {
+                    
+                    calculo(cantidadVenta, idVenta, idDetalle);
+                    listaVentas=null;
+                    ListaProducto=null;
+                    Listadetalles=null;
+                    iniciarcomponentes();
+                    Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
+                    secondAlert.setTitle("Devolucion exitosa");
+                    secondAlert.setHeaderText(null);
+                    secondAlert.setContentText("ticket " + ticketglobal + "con la id " + idDetalle);
+                    secondAlert.showAndWait();
+    
+                    // Reiniciar los campos después de la devolución
+                    date.setValue(null);
+                    textoArea.setText(null);
+                    spinner.getValueFactory().setValue(0.0); // Establecer el valor del spinner a cero
+                } else {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText("No se encontró la venta correspondiente al detalle seleccionado");
+                    errorAlert.showAndWait();
                 }
             }
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Llena todos los campos correctamente");
             alert.showAndWait();
         }
-
     }
 
     @FXML
@@ -385,5 +403,28 @@ public class FXMLDevolucionesController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private Long buscarIdVentaPorDetalle(Long idDetalle) {
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = emf.createEntityManager();
+    
+        try {
+            TypedQuery<DetallesVenta> query = entityManager.createQuery(
+                "SELECT dv FROM DetallesVenta dv WHERE dv.id = :idDetalle",
+                DetallesVenta.class);
+            query.setParameter("idDetalle", idDetalle);
+            DetallesVenta detalleVenta = query.getSingleResult();
+            return detalleVenta.getVenta().getId();
+        } catch (NoResultException e) {
+            System.out.println("No se encontró el detalle de venta correspondiente");
+            return null;
+        } finally {
+            entityManager.close();
+            emf.close();
+        }
+        
     }
 }

@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -108,7 +109,12 @@ private void guardarVenta() {
     // Crear una nueva venta con el ticket generado
     Ventas venta = new Ventas();
     venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
-    venta.setFecha(java.sql.Date.valueOf(LocalDate.now()));
+
+
+
+    
+    LocalDateTime localDateTime = LocalDateTime.now();
+venta.setFecha(localDateTime);
     venta.setTotal(importeTotal.floatValue());
 
     // Agregar los detalles de la venta
