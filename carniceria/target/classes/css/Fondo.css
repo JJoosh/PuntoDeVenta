@@ -1,3 +1,121 @@
+#menu_ventas , #menu_kardex , #menu_compra, #menu_devoluciones, #menu_inventario{
+    -fx-background-color: #D62934;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+    -fx-alignment: center;
+    -fx-border-color: white;
+}
+
+#menu_ventas:hover , #menu_kardex:hover ,#menu_compra:hover , #menu_devoluciones:hover , #menu_inventario:hover{
+-fx-text-fill: white;
+-fx-background-color: #58050B;
+}
+
+/* Estilo del login */
+#login{
+    -fx-background-image: url(/css/img/carne.jpg);
+    
+}
+
+.text-field {
+    -fx-background-color: #ffffff; /* Color de fondo blanco */
+    -fx-border-color: #cccccc; /* Color del borde gris */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-padding: 5px; /* Espacio interno */
+}
+
+#primaryButton {
+    -fx-background-color: #007bff; /* Color de fondo azul */
+    -fx-text-fill: #ffffff; /* Color de texto blanco */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-padding: 8px 16px; /* Espacio interno */
+}
+
+#primaryButton:hover {
+    -fx-background-color: #0056b3; /* Color de fondo azul más oscuro */
+}
+
+#label_login{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 25px;
+    -fx-alignment:center
+}
+
+/* Importe en Ventas*/
+#importe_total{
+    -fx-text-fill:#011ADB;
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+}
+
+#compra_cambio{
+    -fx-text-fill:#DC0901;
+    -fx-font-family: "Arial";
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+#compra_total{
+    -fx-text-fill:#011ADB;
+    -fx-font-family: "Arial";
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+#osc {
+    -fx-text-fill:#332C2C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+#compra_finalizar{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment:center
+}
+
+#compra_finalizar:hover{
+    -fx-text-fill:black;
+    -fx-background-color: red;
+}
+
+
+#label_blanco{
+        -fx-text-fill:#FFFFFF;
+        -fx-font-family: "Arial";
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-alignment:center
+}
+
+
+#Titulo_modulo{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+
+/*Panel del costado*/
+.anchor-pane {
+    -fx-background-color: #ac3d45;
+}
+
+
+.button{
+    -fx-background-color: #D62934;
+
+}
+
 .label {
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
@@ -12,7 +130,6 @@
 }
 
 
-
 #importe{
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
@@ -20,7 +137,7 @@
     -fx-font-weight: bold;
 }
 
-#label_blanco{
+#usuario , #compra_borrar{
         -fx-text-fill:#FFFFFF;
         -fx-font-family: "Arial";
         -fx-font-size: 20px;
@@ -55,51 +172,87 @@
     -fx-font-weight: bold;
 }
 
-#Boton2{
-        -fx-background-color: #FFFFFF;
-        -fx-text-fill: #000000;
-        -fx-font-family: Arial;
-        -fx-font-weight: bold;
-    }
 
-.button:pressed {
-    -fx-background-color: #FFFFFF;
-    -fx-text-fill: #573C3E;
-}
-
-#BotonCerrarS{
+/* Boton pa cerrar sesion*/
+#boton_cs{
     -fx-background-color: #000000;
     -fx-text-fill: #ffffff;
     -fx-font-family: Arial;
     -fx-font-weight: bold;
 }
 
-/*menu de  botones*/
-.menu-button {
-    -fx-background-color: #D62934;
-    -fx-text-fill: white; /* Texto blanco dentro del botón */
+#boton_cs:hover{
+    -fx-background-color: blue;
+    -fx-text-fill: #ffffff;
 }
 
-.menu-button:hover{
+/*Boton de cambio de usuario*/
+#cambio_user{
+        -fx-background-color: white;
+        -fx-text-fill: black;
+        -fx-font-family: Arial;
+        -fx-font-weight: bold;
+    }
+
+
+/*Acciones de los botones*/
+.button:pressed {
     -fx-background-color: #FFFFFF;
-    -fx-text-fill: cyan; /* Cambia el color del texto al pasar el ratón */
+    -fx-text-fill: #573C3E;
 }
 
-.menu-button .menu-item {
-    -fx-text-fill: white; /* Texto blanco en los elementos del menú */
+.button:hover {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
 }
+
 
 .menu-button .menu-item:hover {
     -fx-text-fill: blue; /* Cambia el color del texto al pasar el ratón sobre los elementos del menú */
 }
 
-.menu-item {
-    -fx-text-fill: white; /* Texto blanco en los elementos del menú */
-    -fx-background-color: #4CAF50; /* Color de fondo de los elementos del menú */
-}
 
 #Label_usuario{
     -fx-text-fill:#ffffff;
     -fx-font-family: "Arial";
     -fx-font-size: 20px;
+}
+
+#Label_letras{
+    -fx-text-fill:#000000;
+    -fx-font-family: "Arial";
+    -fx-font-size: 35px;
+}
+
+#atras{
+    -fx-text-fill:#ffffff;
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+}
+
+#Devo{
+    -fx-text-fill:black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #92E583;
+}
+
+#Devo:hover{
+    -fx-text-fill:white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-background-color: #105005;
+}
+
+#inv_agregar:hover , #inv_eliminar:hover , #inv_modificar:hover {
+    -fx-background-color: #064658;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
+}
+
+.pane{
+    -fx-background-position-x: 50%
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="1000.0" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="663.0" prefWidth="1000.0">
+         <children>
+            <Label layoutX="544.0" layoutY="384.0" text="Mínimo">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="guardar_mod" layoutX="401.0" layoutY="493.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="185.0" stylesheets="@../css/Fondo.css" text="Guardar Producto">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Label id="Titulo_modulo" prefHeight="95.0" prefWidth="1000.0" style="-fx-background-color: black;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" text="Modificar Producto">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="348.0" layoutY="120.0" text="Nuevo código">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="codigo_mod" layoutX="529.0" layoutY="122.0" style="-fx-background-color: F1EAE8; -fx-border-color: gray;" />
+            <Label layoutX="348.0" layoutY="169.0" text="Descripción">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="desc_mod" layoutX="529.0" layoutY="171.0" prefHeight="25.0" prefWidth="251.0" style="-fx-background-color: EAD5CF; -fx-border-color: gray;" />
+            <Label layoutX="367.0" layoutY="230.0" text="Precio costo">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="366.0" layoutY="281.0" text="Precio venta">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="precio_mod" layoutX="529.0" layoutY="283.0" promptText="0.00" style="-fx-background-color: CFDFEA; -fx-border-color: gray;" />
+            <TextField fx:id="costo_mod" layoutX="529.0" layoutY="230.0" prefHeight="25.0" prefWidth="153.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
+            <ComboBox fx:id="cat_mod" layoutX="531.0" layoutY="334.0" prefWidth="150.0" promptText="Cerdo" stylesheets="@../css/Fondo.css" />
+            <Label layoutX="366.0" layoutY="332.0" text="Categoría">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="133.0" layoutY="384.0" text="Cantidad actual">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="cantidad_actual" layoutX="288.0" layoutY="386.0" />
+            <Spinner fx:id="minimo_prod" layoutX="642.0" layoutY="385.0" />
+            <Button id="atras" fx:id="boton_atras" layoutX="42.0" layoutY="120.0" mnemonicParsing="false" text="Atras" />
+            <AnchorPane layoutY="95.0" prefHeight="569.0" prefWidth="28.0" style="-fx-background-color: crimson;" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="197.0" layoutY="175.0" />
+      <Label layoutX="484.0" layoutY="346.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
