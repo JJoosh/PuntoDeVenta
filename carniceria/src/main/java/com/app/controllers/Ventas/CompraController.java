@@ -26,6 +26,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +40,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 public class CompraController {
 
@@ -69,6 +73,11 @@ public class CompraController {
     @FXML
     private Label cambioLabel;
 
+    @FXML 
+    private Pane rootPane;
+
+
+
     private Ventas venta;
     private BigDecimal importeTotal;
 
@@ -86,7 +95,28 @@ public class CompraController {
             calcularCambio();
         });
 
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+
+        Platform.runLater(() -> insertarPagoTextField.requestFocus());
         
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.ESCAPE) {
+            borrarArticuloSeleccionado();
+        }
+       
+        if (event.getCode() == KeyCode.F2) {
+            finalizarCompra();
+
+        }
+
+        if (event.getCode() == KeyCode.F1) {
+            regresar();
+        }
+
     }
 
     public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {

@@ -32,6 +32,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -75,6 +77,10 @@ public class VentasController {
     @FXML
     private TextField pesoTextField;
 
+    @FXML 
+    private Pane rootPane;
+    
+
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
@@ -95,15 +101,14 @@ public class VentasController {
             buscarProductos();
         });
         
-        btnbuscarcode1.setFocusTraversable(false);
-        btnbuscarcode1.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.F1) {
-            agregarProducto();
-            }
-        });
 
-        // Enfocar el botón al iniciar
-        Platform.runLater(() -> btnbuscarcode1.requestFocus());
+
+
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+
+        
+        Platform.runLater(() -> codigoProductoTextField.requestFocus());
+
     }
 
    
@@ -273,7 +278,6 @@ public class VentasController {
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -362,6 +366,25 @@ public class VentasController {
             if (sessionFactory != null) {
                 sessionFactory.close();
             }
+        }
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.F4) {
+            cobrar();
+        }
+
+        if (event.getCode() == KeyCode.F3) {
+            agregarProducto();
+
+        }
+        if (event.getCode() == KeyCode.F2) {
+            obtenerPesoBascula();
+        }
+
+        if (event.getCode() == KeyCode.F1) {
+            borrarArticulo();
         }
     }
 

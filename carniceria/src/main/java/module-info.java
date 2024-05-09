@@ -11,6 +11,10 @@ module com.carniceria{
     requires itextpdf;
     requires icu4j;
     requires nrjavaserial;
+    requires javafx.graphics;
+
+    requires escpos.coffee;
+
 
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;
