@@ -17,6 +17,7 @@ import com.app.models.Productos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,6 +29,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -65,28 +71,54 @@ public class VentasController {
     @FXML
     private TableColumn<Productos, BigDecimal> Cantidad;
     @FXML
-    private Label totalImporteLabel;
+    private Label importe_total;
     @FXML
     private TextField cantidadTextField;
+    
+    @FXML private Label menu_ventas;
+    @FXML private Label menu_inventario;
+    @FXML private Label menu_kardex;
+    @FXML private Label menu_devoluciones;
+    @FXML private Label usuario;
+    @FXML private Label importetotal;
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
 
+    @FXML 
+    private Pane rootPane;
+    
+
     public void initialize() {
         
-        codigoProductoTextField.setText("");
-        cantidadTextField.setText(""); // Inicializar el campo de texto vacío
-
+        
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         PrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
         Cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
         tablaProductos.setItems(productosData);
-        totalImporteLabel.setText("0.00");
+        importe_total.setText("0.00");
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+        menu_inventario.setOnMouseClicked(event -> {
+            // Código que se ejecutará cuando se haga clic en el label
+            abrirInventario();
+        });
+    }
+
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.F2) {
+            
+            abrirInventario();
+        
+        }
+
+        if(event.getCode()==KeyCode.F6){
+            System.out.println("F6");
+        }
     }
 
     @FXML
@@ -206,7 +238,7 @@ public class VentasController {
             total = total.add(subtotal);
         }
         importeTotal = total;
-        totalImporteLabel.setText(importeTotal.toString());
+        importe_total.setText(importeTotal.toString());
     }
 
     private Productos buscarProductoPorCodigo(Long codigoProducto) {
@@ -258,36 +290,24 @@ public class VentasController {
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
-        totalImporteLabel.setText(importeTotal.toString());
+        importe_total.setText(importeTotal.toString());
      
     }
-    @FXML
-    public void abrirInventario(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLVista.fxml"));
-            Parent root = loader.load();
-            
-            FXMLInventarioController newProductoController = loader.getController();
-        
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-}
-
-
  
     
-
-
-
-
-
-
-
-
-// totalImporteLabel.setText(importeTotal.toString());
+    public void abrirInventario() {
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLInventarioController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

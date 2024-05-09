@@ -46,9 +46,7 @@ public class LoginController {
             try {
                 // Cargar la vista Ventas.fxml
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
-                Parent root = loader.load();
-
-                // Obtener el controlador de la vista Ventas.fxml
+                Parent root = loader.load();                
                 VentasController ventasController = loader.getController();
 
                 ventasController.setNombreUsser(username);

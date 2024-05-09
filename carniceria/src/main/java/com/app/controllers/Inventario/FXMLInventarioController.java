@@ -1,5 +1,6 @@
 package com.app.controllers.Inventario;
 
+import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
 import com.app.models.Productos;
 import org.apache.poi.ss.usermodel.*;
@@ -22,12 +23,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -62,6 +68,9 @@ public class FXMLInventarioController implements Initializable {
     private TextField idP;
     @FXML
     private ComboBox<String> categorias;
+    @FXML private Pane rootPane;
+    
+    @FXML private Button btnAgregar;
 
     private ObservableList<Productos> productosData;
     private ObservableList<Productos> productosOriginalData;
@@ -75,8 +84,7 @@ public class FXMLInventarioController implements Initializable {
             }
         });
     }
-
-
+  
     private void buscar(String consultaTexto) {
         // Crear una nueva lista para almacenar los elementos filtrados
         ObservableList<Productos> filteredItems = FXCollections.observableArrayList();
@@ -160,16 +168,15 @@ public class FXMLInventarioController implements Initializable {
     }
 
 
-
+    
     @FXML
-    private void addInventario(ActionEvent e) {
+    private void addInventario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLProductoNew.fxml"));
             Parent root = loader.load();
             
             FXML_NewProducto newProductoController = loader.getController();
             newProductoController.setInventarioController(this);
-            
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
@@ -250,11 +257,24 @@ public class FXMLInventarioController implements Initializable {
         cargarCategorias(this.categorias, 1);
         filtarCategorias();
         buscarforID();
-
         
-
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
     }
+    
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.F5) {
+            addInventario();
+        
+        }
 
+        if(event.getCode()==KeyCode.F6){
+            ModProd();
+        }
+        if(event.getCode()==KeyCode.F1){
+            abrirVentas();
+        }
+    }
     public void agregaraTabla(){
        
         codigoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -351,6 +371,10 @@ public class FXMLInventarioController implements Initializable {
         try (FileOutputStream fileOut = new FileOutputStream("Inventario " + (categorias.getValue() != null && !categorias.getValue().equalsIgnoreCase("Todos") ? categorias.getValue() : "Total") +" "+fechaExcell+ ".xlsx")) {
             workbook.write(fileOut);
             System.out.println("¡Los datos se han exportado correctamente a Excel!");
+             Alert alert=new Alert(AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Se exporto correctamente el documento Excell");
+            alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -382,5 +406,75 @@ public class FXMLInventarioController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
+
+   @FXML
+public void eliminarProducto() {
+    // Obtener el producto seleccionado del TableView
+    Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+
+    if (productoSeleccionado != null) {
+        // Mostrar un diálogo de confirmación
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar eliminación");
+        alert.setHeaderText("¿Estás seguro de que deseas eliminar este producto?");
+        alert.setContentText("Esta acción no se puede deshacer.");
+
+        // Esperar la respuesta del usuario
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // Eliminar el producto de la base de datos
+                Configuration configuration = new Configuration();
+                configuration.configure("hibernate.cfg.xml");
+                configuration.addAnnotatedClass(Productos.class);
+
+                SessionFactory sessionFactory = configuration.buildSessionFactory();
+                EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+                EntityManager entityManager = emf.createEntityManager();
+
+                entityManager.getTransaction().begin();
+                entityManager.remove(entityManager.contains(productoSeleccionado) ? productoSeleccionado : entityManager.merge(productoSeleccionado));
+                entityManager.getTransaction().commit();
+
+                entityManager.close();
+                emf.close();
+
+                
+                productosData.remove(productoSeleccionado);
+                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+                alert2.setHeaderText(null);
+                alert2.setContentText("Se elimino el producto correctamente");
+                alert2.showAndWait();
+                
+            }
+        });
+    } else {
+        // Mostrar un mensaje de error si no se ha seleccionado ningún producto
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("No se ha seleccionado ningún producto");
+        alert.setContentText("Por favor, selecciona un producto para eliminar.");
+        alert.showAndWait();
+    }
+}
+
+
+public void abrirVentas() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+        Pane nuevoContenido = loader.load();
+        
+        // Obtener el controlador del nuevo contenido
+        VentasController inventarioController = loader.getController();
+        
+        // Reemplazar el contenido del contenedor principal con el nuevo contenido
+        rootPane.getChildren().setAll(nuevoContenido);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
 }

@@ -15,6 +15,7 @@ module com.carniceria{
     requires org.apache.poi.poi;
 
     requires org.apache.poi.ooxml;
+    requires javafx.graphics;
 
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;
