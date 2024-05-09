@@ -17,7 +17,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
    <children>
       <AnchorPane prefHeight="688.0" prefWidth="1337.0">
@@ -30,7 +29,7 @@
                            <top>
                               <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <AnchorPane layoutX="178.0" layoutY="-77.0" prefHeight="89.0" prefWidth="1337.0" style="-fx-background-color: black;" stylesheets="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-236.0" AnchorPane.topAnchor="0.0">
+                                    <AnchorPane layoutX="178.0" layoutY="-77.0" prefHeight="89.0" prefWidth="1378.0" style="-fx-background-color: black;" stylesheets="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-49.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Label id="Titulo_modulo" layoutX="392.0" layoutY="1.0" prefHeight="88.0" prefWidth="946.0" stylesheets="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" text="Reporte de Inventario" textFill="WHITE">
                                              <font>
@@ -66,10 +65,10 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="28.0" layoutY="221.0" minHeight="50.0" prefWidth="155.0" text="Ventas" />
-                                          <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="28.0" layoutY="285.0" minHeight="50.0" prefWidth="155.0" text="Inventario" />
-                                          <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="28.0" layoutY="351.0" minHeight="50.0" prefWidth="155.0" text="Kardex" />
-                                          <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="30.0" layoutY="418.0" minHeight="50.0" prefWidth="155.0" text="Devoluciones" />
+                                          <Label id="menu_ventas" fx:id="menu_ventas" accessibleRole="BUTTON" layoutX="28.0" layoutY="221.0" minHeight="50.0" prefWidth="155.0" text="Ventas" />
+                                          <Label id="menu_inventario" fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="28.0" layoutY="285.0" minHeight="50.0" prefWidth="155.0" text="Inventario" />
+                                          <Label id="menu_kardex" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="28.0" layoutY="351.0" minHeight="50.0" prefWidth="155.0" text="Kardex" />
+                                          <Label id="menu_devoluciones" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="30.0" layoutY="418.0" minHeight="50.0" prefWidth="155.0" text="Devoluciones" />
                                        </children>
                                        <stylesheets>
                                           <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
@@ -109,22 +108,18 @@
                                                       </ComboBox>
                                                    </children>
                                                 </AnchorPane>
-                                                <ScrollPane layoutX="28.0" layoutY="269.0" prefHeight="270.0" prefWidth="819.0">
+                                                <ScrollPane layoutX="28.0" layoutY="269.0" prefHeight="270.0" prefWidth="792.0">
                                                    <content>
-                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="830.0">
-                                                         <children>
-                                                            <TableView layoutX="-30.0" prefHeight="270.0" prefWidth="872.0">
-                                                              <columns>
-                                                                <TableColumn prefWidth="120.00000077486038" text="Codigo" />
-                                                                <TableColumn prefWidth="180.79998779296875" text="Descripcion del producto" />
-                                                                  <TableColumn prefWidth="85.60003662109375" text="Costo" />
-                                                                  <TableColumn prefWidth="111.2000732421875" text="Precio venta" />
-                                                                  <TableColumn prefWidth="152.00006103515625" text="Existencia" />
-                                                                  <TableColumn prefWidth="159.2000732421875" text="Inventario minimo" />
-                                                              </columns>
-                                                            </TableView>
-                                                         </children>
-                                                      </AnchorPane>
+                                                      <TableView prefHeight="270.0" prefWidth="825.0">
+                                                        <columns>
+                                                          <TableColumn prefWidth="120.00000077486038" text="Codigo" />
+                                                          <TableColumn prefWidth="180.79998779296875" text="Descripcion del producto" />
+                                                            <TableColumn prefWidth="85.60003662109375" text="Costo" />
+                                                            <TableColumn prefWidth="111.2000732421875" text="Precio venta" />
+                                                            <TableColumn prefWidth="152.00006103515625" text="Existencia" />
+                                                            <TableColumn prefWidth="159.2000732421875" text="Inventario minimo" />
+                                                        </columns>
+                                                      </TableView>
                                                    </content>
                                                 </ScrollPane>
                                                 <Button id="inv_modificar" layoutX="411.0" layoutY="198.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="Modificar producto">
@@ -133,7 +128,7 @@
                                                       <URL value="@../css/Fondo.css" />
                                                    </stylesheets>
                                                 </Button>
-                                                <Button id="inv_imprimir" layoutX="865.0" layoutY="101.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" text="Imprimir pdf">
+                                                <Button id="inv_bajos" layoutX="810.0" layoutY="25.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="203.0" text="Productos bajos en existencias">
                                                    <stylesheets>
                                                       <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                                       <URL value="@../css/Fondo.css" />
@@ -153,6 +148,12 @@
                                                 </Button>
                                                 <TextField layoutX="28.0" layoutY="210.0" text="ID" />
                                                 <Button id="inv_agregar" layoutX="222.0" layoutY="197.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="Agregar producto">
+                                                   <stylesheets>
+                                                      <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+                                                      <URL value="@../css/Fondo.css" />
+                                                   </stylesheets>
+                                                </Button>
+                                                <Button id="inv_repomov" layoutX="862.0" layoutY="111.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="152.0" text="Reporte de movimiento">
                                                    <stylesheets>
                                                       <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                                                       <URL value="@../css/Fondo.css" />

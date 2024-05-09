@@ -13,127 +13,102 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 
-<Pane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.InventarioController">
    <children>
-      <StackPane prefHeight="640.0" prefWidth="1100.0">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane layoutX="248.0" layoutY="190.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane layoutX="248.0" layoutY="190.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <top>
-                        <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <AnchorPane layoutX="178.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="b-black" stylesheets="@../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label id="Titulo_modulo" layoutX="227.0" layoutY="8.0" prefHeight="58.0" prefWidth="1145.0" text="Historial de movimientos de inventario">
-                                       <font>
-                                          <Font size="35.0" />
-                                       </font>
-                                       <stylesheets>
-                                          <URL value="@../css/styles.css" />
-                                          <URL value="@../css/Fondo.css" />
-                                       </stylesheets>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </top>
-                     <left>
-                        <AnchorPane prefHeight="554.0" prefWidth="215.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <AnchorPane layoutX="8.0" layoutY="-76.66666666666667" prefHeight="670.0" prefWidth="226.0" scaleShape="false" styleClass="anchor-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="-77.0">
-                                 <children>
-                                    <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="65.0" layoutY="87.0">
-                                       <image>
-                                          <Image url="@../ProyectoCarniceria/456212.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Line endX="100.0" layoutX="110.0" layoutY="175.0" startX="-100.0" />
-                                    <ImageView fitHeight="60.0" fitWidth="168.0" layoutX="23.0" layoutY="45.0">
-                                       <image>
-                                          <Image url="@../../../../../../../../../Downloads/LogoSuKarne/word/media/image1.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="73.0" fitWidth="200.0" layoutX="20.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/LOGO.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="41.0" layoutY="202.0" prefHeight="50.0" prefWidth="155.0" text="Ventas" />
-                                    <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="42.0" layoutY="266.0" prefHeight="50.0" prefWidth="155.0" text="Inventario" />
-                                    <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="41.0" layoutY="327.0" prefHeight="50.0" prefWidth="155.0" text="Kardex" />
-                                    <Label id="menu_ventas" accessibleRole="BUTTON" layoutX="42.0" layoutY="388.0" prefHeight="50.0" prefWidth="155.0" text="Devoluciones" />
-                                    <Button id="cambio_user" layoutX="56.0" layoutY="544.0" mnemonicParsing="false" text="Cambio de usuario" />
-                                    <Button id="boton_cs" layoutX="73.0" layoutY="587.0" mnemonicParsing="false" text="Cerrar sesion" />
-                                    <Label id="usuario" layoutX="85.0" layoutY="502.0" text="Usuario" />
-                                 </children>
-                                 <stylesheets>
-                                    <URL value="@../css/styles.css" />
-                                    <URL value="@../css/Fondo.css" />
-                                 </stylesheets>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </left>
-                     <center>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <AnchorPane layoutX="73.0" layoutY="55.0" prefHeight="554.4" prefWidth="884.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <AnchorPane layoutX="11.0" layoutY="11.0" prefHeight="582.0" prefWidth="862.0">
-                                       <children>
-                                          <AnchorPane layoutX="15.0" layoutY="14.0" prefHeight="126.0" prefWidth="830.0" styleClass="filter" stylesheets="@../GitHub/PuntoDeVenta/carniceria/src/main/resources/views/Fondo.css">
-                                             <children>
-                                                <Label layoutX="37.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Del día:" />
-                                                <Label layoutX="257.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Buscar por:" />
-                                                <TextField layoutX="257.0" layoutY="51.0" prefHeight="48.0" prefWidth="262.0" promptText="Cajero, producto o departamento" styleClass="b-white" stylesheets="@../css/styles.css" />
-                                                <Label layoutX="554.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Movimientos" />
-                                                <DatePicker layoutX="37.0" layoutY="57.0" prefHeight="39.0" prefWidth="195.0" />
-                                                <ComboBox layoutX="549.0" layoutY="51.0" prefWidth="150.0" promptText="-Todos-" style="-fx-background-color: 93B7DF;" styleClass="b-black" stylesheets="@../css/styles.css" />
-                                             </children>
-                                          </AnchorPane>
-                                          <ScrollPane layoutX="28.0" layoutY="269.0" prefHeight="270.0" prefWidth="819.0">
-                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="830.0">
-                                                   <children>
-                                                      <TableView prefHeight="270.0" prefWidth="827.0" styleClass="table" stylesheets="@../css/styles.css">
-                                                         <columns>
-                                                            <TableColumn prefWidth="100.79997330904007" text="Hora" />
-                                                            <TableColumn prefWidth="164.79998779296875" text="Descripcion del producto" />
-                                                            <TableColumn prefWidth="95.20001220703125" text="Habia" />
-                                                            <TableColumn prefWidth="133.5999755859375" text="tipo de movimiento" />
-                                                            <TableColumn prefWidth="105.5999755859375" text="Cantidad" />
-                                                            <TableColumn prefWidth="95.20001220703125" text="Cajero" />
-                                                            <TableColumn prefWidth="109.59991455078125" text="Departamento" />
-                                                         </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </AnchorPane>
-                                             </content>
-                                          </ScrollPane>
-                                          <Button layoutX="283.0" layoutY="167.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="169.0" styleClass="b-red" stylesheets="@../css/styles.css" text="Modificar producto" />
-                                          <Button layoutX="481.0" layoutY="164.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="140.0" styleClass="b-black" stylesheets="@../css/styles.css" text="Exportar excel" />
-                                          <Button layoutX="643.0" layoutY="165.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="144.0" styleClass="b-black" stylesheets="@../css/styles.css" text="Imprimir pdf" />
-                                          <ComboBox layoutX="99.0" layoutY="169.0" prefHeight="45.0" prefWidth="155.0" promptText="Categorias" styleClass="b-red" stylesheets="@../css/styles.css" />
-                                          <Label layoutX="16.0" layoutY="545.0" prefHeight="30.0" prefWidth="960.0" styleClass="text-20" stylesheets="@../css/styles.css" text="NOTA: EN TIPO DE MOVIMIENTO DEBE DE IR ESPECIFICADO SI FUE SALIDA, ENTRADA O AJUSTE" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </center>
-                  </BorderPane>
+                  <AnchorPane layoutX="178.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="b-black" stylesheets="@../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label id="Titulo_modulo" layoutX="3.0" layoutY="8.0" prefHeight="58.0" prefWidth="1369.0" text="Historial de movimientos de inventario">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                           <stylesheets>
+                              <URL value="@../css/styles.css" />
+                              <URL value="@../css/Fondo.css" />
+                           </stylesheets>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
-         </children>
-      </StackPane>
+         </top>
+         <left>
+            <AnchorPane prefHeight="554.0" prefWidth="215.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="-2.0" prefHeight="619.0" prefWidth="226.0" scaleShape="false" styleClass="anchor-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="-2.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" layoutX="65.0" layoutY="87.0">
+                           <image>
+                              <Image url="@../ProyectoCarniceria/456212.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="73.0" fitWidth="200.0" layoutX="13.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/LOGO.png" />
+                           </image>
+                        </ImageView>
+                        <Button id="atras" fx:id="boton_atras" layoutX="57.0" layoutY="56.0" mnemonicParsing="false" text="atras" />
+                     </children>
+                     <stylesheets>
+                        <URL value="@../css/styles.css" />
+                        <URL value="@../css/Fondo.css" />
+                     </stylesheets>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="73.0" layoutY="55.0" prefHeight="554.4" prefWidth="884.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutY="6.0" prefHeight="582.0" prefWidth="862.0">
+                           <children>
+                              <AnchorPane layoutX="15.0" layoutY="14.0" prefHeight="126.0" prefWidth="830.0" styleClass="filter" stylesheets="@../GitHub/PuntoDeVenta/carniceria/src/main/resources/views/Fondo.css">
+                                 <children>
+                                    <Label layoutX="37.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Del día:" />
+                                    <Label layoutX="257.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Buscar por:" />
+                                    <TextField fx:id="buscar_mov" layoutX="257.0" layoutY="51.0" prefHeight="48.0" prefWidth="262.0" promptText="Cajero, producto o departamento" style="-fx-border-color: gray;" styleClass="b-white" stylesheets="@../css/styles.css" />
+                                    <Label layoutX="554.0" layoutY="19.0" styleClass="tex-sub" stylesheets="@../css/styles.css" text="Movimientos" />
+                                    <DatePicker fx:id="fecha_mov" layoutX="37.0" layoutY="57.0" prefHeight="39.0" prefWidth="195.0" />
+                                    <ComboBox fx:id="tipo_mov" layoutX="549.0" layoutY="51.0" prefWidth="150.0" promptText="-Todos-" style="-fx-background-color: F0D9D1;" styleClass="b-black" stylesheets="@../css/styles.css" />
+                                 </children>
+                              </AnchorPane>
+                              <ScrollPane layoutX="28.0" layoutY="269.0" prefHeight="270.0" prefWidth="819.0">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="830.0">
+                                       <children>
+                                          <TableView prefHeight="270.0" prefWidth="827.0" styleClass="table" stylesheets="@../css/styles.css">
+                                             <columns>
+                                                <TableColumn prefWidth="100.79997330904007" text="Hora" />
+                                                <TableColumn prefWidth="164.79998779296875" text="Descripcion del producto" />
+                                                <TableColumn prefWidth="95.20001220703125" text="Habia" />
+                                                <TableColumn prefWidth="133.5999755859375" text="tipo de movimiento" />
+                                                <TableColumn prefWidth="105.5999755859375" text="Cantidad" />
+                                                <TableColumn prefWidth="95.20001220703125" text="Cajero" />
+                                                <TableColumn prefWidth="109.59991455078125" text="Departamento" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                              <Button fx:id="modificar_historial" layoutX="283.0" layoutY="167.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="169.0" styleClass="b-red" stylesheets="@../css/styles.css" text="Modificar producto" />
+                              <Button fx:id="exportar_mov" layoutX="577.0" layoutY="165.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="140.0" styleClass="b-black" stylesheets="@../css/styles.css" text="Exportar excel" />
+                              <ComboBox fx:id="cat_historial" layoutX="99.0" layoutY="169.0" prefHeight="45.0" prefWidth="155.0" promptText="Categorias" style="-fx-background-color: CDDBE8;" styleClass="b-red" stylesheets="@../css/styles.css" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
    </children>
-</Pane>
+</AnchorPane>
