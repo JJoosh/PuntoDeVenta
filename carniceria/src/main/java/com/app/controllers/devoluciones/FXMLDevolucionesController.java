@@ -137,7 +137,8 @@ private void cargarCategorias(ComboBox<String> motivos, int opcion){
     motivos.getItems().clear();
     motivos.getItems().addAll("producto en mal estado", "Error de pedido", "otro");
     motivos.setOnAction(event -> {
-            if (motivos.getSelectionModel().getSelectedItem().equals("otro")) {
+        String selectedOption = motivos.getSelectionModel().getSelectedItem();
+            if (motivos.getSelectionModel().getSelectedItem().equals("otro") && selectedOption != null) {
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Motivo");
                 dialog.setHeaderText("Ingrese el Motivo");
@@ -409,7 +410,9 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         Long idVenta = buscarIdVentaPorDetalle(idDetalle);
                         if (idVenta != null) {
-                            if(motivos.getSelectionModel().getSelectedItem().equals("producto en mal estado")){
+                            String selectedOption = motivos.getSelectionModel().getSelectedItem();
+                            System.out.println(selectedOption+"--------ya");
+                            if(motivos.getSelectionModel().getSelectedItem().equals("producto en mal estado") && selectedOption!= null){
                                 System.out.println("no se agrega a productos");
                             }
                             else{
@@ -429,9 +432,9 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                             secondAlert.setHeaderText(null);
                             secondAlert.setContentText("Ticket " + ticketglobal + " con la ID " + idDetalle);
                             secondAlert.showAndWait();
-    
-                            
-                            textoArea.setText(null);
+
+                            motivos.getSelectionModel().clearSelection();
+
                             spinner.getValueFactory().setValue(0.0);
                         } else {
                             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
