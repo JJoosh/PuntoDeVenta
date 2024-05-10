@@ -30,6 +30,9 @@ import com.app.models.Productos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -95,7 +98,9 @@ public class FXMLDevolucionesController implements Initializable {
 
     @FXML
     private ComboBox<String> motivos;
-
+    
+    @FXML 
+    private Pane rootPane;
 
     private ObservableList<tabledata> datosTabla = FXCollections.observableArrayList();
 
@@ -128,8 +133,12 @@ public void initialize(URL url, ResourceBundle rb) {
            
         }
     });
+    if (rootPane != null) {
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+    } else {
+        // Manejar el caso en el que rootPane sea nulo
+    }
 
-    
 }
 
 
@@ -138,7 +147,11 @@ private void cargarCategorias(ComboBox<String> motivos, int opcion){
     motivos.getItems().addAll("producto en mal estado", "Error de pedido", "otro");
     motivos.setOnAction(event -> {
         String selectedOption = motivos.getSelectionModel().getSelectedItem();
-            if (motivos.getSelectionModel().getSelectedItem().equals("otro") && selectedOption != null) {
+        if (selectedOption ==null) {
+            System.out.println("nada");
+        }
+        else{
+            if (motivos.getSelectionModel().getSelectedItem().equals("otro")) {
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Motivo");
                 dialog.setHeaderText("Ingrese el Motivo");
@@ -148,6 +161,11 @@ private void cargarCategorias(ComboBox<String> motivos, int opcion){
                     opcion3=valor;
                 });
             }
+            else{
+                opcion3="";
+                System.out.println("ummm");
+            }
+        }
         });
 }
 private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
@@ -369,7 +387,10 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
     }
     @FXML
     private void enviar(ActionEvent event) {
-        tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
+        proceso();
+    }
+    private void proceso(){
+tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         String selectedItem = motivos.getSelectionModel().getSelectedItem();
         Double Devolucion = spinner.getValue();
@@ -527,5 +548,18 @@ try {
     emf.close();
 }
 
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.isControlDown() && event.getCode() == KeyCode.D) {
+           System.out.println("sijala f1");
+        }
+
+        if (event.getCode() == KeyCode.F3) {
+            
+            System.out.println("sijala f3");
+        }
+        
     }
 }

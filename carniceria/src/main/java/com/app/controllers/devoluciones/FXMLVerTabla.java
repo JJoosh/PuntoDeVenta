@@ -78,30 +78,33 @@ public class FXMLVerTabla{
         mostartabla(devolucion);
     }
 
-    public void compararTicketConTextField(List<Devoluciones> devolucion){
+    public void compararTicketConTextField(List<Devoluciones> devolucion) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatoDeseado = new SimpleDateFormat("dd-MM-yyyy"); // Formato deseado DD-MM-AA
+    
         iddev.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 // Mostrar todos los datos cuando el campo de texto está vacío
                 mostartabla(devolucion);
             } else {
                 devolucionFiltrado.clear();
-
+    
                 for (Devoluciones devoluciones : devolucion) {
                     Long idDevolucion = devoluciones.getId();
-                    java.sql.Timestamp fecha=devoluciones.getFechaDevolucion();
+                    java.sql.Timestamp fecha = devoluciones.getFechaDevolucion();
                     String fechaString = sdf.format(fecha);
-                    String Solofecha = fechaString.substring(0, Math.min(fechaString.length(), 10));
+                    String fechaFormateada = formatoDeseado.format(fecha); // Convertir fecha al formato deseado
+    
                     String idString = idDevolucion.toString(); // Convertir Long a String
-                    if (idString.startsWith(newValue) || Solofecha.endsWith(newValue)) {
-                       Ventas venta =  devoluciones.getVenta();
-                       Double Cantidad= devoluciones.getCantidadDevuelta();
-                       String motivo= devoluciones.getMotivo();
-                       Devoluciones devn = new Devoluciones(idDevolucion,venta,Cantidad,motivo,fecha);
-                       devolucionFiltrado.add(devn);
+                    if (idString.startsWith(newValue) || fechaFormateada.startsWith(newValue)) {
+                        Ventas venta = devoluciones.getVenta();
+                        Double Cantidad = devoluciones.getCantidadDevuelta();
+                        String motivo = devoluciones.getMotivo();
+                        Devoluciones devn = new Devoluciones(idDevolucion, venta, Cantidad, motivo, fecha);
+                        devolucionFiltrado.add(devn);
                     }
                 }
-
+    
                 mostartabla(devolucionFiltrado);
             }
         });
