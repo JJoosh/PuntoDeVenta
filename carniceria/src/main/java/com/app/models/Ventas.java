@@ -1,7 +1,8 @@
 package com.app.models;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,18 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Ventas")
 public class Ventas {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String ticket;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    private float total;
-
+    private BigDecimal total;
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallesVenta> detalles = new ArrayList<>();
 
@@ -50,11 +52,11 @@ public class Ventas {
         this.fecha = fecha;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -70,5 +72,9 @@ public class Ventas {
     public void removeDetalle(DetallesVenta detalle) {
         detalles.remove(detalle);
         detalle.setVenta(null);
+    }
+
+    public String getIdVenta() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

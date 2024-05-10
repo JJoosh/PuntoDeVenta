@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,44 +11,50 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane fx:id="rootPane" maxHeight="-Infinity"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
-      <Label layoutX="37.0" layoutY="61.0" prefHeight="41.0" prefWidth="283.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
+      <Label id="Label_letras" layoutX="27.0" layoutY="153.0" prefHeight="41.0" prefWidth="488.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" layoutX="326.0" layoutY="69.0" prefHeight="25.0" prefWidth="268.0" style="-fx-background-color: F5D6D8; -fx-border-color: black;" />
-      <Label layoutX="138.0" layoutY="111.0" prefHeight="41.0" prefWidth="181.0" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad:">
+      <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" layoutX="522.0" layoutY="160.0" prefHeight="28.0" prefWidth="363.0" style="-fx-background-color: F5D6D8; -fx-border-color: black;" />
+      <Label id="Label_letras" layoutX="47.0" layoutY="225.0" prefHeight="41.0" prefWidth="307.0" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button id="bventas_agregar" layoutX="630.0" layoutY="53.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="34.0" prefWidth="129.0" stylesheets="@../css/Fondo.css" text="Agregar" />
-      <Label id="osc" layoutX="524.0" layoutY="536.0" prefHeight="67.0" prefWidth="213.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
-      <Button id="bventas_cobrar" layoutX="325.0" layoutY="548.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="41.0" prefWidth="166.0" stylesheets="@../css/Fondo.css" text="Cobrar" />
-      <Button id="bventas_cancelar" layoutX="695.0" layoutY="107.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="34.0" prefWidth="166.0" stylesheets="@../css/Fondo.css" text="Cancelar compra" />
-      <Button id="bventas_peso" layoutX="808.0" layoutY="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="129.0" stylesheets="@../css/Fondo.css" text="Obtener peso" />
-      <TextField id="v_ingreso_cant" fx:id="cantidadTextField" layoutX="326.0" layoutY="119.0" prefHeight="25.0" prefWidth="268.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-      <Label id="importe_total" fx:id="importe_total" layoutX="752.0" layoutY="534.0" prefHeight="67.0" prefWidth="181.0" stylesheets="@../css/Fondo.css" text="0.0" />
-      <ScrollPane layoutX="21.0" layoutY="194.0" prefHeight="300.0" prefWidth="916.0">
+      <Button id="bventas_agregar" fx:id="btnbuscarcode1" layoutX="962.0" layoutY="201.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" stylesheets="@../css/Fondo.css" text="Agregar" />
+      <Label id="osc" layoutX="796.0" layoutY="778.0" prefHeight="67.0" prefWidth="289.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
+      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="456.0" layoutY="762.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Cobrar" />
+      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="1240.0" layoutY="203.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="283.0" stylesheets="@../css/Fondo.css" text="Cancelar compra" />
+      <Button id="bventas_peso" fx:id="btnbuscarcode1" layoutX="1270.0" layoutY="130.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Obtener peso" />
+      <TextField id="v_ingreso_cant" fx:id="pesoTextField" layoutX="373.0" layoutY="232.0" prefHeight="28.0" prefWidth="431.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
+      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="1093.0" layoutY="762.0" prefHeight="80.0" prefWidth="439.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
+      <ScrollPane layoutX="385.0" layoutY="320.0" prefHeight="403.0" prefWidth="885.0">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="896.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="908.0">
                <children>
-                  <TableView fx:id="tablaProductos" layoutX="4.0" prefHeight="300.0" prefWidth="893.0">
+                  <TableView fx:id="tablaProductos" layoutX="-2.0" prefHeight="396.0" prefWidth="914.0">
                      <columns>
-                        <TableColumn fx:id="Cbarra" editable="false" prefWidth="190.6666922569275" resizable="false" text="Código de barras" />
-                        <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="173.99998474121094" resizable="false" text="Descripción producto" />
-                        <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="120.0" resizable="false" text="Precio de venta" />
-                        <TableColumn fx:id="Cantidad" editable="false" prefWidth="144.66671752929688" resizable="false" text="Cantidad" />
-                        <TableColumn editable="false" prefWidth="128.00006103515625" resizable="false" text="Importe" />
-                        <TableColumn prefWidth="130.0" text="Peso" />
+                        <TableColumn fx:id="Cbarra" editable="false" prefWidth="240.66668462753296" resizable="false" text="Código de barras" />
+                        <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="199.3333282470703" resizable="false" text="Descripción producto" />
+                        <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="196.66671752929688" resizable="false" text="Precio de venta" />
+                        <TableColumn fx:id="Cantidad" editable="false" prefWidth="210.0" resizable="false" text="Cantidad" />
                      </columns>
                   </TableView>
                </children>
             </AnchorPane>
          </content>
       </ScrollPane>
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" text="Ventas de productos">
+         <font>
+            <Font size="35.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Label>
    </children>
 </Pane>

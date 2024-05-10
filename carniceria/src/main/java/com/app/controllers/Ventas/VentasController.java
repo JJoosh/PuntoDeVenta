@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.models.Productos;
 
 import gnu.io.NoSuchPortException;
@@ -32,6 +33,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -75,6 +78,10 @@ public class VentasController {
     @FXML
     private TextField pesoTextField;
 
+    @FXML 
+    private Pane rootPane;
+    
+
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
@@ -95,15 +102,14 @@ public class VentasController {
             buscarProductos();
         });
         
-        btnbuscarcode1.setFocusTraversable(false);
-        btnbuscarcode1.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.F1) {
-            agregarProducto();
-            }
-        });
 
-        // Enfocar el botón al iniciar
-        Platform.runLater(() -> btnbuscarcode1.requestFocus());
+
+
+        rootPane.setOnKeyPressed(this::handleKeyPressed);
+
+        
+        Platform.runLater(() -> codigoProductoTextField.requestFocus());
+
     }
 
    
@@ -263,17 +269,24 @@ public class VentasController {
             alert.showAndWait();
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
-                Scene scene = new Scene(loader.load());
+                
 
-                CompraController compraController = loader.getController();
-                compraController.initData(productosAgregados, importeTotal);
 
-                Stage stage = (Stage) codigoProductoTextField.getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+                try {
+                    // Cargar el archivo FXML con el nuevo contenido
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
+                    Pane nuevoContenido = loader.load();
+                    
+                    // Obtener el controlador del nuevo contenido
+                    CompraController compraController = loader.getController();  
+                    compraController.initData(productosAgregados, importeTotal);
+                 
+                    rootPane.getChildren().setAll(nuevoContenido);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
             }
         }
     }
@@ -282,10 +295,10 @@ public class VentasController {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
-
+    
         // Actualizar la tabla de productos
         tablaProductos.setItems(productosData);
-
+    
         // Actualizar los productos agregados
         this.productosAgregados.clear();
         this.productosAgregados.addAll(productosData);
@@ -362,6 +375,43 @@ public class VentasController {
             if (sessionFactory != null) {
                 sessionFactory.close();
             }
+        }
+    }
+
+    public void abrirInventario() {
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLInventarioController inventarioController = loader.getController();
+           
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode()==KeyCode.F2) {
+            abrirInventario();
+        }
+        if (event.getCode() == KeyCode.F4) {
+            cobrar();
+        }
+
+        if (event.getCode() == KeyCode.F3) {
+            agregarProducto();
+
+        }
+        if (event.getCode() == KeyCode.F7) {
+            obtenerPesoBascula();
+        }
+
+        if (event.getCode() == KeyCode.F1) {
+            borrarArticulo();
         }
     }
 

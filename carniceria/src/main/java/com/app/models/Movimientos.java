@@ -82,9 +82,8 @@ public class Movimientos {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             this.fecha = fechaHora.format(formatter);
             ZoneId zoneId = ZoneId.of("America/Mexico_City"); // Reemplaza con la zona horaria deseada
-        LocalTime horaActual = fechaHora.atZone(zoneId).toLocalTime();
-        LocalTime horaRestada = horaActual.minusHours(1);
-        this.hora = horaRestada;
+            LocalTime horaActual = fechaHora.atZone(zoneId).toLocalTime();
+            this.hora = horaActual;
         }
     }
 

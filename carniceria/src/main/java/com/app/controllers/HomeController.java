@@ -33,6 +33,9 @@ public class HomeController implements Initializable {
     
     @FXML
     private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode()==KeyCode.F1) {
+            abrirVentas();
+        }
         if (event.getCode() == KeyCode.F2) {
             abrirInventario();   
             System.err.println("SE PRESIONO PERRA");
@@ -62,9 +65,21 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void inventario(){
-
-        System.out.println("PROBANDO FUERA DE HOME");
+    public void abrirVentas(){
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            VentasController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            home.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
 
     }
 }
