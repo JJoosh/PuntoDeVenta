@@ -1,5 +1,6 @@
 package com.app.controllers.Ventas;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,15 +12,25 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.app.models.DetallesVenta;
+import com.app.models.Movimientos;
 import com.app.models.Productos;
 import com.app.models.Ventas;
-import com.app.models.Movimientos;
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.itextpdf.text.Chunk;
@@ -45,6 +56,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -54,9 +66,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+
 public class CompraController {
 
-    private static final Font TITLE_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font NORMAL_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font FUENTE = new Font(Font.FontFamily.COURIER, 9);
     private static final Font FUENTE_DOS = new Font(Font.FontFamily.HELVETICA, 11);
@@ -100,15 +112,31 @@ public class CompraController {
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
 
-    private long idProducto = 0;
-
     @FXML
     private void initialize() {
         nombreProductoColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
-                cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad())));
+
+        // Modificar la forma en que se muestra el importe total en la columna
+        totalColumn.setCellValueFactory(cellData -> {
+            BigDecimal total = cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad());
+            return new SimpleObjectProperty<>(total);
+        });
+
+        // Formatear la columna total con el signo de $ y dos decimales
+        totalColumn.setCellFactory(column -> new TableCell<Productos, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    DecimalFormat formato = new DecimalFormat("$#,##0.00");
+                    setText(formato.format(item));
+                }
+            }
+        });
 
         insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             calcularCambio();
@@ -118,6 +146,7 @@ public class CompraController {
 
         Platform.runLater(() -> insertarPagoTextField.requestFocus());
     }
+    
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
@@ -138,7 +167,12 @@ public class CompraController {
         setProductosData(productosData);
         setImporteTotal(importeTotal);
         actualizarTablaDetallesVenta();
-        totalImporteLabel.setText(importeTotal.toString());
+
+        // Formatear el importe total con dos decimales y el signo de dólar
+        DecimalFormat formato = new DecimalFormat("$#,##0.00");
+        String importeFormateado = formato.format(importeTotal);
+
+        totalImporteLabel.setText(importeFormateado);
     }
 
     private void actualizarTablaDetallesVenta() {
@@ -173,8 +207,9 @@ public class CompraController {
             }
 
             guardarVenta();
-            generarPDF();
+            // generarPDF();
             actualizarInventario();
+            printTicket();
             importeTotal = BigDecimal.ZERO;
 
             regresarAVenta();
@@ -280,12 +315,18 @@ public class CompraController {
         // Close the communication with the scale before returning to the Ventas view
         VentasController ventasController1 = new VentasController();
         ventasController1.cerrarBascula();
+
+        // Limpiar la lista de productos
+        productosData.clear();
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Scene scene = new Scene(loader.load());
             VentasController ventasController = loader.getController();
-            ventasController.actualizarDatos(productosData, importeTotal);
-            ventasController.cargarProductos(); // Load the updated products from the database
+
+            // Actualizar los datos en la vista de ventas
+            // ventasController.actualizarDatos(productosData, importeTotal);
+            // ventasController.cargarProductos(); // Load the updated products from the database
 
             Stage stage = (Stage) tablaDetallesVenta.getScene().getWindow();
             stage.setScene(scene);
@@ -373,7 +414,6 @@ public class CompraController {
                 transaction.commit();
 
             } catch (Exception e) {
-                e.printStackTrace();
                 mostrarAlertaError("Error al actualizar inventario",
                         "Ocurrió un error al actualizar el inventario. Por favor, intente nuevamente.");
             } finally {
@@ -428,7 +468,7 @@ public class CompraController {
             document.open();
 
             // Agregar logo de la empresa
-            String rutaLogo = "C:\\Users\\joshu\\Documents\\git proyects\\PuntoDeVenta\\carniceria\\src\\main\\java\\com\\app\\controllers\\Ventas\\ticket\\LOGO.png";
+            String rutaLogo = "C:\\Users\\joshu\\Documents\\git proyects\\PuntoDeVenta\\carniceria\\src\\main\\java\\com\\app\\controllers\\Ventas\\LOGO.png";
             Image logo = Image.getInstance(rutaLogo);
             logo.scaleToFit(100, 100); // Ajusta el tamaño del logo según tus necesidades
             logo.setAlignment(Element.ALIGN_CENTER);
@@ -442,49 +482,78 @@ public class CompraController {
             textoIzquierda.setAlignment(Element.ALIGN_CENTER);
             textoIzquierda.setLeading(1f, 1f);
             document.add(textoIzquierda);
-        
 
             textoIzquierda = new Paragraph("No. ticket: " + numeroTicket,
                     new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIzquierda.setAlignment(Element.ALIGN_RIGHT);
+            textoIzquierda.setAlignment(Element.ALIGN_LEFT);
             textoIzquierda.setLeading(1f, 1f);
             document.add(textoIzquierda);
 
             textoIzquierda = new Paragraph(
                     "Fecha: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(venta.getFecha()),
                     new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIzquierda.setAlignment(Element.ALIGN_RIGHT);
+            textoIzquierda.setAlignment(Element.ALIGN_LEFT);
             textoIzquierda.setLeading(1f, 1f);
             document.add(textoIzquierda);
 
             Paragraph lineaSeparadora = new Paragraph(
                     "________________________________________________________________________________",
                     new Font(Font.FontFamily.COURIER, 4, Font.BOLD));
+
             lineaSeparadora.setAlignment(Element.ALIGN_CENTER);
             lineaSeparadora.setLeading(1f, 1f);
             document.add(lineaSeparadora);
 
-            // Agregar tabla de detalles de venta
             PdfPTable tablaDetalles = new PdfPTable(3);
-            tablaDetalles.setWidths(new float[] { 0.2f, 0.6f, 0.2f }); // Ajusta los anchos de las columnas según tus
-                                                                       // necesidades
-            tablaDetalles.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            // Obtener el ancho disponible para la tabla
+            float anchoHoja = 200f;
+            float anchoDisponible = anchoHoja - document.leftMargin() - document.rightMargin();
+
+            // Establecer el ancho total de la tabla al ancho disponible
+            tablaDetalles.setTotalWidth(anchoDisponible);
+            tablaDetalles.setLockedWidth(true);
+
+            // Ajustar los anchos proporcionales de las columnas
+            tablaDetalles.setWidths(new float[] { 0.4f, 0.4f, 0.3f });
+
+            tablaDetalles.setHorizontalAlignment(Element.ALIGN_LEFT);
             tablaDetalles.getDefaultCell().setBorder(0);
 
             PdfPCell cellDerecha = new PdfPCell();
             cellDerecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
             cellDerecha.setBorder(0);
             cellDerecha.setLeading(0.5f, 0.8f);
-            cellDerecha.setPaddingRight(4f);
 
             PdfPCell cellIzquierda = new PdfPCell();
             cellIzquierda.setHorizontalAlignment(Element.ALIGN_LEFT);
             cellIzquierda.setLeading(0.5f, 0.8f);
             cellIzquierda.setBorder(0);
 
+            // Agregar cabeceras a la tabla
+            PdfPCell cabeceraCantidad = new PdfPCell(
+                    new Phrase("Cantidad:", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
+            cabeceraCantidad.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cabeceraCantidad.setBorder(0);
+            tablaDetalles.addCell(cabeceraCantidad);
+
+            PdfPCell cabecerapDescripcion = new PdfPCell(
+                    new Phrase("Descripción", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
+            cabecerapDescripcion.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cabecerapDescripcion.setBorder(0);
+            tablaDetalles.addCell(cabecerapDescripcion);
+
+            PdfPCell cabeceraMonto = new PdfPCell(new Phrase("Monto", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
+            cabeceraMonto.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            cabeceraMonto.setBorder(0);
+            tablaDetalles.addCell(cabeceraMonto);
+
+            // Agregar los detalles de la venta
             for (DetallesVenta detalle : venta.getDetalles()) {
                 cellDerecha.setPhrase(
                         new Phrase(detalle.getCantidad() + "Kg", new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
+                cellDerecha.setPaddingRight(0f);
+                cellDerecha.setHorizontalAlignment(Element.ALIGN_LEFT); // Eliminar el espacio a la derecha
                 tablaDetalles.addCell(cellDerecha);
 
                 String descripcionProducto = detalle.getProducto().getNombre();
@@ -494,18 +563,13 @@ public class CompraController {
 
                 cellDerecha.setPhrase(new Phrase(formatoDinero.format(detalle.getTotal()),
                         new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
+                cellDerecha.setPaddingRight(0f);
+                cellDerecha.setHorizontalAlignment(Element.ALIGN_RIGHT); // Eliminar el espacio a la derecha
                 tablaDetalles.addCell(cellDerecha);
             }
 
             document.add(tablaDetalles);
             document.add(lineaSeparadora);
-
-            // Agregar total, pago y cambio
-            // Paragraph textoTotal = new Paragraph("TOTAL: " + formatoDinero.format(venta.getTotal()),
-            //         new Font(Font.FontFamily.COURIER, 10, Font.BOLD));
-            // textoTotal.setAlignment(Element.ALIGN_CENTER);
-            // textoTotal.setLeading(1f, 1f);
-            // document.add(textoTotal);
 
             String montoIngresadoTexto = insertarPagoTextField.getText();
             BigDecimal montoIngresado;
@@ -521,21 +585,34 @@ public class CompraController {
 
             BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
 
-            // Formatear monto ingresado y cambio como texto con formato de moneda
+            // Calcular el nuevo total con el IVA incluido
+            BigDecimal iva = venta.getTotal().multiply(new BigDecimal("0.16"));
+            BigDecimal nuevoTotal = venta.getTotal().add(iva);
+
+            // Formatear monto ingresado, cambio, IVA y nuevo total como texto con formato
+            // de moneda
             String montoIngresadoFormateado = formatoDinero.format(montoIngresado.doubleValue());
             String cambioFormateado = formatoDinero.format(cambio.doubleValue());
+            String ivaFormateado = formatoDinero.format(iva.doubleValue());
+            String nuevoTotalFormateado = formatoDinero.format(nuevoTotal.doubleValue());
 
             Paragraph pagoYCambio = new Paragraph();
             pagoYCambio.add(new Chunk("Su Pago: " + montoIngresadoFormateado + "\n",
-                    new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
+                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
             pagoYCambio.add(
-                    new Chunk("Su Cambio: " + cambioFormateado, new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
-            pagoYCambio.setAlignment(Element.ALIGN_RIGHT);
+                    new Chunk("Su Cambio: " + cambioFormateado,
+                            new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
+            pagoYCambio.setAlignment(Element.ALIGN_LEFT);
             pagoYCambio.setLeading(1f, 1f);
             document.add(pagoYCambio);
 
+            Paragraph textoIVA = new Paragraph("IVA: " + ivaFormateado,
+                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
+            textoIVA.setAlignment(Element.ALIGN_LEFT);
+            textoIVA.setLeading(1f, 1f);
+            document.add(textoIVA);
 
-            Paragraph textoTotal = new Paragraph("TOTAL: " + formatoDinero.format(venta.getTotal()),
+            Paragraph textoTotal = new Paragraph("TOTAL: " + nuevoTotalFormateado,
                     new Font(Font.FontFamily.COURIER, 10, Font.BOLD));
             textoTotal.setAlignment(Element.ALIGN_CENTER);
             textoTotal.setLeading(1f, 1f);
@@ -570,7 +647,6 @@ public class CompraController {
 
 
 
-
     private void guardarMovimiento(Movimientos movimiento) {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
@@ -586,6 +662,38 @@ public class CompraController {
 
         entityManager.close();
         emf.close();
+    }
+
+    private void printTicket() {
+        try {
+            generarPDF(); // Generar el PDF antes de imprimirlo
+
+            // Obtener la ruta del archivo PDF generado
+            String numeroTicket = venta.getTicket();
+            String nombreArchivo = "comprobante_" + numeroTicket + ".pdf";
+
+            FileInputStream psStream = new FileInputStream(nombreArchivo);
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+
+            if (service == null) {
+                System.out.println("No se encontró ninguna impresora disponible.");
+                return;
+            }
+
+            Doc myDoc = new SimpleDoc(psStream, flavor, null);
+            DocPrintJob job = service.createPrintJob();
+            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+            pras.add(new Copies(1));
+            job.print(myDoc, pras);
+        } catch (FileNotFoundException e) {
+            mostrarAlertaError("Error al imprimir el ticket",
+                    "No se encontró el archivo PDF. Por favor, genere el PDF primero.");
+            e.printStackTrace();
+        } catch (PrintException e) {
+            mostrarAlertaError("Error al imprimir el ticket", "Ocurrió un error al imprimir el ticket.");
+            e.printStackTrace();
+        }
     }
 
 }

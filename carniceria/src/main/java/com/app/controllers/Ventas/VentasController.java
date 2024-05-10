@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.app.models.Productos;
+import com.ibm.icu.text.DecimalFormat;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -224,17 +225,22 @@ public class VentasController {
         Platform.runLater(() -> btnbuscarcode1.requestFocus());
     }
 
-    public void actualizarTotalImporte() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Productos producto : productosAgregados) {
-            BigDecimal cantidad = producto.getCantidad();
-            BigDecimal precio = producto.getPrecio();
-            BigDecimal subtotal = cantidad.multiply(precio);
-            total = total.add(subtotal);
-        }
-        importeTotal = total;
-        totalImporteLabel.setText(importeTotal.toString());
+public void actualizarTotalImporte() {
+    BigDecimal total = BigDecimal.ZERO;
+    for (Productos producto : productosAgregados) {
+        BigDecimal cantidad = producto.getCantidad();
+        BigDecimal precio = producto.getPrecio();
+        BigDecimal subtotal = cantidad.multiply(precio);
+        total = total.add(subtotal);
     }
+    importeTotal = total;
+    
+    // Formatear el importe total con dos decimales y el signo de dólar
+    DecimalFormat formato = new DecimalFormat("$#,##0.00");
+    String importeFormateado = formato.format(importeTotal);
+    
+    totalImporteLabel.setText(importeFormateado);
+}
 
     private Productos buscarProductoPorCodigo(Long codigoProducto) {
         Configuration configuration = new Configuration().configure();

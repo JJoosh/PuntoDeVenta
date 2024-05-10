@@ -15,6 +15,8 @@ module com.carniceria{
 
     requires org.jpos.jpos;
 
+    requires java.desktop;
+
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;
     opens com.app.controllers.Ventas;
