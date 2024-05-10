@@ -114,8 +114,8 @@ private void guardarVenta() {
 
     
     LocalDateTime localDateTime = LocalDateTime.now();
-venta.setFecha(localDateTime);
-    venta.setTotal(importeTotal.floatValue());
+    venta.setFecha(localDateTime);
+    venta.setTotal(importeTotal);
 
     // Agregar los detalles de la venta
     for (Productos producto : productosData) {

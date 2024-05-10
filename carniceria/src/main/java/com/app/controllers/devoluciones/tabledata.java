@@ -10,7 +10,7 @@ public class tabledata {
     @Column(name = "cantidad")
     private BigDecimal cantidad;
     @Column(name = "total")
-    private float total;
+    private BigDecimal total;
     @Column(name = "fecha")
     private String fecha;
     @Column(name = "ticket1")
@@ -20,7 +20,7 @@ public class tabledata {
     @Column(name = "detalle")
     private Long detalle;
 
-    public tabledata(String ticket12, String fechaFormateada, float total, BigDecimal cantidad, String nombre, Long detalle) {
+    public tabledata(String ticket12, String fechaFormateada, BigDecimal total, BigDecimal cantidad, String nombre, Long detalle) {
         this.ticket1 = ticket12;
         this.fecha = fechaFormateada;
         this.total = total;
@@ -45,11 +45,11 @@ public class tabledata {
         this.fecha = fecha;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 

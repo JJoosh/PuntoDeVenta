@@ -242,7 +242,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                         Long idVenta = venta.getId();
                         LocalDateTime fechaVenta = venta.getFecha();
                         String ticket = venta.getTicket();
-                        float totalVenta = venta.getTotal();
+                        BigDecimal totalVenta = venta.getTotal();
 
                         Ventas ventasn = new Ventas(idVenta, ticket, fechaVenta, totalVenta);
                         ventasfiltrado.add(ventasn);
@@ -284,7 +284,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
         for (Ventas venta : ventasfiltrado) {
             String ticket1 = venta.getTicket();
             LocalDateTime fecha = venta.getFecha();
-            float total = venta.getTotal();
+            BigDecimal total = venta.getTotal();
 
             String nombre = "";
             Long id=null;
@@ -369,8 +369,8 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
 
             BigDecimal precioporProducto=producto.getPrecio();
             BigDecimal resultadoDetalle = precioporProducto.multiply(nuevaCantidad);
-            float floatventa = resultadoDetalle.floatValue();
-            venta.setTotal(floatventa);
+            
+            venta.setTotal(resultadoDetalle);
             detalleVenta.setTotal(resultadoDetalle);
             detalleVenta.setCantidad(nuevaCantidad);
             entityManager.merge(detalleVenta);

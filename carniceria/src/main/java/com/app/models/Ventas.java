@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "Ventas")
 public class Ventas {
@@ -17,12 +19,12 @@ public class Ventas {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime fecha;
 
-    private float total;
+    private BigDecimal total;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallesVenta> detalles = new ArrayList<>();
 
-    public Ventas(Long id, String ticket, LocalDateTime fecha, float total) {
+    public Ventas(Long id, String ticket, LocalDateTime fecha, BigDecimal total) {
         this.id = id;
         this.ticket = ticket;
         this.fecha = fecha;
@@ -56,11 +58,11 @@ public class Ventas {
         this.fecha = fecha;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
