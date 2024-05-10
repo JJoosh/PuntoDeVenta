@@ -21,6 +21,7 @@ import javax.persistence.TypedQuery;
 import com.app.controllers.Producto;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Inventario.FXML_NewProducto;
+import com.app.controllers.Ventas.VentasController;
 import com.app.controllers.devoluciones.tabledata;
 
 import com.app.models.Categoria;
@@ -389,6 +390,13 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
     private void enviar(ActionEvent event) {
         proceso();
     }
+
+    @FXML
+    private void regresarventa(ActionEvent event) {
+        regresar();
+    }
+
+
     private void proceso(){
 tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
         LocalDateTime fechaHoraActual = LocalDateTime.now();
@@ -565,6 +573,21 @@ try {
         if (event.getCode() == KeyCode.F2) {
             abrir();
         }
-        
+        if (event.getCode() == KeyCode.F3) {
+            regresar();
+        }
+    }
+    public void regresar(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            Parent root = loader.load();
+            VentasController newProductoController = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("dff");
+        }
     }
 }
