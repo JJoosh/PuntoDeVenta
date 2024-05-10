@@ -238,7 +238,7 @@ public class CompraController {
             // Crear una instancia de la clase Ventas
             Ventas venta = new Ventas();
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
-            venta.setFecha(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            venta.setFecha(LocalDateTime.now());
             venta.setTotal(total);
 
             for (Productos producto : productosData) {

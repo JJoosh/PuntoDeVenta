@@ -53,6 +53,14 @@ public class Productos {
     public Productos(){
         
     }
+    
+    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
+        this.nombre = nombre;
+
+        this.categoria = categoria;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
     public Productos(Productos producto) {
         this.id = producto.id;
         this.nombre = producto.nombre;
@@ -61,7 +69,11 @@ public class Productos {
         this.precio = producto.precio;
     }
 
-  
+    public Productos(String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
+        this.nombre = nombre;
+        this.costo=costo;
+
+    }
     public Productos(long id, String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio,  BigDecimal productosBajos_inventario) {
         this.id=id;
         this.nombre = nombre;

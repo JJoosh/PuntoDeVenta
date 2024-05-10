@@ -22,11 +22,13 @@ module com.carniceria{
     opens com.app.controllers.Ventas;
     opens com.app.controllers.Login;
     opens com.app.controllers.Inventario;
-    
+    opens com.app.controllers.devoluciones to javafx.fxml;
     exports com.app.controllers.Inventario;
 
     exports com.app.controllers;
     exports com.app.controllers.Ventas;
     exports com.app.controllers.Login;
+    exports com.app.controllers.devoluciones;
+
     
 }
