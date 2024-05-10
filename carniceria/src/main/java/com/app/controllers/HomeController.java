@@ -11,6 +11,8 @@ import com.app.controllers.devoluciones.FXMLDevolucionesController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -40,6 +42,22 @@ public class HomeController implements Initializable {
         stage.setResizable(false);
    
     }
+    @FXML
+    public void cerrar() {
+        this.stage.close();
+        Scene scene; // Agrega un punto y coma aquí
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            scene = new Scene(root, 640, 480);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     @FXML
     private void handleKeyPressed(KeyEvent event) {
