@@ -477,6 +477,9 @@ tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
     }
     @FXML
     private void vertabla(ActionEvent event) {
+        abrir();
+    }
+    private void abrir(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLTablaDevolucion.fxml"));
             Parent root = loader.load();
@@ -552,13 +555,12 @@ try {
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.isControlDown() && event.getCode() == KeyCode.D) {
-           System.out.println("sijala f1");
+        if (event.getCode() == KeyCode.F1) {
+           proceso();
         }
 
-        if (event.getCode() == KeyCode.F3) {
-            
-            System.out.println("sijala f3");
+        if (event.getCode() == KeyCode.F2) {
+            abrir();
         }
         
     }

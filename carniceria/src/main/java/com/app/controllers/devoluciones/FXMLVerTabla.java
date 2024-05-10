@@ -38,6 +38,9 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -63,7 +66,8 @@ public class FXMLVerTabla{
     List<Devoluciones> devolucion;
     private ObservableList<Devoluciones> DevolucionData;
     List<Devoluciones> devolucionFiltrado;
-    
+    @FXML 
+    private Pane rootPane;
 
     @FXML
 
@@ -76,6 +80,11 @@ public class FXMLVerTabla{
         devolucionFiltrado = new ArrayList<>(); // Inicializar la lista
         compararTicketConTextField(devolucion);
         mostartabla(devolucion);
+        if (rootPane != null) {
+            rootPane.setOnKeyPressed(this::handleKeyPressed);
+        } else {
+            // Manejar el caso en el que rootPane sea nulo
+        }
     }
 
     public void compararTicketConTextField(List<Devoluciones> devolucion) {
@@ -141,6 +150,16 @@ public class FXMLVerTabla{
     }
 @FXML
     private void regresar(ActionEvent event) {
+        regresara();
+    }
+@FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.F1) {
+           regresara();
+        }
+        
+    }
+    public void regresara(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Parent root = loader.load();
@@ -151,5 +170,4 @@ public class FXMLVerTabla{
             ex.printStackTrace();
         }
     }
-
 }

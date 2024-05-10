@@ -6,36 +6,34 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="793.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
    <children>
-      <Label layoutX="36.0" layoutY="35.0" text="Devoluciones">
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: BLACK;" stylesheets="@../css/Fondo.css" text="Devoluciones">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="79.0" text="Ticket" />
-      <TextField fx:id="ticket" layoutX="104.0" layoutY="75.0" />
-      <TableView fx:id="tabladev" layoutX="25.0" layoutY="113.0" prefHeight="300.0" prefWidth="741.0">
+      <Label id="Label_letras" layoutX="37.0" layoutY="150.0" stylesheets="@../css/Fondo.css" text="Ingrese el número ticker de compra:" />
+      <TextField fx:id="ticket" layoutX="624.0" layoutY="156.0" prefHeight="42.0" prefWidth="420.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <TableView fx:id="tabladev" layoutX="115.0" layoutY="258.0" prefHeight="338.0" prefWidth="1101.0">
          <columns>
-            <TableColumn fx:id="ticket1" prefWidth="70.39992904663086" text="Ticket" />
-            <TableColumn fx:id="fecha" prefWidth="229.59999084472656" text="Fecha" />
-            <TableColumn fx:id="nombre" prefWidth="199.20001220703125" text="Nombre del producto" />
-            <TableColumn fx:id="cantidad" minWidth="0.0" prefWidth="91.20001220703125" text="Cantidad" />
-            <TableColumn fx:id="total" prefWidth="63.199951171875" text="Total" />
-            <TableColumn fx:id="detalles" prefWidth="89.60009765625" text="Id detalle" />
+            <TableColumn fx:id="ticket1" prefWidth="138.66666412353516" text="Ticket" />
+            <TableColumn fx:id="fecha" prefWidth="151.9999542236328" text="Fecha" />
+            <TableColumn fx:id="nombre" prefWidth="286.0" text="Nombre del producto" />
+            <TableColumn fx:id="cantidad" minWidth="0.0" prefWidth="163.33331298828125" text="Cantidad" />
+            <TableColumn fx:id="total" prefWidth="178.6666259765625" text="Total" />
+            <TableColumn fx:id="detalles" prefWidth="186.66656494140625" text="ID del detalle" />
          </columns>
       </TableView>
-      <Label layoutX="51.0" layoutY="443.0" text="Cantidad" />
-      <Button layoutX="165.0" layoutY="590.0" mnemonicParsing="false" onAction="#enviar" text="Insertar" />
-      <Label layoutX="47.0" layoutY="552.0" prefHeight="17.0" prefWidth="56.0" text="Motivo" />
-      <TextArea fx:id="textoArea" layoutX="119.0" layoutY="477.0" prefHeight="54.0" prefWidth="241.0" />
-      <Spinner fx:id="spinner" editable="true" layoutX="118.0" layoutY="439.0" />
-      <Button layoutX="413.0" layoutY="75.0" mnemonicParsing="false" onAction="#vertabla" text="Tabla Devoluciones" />
-      <ComboBox fx:id="motivos" layoutX="119.0" layoutY="548.0" prefWidth="150.0" />
+      <Label id="Label_letras" layoutX="115.0" layoutY="671.0" stylesheets="@../css/Fondo.css" text="Cantidad a devolver:" />
+      <Button layoutX="1053.0" layoutY="712.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar" />
+      <Label id="Label_letras" layoutX="115.0" layoutY="767.0" prefHeight="41.0" prefWidth="393.0" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
+      <Spinner fx:id="spinner" editable="true" layoutX="474.0" layoutY="662.0" prefHeight="50.0" prefWidth="169.0" />
+      <Button layoutX="1103.0" layoutY="152.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="246.0" stylesheets="@../css/Fondo.css" text="Tabla de devoluciones" />
+      <ComboBox fx:id="motivos" layoutX="525.0" layoutY="771.0" prefHeight="34.0" prefWidth="361.0" style="-fx-border-color: gray; -fx-background-color: DAE5F0;" />
    </children>
 </Pane>
