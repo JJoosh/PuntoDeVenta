@@ -55,14 +55,14 @@
 #compra_cambio{
     -fx-text-fill:#DC0901;
     -fx-font-family: "Arial";
-    -fx-font-size: 50px;
+    -fx-font-size: 45px;
     -fx-font-weight: bold;
 }
 
 #compra_total{
     -fx-text-fill:#011ADB;
     -fx-font-family: "Arial";
-    -fx-font-size: 50px;
+    -fx-font-size: 45px;
     -fx-font-weight: bold;
 }
 
@@ -113,7 +113,7 @@
         -fx-font-size: 20px;
     }
 
-/Panel del costado/
+
 .anchor-pane {
     -fx-background-color: #ac3d45;
 }
@@ -127,7 +127,7 @@
 .label {
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
-    -fx-font-size: 20px;
+    -fx-font-size: 25px;
 }
 
 .Label_asd {
@@ -178,8 +178,7 @@
     -fx-text-fill: #ffffff;
     -fx-font-family: Arial;
     -fx-font-weight: bold;
-    -fx-font-size: 25px;
-    
+    -fx-font-size: 20px;
 }
 
 
@@ -200,7 +199,7 @@
 
 
 
-/Acciones de los botones/
+
 .button:pressed {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #573C3E;

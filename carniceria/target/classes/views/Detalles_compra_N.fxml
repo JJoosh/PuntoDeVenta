@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
    <children>
-      <Label id="Titulo_modulo" layoutY="-4.0" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" text="Detalles de compra">
+      <Label id="Titulo_modulo" layoutY="-4.0" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Detalles de compra">
          <font>
             <Font size="45.0" />
          </font>
@@ -23,7 +23,7 @@
          </stylesheets>
       </Label>
       <AnchorPane layoutY="99.0" prefHeight="804.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
-      <Button id="atras" fx:id="btn_atras" layoutX="108.0" layoutY="126.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
+      <Button id="atras" fx:id="btn_atras" layoutX="79.0" layoutY="123.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
       <Label id="osc" layoutX="120.0" layoutY="595.0" prefHeight="47.0" prefWidth="371.0" stylesheets="@../css/Fondo.css" text="Total de la compra:">
          <font>
             <Font name="Arial Black" size="35.0" />
@@ -39,20 +39,19 @@
             <Font name="Arial Black" size="35.0" />
          </font>
       </Label>
-      <Button id="compra_finalizar" fx:id="compra_finalizar" layoutX="1259.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
-      <Button id="compra_borrar" fx:id="compra_borrar" layoutX="953.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="65.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
-      <Label id="compra_total" fx:id="compra_total" layoutX="514.0" layoutY="595.0" prefHeight="47.0" prefWidth="135.0" stylesheets="@../css/Fondo.css" text="0.0" />
-      <Label id="compra_cambio" fx:id="compra_cambio" layoutX="320.0" layoutY="751.0" prefHeight="47.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="0.0" />
-      <TextField id="compra_ingreso" fx:id="compra_ingreso" layoutX="305.0" layoutY="677.0" prefHeight="47.0" prefWidth="326.0" />
-      <ScrollPane layoutX="143.0" layoutY="201.0" prefHeight="349.0" prefWidth="1380.0">
+      <Button id="compra_finalizar" fx:id="compra_finalizar" layoutX="1091.0" layoutY="689.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#finalizarCompra" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
+      <Button id="compra_borrar" fx:id="borrararticulo" layoutX="770.0" layoutY="689.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#borrarArticuloSeleccionado" prefHeight="65.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
+      <Label id="compra_total" fx:id="totalImporteLabel" layoutX="514.0" layoutY="595.0" prefHeight="47.0" prefWidth="135.0" stylesheets="@../css/Fondo.css" text="0.0" />
+      <Label id="compra_cambio" fx:id="cambioLabel" layoutX="320.0" layoutY="751.0" prefHeight="47.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="0.0" />
+      <TextField id="insertarPagoTextField" fx:id="insertarPagoTextField" layoutX="305.0" layoutY="677.0" onAction="#calcularCambio" prefHeight="47.0" prefWidth="326.0" />
+      <ScrollPane layoutX="143.0" layoutY="201.0" prefHeight="349.0" prefWidth="1201.0">
          <content>
-            <TableView prefHeight="344.0" prefWidth="1376.0">
+            <TableView fx:id="tablaDetallesVenta" prefHeight="344.0" prefWidth="1195.0">
                <columns>
-                  <TableColumn prefWidth="307.3333486318588" text="Producto" />
-                  <TableColumn prefWidth="292.00006103515625" text="Precio" />
-                  <TableColumn editable="false" prefWidth="290.66668701171875" resizable="false" sortable="false" text="Cantidad" />
-                  <TableColumn prefWidth="250.66668701171875" text="Peso" />
-                  <TableColumn prefWidth="238.0" text="Total" />
+                  <TableColumn fx:id="nombreProductoColumn" prefWidth="292.0000356435776" text="Producto" />
+                  <TableColumn fx:id="precioColumn" prefWidth="346.66668701171875" text="Precio" />
+                  <TableColumn fx:id="cantidadColumn" editable="false" minWidth="0.0" prefWidth="290.0" resizable="false" sortable="false" text="Cantidad" />
+                  <TableColumn fx:id="totalColumn" prefWidth="267.33343505859375" resizable="false" text="Total" />
                </columns>
             </TableView>
          </content>
