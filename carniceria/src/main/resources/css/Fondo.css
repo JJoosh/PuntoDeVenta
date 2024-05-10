@@ -48,28 +48,28 @@
 #importe_total{
     -fx-text-fill:#011ADB;
     -fx-font-family: "Arial";
-    -fx-font-size: 50px;
+    -fx-font-size: 70px;
     -fx-font-weight: bold;
 }
 
 #compra_cambio{
     -fx-text-fill:#DC0901;
     -fx-font-family: "Arial";
-    -fx-font-size: 40px;
+    -fx-font-size: 50px;
     -fx-font-weight: bold;
 }
 
 #compra_total{
     -fx-text-fill:#011ADB;
     -fx-font-family: "Arial";
-    -fx-font-size: 40px;
+    -fx-font-size: 50px;
     -fx-font-weight: bold;
 }
 
 #osc {
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
-    -fx-font-size: 28px;
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
 }
 
@@ -104,8 +104,16 @@
     -fx-font-weight: bold;
 }
 
+#boton_user{
+        -fx-background-color: white;
+        -fx-text-fill: black;
+        -fx-font-family: Arial;
+        -fx-font-weight: bold;
+        -fx-max-height: 75px;
+        -fx-font-size: 20px;
+    }
 
-/*Panel del costado*/
+/Panel del costado/
 .anchor-pane {
     -fx-background-color: #ac3d45;
 }
@@ -170,6 +178,8 @@
     -fx-text-fill: #ffffff;
     -fx-font-family: Arial;
     -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    
 }
 
 
@@ -179,6 +189,8 @@
     -fx-text-fill: #ffffff;
     -fx-font-family: Arial;
     -fx-font-weight: bold;
+    -fx-max-height: 75px;
+    -fx-font-size: 20px;
 }
 
 #boton_cs:hover{
@@ -186,15 +198,9 @@
     -fx-text-fill: #ffffff;
 }
 
-/*Boton de cambio de usuario*/
-#cambio_user{
-        -fx-background-color: white;
-        -fx-text-fill: black;
-        -fx-font-family: Arial;
-        -fx-font-weight: bold;
-    }
 
-/*Acciones de los botones*/
+
+/Acciones de los botones/
 .button:pressed {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #573C3E;
@@ -203,6 +209,7 @@
 .button:hover {
     -fx-background-color: #FFA500;
     -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20px;
 }
 
 
@@ -214,11 +221,62 @@
 #Label_usuario{
     -fx-text-fill:#ffffff;
     -fx-font-family: "Arial";
-    -fx-font-size: 20px;
+    -fx-font-size: 30px;
 }
 
 #atras{
     -fx-text-fill:#ffffff;
     -fx-font-family: "Arial";
-    -fx-font-size: 30px;
+    -fx-font-size: 20px;
+    -fx-background-color: #AC3D45;
+    -fx-border-color: WHITE;
+    -fx-background-radius: 15px;
+}
+
+#atras:hover{
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 15px;
+    -fx-background-color: #380949;
+
+}
+
+#Devo{
+    -fx-text-fill:black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #92E583;
+}
+
+#Devo:hover{
+    -fx-text-fill:white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-background-color: #105005;
+}
+
+#inv_agregar:hover , #inv_eliminar:hover , #inv_modificar:hover, #bventas_cancelar:hover {
+    -fx-background-color: #064658;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
+}
+
+.pane{
+    -fx-background-position-x: 50%
+}
+
+#Label_letras{
+    -fx-text-fill:#000000;
+    -fx-font-family: "Arial";
+    -fx-font-size: 35px;
+}
+
+.combo-box {
+    -fx-font-size: 25px;
+}
+
+.text-field {
+    -fx-font-size: 20px;
 }

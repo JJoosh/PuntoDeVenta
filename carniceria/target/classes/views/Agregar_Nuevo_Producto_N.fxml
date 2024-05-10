@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;">
+         <children>
+            <TextField id="pro_codigo" fx:id="bproducto_guardar" layoutX="863.0" layoutY="178.0" prefHeight="41.0" prefWidth="169.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" />
+            <TextField id="pro_descripcion" fx:id="pro_descripcion" layoutX="863.0" layoutY="254.0" prefHeight="41.0" prefWidth="251.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" />
+            <TextField id="pro_costo" fx:id="pro_costo" layoutX="863.0" layoutY="334.0" prefHeight="41.0" prefWidth="154.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
+            <TextField id="pro_venta" fx:id="pro_venta" layoutX="862.0" layoutY="419.0" prefHeight="41.0" prefWidth="154.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: CFDFEA;" />
+            <ComboBox id="cat_agregar" fx:id="cat_agregar" layoutX="862.0" layoutY="498.0" prefHeight="41.0" prefWidth="154.0" promptText="Cerdo" />
+            <Spinner id="pro_min" fx:id="pro_min" layoutX="1278.0" layoutY="602.0" prefHeight="41.0" prefWidth="147.0" />
+            <Button id="bproducto_guardar" fx:id="bproducto_guardar" layoutX="739.0" layoutY="764.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="286.0" text="Guardar Producto">
+               <stylesheets>
+                  <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+                  <URL value="@../css/Fondo.css" />
+               </stylesheets>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Spinner id="pro_cantidad" fx:id="pro_cant" layoutX="621.0" layoutY="592.0" prefHeight="41.0" prefWidth="147.0" />
+         </children>
+      </AnchorPane>
+      <Label id="Label_letras" layoutX="591.0" layoutY="248.0" stylesheets="@../css/Fondo.css" text="Descripción">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="591.0" layoutY="172.0" stylesheets="@../css/Fondo.css" text="Código">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="591.0" layoutY="334.0" stylesheets="@../css/Fondo.css" text="Precio costo">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="356.0" layoutY="595.0" stylesheets="@../css/Fondo.css" text="Precio venta">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="197.0" layoutY="175.0" />
+      <Label id="Label_letras" layoutX="591.0" layoutY="498.0" stylesheets="@../css/Fondo.css" text="Categoría">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="939.0" layoutY="599.0" stylesheets="@../css/Fondo.css" text="Cantidad a agregar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="584.0" layoutY="402.0" stylesheets="@../css/Fondo.css" text="Mínimo">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Agregar nuevo producto">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="-4.0" layoutY="105.0" prefHeight="796.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
+      <Button id="atras" fx:id="btn_atras" layoutX="76.0" layoutY="135.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
+   </children>
+</Pane>
