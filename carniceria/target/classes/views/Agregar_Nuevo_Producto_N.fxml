@@ -14,13 +14,10 @@
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;">
          <children>
-            <TextField id="pro_codigo" fx:id="bproducto_guardar" layoutX="821.0" layoutY="164.0" prefHeight="41.0" prefWidth="169.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" />
-            <TextField id="pro_descripcion" fx:id="pro_descripcion" layoutX="822.0" layoutY="241.0" prefHeight="41.0" prefWidth="251.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" />
-            <TextField id="pro_costo" fx:id="pro_costo" layoutX="821.0" layoutY="314.0" prefHeight="41.0" prefWidth="154.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
-            <TextField id="pro_venta" fx:id="pro_venta" layoutX="821.0" layoutY="399.0" prefHeight="41.0" prefWidth="154.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: CFDFEA;" />
-            <ComboBox id="cat_agregar" fx:id="cat_agregar" layoutX="821.0" layoutY="485.0" prefHeight="41.0" prefWidth="154.0" promptText="Cerdo" />
-            <Spinner id="pro_min" fx:id="pro_min" layoutX="1278.0" layoutY="602.0" prefHeight="41.0" prefWidth="147.0" />
-            <Button id="bproducto_guardar" fx:id="bproducto_guardar" layoutX="678.0" layoutY="723.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="286.0" text="Guardar Producto">
+            <TextField fx:id="bproducto_guardar" layoutX="585.0" layoutY="166.0" prefHeight="42.0" prefWidth="281.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
+            <TextField fx:id="pro_descripcion" layoutX="589.0" layoutY="242.0" prefHeight="42.0" prefWidth="349.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
+            <ComboBox id="cat_agregar" fx:id="cat_agregar" layoutX="1153.0" layoutY="249.0" prefHeight="41.0" prefWidth="222.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" />
+            <Button id="bproducto_guardar" fx:id="bproducto_guardar" layoutX="678.0" layoutY="768.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="286.0" text="Guardar Producto">
                <stylesheets>
                   <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
@@ -29,45 +26,46 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Spinner id="pro_cantidad" fx:id="pro_cant" layoutX="621.0" layoutY="592.0" prefHeight="41.0" prefWidth="147.0" />
-            <Label id="Label_letras" layoutX="525.0" layoutY="164.0" stylesheets="@../css/Fondo.css" text="Código">
+            <Spinner id="pro_cantidad" layoutX="590.0" layoutY="545.0" prefHeight="57.0" prefWidth="286.0" />
+            <Label id="Label_letras" layoutX="284.0" layoutY="166.0" stylesheets="@../css/Fondo.css" text="Código de barras">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="Label_letras" layoutX="525.0" layoutY="241.0" stylesheets="@../css/Fondo.css" text="Descripción">
+            <Label id="Label_letras" layoutX="284.0" layoutY="243.0" stylesheets="@../css/Fondo.css" text="Descripción">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="Label_letras" layoutX="525.0" layoutY="314.0" stylesheets="@../css/Fondo.css" text="Precio costo">
+            <Label id="Label_letras" layoutX="284.0" layoutY="475.0" stylesheets="@../css/Fondo.css" text="Precio costo">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="Label_letras" layoutX="528.0" layoutY="399.0" stylesheets="@../css/Fondo.css" text="Mínimo">
+            <Label id="Label_letras" layoutX="283.0" layoutY="650.0" stylesheets="@../css/Fondo.css" text="Cantidad mínima">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="Label_letras" layoutX="528.0" layoutY="485.0" stylesheets="@../css/Fondo.css" text="Categoría">
+            <Label id="Label_letras" layoutX="979.0" layoutY="243.0" stylesheets="@../css/Fondo.css" text="Categoría">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
+            <Label id="Label_letras" layoutX="284.0" layoutY="323.0" stylesheets="@../css/Fondo.css" text="Cantidad de cajas" />
+            <TextField layoutX="589.0" layoutY="323.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E2F4F3;" />
+            <Label id="Label_letras" layoutX="284.0" layoutY="398.0" stylesheets="@../css/Fondo.css" text="Peso por caja" />
+            <TextField layoutX="589.0" layoutY="398.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
+            <Label id="Label_letras" layoutX="283.0" layoutY="561.0" stylesheets="@../css/Fondo.css" text="Precio venta">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Spinner layoutX="589.0" layoutY="461.0" prefHeight="50.0" prefWidth="281.0" />
+            <Spinner id="pro_cantidad" fx:id="pro_cant" layoutX="590.0" layoutY="633.0" prefHeight="57.0" prefWidth="286.0" />
          </children>
       </AnchorPane>
-      <Label id="Label_letras" layoutX="356.0" layoutY="595.0" stylesheets="@../css/Fondo.css" text="Precio venta">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
       <Label layoutX="197.0" layoutY="175.0" />
-      <Label id="Label_letras" layoutX="939.0" layoutY="599.0" stylesheets="@../css/Fondo.css" text="Cantidad a agregar">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
       <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Agregar nuevo producto">
          <font>
             <Font size="30.0" />
