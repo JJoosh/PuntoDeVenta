@@ -18,21 +18,23 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 public class HomeController implements Initializable {
     @FXML
-    Pane rootPane;
+    Pane home;
 
+    @FXML
+    Pane menu_lateral;
     @FXML
     Label ventas;
     
    @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        rootPane.setOnKeyPressed(this::handleKeyPressed);
+        menu_lateral.setOnKeyPressed(this::handleKeyPressed);
     }
     
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.F5) {
-            abrirVentas();    
+        if (event.getCode() == KeyCode.F2) {
+            abrirInventario();   
             System.err.println("SE PRESIONO PERRA");
         }
 
@@ -44,17 +46,17 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void abrirVentas() {
+    public void abrirInventario() {
         try {
             // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
             Pane nuevoContenido = loader.load();
             
             // Obtener el controlador del nuevo contenido
-            VentasController inventarioController = loader.getController();
+            FXMLInventarioController inventarioController = loader.getController();
             
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
-            rootPane.getChildren().setAll(nuevoContenido);
+            home.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
         }

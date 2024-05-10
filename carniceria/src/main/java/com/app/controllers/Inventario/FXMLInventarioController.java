@@ -133,6 +133,7 @@ public class FXMLInventarioController implements Initializable {
             BigDecimal Cantidad=productoSeleccionado.getCantidad();
             BigDecimal Costo=productoSeleccionado.getCosto();
             Categoria categoria=productoSeleccionado.getCategoria();
+            BigDecimal pesoCaja=productoSeleccionado.getPesoCaja();
             
             
             try {
@@ -141,7 +142,7 @@ public class FXMLInventarioController implements Initializable {
                 
                 FXML_ModProducto modProductoController = loader.getController();
                 modProductoController.setInventarioController(this);
-                modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria());
+                modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria(), pesoCaja);
                 Scene scene = new Scene(root);
                 
                 Stage stage = new Stage();
@@ -178,6 +179,7 @@ public class FXMLInventarioController implements Initializable {
             newProductoController.setInventarioController(this);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            newProductoController.setStage(stage);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -260,7 +262,6 @@ public class FXMLInventarioController implements Initializable {
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.F5) {
             addInventario();
-        
         }
 
         if(event.getCode()==KeyCode.F6){
@@ -395,6 +396,7 @@ public class FXMLInventarioController implements Initializable {
             
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            newMovimientos.setStage(stage);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -492,6 +494,32 @@ public void productosBajos() {
     productosData.addAll(productosBajos);
 }
 
+
+public void ingresarCantidad(){
+    try {
+        Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VentanaProducto.fxml"));
+        Parent root = loader.load();
+        AddCantidadController cantidadController = loader.getController();
+        
+
+        String nombre=productoSeleccionado.getNombre();
+        BigDecimal pesoCaja=productoSeleccionado.getPesoCaja();
+        BigDecimal cantidad=productoSeleccionado.getCantidad();
+        long id=productoSeleccionado.getId();
+
+        cantidadController.setDatos(nombre, pesoCaja, cantidad, id);
+        cantidadController.setInventarioController(this);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        cantidadController.setStage(stage);
+        stage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 
 

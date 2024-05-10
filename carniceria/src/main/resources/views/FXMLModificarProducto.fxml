@@ -18,12 +18,15 @@
             <Label layoutX="149.0" layoutY="219.0" text="Precio:" />
             <TextField fx:id="id" layoutX="235.0" layoutY="125.0" />
             <Label layoutX="157.0" layoutY="142.0" text="ID" />
-            <TextField fx:id="cantidad" layoutX="235.0" layoutY="356.0" />
+            <TextField fx:id="cantidad" layoutX="235.0" layoutY="361.0" />
             <Label layoutX="143.0" layoutY="373.0" text="Cantidad" />
             <ComboBox fx:id="categoria" layoutX="225.0" layoutY="418.0" prefWidth="150.0" promptText="Categorias" />
             <Label layoutX="151.0" layoutY="301.0" text="Costo:" />
             <TextField fx:id="costo" layoutX="235.0" layoutY="297.0" />
             <Label layoutX="404.0" layoutY="364.0" text="KG" />
+            <TextField fx:id="pesoCaja" layoutX="235.0" layoutY="251.0" />
+            <Label layoutX="151.0" layoutY="255.0" text="Peso por caja" />
+            <Label layoutX="412.0" layoutY="255.0" text="KG" />
          </children></AnchorPane>
   </content>
 </TitledPane>

@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import javafx.scene.control.Alert;
 
 
@@ -45,6 +47,8 @@ public class Productos {
     @Column(name = "ProduBajos_Inventario")
     private BigDecimal productosBajos_inventario;
 
+    @Column(name = "Peso_Caja")
+    private BigDecimal peso_caja;
 
     public Productos(){
         
@@ -70,6 +74,13 @@ public class Productos {
 
     // Getters y setters
 
+    public BigDecimal getPesoCaja(){
+        return peso_caja;
+    }
+
+    public void setPesoCaja(BigDecimal peso_caja){
+        this.peso_caja=peso_caja;
+    }
     public Long getId() {
         return id;
     }
@@ -127,7 +138,7 @@ public class Productos {
         this.productosBajos_inventario=productosBajos;
     }
 
-    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio) {
+    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio, BigDecimal pesoCaja ) {
        
     
         Configuration configuration = new Configuration();
@@ -152,7 +163,7 @@ public class Productos {
                 producto.setCategoria(categoria);
                 producto.setCantidad(cantidad);
                 producto.setPrecio(precio);
-                
+                producto.setPesoCaja(pesoCaja);
                 entityManager.merge(producto);
                 
                 transaction.commit();
@@ -177,6 +188,39 @@ public class Productos {
             return categoria.getNombreCategoria();
         }
         return "";
+    }
+
+    public void actualizarCantidad(Long id, BigDecimal nuevaCantidad) {
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+        configuration.addAnnotatedClass(Productos.class);
+    
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+    
+            Productos producto = entityManager.find(Productos.class, id);
+            if (producto != null) {
+                producto.setCantidad(nuevaCantidad);
+                entityManager.merge(producto);
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
     }
     
 }

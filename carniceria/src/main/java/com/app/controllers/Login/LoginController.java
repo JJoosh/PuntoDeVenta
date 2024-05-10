@@ -47,9 +47,9 @@ public class LoginController {
         if (isAuthenticated) {
             try {
                 // Cargar la vista Ventas.fxml
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
                 Parent root = loader.load();                
-                FXMLInventarioController ventasController = loader.getController();
+                HomeController ventasController = loader.getController();
 
                 //ventasController.setNombreUsser(username);
                 Scene scene = new Scene(root);

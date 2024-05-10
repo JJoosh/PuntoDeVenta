@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,6 +53,8 @@ public class MovimientosController implements Initializable {
     @FXML private ComboBox<String> categorias;
     @FXML private ComboBox<String> boxMovimiento;
     @FXML private TextField fproducto;
+
+    private Stage stage;
 
     private ObservableList<Movimientos> tablaDevoluciones;
 
@@ -286,4 +289,12 @@ public class MovimientosController implements Initializable {
         e.printStackTrace();
     }
 }
+
+public void setStage(Stage stage){
+    this.stage=stage;
+}
+public void regresar(){
+    this.stage.close();
+}
+
 }

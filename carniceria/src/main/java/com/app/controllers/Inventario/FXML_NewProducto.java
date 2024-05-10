@@ -23,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class FXML_NewProducto {
     @FXML
@@ -37,16 +38,21 @@ public class FXML_NewProducto {
     private Spinner<Double> spinner2;
     @FXML
     private Spinner<Double> spinner3;
-
+    @FXML
+    private TextField layout5;
     @FXML
     private ComboBox<String> categorias;
 
-
+    private Stage stage;
     private FXMLInventarioController inventarioController;
     
     
     public void setInventarioController(FXMLInventarioController inventarioController) {
         this.inventarioController = inventarioController;
+    }
+
+    public void setStage(Stage stage){
+        this.stage=stage;
     }
 
     @FXML
@@ -62,7 +68,10 @@ public class FXML_NewProducto {
             Double precioCosto = spinner1.getValue();
             double precioVenta = spinner2.getValue();
             double invMinimo = spinner3.getValue();
-            double cantidadKg = Double.parseDouble(layout4.getText());
+            int cantidadCajas = Integer.parseInt(layout4.getText());
+            BigDecimal pesoCaja= BigDecimal.valueOf(Double.parseDouble(layout5.getText()));
+
+            BigDecimal cantidadKg = pesoCaja.multiply(BigDecimal.valueOf(cantidadCajas));
 
             String Categoria = categorias.getValue().toString();
             System.out.println("Categoria: " + Categoria);
@@ -87,15 +96,16 @@ public class FXML_NewProducto {
                 productosbd.setNombre(descripcion);
                 productosbd.setCosto(BigDecimal.valueOf(precioCosto));
                 productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
-                productosbd.setCantidad(BigDecimal.valueOf(cantidadKg));
+                productosbd.setCantidad(cantidadKg);
                 productosbd.setCategoria(categoria);
                 productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
+                productosbd.setPesoCaja(pesoCaja);
 
                 session.save(productosbd);
                 System.out.println("FECHA DE PRUEBA"+fechaHoraActual);
                 movimientos.setIdProducto(productosbd);
                 movimientos.setTipoMovimiento("Entrada");
-                movimientos.setCantidad(BigDecimal.valueOf(cantidadKg));
+                movimientos.setCantidad(cantidadKg);
                 movimientos.setFecha(fechaHoraActual);
                 session.save(movimientos);
                 tx.commit();
@@ -162,5 +172,9 @@ public class FXML_NewProducto {
         loadCat.cargarCategorias(this.categorias, 0);
 
 
+    }
+
+    public void cerrar(){
+        stage.close();
     }
 }
