@@ -117,8 +117,18 @@ public void initialize(URL url, ResourceBundle rb) {
     SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
             Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
     spinner.setValueFactory(valueFactory1);
+    tabladev.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue != null) {
 
-    
+            actualizarSpinnerMaximo(newValue.getCantidad());
+           
+        }
+    });
+}
+private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
+    SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
+        Double.MIN_VALUE, cantidadVenta.doubleValue(), 0.0, 0.1);
+    spinner.setValueFactory(valueFactory);
 }
     public void iniciarcomponentes() { 
         listaVentas = obtenerListaDeVentas();
