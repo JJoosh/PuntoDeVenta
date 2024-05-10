@@ -319,12 +319,14 @@ public class FXMLInventarioController implements Initializable {
     public void Exportar() {
         // Obtén la lista observable de la TableView
         ObservableList<Productos> data = tableView.getItems();
-
+    
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         String fechaString = formato.format(fecha);
-
-
+    
+        // Obtiene la carpeta de descargas del sistema
+        String carpetaDescargas = System.getProperty("user.home") + "/Downloads/";
+    
         // Crea el libro de trabajo y la hoja de cálculo
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Datos");
@@ -347,26 +349,29 @@ public class FXMLInventarioController implements Initializable {
             
             org.apache.poi.ss.usermodel.Cell cellID = excelRow.createCell(colNum++);
             cellID.setCellValue(producto.getId());
-
+    
             org.apache.poi.ss.usermodel.Cell cellNombre = excelRow.createCell(colNum++);
             cellNombre.setCellValue(producto.getNombre());
     
             org.apache.poi.ss.usermodel.Cell cellCantidad = excelRow.createCell(colNum++);
             cellCantidad.setCellValue(producto.getCantidad().doubleValue()); 
-
+    
             org.apache.poi.ss.usermodel.Cell cellCosto = excelRow.createCell(colNum++);
             cellCosto.setCellValue(producto.getCosto().doubleValue()); 
             
             org.apache.poi.ss.usermodel.Cell cellPrecio = excelRow.createCell(colNum++);
             cellPrecio.setCellValue(producto.getPrecio().doubleValue()); 
         }
-        String fechaExcell=fechaString.replace("/", "-");
-        try (FileOutputStream fileOut = new FileOutputStream("Inventario " + (categorias.getValue() != null && !categorias.getValue().equalsIgnoreCase("Todos") ? categorias.getValue() : "Total") +" "+fechaExcell+ ".xlsx")) {
+        String fechaExcell = fechaString.replace("/", "-");
+        String nombreArchivo = "Inventario " + (categorias.getValue() != null && !categorias.getValue().equalsIgnoreCase("Todos") ? categorias.getValue() : "Total") + " " + fechaExcell + ".xlsx";
+        String rutaCompleta = carpetaDescargas + nombreArchivo;
+        
+        try (FileOutputStream fileOut = new FileOutputStream(rutaCompleta)) {
             workbook.write(fileOut);
             System.out.println("¡Los datos se han exportado correctamente a Excel!");
-             Alert alert=new Alert(AlertType.INFORMATION);
+            Alert alert = new Alert(AlertType.INFORMATION);
             alert.setHeaderText(null);
-            alert.setContentText("Se exporto correctamente el documento Excell");
+            alert.setContentText("Se exportó correctamente el documento Excel a la carpeta de descargas.");
             alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -376,10 +381,9 @@ public class FXMLInventarioController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        
+        }       
     }
-
+    
 
     //Movimientos
 
@@ -402,56 +406,60 @@ public class FXMLInventarioController implements Initializable {
     }
 
 
-   @FXML
-public void eliminarProducto() {
-    // Obtener el producto seleccionado del TableView
-    Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
-
-    if (productoSeleccionado != null) {
-        // Mostrar un diálogo de confirmación
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar eliminación");
-        alert.setHeaderText("¿Estás seguro de que deseas eliminar este producto?");
-        alert.setContentText("Esta acción no se puede deshacer.");
-
-        // Esperar la respuesta del usuario
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                // Eliminar el producto de la base de datos
-                Configuration configuration = new Configuration();
-                configuration.configure("hibernate.cfg.xml");
-                configuration.addAnnotatedClass(Productos.class);
-
-                SessionFactory sessionFactory = configuration.buildSessionFactory();
-                EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
-                EntityManager entityManager = emf.createEntityManager();
-
-                entityManager.getTransaction().begin();
-                entityManager.remove(entityManager.contains(productoSeleccionado) ? productoSeleccionado : entityManager.merge(productoSeleccionado));
-                entityManager.getTransaction().commit();
-
-                entityManager.close();
-                emf.close();
-
-                
-                productosData.remove(productoSeleccionado);
-                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-                alert2.setHeaderText(null);
-                alert2.setContentText("Se elimino el producto correctamente");
-                alert2.showAndWait();
-                
-            }
-        });
-    } else {
-        // Mostrar un mensaje de error si no se ha seleccionado ningún producto
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("No se ha seleccionado ningún producto");
-        alert.setContentText("Por favor, selecciona un producto para eliminar.");
-        alert.showAndWait();
+    @FXML
+    public void eliminarProducto() {
+        // Obtener el producto seleccionado del TableView
+        Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+    
+        if (productoSeleccionado != null) {
+            // Mostrar un diálogo de confirmación
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar eliminación");
+            alert.setHeaderText("¿Estás seguro de que deseas eliminar este producto?");
+            alert.setContentText("Esta acción no se puede deshacer.");
+    
+            // Esperar la respuesta del usuario
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    // Eliminar el producto de la base de datos
+                    Configuration configuration = new Configuration();
+                    configuration.configure("hibernate.cfg.xml");
+                    configuration.addAnnotatedClass(Productos.class);
+    
+                    SessionFactory sessionFactory = configuration.buildSessionFactory();
+                    EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+                    EntityManager entityManager = emf.createEntityManager();
+    
+                    entityManager.getTransaction().begin();
+                    // Eliminar los movimientos relacionados con el producto
+                    entityManager.createQuery("DELETE FROM Movimientos m WHERE m.producto = :producto")
+                                 .setParameter("producto", productoSeleccionado)
+                                 .executeUpdate();
+                    // Luego eliminar el producto
+                    entityManager.remove(entityManager.contains(productoSeleccionado) ? productoSeleccionado : entityManager.merge(productoSeleccionado));
+                    entityManager.getTransaction().commit();
+    
+                    entityManager.close();
+                    emf.close();
+    
+                    productosData.remove(productoSeleccionado);
+                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Se eliminó el producto correctamente");
+                    alert2.showAndWait();
+                    
+                }
+            });
+        } else {
+            // Mostrar un mensaje de error si no se ha seleccionado ningún producto
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No se ha seleccionado ningún producto");
+            alert.setContentText("Por favor, selecciona un producto para eliminar.");
+            alert.showAndWait();
+        }
     }
-}
-
+    
 
 public void abrirVentas() {
     try {
