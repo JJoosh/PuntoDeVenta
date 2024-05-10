@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="1385.0" maxWidth="1385.0" minHeight="900.0" minWidth="1385.0" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_NewProducto">
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;">
          <children>
-            <TextField fx:id="bproducto_guardar" layoutX="585.0" layoutY="166.0" prefHeight="42.0" prefWidth="281.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
-            <TextField fx:id="pro_descripcion" layoutX="589.0" layoutY="242.0" prefHeight="42.0" prefWidth="349.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
-            <ComboBox id="cat_agregar" fx:id="cat_agregar" layoutX="1153.0" layoutY="249.0" prefHeight="41.0" prefWidth="222.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" />
-            <Button id="bproducto_guardar" fx:id="bproducto_guardar" layoutX="678.0" layoutY="768.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="286.0" text="Guardar Producto">
+            <TextField fx:id="layout1" layoutX="585.0" layoutY="166.0" prefHeight="42.0" prefWidth="281.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
+            <TextField fx:id="layout2" layoutX="589.0" layoutY="242.0" prefHeight="42.0" prefWidth="349.0" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="text-field" stylesheets="@../css/Fondo.css" />
+            <ComboBox id="cat_agregar" fx:id="categorias" layoutX="1098.0" layoutY="169.0" prefHeight="41.0" prefWidth="222.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" />
+            <Button id="bproducto_guardar" layoutX="678.0" layoutY="768.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="286.0" text="Guardar Producto">
                <stylesheets>
                   <URL value="@../../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
@@ -26,7 +26,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Spinner id="pro_cantidad" layoutX="590.0" layoutY="545.0" prefHeight="57.0" prefWidth="286.0" />
+            <Spinner id="pro_cantidad" fx:id="spinner2" editable="true" layoutX="590.0" layoutY="545.0" prefHeight="57.0" prefWidth="286.0" />
             <Label id="Label_letras" layoutX="284.0" layoutY="166.0" stylesheets="@../css/Fondo.css" text="Código de barras">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -47,22 +47,22 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="Label_letras" layoutX="979.0" layoutY="243.0" stylesheets="@../css/Fondo.css" text="Categoría">
+            <Label id="Label_letras" layoutX="924.0" layoutY="163.0" stylesheets="@../css/Fondo.css" text="Categoría">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
             <Label id="Label_letras" layoutX="284.0" layoutY="323.0" stylesheets="@../css/Fondo.css" text="Cantidad de cajas" />
-            <TextField layoutX="589.0" layoutY="323.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E2F4F3;" />
+            <TextField fx:id="layout4" layoutX="589.0" layoutY="323.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E2F4F3;" />
             <Label id="Label_letras" layoutX="284.0" layoutY="398.0" stylesheets="@../css/Fondo.css" text="Peso por caja" />
-            <TextField layoutX="589.0" layoutY="398.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
+            <TextField fx:id="layout5" layoutX="589.0" layoutY="398.0" prefHeight="42.0" prefWidth="281.0" style="-fx-border-color: gray; -fx-background-color: E0EEDC;" />
             <Label id="Label_letras" layoutX="283.0" layoutY="561.0" stylesheets="@../css/Fondo.css" text="Precio venta">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Spinner layoutX="589.0" layoutY="461.0" prefHeight="50.0" prefWidth="281.0" />
-            <Spinner id="pro_cantidad" fx:id="pro_cant" layoutX="590.0" layoutY="633.0" prefHeight="57.0" prefWidth="286.0" />
+            <Spinner fx:id="spinner1" editable="true" layoutX="589.0" layoutY="461.0" prefHeight="50.0" prefWidth="281.0" />
+            <Spinner id="pro_cantidad" fx:id="spinner3" editable="true" layoutX="590.0" layoutY="633.0" prefHeight="57.0" prefWidth="286.0" />
          </children>
       </AnchorPane>
       <Label layoutX="197.0" layoutY="175.0" />
@@ -72,6 +72,6 @@
          </font>
       </Label>
       <AnchorPane layoutX="-4.0" layoutY="105.0" prefHeight="796.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
-      <Button id="atras" fx:id="btn_atras" layoutX="76.0" layoutY="135.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
+      <Button id="atras" fx:id="btn_atras" layoutX="76.0" layoutY="135.0" mnemonicParsing="false" onAction="#cerrar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
    </children>
 </Pane>

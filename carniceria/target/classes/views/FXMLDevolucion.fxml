@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
    <children>
       <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: BLACK;" stylesheets="@../css/Fondo.css" text="Devoluciones">
          <font>
@@ -30,7 +30,7 @@
          </columns>
       </TableView>
       <Label id="Label_letras" layoutX="115.0" layoutY="671.0" stylesheets="@../css/Fondo.css" text="Cantidad a devolver:" />
-      <Button layoutX="1053.0" layoutY="712.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar" />
+      <Button layoutX="1053.0" layoutY="687.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar" />
       <Label id="Label_letras" layoutX="115.0" layoutY="767.0" prefHeight="41.0" prefWidth="393.0" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
       <Spinner fx:id="spinner" editable="true" layoutX="474.0" layoutY="662.0" prefHeight="50.0" prefWidth="169.0" />
       <Button layoutX="1103.0" layoutY="152.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="246.0" stylesheets="@../css/Fondo.css" text="Tabla de devoluciones" />
