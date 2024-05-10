@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ public class FXML_ModProducto implements Initializable {
     @FXML private ComboBox<String> categoria;
     @FXML private TextField pesoCaja;
     private FXMLInventarioController table;
+    
     private Stage stage; 
    
    public void setInventarioController(FXMLInventarioController inventarioController) {
@@ -89,5 +91,9 @@ public class FXML_ModProducto implements Initializable {
         this.precio.setText(String.valueOf(precio));
         this.categoria.setValue(categoria);
         this.pesoCaja.setText(String.valueOf(pesoCaja));
+    }
+
+    public void cerrar(){
+        stage.close();
     }
 }

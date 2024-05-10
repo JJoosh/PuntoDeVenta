@@ -495,29 +495,37 @@ public void productosBajos() {
 }
 
 
-public void ingresarCantidad(){
-    try {
-        Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VentanaProducto.fxml"));
-        Parent root = loader.load();
-        AddCantidadController cantidadController = loader.getController();
-        
-
-        String nombre=productoSeleccionado.getNombre();
-        BigDecimal pesoCaja=productoSeleccionado.getPesoCaja();
-        BigDecimal cantidad=productoSeleccionado.getCantidad();
-        long id=productoSeleccionado.getId();
-
-        cantidadController.setDatos(nombre, pesoCaja, cantidad, id);
-        cantidadController.setInventarioController(this);
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        cantidadController.setStage(stage);
-        stage.show();
-
-    } catch (IOException e) {
-        e.printStackTrace();
+public void ingresarCantidad() {
+    Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
+    
+    if (productoSeleccionado != null) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VentanaProducto.fxml"));
+            Parent root = loader.load();
+            AddCantidadController cantidadController = loader.getController();
+            
+            String nombre = productoSeleccionado.getNombre();
+            BigDecimal pesoCaja = productoSeleccionado.getPesoCaja();
+            BigDecimal cantidad = productoSeleccionado.getCantidad();
+            long id = productoSeleccionado.getId();
+            
+            cantidadController.setDatos(nombre, pesoCaja, cantidad, id);
+            cantidadController.setInventarioController(this);
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            cantidadController.setStage(stage);
+            stage.show();
+        } catch (IOException e) {
+           
+        }
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setHeaderText(null);
+        alert.setContentText("Por favor, seleccione un elemento de la tabla");
+        alert.showAndWait();
     }
 }
 
