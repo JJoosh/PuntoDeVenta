@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
@@ -31,9 +32,10 @@
       </TableView>
       <Label layoutX="51.0" layoutY="443.0" text="Cantidad" />
       <Button layoutX="165.0" layoutY="590.0" mnemonicParsing="false" onAction="#enviar" text="Insertar" />
-      <Label layoutX="52.0" layoutY="495.0" prefHeight="17.0" prefWidth="56.0" text="Motivo" />
+      <Label layoutX="47.0" layoutY="552.0" prefHeight="17.0" prefWidth="56.0" text="Motivo" />
       <TextArea fx:id="textoArea" layoutX="119.0" layoutY="477.0" prefHeight="54.0" prefWidth="241.0" />
       <Spinner fx:id="spinner" editable="true" layoutX="118.0" layoutY="439.0" />
       <Button layoutX="413.0" layoutY="75.0" mnemonicParsing="false" onAction="#vertabla" text="Tabla Devoluciones" />
+      <ComboBox fx:id="motivos" layoutX="119.0" layoutY="548.0" prefWidth="150.0" />
    </children>
 </Pane>

@@ -18,6 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import com.app.controllers.Producto;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Inventario.FXML_NewProducto;
 import com.app.controllers.devoluciones.tabledata;
@@ -27,6 +28,7 @@ import com.app.models.DetallesVenta;
 import com.app.models.Devoluciones;
 import com.app.models.Productos;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener;
@@ -41,6 +43,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -88,10 +91,11 @@ public class FXMLDevolucionesController implements Initializable {
     private Spinner<Double> spinner;
 
     @FXML
-    private DatePicker date;
+    private TextArea textoArea;
 
     @FXML
-    private TextArea textoArea;
+    private ComboBox<String> motivos;
+
 
     private ObservableList<tabledata> datosTabla = FXCollections.observableArrayList();
 
@@ -102,11 +106,10 @@ public class FXMLDevolucionesController implements Initializable {
     List<Ventas> ventasfiltrado;
     List<Productos> productofiltrado;
     String ticketglobal="";
-
-   
+    String opcion3="";
     @Override
 public void initialize(URL url, ResourceBundle rb) {
-    
+    cargarCategorias(this.motivos, 1);
     ticket1.setCellValueFactory(new PropertyValueFactory<>("ticket1"));
     fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
     total.setCellValueFactory(new PropertyValueFactory<>("total"));
@@ -117,6 +120,7 @@ public void initialize(URL url, ResourceBundle rb) {
     SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
             Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
     spinner.setValueFactory(valueFactory1);
+
     tabladev.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null) {
 
@@ -124,6 +128,26 @@ public void initialize(URL url, ResourceBundle rb) {
            
         }
     });
+
+    
+}
+
+
+private void cargarCategorias(ComboBox<String> motivos, int opcion){
+    motivos.getItems().clear();
+    motivos.getItems().addAll("producto en mal estado", "Error de pedido", "otro");
+    motivos.setOnAction(event -> {
+            if (motivos.getSelectionModel().getSelectedItem().equals("otro")) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Motivo");
+                dialog.setHeaderText("Ingrese el Motivo");
+                dialog.setContentText("Motivo:");
+
+                dialog.showAndWait().ifPresent(valor -> {
+                    opcion3=valor;
+                });
+            }
+        });
 }
 private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
     SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
@@ -264,13 +288,9 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
         
     }
 
-    public void calculo(LocalDateTime fechaHoraActual,BigDecimal cantidadventa, Long idVenta, Long idDetalle) {
-        
-       
-        String texto = textoArea.getText();
-        Double Devolucion = spinner.getValue();
+    public void calculo(LocalDateTime fechaHoraActual,BigDecimal cantidadventa, Long idVenta, Long idDetalle, String texto,Double Devolucion) {
         BigDecimal resultadoResta = cantidadventa.subtract(BigDecimal.valueOf(Devolucion));
-        actualizarCantidadDetalleVenta(idVenta, idDetalle, resultadoResta);
+        actualizarCantidadDetalleVenta(idVenta, idDetalle, resultadoResta,cantidadventa);
         llenartabladevolucion(resultadoResta, fechaHoraActual, texto, idVenta);
     }
 
@@ -310,13 +330,12 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
             emf.close();
         }
     }
-    private void actualizarCantidadDetalleVenta(Long idVenta, Long idDetalle, BigDecimal nuevaCantidad) {
+    private void actualizarCantidadDetalleVenta(Long idVenta, Long idDetalle, BigDecimal nuevaCantidad, BigDecimal cantidadventa) {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
-        System.out.println(nuevaCantidad+"-------------");
         try {
             // Buscar el detalle de venta por ID_Venta e ID_Detalle
             TypedQuery<DetallesVenta> query = entityManager.createQuery(
@@ -325,8 +344,14 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
             query.setParameter("idVenta", idVenta);
             query.setParameter("idDetalle", idDetalle);
             DetallesVenta detalleVenta = query.getSingleResult();
-    
-            // Actualizar la cantidad del detalle de venta
+            Productos producto = detalleVenta.getProducto();
+            Ventas venta= detalleVenta.getVenta();
+
+            BigDecimal precioporProducto=producto.getPrecio();
+            BigDecimal resultadoDetalle = precioporProducto.multiply(nuevaCantidad);
+            float floatventa = resultadoDetalle.floatValue();
+            venta.setTotal(floatventa);
+            detalleVenta.setTotal(resultadoDetalle);
             detalleVenta.setCantidad(nuevaCantidad);
             entityManager.merge(detalleVenta);
     
@@ -345,6 +370,8 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
     private void enviar(ActionEvent event) {
         tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
         LocalDateTime fechaHoraActual = LocalDateTime.now();
+        String selectedItem = motivos.getSelectionModel().getSelectedItem();
+        Double Devolucion = spinner.getValue();
     
         if (ticketseleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -372,7 +399,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                 alert.showAndWait();
             } else {
                 // No se pasaron más de 24 horas desde la venta
-                if (!textoArea.getText().isEmpty() && spinner.getValue() > 0) {
+                if (selectedItem != null && spinner.getValue() > 0) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Exitosa");
                     alert.setHeaderText(null);
@@ -382,7 +409,16 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         Long idVenta = buscarIdVentaPorDetalle(idDetalle);
                         if (idVenta != null) {
-                            calculo(fechaHoraActual,cantidadVenta, idVenta, idDetalle);
+                            if(motivos.getSelectionModel().getSelectedItem().equals("producto en mal estado")){
+                                System.out.println("no se agrega a productos");
+                            }
+                            else{
+                                if(motivos.getSelectionModel().getSelectedItem().equals("otro")){
+                                    selectedItem=opcion3;
+                                }
+                                actualizarproductos(Devolucion, idVenta, idDetalle);
+                            }
+                            calculo(fechaHoraActual,cantidadVenta, idVenta, idDetalle,selectedItem,Devolucion);
                             listaVentas = null;
                             ListaProducto = null;
                             Listadetalles = null;
@@ -394,7 +430,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                             secondAlert.setContentText("Ticket " + ticketglobal + " con la ID " + idDetalle);
                             secondAlert.showAndWait();
     
-                            date.setValue(null);
+                            
                             textoArea.setText(null);
                             spinner.getValueFactory().setValue(0.0);
                         } else {
@@ -451,5 +487,42 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
             emf.close();
         }
         
+    }
+    public void actualizarproductos(Double Devolucion, Long idVenta, Long idDetalle){
+
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+try {
+    // Consulta para obtener el detalle de venta por ID_Venta e ID_Detalle
+    TypedQuery<DetallesVenta> query = entityManager.createQuery(
+        "SELECT dv FROM DetallesVenta dv JOIN FETCH dv.producto p JOIN dv.venta v WHERE v.id = :idVenta AND dv.id = :idDetalle",
+        DetallesVenta.class);
+    query.setParameter("idVenta", idVenta);
+    query.setParameter("idDetalle", idDetalle);
+    DetallesVenta detalleVenta = query.getSingleResult();
+
+
+    Productos producto = detalleVenta.getProducto();
+    
+    BigDecimal cantidad =producto.getCantidad();
+    BigDecimal doubleComoBigDecimal = BigDecimal.valueOf(Devolucion);
+    BigDecimal resultado = cantidad.add(doubleComoBigDecimal);
+    
+    producto.setCantidad(resultado);
+    
+    entityManager.merge(producto);
+    entityManager.getTransaction().commit();
+    System.out.println("Actualización realizada correctamente");
+} catch (NoResultException e) {
+    System.out.println("No se encontró el detalle de venta correspondiente");
+    entityManager.getTransaction().rollback();
+} finally {
+    entityManager.close();
+    emf.close();
+}
+
     }
 }
