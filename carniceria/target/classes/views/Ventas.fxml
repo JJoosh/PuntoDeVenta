@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
       <Label id="Label_letras" layoutX="27.0" layoutY="153.0" prefHeight="41.0" prefWidth="488.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
          <font>
@@ -24,14 +24,14 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button id="bventas_agregar" fx:id="btnbuscarcode1" layoutX="962.0" layoutY="201.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" stylesheets="@../css/Fondo.css" text="Agregar" />
-      <Label id="osc" layoutX="796.0" layoutY="778.0" prefHeight="67.0" prefWidth="289.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
-      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="456.0" layoutY="762.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Cobrar" />
-      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="1240.0" layoutY="203.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="283.0" stylesheets="@../css/Fondo.css" text="Cancelar compra" />
-      <Button id="bventas_peso" fx:id="btnbuscarcode1" layoutX="1270.0" layoutY="130.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Obtener peso" />
+      <Button id="bventas_agregar" fx:id="btnbuscarcode1" layoutX="873.0" layoutY="223.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" stylesheets="@../css/Fondo.css" text="Agregar-F5" />
+      <Label id="osc" layoutX="594.0" layoutY="753.0" prefHeight="67.0" prefWidth="289.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
+      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="243.0" layoutY="751.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Cobrar-F6" />
+      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="1107.0" layoutY="209.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Cancelar compra-F8" />
+      <Button id="bventas_peso" fx:id="btnbuscarcode1" layoutX="1107.0" layoutY="137.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Obtener peso-F7" />
       <TextField id="v_ingreso_cant" fx:id="pesoTextField" layoutX="373.0" layoutY="232.0" prefHeight="28.0" prefWidth="431.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="1093.0" layoutY="762.0" prefHeight="80.0" prefWidth="439.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
-      <ScrollPane layoutX="385.0" layoutY="320.0" prefHeight="403.0" prefWidth="885.0">
+      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="891.0" layoutY="737.0" prefHeight="80.0" prefWidth="439.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
+      <ScrollPane layoutX="208.0" layoutY="298.0" prefHeight="403.0" prefWidth="885.0">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="908.0">
                <children>
@@ -47,7 +47,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" text="Ventas de productos">
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Ventas de productos">
          <font>
             <Font size="35.0" />
          </font>

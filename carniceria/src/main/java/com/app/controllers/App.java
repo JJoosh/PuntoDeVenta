@@ -1,9 +1,10 @@
 package com.app.controllers;
-
 import java.io.IOException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,10 +25,10 @@ public class App extends Application {
         Session session = sessionFactory.openSession();
         System.out.println(session);
 
-        
+        // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root = loader.load();
-        scene = new Scene(root, 1000, 800);
+        scene = new Scene(root, 640, 480);
         stage.setScene(scene);
         stage.show();
     }

@@ -1,5 +1,6 @@
 package com.app.controllers.Inventario;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,16 +14,18 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class FXML_NewProducto {
@@ -111,7 +114,7 @@ public class FXML_NewProducto {
                 tx.commit();
                 System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
                 System.out.println("Categoria: " + Categoria);
-                inventarioController.actualizarTabla();
+                
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText(null);
                 alert.setContentText("Se guardo el producto correctamente\nID:" + productosbd.getId() + "\nNombre: " + productosbd.getNombre());
@@ -173,8 +176,20 @@ public class FXML_NewProducto {
 
 
     }
-
+    @FXML
+    private Pane rootPane;
     public void cerrar(){
-        stage.close();
+        try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+        Pane nuevoContenido = loader.load();
+        
+        
+        FXMLInventarioController inventarioController = loader.getController();
+       
+        rootPane.getChildren().setAll(nuevoContenido);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }

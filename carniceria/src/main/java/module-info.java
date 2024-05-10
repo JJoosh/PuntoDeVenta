@@ -11,9 +11,9 @@ module com.carniceria{
     requires itextpdf;
     requires icu4j;
     requires nrjavaserial;
-    
+    requires java.desktop;
     requires org.apache.poi.poi;
-
+    requires org.jpos.jpos;
     requires org.apache.poi.ooxml;
     requires javafx.graphics;
 

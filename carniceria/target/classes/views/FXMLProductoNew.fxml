@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_NewProducto">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;" stylesheets="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_NewProducto">
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;">
          <children>

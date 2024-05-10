@@ -14,7 +14,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.app.controllers.Inventario.FXMLInventarioController;
+import com.app.controllers.devoluciones.FXMLDevolucionesController;
 import com.app.models.Productos;
+import com.ibm.icu.text.DecimalFormat;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -259,37 +261,31 @@ public class VentasController {
     }
 
     @FXML
-    private void cobrar() {
-        cerrarBascula();
-        if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe agregar al menos un producto y su cantidad");
-            alert.showAndWait();
-        } else {
-            try {
-                
-
-
-
-                try {
-                    // Cargar el archivo FXML con el nuevo contenido
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
-                    Pane nuevoContenido = loader.load();
-                    
-                    // Obtener el controlador del nuevo contenido
-                    CompraController compraController = loader.getController();  
-                    compraController.initData(productosAgregados, importeTotal);
-                 
-                    rootPane.getChildren().setAll(nuevoContenido);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-            }
+private void cobrar() {
+    cerrarBascula();
+    if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Debe agregar al menos un producto y su cantidad");
+        alert.showAndWait();
+    } else {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador de CompraController
+            CompraController compraController = loader.getController();
+            
+            // Pasar los datos necesarios a CompraController
+            compraController.initData(productosAgregados, importeTotal);
+            
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
 
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
@@ -298,12 +294,7 @@ public class VentasController {
     
         // Actualizar la tabla de productos
         tablaProductos.setItems(productosData);
-    
-        // Actualizar los productos agregados
-        this.productosAgregados.clear();
-        this.productosAgregados.addAll(productosData);
     }
-
     public void obtenerPesoBascula() {
         try {
             if (peso == null) {
@@ -333,6 +324,7 @@ public class VentasController {
         this.productosAgregados.clear();
         this.productosAgregados.addAll(productosData);
     }
+    
 
     public BigDecimal getImporteTotal() {
         return this.importeTotal;
@@ -378,31 +370,13 @@ public class VentasController {
         }
     }
 
-    public void abrirInventario() {
-        try {
-            // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
-            Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            FXMLInventarioController inventarioController = loader.getController();
-           
-            rootPane.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode()==KeyCode.F2) {
-            abrirInventario();
-        }
-        if (event.getCode() == KeyCode.F4) {
+        if (event.getCode() == KeyCode.F6) {
             cobrar();
         }
 
-        if (event.getCode() == KeyCode.F3) {
+        if (event.getCode() == KeyCode.F5) {
             agregarProducto();
 
         }
@@ -410,8 +384,65 @@ public class VentasController {
             obtenerPesoBascula();
         }
 
-        if (event.getCode() == KeyCode.F1) {
+        if (event.getCode() == KeyCode.F8) {
             borrarArticulo();
+        }
+
+        if(event.getCode()==KeyCode.F2){
+            abrirInventario();
+        }
+        if(event.getCode()==KeyCode.F4){
+            abrirCorteCaja();
+        }
+
+        if(event.getCode()==KeyCode.F3){
+            abrirDevoluciones();
+        }
+    }
+
+    public void abrirDevoluciones(){
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLDevolucionesController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void abrirCorteCaja(){
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLDevolucionesController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void abrirInventario(){
+          try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLInventarioController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -16,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 import java.net.URL;
 public class HomeController implements Initializable {
     @FXML
@@ -24,11 +26,19 @@ public class HomeController implements Initializable {
     Pane menu_lateral;
     @FXML
     Label ventas;
-    
+    private Stage stage;
    @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         menu_lateral.setOnKeyPressed(this::handleKeyPressed);
+        
+    }
+
+    public void setStage(Stage stage){
+        this.stage=stage;
+    
+        stage.setResizable(false);
+   
     }
     
     @FXML
@@ -44,14 +54,28 @@ public class HomeController implements Initializable {
             abrirDevoluciones();
         }
 
-        if(event.getCode()==KeyCode.F6){
-            
+        if(event.getCode()==KeyCode.F4){
+            abrirCorteCaja();
         }
-        if(event.getCode()==KeyCode.F1){
-            
-        }
+       
     }
 
+    public void abrirCorteCaja(){
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            FXMLDevolucionesController inventarioController = loader.getController();
+            
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            home.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+   
     public void abrirInventario() {
         try {
             // Cargar el archivo FXML con el nuevo contenido

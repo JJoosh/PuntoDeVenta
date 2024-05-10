@@ -172,17 +172,15 @@ public class FXMLInventarioController implements Initializable {
     @FXML
     private void addInventario() {
         try {
+            // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLProductoNew.fxml"));
-            Parent root = loader.load();
+            Pane nuevoContenido = loader.load();
             
-            FXML_NewProducto newProductoController = loader.getController();
-            newProductoController.setInventarioController(this);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            newProductoController.setStage(stage);
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            // Obtener el controlador del nuevo contenido
+            FXML_NewProducto inventarioController = loader.getController();
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
