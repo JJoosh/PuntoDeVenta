@@ -585,16 +585,10 @@ public class CompraController {
 
             BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
 
-            // Calcular el nuevo total con el IVA incluido
-            BigDecimal iva = venta.getTotal().multiply(new BigDecimal("0.16"));
-            BigDecimal nuevoTotal = venta.getTotal().add(iva);
-
-            // Formatear monto ingresado, cambio, IVA y nuevo total como texto con formato
-            // de moneda
+            // Formatear monto ingresado, cambio y total como texto con formato de moneda
             String montoIngresadoFormateado = formatoDinero.format(montoIngresado.doubleValue());
             String cambioFormateado = formatoDinero.format(cambio.doubleValue());
-            String ivaFormateado = formatoDinero.format(iva.doubleValue());
-            String nuevoTotalFormateado = formatoDinero.format(nuevoTotal.doubleValue());
+            String totalFormateado = formatoDinero.format(venta.getTotal().doubleValue());
 
             Paragraph pagoYCambio = new Paragraph();
             pagoYCambio.add(new Chunk("Su Pago: " + montoIngresadoFormateado + "\n",
@@ -606,13 +600,8 @@ public class CompraController {
             pagoYCambio.setLeading(1f, 1f);
             document.add(pagoYCambio);
 
-            Paragraph textoIVA = new Paragraph("IVA: " + ivaFormateado,
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIVA.setAlignment(Element.ALIGN_LEFT);
-            textoIVA.setLeading(1f, 1f);
-            document.add(textoIVA);
-
-            Paragraph textoTotal = new Paragraph("TOTAL: " + nuevoTotalFormateado,
+            // Mostrar el total sin el IVA
+            Paragraph textoTotal = new Paragraph("TOTAL: " + totalFormateado,
                     new Font(Font.FontFamily.COURIER, 10, Font.BOLD));
             textoTotal.setAlignment(Element.ALIGN_CENTER);
             textoTotal.setLeading(1f, 1f);
