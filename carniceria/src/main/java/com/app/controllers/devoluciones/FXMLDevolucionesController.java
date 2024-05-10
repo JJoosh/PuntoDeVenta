@@ -419,6 +419,9 @@ tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
                 alert.setHeaderText(null);
                 alert.setContentText("Se pasaron más de 24 horas desde la venta. No se puede realizar la devolución.");
                 alert.showAndWait();
+                motivos.getSelectionModel().clearSelection();
+
+                spinner.getValueFactory().setValue(0.0);
             } else {
                 // No se pasaron más de 24 horas desde la venta
                 if (selectedItem != null && spinner.getValue() > 0) {
