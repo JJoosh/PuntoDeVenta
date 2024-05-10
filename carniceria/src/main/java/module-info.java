@@ -13,8 +13,7 @@ module com.carniceria{
     requires nrjavaserial;
     requires javafx.graphics;
 
-    requires escpos.coffee;
-
+    requires org.jpos.jpos;
 
     opens com.app.models to org.hibernate.orm.core, javafx.base;
     opens com.app.controllers to javafx.fxml;

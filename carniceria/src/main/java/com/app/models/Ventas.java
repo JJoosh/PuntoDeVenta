@@ -1,5 +1,6 @@
 package com.app.models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Ventas {
     private String ticket;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    private float total;
+    private BigDecimal total;
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallesVenta> detalles = new ArrayList<>();
 
@@ -51,11 +52,11 @@ public class Ventas {
         this.fecha = fecha;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -71,5 +72,9 @@ public class Ventas {
     public void removeDetalle(DetallesVenta detalle) {
         detalles.remove(detalle);
         detalle.setVenta(null);
+    }
+
+    public String getIdVenta() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

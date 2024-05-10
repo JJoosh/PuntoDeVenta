@@ -12,9 +12,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.github.anastaciocintra</groupId>
-            <artifactId>escpos-coffee</artifactId>
-            <version>4.0.1</version>
+            <groupId>org.jpos</groupId>
+            <artifactId>jpos</artifactId>
+            <version>2.1.9</version>
         </dependency>
 
         <dependency>

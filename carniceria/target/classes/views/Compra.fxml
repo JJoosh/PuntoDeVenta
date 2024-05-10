@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -7,44 +8,53 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="580.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
-    <children>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="24.0" prefHeight="71.0" prefWidth="339.0" text="SuKarne">
-            <font>
-                <Font name="Arial Black" size="34.0" />
-            </font>
-        </Label>
-        <Label layoutX="46.0" layoutY="116.0" text="Detalles de la compra">
-            <font>
-                <Font name="Arial Rounded MT Bold" size="20.0" />
-            </font>
-        </Label>
-        <ScrollPane layoutX="46.0" layoutY="160.0" prefHeight="300.0" prefWidth="459.0">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="454.0">
-                    <children>
-                        <TableView fx:id="tablaDetallesVenta" layoutX="4.0" prefHeight="300.0" prefWidth="433.0">
-                            <columns>
-                                <TableColumn fx:id="nombreProductoColumn" prefWidth="158.40003967285156" text="Producto" />
-                                <TableColumn fx:id="precioColumn" prefWidth="88.0" text="Precio" />
-                                <TableColumn fx:id="cantidadColumn" prefWidth="90.39996337890625" text="Cantidad" />
-                                <TableColumn fx:id="totalColumn" prefWidth="117.60003662109375" text="Total" />
-                            </columns>
-                        </TableView>
-                    </children>
-                </AnchorPane>
-            </content>
-        </ScrollPane>
-        <Label fx:id="totalImporteLabel" layoutX="145.0" layoutY="471.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
-        <Button layoutX="264.0" layoutY="496.0" mnemonicParsing="false" onAction="#finalizarCompra" text="Finalizar" />
-      <Button layoutX="23.0" layoutY="24.0" mnemonicParsing="false" onAction="#regresar" text="&lt;-----" />
-      <Label fx:id="ticketLabel2" layoutX="46.0" layoutY="472.0" prefHeight="23.0" prefWidth="91.0" text="Total de Compra" />
-      <Label fx:id="ticketLabel21" layoutX="46.0" layoutY="497.0" prefHeight="23.0" prefWidth="91.0" text="Pago con:" />
-      <TextField fx:id="insertarPagoTextField" layoutX="46.0" layoutY="520.0" onAction="#calcularCambio" />
-      <Label fx:id="ticketLabel211" layoutX="46.0" layoutY="545.0" prefHeight="23.0" prefWidth="91.0" text="Cambio:" />
-      <Label fx:id="cambioLabel" layoutX="145.0" layoutY="544.0" prefHeight="25.0" prefWidth="73.0" text="0.00" />
-      <Button fx:id="borrararticulo" layoutX="417.0" layoutY="496.0" mnemonicParsing="false" onAction="#borrarArticuloSeleccionado" text="Borar articulo" />
-    </children>
-</AnchorPane>
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
+   <children>
+      <Label id="Titulo_modulo" layoutY="-4.0" prefHeight="105.0" prefWidth="1600.0" style="-fx-background-color: black;" text="Detalles de compra">
+         <font>
+            <Font size="45.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Label>
+      <AnchorPane layoutY="99.0" prefHeight="804.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
+      <Button id="atras" fx:id="btn_atras" layoutX="108.0" layoutY="126.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
+      <Label id="osc" layoutX="120.0" layoutY="595.0" prefHeight="47.0" prefWidth="371.0" stylesheets="@../css/Fondo.css" text="Total de la compra:">
+         <font>
+            <Font name="Arial Black" size="35.0" />
+         </font>
+      </Label>
+      <Label id="Label_letras" layoutX="121.0" layoutY="680.0" prefHeight="41.0" prefWidth="194.0" stylesheets="@../css/Fondo.css" text="Pago con:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label id="osc" layoutX="121.0" layoutY="747.0" prefHeight="65.0" prefWidth="170.0" text="Cambio:">
+         <font>
+            <Font name="Arial Black" size="35.0" />
+         </font>
+      </Label>
+      <Button id="compra_finalizar" fx:id="compra_finalizar" layoutX="1259.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#finalizarCompra" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
+      <Button id="compra_borrar" fx:id="borrararticulo" layoutX="953.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#borrarArticuloSeleccionado" prefHeight="65.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
+      <Label id="compra_total" fx:id="totalImporteLabel" layoutX="514.0" layoutY="595.0" prefHeight="47.0" prefWidth="135.0" stylesheets="@../css/Fondo.css" text="0.0" />
+      <Label id="compra_cambio" fx:id="cambioLabel" layoutX="320.0" layoutY="751.0" prefHeight="47.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="0.0" />
+      <TextField id="insertarPagoTextField" fx:id="insertarPagoTextField" layoutX="305.0" layoutY="677.0" onAction="#calcularCambio" prefHeight="47.0" prefWidth="326.0" />
+      <ScrollPane layoutX="143.0" layoutY="201.0" prefHeight="349.0" prefWidth="1380.0">
+         <content>
+            <TableView  fx:id="tablaDetallesVenta" prefHeight="344.0" prefWidth="1376.0">
+               <columns>
+                  <TableColumn fx:id="nombreProductoColumn" prefWidth="307.3333486318588" text="Producto" />
+                  <TableColumn fx:id="precioColumn" prefWidth="292.00006103515625" text="Precio" />
+                  <TableColumn fx:id="cantidadColumn" editable="false" prefWidth="290.66668701171875" resizable="false" sortable="false" text="Cantidad" />
+                  <TableColumn fx:id="totalColumn" prefWidth="483.0" text="Total" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

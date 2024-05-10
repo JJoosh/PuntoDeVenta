@@ -77,4 +77,8 @@ public class DetallesVenta {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+
+    public Object getImporte() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

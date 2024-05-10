@@ -379,7 +379,7 @@ public class VentasController {
             agregarProducto();
 
         }
-        if (event.getCode() == KeyCode.F2) {
+        if (event.getCode() == KeyCode.F7) {
             obtenerPesoBascula();
         }
 
