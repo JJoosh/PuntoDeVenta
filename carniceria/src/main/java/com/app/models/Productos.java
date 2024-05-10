@@ -1,13 +1,20 @@
 package com.app.models;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name = "Productos")
@@ -19,9 +26,15 @@ public class Productos {
     @Column(name = "Nombre")
     private String nombre;
 
+    @Column(name = "Costo")
+    private BigDecimal costo;
+
     @ManyToOne
     @JoinColumn(name = "Categoria_ID")
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "id_producto")
+    private List<Movimientos> movimientos;
 
     @Column(name = "Cantidad")
     private BigDecimal cantidad;
@@ -29,17 +42,16 @@ public class Productos {
     @Column(name = "Precio")
     private BigDecimal precio;
 
+    @Column(name = "ProduBajos_Inventario")
+    private BigDecimal productosBajos_inventario;
+
+    @Column(name = "Peso_Caja")
+    private BigDecimal peso_caja;
+
     public Productos() {
+
     }
 
-    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.cantidad = cantidad;
-        this.precio = precio;
-    }
-
-    // Constructor de copia
     public Productos(Productos producto) {
         this.id = producto.id;
         this.nombre = producto.nombre;
@@ -48,7 +60,26 @@ public class Productos {
         this.precio = producto.precio;
     }
 
+    public Productos(long id, String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad,
+            BigDecimal precio, BigDecimal productosBajos_inventario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.costo = costo;
+        this.productosBajos_inventario = productosBajos_inventario;
+        this.categoria = categoria;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
     // Getters y setters
+
+    public BigDecimal getPesoCaja() {
+        return peso_caja;
+    }
+
+    public void setPesoCaja(BigDecimal peso_caja) {
+        this.peso_caja = peso_caja;
+    }
 
     public Long getId() {
         return id;
@@ -86,8 +117,108 @@ public class Productos {
         return precio;
     }
 
-    public BigDecimal getInventario() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getInventario'");
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
+
+    public BigDecimal getCosto() {
+        return costo;
+    }
+
+    public void setCosto(BigDecimal Costo) {
+        this.costo = Costo;
+    }
+
+    public BigDecimal getProductosBajos_inventario() {
+        return productosBajos_inventario;
+    }
+
+    public void setProductosBajos_inventario(BigDecimal productosBajos) {
+        this.productosBajos_inventario = productosBajos;
+    }
+
+    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad,
+            BigDecimal precio, BigDecimal pesoCaja) {
+
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+        configuration.addAnnotatedClass(Productos.class);
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+        EntityManager entityManager = sessionFactory.createEntityManager();
+
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Productos producto = entityManager.find(Productos.class, id);
+            if (producto != null) {
+                producto.setNombre(nombre);
+                producto.setCosto(costo);
+                Categoria categoria = entityManager.find(Categoria.class, id_cat);
+                producto.setCategoria(categoria);
+                producto.setCantidad(cantidad);
+                producto.setPrecio(precio);
+                producto.setPesoCaja(pesoCaja);
+                entityManager.merge(producto);
+
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                System.out.println(e);
+            }
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+    }
+
+    public String getNombreCategoria() {
+        if (categoria != null) {
+            return categoria.getNombreCategoria();
+        }
+        return "";
+    }
+
+    public void actualizarCantidad(Long id, BigDecimal nuevaCantidad) {
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+        configuration.addAnnotatedClass(Productos.class);
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Productos producto = entityManager.find(Productos.class, id);
+            if (producto != null) {
+                producto.setCantidad(nuevaCantidad);
+                entityManager.merge(producto);
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+    }
+
 }

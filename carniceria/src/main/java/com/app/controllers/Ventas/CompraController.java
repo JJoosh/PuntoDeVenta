@@ -19,6 +19,7 @@ import org.hibernate.cfg.Configuration;
 import com.app.models.DetallesVenta;
 import com.app.models.Productos;
 import com.app.models.Ventas;
+import com.app.models.Movimientos;
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.itextpdf.text.Chunk;
@@ -94,9 +95,12 @@ public class CompraController {
     private Pane rootPane;
 
     private Ventas venta;
+    // private Productos id;
     private BigDecimal importeTotal;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
+
+    private long idProducto = 0;
 
     @FXML
     private void initialize() {
@@ -206,6 +210,7 @@ public class CompraController {
 
             // Crear una instancia de BigDecimal para el total
             BigDecimal total = importeTotal != null ? importeTotal : BigDecimal.ZERO;
+            
 
             // Crear una instancia de la clase Ventas
             Ventas venta = new Ventas();
@@ -237,6 +242,14 @@ public class CompraController {
 
                 detalle.setTotal(precio.multiply(cantidad));
                 venta.addDetalle(detalle);
+               
+                Movimientos movimiento = new Movimientos();
+                movimiento.setIdProducto(producto);
+                movimiento.setTipoMovimiento("Salida");
+                movimiento.setCantidad(cantidad);
+                LocalDateTime fechaHoraActual = LocalDateTime.now();
+                movimiento.setFecha(fechaHoraActual);
+                guardarMovimiento(movimiento);
             }
 
             entityManager.persist(venta);
@@ -553,6 +566,26 @@ public class CompraController {
                     "Ocurrió un error inesperado al generar el PDF. Por favor, intente nuevamente.");
             e.printStackTrace();
         }
+    }
+
+
+
+
+    private void guardarMovimiento(Movimientos movimiento) {
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+        configuration.addAnnotatedClass(Movimientos.class);
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = emf.createEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(movimiento);
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        emf.close();
     }
 
 }
