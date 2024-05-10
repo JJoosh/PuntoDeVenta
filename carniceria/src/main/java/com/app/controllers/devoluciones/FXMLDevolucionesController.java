@@ -117,6 +117,8 @@ public void initialize(URL url, ResourceBundle rb) {
     SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
             Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
     spinner.setValueFactory(valueFactory1);
+
+    
 }
     public void iniciarcomponentes() { 
         listaVentas = obtenerListaDeVentas();
@@ -252,18 +254,17 @@ public void initialize(URL url, ResourceBundle rb) {
         
     }
 
-    public void calculo(BigDecimal cantidadventa, Long idVenta, Long idDetalle) {
-        LocalDate fechaSeleccionada = date.getValue();
+    public void calculo(LocalDateTime fechaHoraActual,BigDecimal cantidadventa, Long idVenta, Long idDetalle) {
+        
        
         String texto = textoArea.getText();
         Double Devolucion = spinner.getValue();
         BigDecimal resultadoResta = cantidadventa.subtract(BigDecimal.valueOf(Devolucion));
-        System.out.println(Devolucion+"---------");
         actualizarCantidadDetalleVenta(idVenta, idDetalle, resultadoResta);
-        llenartabladevolucion(resultadoResta, fechaSeleccionada, texto, idVenta);
+        llenartabladevolucion(resultadoResta, fechaHoraActual, texto, idVenta);
     }
 
-    private void llenartabladevolucion(BigDecimal resultadoResta,LocalDate fechaSQL, String texto, Long idVenta) {
+    private void llenartabladevolucion(BigDecimal resultadoResta,LocalDateTime fechaSQL, String texto, Long idVenta) {
         double doubleValue = resultadoResta.doubleValue();
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -271,8 +272,10 @@ public void initialize(URL url, ResourceBundle rb) {
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         LocalDate localDate = LocalDate.now();
-LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
-Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
+        Timestamp timestamp = Timestamp.valueOf(fechaSQL);
+        System.out.println(fechaSQL+"vamosss ");
+        System.out.println(timestamp+"vamosss ");
         try {
             // Buscar la entidad Ventas por su ID
             Ventas venta = entityManager.find(Ventas.class, idVenta);
@@ -331,65 +334,77 @@ Timestamp timestamp = Timestamp.valueOf(localDateTime);
     @FXML
     private void enviar(ActionEvent event) {
         tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
+        LocalDateTime fechaHoraActual = LocalDateTime.now();
     
         if (ticketseleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("campo o valor no seleccionado");
+            alert.setContentText("Campo o valor no seleccionado");
             alert.showAndWait();
             return;
-        }
+        } else {
+            ticketglobal = ticketseleccionado.getTicket1();
+            Long idDetalle = ticketseleccionado.getDetalle();
+            BigDecimal cantidadVenta = ticketseleccionado.getCantidad();
+            String fechaVenta = ticketseleccionado.getFecha();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime fechaLocalDateTime = LocalDateTime.parse(fechaVenta, formatter);
+
+            LocalDateTime fechaVentaMas24Horas = fechaLocalDateTime.plusHours(24);
+
+            if (fechaHoraActual.isAfter(fechaVentaMas24Horas)) {
+                // Se pasaron más de 24 horas desde la venta
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText(null);
+                alert.setContentText("Se pasaron más de 24 horas desde la venta. No se puede realizar la devolución.");
+                alert.showAndWait();
+            } else {
+                // No se pasaron más de 24 horas desde la venta
+                if (!textoArea.getText().isEmpty() && spinner.getValue() > 0) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Exitosa");
+                    alert.setHeaderText(null);
+                    alert.setContentText("¿Seguro? El siguiente ticket " + ticketglobal + " se le aplicará una devolución con la ID " + idDetalle);
     
-        ticketglobal = ticketseleccionado.getTicket1();
-        Long idDetalle = ticketseleccionado.getDetalle();
-        BigDecimal cantidadVenta = ticketseleccionado.getCantidad();
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        Long idVenta = buscarIdVentaPorDetalle(idDetalle);
+                        if (idVenta != null) {
+                            calculo(fechaHoraActual,cantidadVenta, idVenta, idDetalle);
+                            listaVentas = null;
+                            ListaProducto = null;
+                            Listadetalles = null;
+                            iniciarcomponentes();
     
-        if (date.getValue() != null && !textoArea.getText().isEmpty() && spinner.getValue()>0) {
-            // Establecer el valor máximo del spinner como la cantidad actual
+                            Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
+                            secondAlert.setTitle("Devolución exitosa");
+                            secondAlert.setHeaderText(null);
+                            secondAlert.setContentText("Ticket " + ticketglobal + " con la ID " + idDetalle);
+                            secondAlert.showAndWait();
     
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exitosa");
-            alert.setHeaderText(null);
-            alert.setContentText("seguro? el siguiente ticket " + ticketglobal + " se le aplicara una devolucion con la id " + idDetalle);
-    
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Long idVenta = buscarIdVentaPorDetalle(idDetalle);
-                if (idVenta != null) {
-                    
-                    calculo(cantidadVenta, idVenta, idDetalle);
-                    listaVentas=null;
-                    ListaProducto=null;
-                    Listadetalles=null;
-                    iniciarcomponentes();
-                    Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
-                    secondAlert.setTitle("Devolucion exitosa");
-                    secondAlert.setHeaderText(null);
-                    secondAlert.setContentText("ticket " + ticketglobal + "con la id " + idDetalle);
-                    secondAlert.showAndWait();
-    
-                    // Reiniciar los campos después de la devolución
-                    date.setValue(null);
-                    textoArea.setText(null);
-                    spinner.getValueFactory().setValue(0.0); // Establecer el valor del spinner a cero
+                            date.setValue(null);
+                            textoArea.setText(null);
+                            spinner.getValueFactory().setValue(0.0);
+                        } else {
+                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                            errorAlert.setTitle("Error");
+                            errorAlert.setHeaderText(null);
+                            errorAlert.setContentText("No se encontró la venta correspondiente al detalle seleccionado");
+                            errorAlert.showAndWait();
+                        }
+                    }
                 } else {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setTitle("Error");
-                    errorAlert.setHeaderText(null);
-                    errorAlert.setContentText("No se encontró la venta correspondiente al detalle seleccionado");
-                    errorAlert.showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Llena todos los campos correctamente");
+                    alert.showAndWait();
                 }
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Llena todos los campos correctamente");
-            alert.showAndWait();
         }
     }
-
     @FXML
     private void vertabla(ActionEvent event) {
         try {
