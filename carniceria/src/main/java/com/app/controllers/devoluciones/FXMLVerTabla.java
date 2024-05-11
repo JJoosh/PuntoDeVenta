@@ -154,10 +154,9 @@ public class FXMLVerTabla{
     }
 @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
+        if (event.getCode() == KeyCode.F5) {
            regresara();
         }
-        
     }
     public void regresara(){
         try {

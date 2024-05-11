@@ -568,15 +568,12 @@ try {
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.F1) {
+        if (event.getCode() == KeyCode.F5) {
            proceso();
         }
 
-        if (event.getCode() == KeyCode.F2) {
+        if (event.getCode() == KeyCode.F6) {
             abrir();
-        }
-        if (event.getCode() == KeyCode.F3) {
-            regresar();
         }
     }
     public void regresar(){

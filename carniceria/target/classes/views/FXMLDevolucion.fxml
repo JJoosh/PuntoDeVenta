@@ -30,10 +30,10 @@
          </columns>
       </TableView>
       <Label id="Label_letras" layoutX="115.0" layoutY="671.0" stylesheets="@../css/Fondo.css" text="Cantidad a devolver:" />
-      <Button layoutX="1053.0" layoutY="687.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar" />
+      <Button layoutX="1053.0" layoutY="687.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar-F5" />
       <Label id="Label_letras" layoutX="115.0" layoutY="767.0" prefHeight="41.0" prefWidth="393.0" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
       <Spinner fx:id="spinner" editable="true" layoutX="474.0" layoutY="662.0" prefHeight="50.0" prefWidth="169.0" />
-      <Button layoutX="1103.0" layoutY="152.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="246.0" stylesheets="@../css/Fondo.css" text="Tabla de devoluciones" />
+      <Button layoutX="1103.0" layoutY="152.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="246.0" stylesheets="@../css/Fondo.css" text="Tabla de devoluciones-F6" />
       <ComboBox fx:id="motivos" layoutX="525.0" layoutY="771.0" prefHeight="34.0" prefWidth="361.0" style="-fx-border-color: gray; -fx-background-color: DAE5F0;" />
    </children>
 </Pane>

@@ -1,6 +1,6 @@
 package com.app.models;
 
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "CortedeCaja")
@@ -24,17 +25,22 @@ public class CortedeCaja {
     private BigDecimal totalVentas;
 
     @Column(name = "cantidad_Ventas")
-    private BigDecimal cantidadVentas;
+    private BigDecimal totalcantidad;
+
+    // Constructores
 
     public CortedeCaja() {
     }
-    
-    public CortedeCaja(Long id, LocalDateTime fecha, BigDecimal totalVentas, BigDecimal cantidadVentas)  {
+
+    public CortedeCaja(Long id, LocalDateTime fecha, BigDecimal totalVentas, BigDecimal totalcantidad) {
         this.id = id;
         this.fecha = fecha;
         this.totalVentas = totalVentas;
-        this.cantidadVentas = cantidadVentas;
+        this.totalcantidad = totalcantidad;
+        
     }
+
+    // Getters y setters
 
     public Long getId() {
         return id;
@@ -60,11 +66,11 @@ public class CortedeCaja {
         this.totalVentas = totalVentas;
     }
 
-    public BigDecimal getCantidadVentas() {
-        return cantidadVentas;
+    public BigDecimal getTotalcantidad() {
+        return totalcantidad;
     }
-
-    public void setCantidadVentas(BigDecimal cantidadVentas) {
-        this.cantidadVentas = cantidadVentas;
+    
+    public void setCantidadProductos(BigDecimal totalcantidad) {
+        this.totalcantidad = totalcantidad;
     }
 }

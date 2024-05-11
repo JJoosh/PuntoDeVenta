@@ -22,13 +22,13 @@
             <Label id="menu_ventas" fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="32.0" layoutY="237.0" onMouseClicked="#abrirInventario" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Inventario-F2" />
             <Label id="menu_ventas" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="32.0" layoutY="304.0" onMouseClicked="#abrirCorteCaja" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Kardex-F4" />
             <Label id="menu_ventas" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="369.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
-            <Label id="usuario" fx:id="id_usuario" layoutX="73.0" layoutY="621.0" stylesheets="@../css/Fondo.css" text="Usuario" />
+            <Label id="menu_devoluciones" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="369.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
             <Button id="boton_cs" fx:id="cerrar_sesion" layoutX="14.0" layoutY="745.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
                </stylesheets></Button>
-            <Button id="boton_user" layoutX="14.0" layoutY="689.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
+            <Button id="boton_user" layoutX="14.0" layoutY="689.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cambiar User">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
