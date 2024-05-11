@@ -19,5 +19,6 @@
         <mapping class="com.app.models.Usuarios"/>
         <mapping class="com.app.models.DetallesVenta"/>
         <mapping class="com.app.models.Movimientos"/>
+         <mapping class="com.app.models.CortedeCaja"/>
     </session-factory>
 </hibernate-configuration>

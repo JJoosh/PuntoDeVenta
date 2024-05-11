@@ -28,7 +28,7 @@
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
                </stylesheets></Button>
-            <Button id="boton_user" layoutX="14.0" layoutY="689.0" mnemonicParsing="false" prefHeight="36.0" onAction="#cerrar" prefWidth="173.0" text="Cerrar sesión">
+            <Button id="boton_user" layoutX="14.0" layoutY="689.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />

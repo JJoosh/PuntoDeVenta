@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Ventas.VentasController;
+import com.app.controllers.corte.FXMLCorte;
 import com.app.controllers.devoluciones.FXMLDevolucionesController;
 
 import javafx.fxml.FXML;
@@ -81,11 +82,11 @@ public class HomeController implements Initializable {
     public void abrirCorteCaja(){
         try {
             // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
             Pane nuevoContenido = loader.load();
             
             // Obtener el controlador del nuevo contenido
-            FXMLDevolucionesController inventarioController = loader.getController();
+            FXMLCorte inventarioController = loader.getController();
             
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
             home.getChildren().setAll(nuevoContenido);
