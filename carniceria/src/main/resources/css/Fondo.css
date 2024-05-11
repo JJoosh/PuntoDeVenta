@@ -1,4 +1,14 @@
-#menu_ventas , #menu_kardex , #menu_compra, #menu_devoluciones, #menu_inventario{
+#menu_devoluciones{
+    -fx-background-color: #D62934;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+    -fx-alignment: center;
+    -fx-border-color: white;
+}
+
+#menu_ventas , #menu_kardex , #menu_compra, #menu_inventario{
     -fx-background-color: #D62934;
     -fx-font-family: "Arial";
     -fx-font-weight: bold;
