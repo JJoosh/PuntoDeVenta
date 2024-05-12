@@ -298,7 +298,7 @@ private void cobrar() {
     public void obtenerPesoBascula() {
         try {
             if (peso == null) {
-                peso = new bascula("COM3"); // Suponiendo que el puerto de la báscula es COM3
+                peso = new bascula("COM4"); // Suponiendo que el puerto de la báscula es COM3
                 peso.setVentasController(this); // Establecer la referencia a VentasController en bascula
             }
             peso.sendCommand("P");

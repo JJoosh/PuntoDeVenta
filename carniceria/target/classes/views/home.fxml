@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-   <Pane maxHeight="900.0" maxWidth="1600.0" minHeight="900.0" minWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.HomeController">
+
+<Pane maxHeight="900.0" maxWidth="1600.0" minHeight="900.0" minWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.HomeController">
    <children>
       <Pane fx:id="menu_lateral" maxHeight="900.0" maxWidth="215.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="215.0" style="-fx-background-color: #AC3D45;">
          <children>
@@ -19,21 +20,14 @@
             </ImageView>
             <Line endX="100.0" layoutX="110.0" layoutY="144.0" startX="-100.0" />
             <Label id="menu_ventas" fx:id="menu_ventas" accessibleRole="BUTTON" layoutX="32.0" layoutY="172.0" onMouseClicked="#abrirVentas" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Ventas-F1" />
-            <Label id="menu_ventas" fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="32.0" layoutY="237.0" onMouseClicked="#abrirInventario" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Inventario-F2" />
-            <Label id="menu_ventas" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="32.0" layoutY="304.0" onMouseClicked="#abrirCorteCaja" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Kardex-F4" />
-            <Label id="menu_ventas" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="369.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
-            <Label id="menu_devoluciones" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="369.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
-            <Button id="boton_cs" fx:id="cerrar_sesion" layoutX="14.0" layoutY="745.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
+            <Label id="menu_ventas" fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="33.0" layoutY="262.0" onMouseClicked="#abrirInventario" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Inventario-F2" />
+            <Label id="menu_ventas" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="33.0" layoutY="450.0" onMouseClicked="#abrirCorteCaja" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Kardex-F4" />
+            <Label id="menu_devoluciones" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="353.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
+            <Button id="boton_cs" layoutX="14.0" layoutY="745.0" mnemonicParsing="false" onAction="#cerrar" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/Fondo.css" />
                </stylesheets></Button>
-            <Button id="boton_user" layoutX="14.0" layoutY="689.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="173.0" text="Cambiar User">
-               <stylesheets>
-                  <URL value="@../css/Fondo.css" />
-                  <URL value="@../css/Fondo.css" />
-               </stylesheets>
-            </Button>
          </children>
       </Pane>
       <Pane fx:id="home" layoutX="215.0" maxHeight="900.0" maxWidth="1385.0" minHeight="900.0" minWidth="1385.0" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;">
