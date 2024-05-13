@@ -2,7 +2,9 @@ package com.app.controllers.Ventas;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,6 +37,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+
+import com.app.controllers.App;
 import com.app.models.DetallesVenta;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
@@ -215,7 +219,7 @@ public class CompraController {
             }
 
             guardarVenta();
-            generarPDF();
+            ImprimirTicket();
             actualizarInventario();
            
             importeTotal = BigDecimal.ZERO;
@@ -455,7 +459,7 @@ public void regresar() {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private void generarPDF() {
+    private void ImprimirTicket() {
         try {
             if (venta == null) {
                 mostrarAlertaError("Error al generar el ticket",
@@ -463,21 +467,8 @@ public void regresar() {
                 return;
             }
     
-            String numeroTicket = venta.getTicket();
-            String contenidoTicket = generarContenidoTicket();
-    
-            PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
-    
-            if (printService == null) {
-                System.out.println("No se encontró ninguna impresora disponible.");
-                return;
-            }
-    
-            DocPrintJob printJob = printService.createPrintJob();
-            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-            Doc doc = new SimpleDoc(contenidoTicket.getBytes(), flavor, null);
-    
-            printJob.print(doc, null);
+        
+           generarContenidoTicket();
     
             mostrarAlertaInformacion("Ticket generado", "El ticket se ha generado e imprimido correctamente.");
     
@@ -487,7 +478,62 @@ public void regresar() {
             e.printStackTrace();
         }
     }
+    
+    private void generarContenidoTicket() {
+        StringBuilder sb = new StringBuilder();
+        PrintService ps = PrintServiceLookup.lookupDefaultPrintService();
+         DocPrintJob job = ps.createPrintJob();
+        try {
+            String rutaImagen = "/ticket/LOGO.jpg"; // Ruta relativa al directorio resources
+            
+            // Obtener la    ruta absoluta   del archivo
+            String absolutePath = new File(App.class.getResource(rutaImagen).getFile()).getAbsolutePath();
+    
+            FileInputStream FIS = new FileInputStream(absolutePath);
+    
+           
+           
+            DocFlavor DF = DocFlavor.INPUT_STREAM.JPEG;
+            Doc doc = new SimpleDoc(FIS, DF, null);
+            job.print(doc, null);
+    
+            FIS.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        sb.append("Tenosique, Tabasco\n");
+        sb.append("Prolongacion Calle 28, Carretera la Palma\n");
+    
+        // Agregar el número de ticket
+        sb.append("Ficha de compra\n");
+        sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
+        sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
+        sb.append("------------------------------------------------\n");
+        sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
+    
+        for (DetallesVenta detalle : venta.getDetalles()) {
+            sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(), formatoDinero.format(detalle.getTotal())));
+        }
+    
+        sb.append("------------------------------------------------\n");
+    
+        String montoIngresadoTexto = insertarPagoTextField.getText();
+        BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
+        BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
+    
+        sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
+        sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
+        sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
+        sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
+        sb.append("\n\n\n\n\n\n");
+        sb.append("\n\n\n\n\n\n");
+        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        Doc doc = new SimpleDoc(sb.toString(), flavor, null);
+        job = ps.createPrintJob(); 
+    }
 
+    
     private void guardarMovimiento(Movimientos movimiento) {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
@@ -504,68 +550,4 @@ public void regresar() {
         entityManager.close();
         emf.close();
     }
-
-    private String generarContenidoTicket() {
-    StringBuilder sb = new StringBuilder();
-
-//     // Agregar el logo de la empresa
-        String rutaImagen = "/ticket/LOGO.jpg";
-    // try {
-    //     InputStream inputStream = getClass().getResourceAsStream(rutaImagen);
-    // BufferedImage imagen = ImageIO.read(inputStream);
-
-    // // Crear un objeto ByteArrayOutputStream para almacenar los datos de la imagen
-    // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    // ImageIO.write(imagen, "BMP", baos); // Convertir la imagen a formato BMP
-
-    // // Obtener los datos de la imagen como un arreglo de bytes
-    // byte[] imagenBytes = baos.toByteArray();
-
-    //     // Agregar la imagen al contenido del ticket
-    //     sb.append("\u001B|1B"); // Comando para iniciar la impresión de imagen
-    //     sb.append(new String(imagenBytes, StandardCharsets.ISO_8859_1));
-    //     sb.append("\u001B|1A"); // Comando para finalizar la impresión de imagen
-    //     sb.append("\n");
-
-    // } catch (IOException e) {
-    //     e.printStackTrace();
-    // }
-
-
-sb.append("\u001B|3C"); // Comando para establecer el tamaño de fuente más grande
-sb.append("--------SuKarne--------\u001B|3D"); // Texto ampliado, seguido del comando para restablecer el tamaño de fuente
-sb.append("\n");
-
-    sb.append("Tenosique, Tabasco\n");
-    sb.append("Prolongacion Calle 28, Carretera la Palma\n");
-    
-
-    // Agregar el número de ticket
-    sb.append("Ficha de compra\n");
-    sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
-    sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
-    sb.append("------------------------------------------------\n");
-    sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
-
-    for (DetallesVenta detalle : venta.getDetalles()) {
-        sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(), formatoDinero.format(detalle.getTotal())));
-    }
-
-    sb.append("------------------------------------------------\n");
-
-    String montoIngresadoTexto = insertarPagoTextField.getText();
-    BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
-    BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
-
-    sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
-    sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
-    sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
-    sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
-
-    // Agregar espacios en blanco al final del ticket
-    sb.append("\n\n\n\n\n");
-    sb.append("\n\n\n\n\n");
-  
-    return sb.toString();
-}
 }   
