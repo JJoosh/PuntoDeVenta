@@ -246,7 +246,7 @@ public class MovimientosController implements Initializable {
     public void exportarExcell() {
     Workbook workbook = new XSSFWorkbook();
     Sheet sheet = workbook.createSheet("Movimientos");
-
+    String carpetaDescargas = System.getProperty("user.home") + "/Downloads/";
     // Crear la fila de encabezado
     Row headerRow = sheet.createRow(0);
     headerRow.createCell(0).setCellValue("Fecha");
@@ -276,9 +276,9 @@ public class MovimientosController implements Initializable {
 
     // Crear el nombre del archivo con la fecha actual
     String nombreArchivo = "Movimientos " + fechaActualStr + ".xlsx";
-
+    String rutaCompleta = carpetaDescargas + nombreArchivo;
     // Guardar el archivo de Excel
-    try (FileOutputStream outputStream = new FileOutputStream(nombreArchivo)) {
+    try (FileOutputStream outputStream = new FileOutputStream(rutaCompleta)) {
         workbook.write(outputStream);
         workbook.close();
         Alert alert=new Alert(AlertType.INFORMATION);

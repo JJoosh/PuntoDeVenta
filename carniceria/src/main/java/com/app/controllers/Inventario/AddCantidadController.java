@@ -53,12 +53,13 @@ public class AddCantidadController implements Initializable {
         this.stage=stage;
     }
     public void setDatos(String nombre, BigDecimal pesoCaja, BigDecimal cantidadactual, long id){
-        id_nameProducto.setText("Nombre del producto: "+ nombre);
+        id_nameProducto.setText("Nombre:"+ nombre);
         this.cantidadactual=cantidadactual;
         this.id=id;
         this.pesoCaja=pesoCaja;
     }
 
+    @FXML
     public void ingresar() {
         if (cantCajas != null) {
             try {

@@ -103,6 +103,7 @@ public class FXML_NewProducto {
                 productosbd.setCategoria(categoria);
                 productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
                 productosbd.setPesoCaja(pesoCaja);
+                productosbd.setActivo("S");
 
                 session.save(productosbd);
                 System.out.println("FECHA DE PRUEBA"+fechaHoraActual);

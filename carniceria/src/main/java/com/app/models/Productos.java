@@ -50,6 +50,9 @@ public class Productos {
     @Column(name = "Peso_Caja")
     private BigDecimal peso_caja;
 
+    @Column(name = "Activo")
+    private String activo;
+
     public Productos(){
         
     }
@@ -74,7 +77,7 @@ public class Productos {
         this.costo=costo;
 
     }
-    public Productos(long id, String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio,  BigDecimal productosBajos_inventario) {
+    public Productos(long id, String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio,  BigDecimal productosBajos_inventario, String activo) {
         this.id=id;
         this.nombre = nombre;
         this.costo=costo;
@@ -82,10 +85,17 @@ public class Productos {
         this.categoria = categoria;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.activo=activo;
     }
 
     // Getters y setters
 
+    public String getActivo(){
+        return this.activo;
+    }
+    public void setActivo(String activo){
+        this.activo=activo;
+    }
     public BigDecimal getPesoCaja(){
         return peso_caja;
     }

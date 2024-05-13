@@ -235,7 +235,7 @@ public class FXMLInventarioController implements Initializable {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
     
         // Realizar la consulta en la base de datos
-        String query = "SELECT p FROM Productos p WHERE p.categoria.nombreCategoria = :nombreCategoria";
+        String query = "SELECT p FROM Productos p WHERE p.categoria.nombreCategoria = :nombreCategoria AND p.activo = 'S'";
         TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
         typedQuery.setParameter("nombreCategoria", nombreCategoria);
         List<Productos> productosEncontrados = typedQuery.getResultList();
@@ -270,7 +270,7 @@ public class FXMLInventarioController implements Initializable {
         }
     }
     public void agregaraTabla(){
-       
+        
         codigoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descripcionColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         costoColumn.setCellValueFactory(new PropertyValueFactory<>("costo"));
@@ -297,7 +297,7 @@ public class FXMLInventarioController implements Initializable {
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
 
-        TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p", Productos.class);
+        TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p WHERE p.activo = 'S'", Productos.class);
         List<Productos> productos = query.getResultList();
 
         entityManager.close();
@@ -410,14 +410,13 @@ public class FXMLInventarioController implements Initializable {
     public void eliminarProducto() {
         // Obtener el producto seleccionado del TableView
         Productos productoSeleccionado = tableView.getSelectionModel().getSelectedItem();
-    
         if (productoSeleccionado != null) {
             // Mostrar un diálogo de confirmación
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmar eliminación");
             alert.setHeaderText("¿Estás seguro de que deseas eliminar este producto?");
             alert.setContentText("Esta acción no se puede deshacer.");
-    
+            
             // Esperar la respuesta del usuario
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -425,29 +424,42 @@ public class FXMLInventarioController implements Initializable {
                     Configuration configuration = new Configuration();
                     configuration.configure("hibernate.cfg.xml");
                     configuration.addAnnotatedClass(Productos.class);
-    
+                    
                     SessionFactory sessionFactory = configuration.buildSessionFactory();
                     EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
                     EntityManager entityManager = emf.createEntityManager();
-    
-                    entityManager.getTransaction().begin();
-                    // Eliminar los movimientos relacionados con el producto
-                    entityManager.createQuery("DELETE FROM Movimientos m WHERE m.producto = :producto")
-                                 .setParameter("producto", productoSeleccionado)
-                                 .executeUpdate();
-                    // Luego eliminar el producto
-                    entityManager.remove(entityManager.contains(productoSeleccionado) ? productoSeleccionado : entityManager.merge(productoSeleccionado));
-                    entityManager.getTransaction().commit();
-    
-                    entityManager.close();
-                    emf.close();
-    
-                    productosData.remove(productoSeleccionado);
-                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Se eliminó el producto correctamente");
-                    alert2.showAndWait();
                     
+                    try {
+                        entityManager.getTransaction().begin();
+                        
+                        // Obtener el producto de la base de datos
+                        Productos producto = entityManager.find(Productos.class, productoSeleccionado.getId());
+                        
+                        if (producto != null) {
+                            // Actualizar el valor de "activo" usando el setter
+                            producto.setActivo("N");
+                            
+                            // Guardar los cambios en la base de datos
+                            entityManager.merge(producto);
+                            entityManager.getTransaction().commit();
+                            
+                            actualizarTabla();
+                            
+                            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert2.setHeaderText(null);
+                            alert2.setContentText("Se eliminó el producto correctamente");
+                            alert2.showAndWait();
+                        }
+                    } catch (Exception e) {
+                        if (entityManager.getTransaction().isActive()) {
+                            entityManager.getTransaction().rollback();
+                        }
+                        e.printStackTrace();
+                    } finally {
+                        entityManager.close();
+                        emf.close();
+                        sessionFactory.close();
+                    }
                 }
             });
         } else {
@@ -459,7 +471,6 @@ public class FXMLInventarioController implements Initializable {
             alert.showAndWait();
         }
     }
-    
 
 public void abrirVentas() {
     try {
@@ -488,7 +499,8 @@ public void productosBajos() {
     EntityManager entityManager = emf.createEntityManager();
 
     // Realizar la consulta para obtener los productos con cantidad menor o igual al inventario mínimo
-    String query = "SELECT p FROM Productos p WHERE p.cantidad <= p.productosBajos_inventario";
+    String query = "SELECT p FROM Productos p WHERE p.cantidad <= p.productosBajos_inventario AND p.activo = 'S'";
+
     TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
     List<Productos> productosBajos = typedQuery.getResultList();
 
