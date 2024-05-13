@@ -131,7 +131,7 @@ public class VentasController {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         // Realizar la consulta en la base de datos
-        String query = "SELECT p FROM Productos p WHERE p.id LIKE :consultaTexto OR p.nombre LIKE :consultaTexto";
+        String query = "SELECT p FROM Productos p WHERE (p.id LIKE :consultaTexto OR p.nombre LIKE :consultaTexto) AND p.activo = 'S'";
         TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
         typedQuery.setParameter("consultaTexto", "%" + consultaTexto + "%");
         List<Productos> productosEncontrados = typedQuery.getResultList();
@@ -347,7 +347,7 @@ private void cobrar() {
             entityManager = entityManagerFactory.createEntityManager();
 
             // Realizar la consulta para obtener todos los productos
-            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p", Productos.class);
+            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p WHERE p.activo='S'", Productos.class);
             List<Productos> productos = query.getResultList();
 
             // Actualizar la tabla de productos

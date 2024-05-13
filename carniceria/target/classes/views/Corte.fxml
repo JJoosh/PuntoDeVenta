@@ -14,8 +14,8 @@
          <content>
             <TableView fx:id="Corte" prefHeight="463.0" prefWidth="975.0">
               <columns>
-                <TableColumn fx:id="IDcorte" minWidth="281.0" prefWidth="344.666646361351" text="TOtal Producto" />
-                <TableColumn fx:id="Fecha" minWidth="281.0" prefWidth="316.0000305175781" text="FECHA" />
+                <TableColumn fx:id="IDcorte" minWidth="281.0" prefWidth="344.666646361351" text="Total Producto" />
+                <TableColumn fx:id="Fecha" minWidth="281.0" prefWidth="316.0000305175781" text="Fecha" />
                <TableColumn fx:id="CantidadC" prefWidth="314.00006103515625" text="Total Vendida" />
               </columns>
             </TableView>

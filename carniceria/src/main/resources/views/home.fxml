@@ -21,7 +21,7 @@
             <Line endX="100.0" layoutX="110.0" layoutY="144.0" startX="-100.0" />
             <Label id="menu_ventas" fx:id="menu_ventas" accessibleRole="BUTTON" layoutX="32.0" layoutY="172.0" onMouseClicked="#abrirVentas" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Ventas-F1" />
             <Label id="menu_ventas" fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="33.0" layoutY="262.0" onMouseClicked="#abrirInventario" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Inventario-F2" />
-            <Label id="menu_ventas" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="33.0" layoutY="450.0" onMouseClicked="#abrirCorteCaja" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Kardex-F4" />
+            <Label id="menu_ventas" fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="33.0" layoutY="450.0" onMouseClicked="#abrirCorteCaja" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Corte-F4" />
             <Label id="menu_devoluciones" fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="33.0" layoutY="353.0" onMouseClicked="#abrirDevoluciones" prefHeight="50.0" prefWidth="155.0" stylesheets="@../css/Fondo.css" text="Devoluciones-F3" />
             <Button id="boton_cs" layoutX="14.0" layoutY="745.0" mnemonicParsing="false" onAction="#cerrar" prefHeight="36.0" prefWidth="173.0" text="Cerrar sesión">
                <stylesheets>
