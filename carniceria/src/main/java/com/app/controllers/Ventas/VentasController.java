@@ -44,7 +44,7 @@ public class VentasController {
     private static String nombreUsser;
     private static String rol;
 
-    public void setNombreUsser(String nombreUsser) {
+    public void setNombreUsser(String nombreUsser) { 
         this.nombreUsser = nombreUsser;
     }
 

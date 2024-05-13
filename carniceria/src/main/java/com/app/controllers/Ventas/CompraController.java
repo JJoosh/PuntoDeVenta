@@ -1,15 +1,22 @@
 package com.app.controllers.Ventas;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -451,187 +458,32 @@ public void regresar() {
     private void generarPDF() {
         try {
             if (venta == null) {
-                mostrarAlertaError("Error al generar el PDF",
+                mostrarAlertaError("Error al generar el ticket",
                         "No se encontró información de la venta. Por favor, intente nuevamente.");
                 return;
             }
     
-            Document document = new Document(new Rectangle(200f, 500f));
-            document.setMargins(3, 2, 10, 3);
             String numeroTicket = venta.getTicket();
-            String nombreArchivo = "comprobante_" + numeroTicket + ".pdf";
+            String contenidoTicket = generarContenidoTicket();
     
-            // Obtener la ruta de la carpeta de descargas
-            String rutaDescargas = System.getProperty("user.home") + "/Downloads/";
-            String rutaPDF = rutaDescargas + nombreArchivo;
+            PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
     
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(rutaPDF));
-            document.open();
-    
-            // Agregar logo de la empresa
-            String rutaLogo = "carniceria/src/main/java/com/app/controllers/Ventas/ticket/LOGO.png";
-            Image logo = Image.getInstance(rutaLogo);
-            logo.scaleToFit(100, 100); // Ajusta el tamaño del logo según tus necesidades
-            logo.setAlignment(Element.ALIGN_CENTER);
-            document.add(logo);
-            Paragraph saltolinea = new Paragraph('\n');
-            document.add(saltolinea);
-    
-            // Agregar información de la venta
-            Paragraph textoIzquierda = new Paragraph("Ficha de compra\n",
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIzquierda.setAlignment(Element.ALIGN_CENTER);
-            textoIzquierda.setLeading(1f, 1f);
-            document.add(textoIzquierda);
-    
-            textoIzquierda = new Paragraph("No. ticket: " + numeroTicket,
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIzquierda.setAlignment(Element.ALIGN_LEFT);
-            textoIzquierda.setLeading(1f, 1f);
-            document.add(textoIzquierda);
-    
-            textoIzquierda = new Paragraph(
-                    "Fecha: " + venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            textoIzquierda.setAlignment(Element.ALIGN_LEFT);
-            textoIzquierda.setLeading(1f, 1f);
-            document.add(textoIzquierda);
-    
-            Paragraph lineaSeparadora = new Paragraph(
-                    "________________________________________________________________________________",
-                    new Font(Font.FontFamily.COURIER, 4, Font.BOLD));
-    
-            lineaSeparadora.setAlignment(Element.ALIGN_CENTER);
-            lineaSeparadora.setLeading(1f, 1f);
-            document.add(lineaSeparadora);
-    
-            PdfPTable tablaDetalles = new PdfPTable(3);
-    
-            // Obtener el ancho disponible para la tabla
-            float anchoHoja = 200f;
-            float anchoDisponible = anchoHoja - document.leftMargin() - document.rightMargin();
-    
-            // Establecer el ancho total de la tabla al ancho disponible
-            tablaDetalles.setTotalWidth(anchoDisponible);
-            tablaDetalles.setLockedWidth(true);
-    
-            // Ajustar los anchos proporcionales de las columnas
-            tablaDetalles.setWidths(new float[] { 0.4f, 0.4f, 0.3f });
-    
-            tablaDetalles.setHorizontalAlignment(Element.ALIGN_LEFT);
-            tablaDetalles.getDefaultCell().setBorder(0);
-    
-            PdfPCell cellDerecha = new PdfPCell();
-            cellDerecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            cellDerecha.setBorder(0);
-            cellDerecha.setLeading(0.5f, 0.8f);
-    
-            PdfPCell cellIzquierda = new PdfPCell();
-            cellIzquierda.setHorizontalAlignment(Element.ALIGN_LEFT);
-            cellIzquierda.setLeading(0.5f, 0.8f);
-            cellIzquierda.setBorder(0);
-    
-            // Agregar cabeceras a la tabla
-            PdfPCell cabeceraCantidad = new PdfPCell(
-                    new Phrase("Cantidad:", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
-            cabeceraCantidad.setHorizontalAlignment(Element.ALIGN_LEFT);
-            cabeceraCantidad.setBorder(0);
-            tablaDetalles.addCell(cabeceraCantidad);
-    
-            PdfPCell cabecerapDescripcion = new PdfPCell(
-                    new Phrase("Descripción", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
-            cabecerapDescripcion.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cabecerapDescripcion.setBorder(0);
-            tablaDetalles.addCell(cabecerapDescripcion);
-    
-            PdfPCell cabeceraMonto = new PdfPCell(new Phrase("Monto", new Font(Font.FontFamily.COURIER, 9, Font.BOLD)));
-            cabeceraMonto.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            cabeceraMonto.setBorder(0);
-            tablaDetalles.addCell(cabeceraMonto);
-    
-            // Agregar los detalles de la venta
-            for (DetallesVenta detalle : venta.getDetalles()) {
-                cellDerecha.setPhrase(
-                        new Phrase(detalle.getCantidad() + "Kg", new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
-                cellDerecha.setPaddingRight(0f);
-                cellDerecha.setHorizontalAlignment(Element.ALIGN_LEFT); // Eliminar el espacio a la derecha
-                tablaDetalles.addCell(cellDerecha);
-    
-                String descripcionProducto = detalle.getProducto().getNombre();
-                cellIzquierda.setPhrase(
-                        new Phrase(descripcionProducto, new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
-                tablaDetalles.addCell(cellIzquierda);
-    
-                cellDerecha.setPhrase(new Phrase(formatoDinero.format(detalle.getTotal()),
-                        new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
-                cellDerecha.setPaddingRight(0f);
-                cellDerecha.setHorizontalAlignment(Element.ALIGN_RIGHT); // Eliminar el espacio a la derecha
-                tablaDetalles.addCell(cellDerecha);
-            }
-    
-            document.add(tablaDetalles);
-            document.add(lineaSeparadora);
-    
-            String montoIngresadoTexto = insertarPagoTextField.getText();
-            BigDecimal montoIngresado;
-            try {
-                montoIngresado = new BigDecimal(montoIngresadoTexto);
-            } catch (NumberFormatException e) {
-                mostrarAlertaError("Error al generar el PDF",
-                        "El monto ingresado no es válido. Por favor, ingrese un número válido.");
-                document.close();
-                writer.close();
+            if (printService == null) {
+                System.out.println("No se encontró ninguna impresora disponible.");
                 return;
             }
     
-            BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
+            DocPrintJob printJob = printService.createPrintJob();
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            Doc doc = new SimpleDoc(contenidoTicket.getBytes(), flavor, null);
     
-            // Formatear monto ingresado, cambio y total como texto con formato de moneda
-            String montoIngresadoFormateado = formatoDinero.format(montoIngresado.doubleValue());
-            String cambioFormateado = formatoDinero.format(cambio.doubleValue());
-            String totalFormateado = formatoDinero.format(venta.getTotal().doubleValue());
+            printJob.print(doc, null);
     
-            Paragraph pagoYCambio = new Paragraph();
-            pagoYCambio.add(new Chunk("Su Pago: " + montoIngresadoFormateado + "\n",
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
-            pagoYCambio.add(
-                    new Chunk("Su Cambio: " + cambioFormateado,
-                            new Font(Font.FontFamily.COURIER, 9, Font.NORMAL)));
-            pagoYCambio.setAlignment(Element.ALIGN_LEFT);
-            pagoYCambio.setLeading(1f, 1f);
-            document.add(pagoYCambio);
+            mostrarAlertaInformacion("Ticket generado", "El ticket se ha generado e imprimido correctamente.");
     
-            // Mostrar el total sin el IVA
-            Paragraph textoTotal = new Paragraph("TOTAL: " + totalFormateado,
-                    new Font(Font.FontFamily.COURIER, 10, Font.BOLD));
-            textoTotal.setAlignment(Element.ALIGN_CENTER);
-            textoTotal.setLeading(1f, 1f);
-            document.add(textoTotal);
-    
-            Paragraph gracias = new Paragraph("\n¡GRACIAS, VUELVA PRONTO!",
-                    new Font(Font.FontFamily.COURIER, 9, Font.NORMAL));
-            gracias.setAlignment(Element.ALIGN_CENTER);
-            gracias.setLeading(1f, 1f);
-            document.add(gracias);
-    
-            document.close();
-            writer.close();
-    
-            System.out.println("PDF generado exitosamente en la carpeta de descargas: " + rutaPDF);
-            printTicket(rutaPDF);
-        } catch (FileNotFoundException e) {
-            mostrarAlertaError("Error al generar el PDF",
-                    "No se encontró el archivo de la imagen del logo. Verifique la ruta.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            mostrarAlertaError("Error al generar el PDF", "Ocurrió un error al escribir el archivo PDF.");
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            mostrarAlertaError("Error al generar el PDF", "Ocurrió un error en la creación del documento PDF.");
-            e.printStackTrace();
         } catch (Exception e) {
-            mostrarAlertaError("Error al generar el PDF",
-                    "Ocurrió un error inesperado al generar el PDF. Por favor, intente nuevamente.");
+            mostrarAlertaError("Error al generar el ticket",
+                    "Ocurrió un error inesperado al generar el ticket. Por favor, intente nuevamente.");
             e.printStackTrace();
         }
     }
@@ -653,35 +505,67 @@ public void regresar() {
         emf.close();
     }
 
-    private void printTicket(String url) {
-        try {
-          
-            // Obtener la ruta del archivo PDF generado
-            String numeroTicket = venta.getTicket();
-            String nombreArchivo = "comprobante_" + numeroTicket + ".pdf";
+    private String generarContenidoTicket() {
+    StringBuilder sb = new StringBuilder();
 
-            FileInputStream psStream = new FileInputStream(url);
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-            PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+//     // Agregar el logo de la empresa
+        String rutaImagen = "/ticket/LOGO.jpg";
+    // try {
+    //     InputStream inputStream = getClass().getResourceAsStream(rutaImagen);
+    // BufferedImage imagen = ImageIO.read(inputStream);
 
-            if (service == null) {
-                System.out.println("No se encontró ninguna impresora disponible.");
-                return;
-            }
+    // // Crear un objeto ByteArrayOutputStream para almacenar los datos de la imagen
+    // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    // ImageIO.write(imagen, "BMP", baos); // Convertir la imagen a formato BMP
 
-            Doc myDoc = new SimpleDoc(psStream, flavor, null);
-            DocPrintJob job = service.createPrintJob();
-            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-            pras.add(new Copies(1));
-            job.print(myDoc, pras);
-        } catch (FileNotFoundException e) {
-            mostrarAlertaError("Error al imprimir el ticket",
-                    "No se encontró el archivo PDF. Por favor, genere el PDF primero.");
-            e.printStackTrace();
-        } catch (PrintException e) {
-            mostrarAlertaError("Error al imprimir el ticket", "Ocurrió un error al imprimir el ticket.");
-            e.printStackTrace();
-        }
+    // // Obtener los datos de la imagen como un arreglo de bytes
+    // byte[] imagenBytes = baos.toByteArray();
+
+    //     // Agregar la imagen al contenido del ticket
+    //     sb.append("\u001B|1B"); // Comando para iniciar la impresión de imagen
+    //     sb.append(new String(imagenBytes, StandardCharsets.ISO_8859_1));
+    //     sb.append("\u001B|1A"); // Comando para finalizar la impresión de imagen
+    //     sb.append("\n");
+
+    // } catch (IOException e) {
+    //     e.printStackTrace();
+    // }
+
+
+sb.append("\u001B|3C"); // Comando para establecer el tamaño de fuente más grande
+sb.append("--------SuKarne--------\u001B|3D"); // Texto ampliado, seguido del comando para restablecer el tamaño de fuente
+sb.append("\n");
+
+    sb.append("Tenosique, Tabasco\n");
+    sb.append("Prolongacion Calle 28, Carretera la Palma\n");
+    
+
+    // Agregar el número de ticket
+    sb.append("Ficha de compra\n");
+    sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
+    sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
+    sb.append("------------------------------------------------\n");
+    sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
+
+    for (DetallesVenta detalle : venta.getDetalles()) {
+        sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(), formatoDinero.format(detalle.getTotal())));
     }
 
+    sb.append("------------------------------------------------\n");
+
+    String montoIngresadoTexto = insertarPagoTextField.getText();
+    BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
+    BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
+
+    sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
+    sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
+    sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
+    sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
+
+    // Agregar espacios en blanco al final del ticket
+    sb.append("\n\n\n\n\n");
+    sb.append("\n\n\n\n\n");
+  
+    return sb.toString();
 }
+}   
