@@ -15,13 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.net.URL;
 public class HomeController implements Initializable {
     @FXML
     Pane home;
@@ -29,27 +27,30 @@ public class HomeController implements Initializable {
     Pane menu_lateral;
     @FXML
     Label ventas;
+
     private Stage stage;
-   @Override
+    private String userRole; // Variable para almacenar el rol del usuario
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         menu_lateral.setOnKeyPressed(this::handleKeyPressed);
-       
+
     }
 
-    public void setStage(Stage stage){
-        this.stage=stage;
-    
+    public void setStage(Stage stage) {
+        this.stage = stage;
         stage.setResizable(false);
-   
     }
-    
 
- 
+
+    public void setUserRole(String role) {
+        this.userRole = role;
+    }
+
     @FXML
     public void cerrar() {
         this.stage.close();
-        Scene scene; // Agrega un punto y coma aquí
+        Scene scene;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root;
         try {
@@ -61,10 +62,10 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    
+
     @FXML
     private void handleKeyPressed(KeyEvent event) {
+
         if (event.getCode()==KeyCode.F1) {
             abrirVentas();
          
@@ -85,67 +86,72 @@ public class HomeController implements Initializable {
        
     }
 
-    public void abrirCorteCaja(){
-        try {
-            // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
-            Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            FXMLCorte inventarioController = loader.getController();
-            
-            // Reemplazar el contenido del contenedor principal con el nuevo contenido
-            home.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
    
-    public void abrirInventario() {
-        try {
-            // Cargar el archivo FXML con el nuevo contenido
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
-            Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            FXMLInventarioController inventarioController = loader.getController();
-            
-            // Reemplazar el contenido del contenedor principal con el nuevo contenido
-            home.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
-            e.printStackTrace();
+    @FXML
+    private void abrirInventario() {
+        if ("administrador".equals(userRole)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+                Pane nuevoContenido = loader.load();
+                FXMLInventarioController inventarioController = loader.getController();
+                home.getChildren().setAll(nuevoContenido);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
         }
     }
 
-    public void abrirVentas(){
+    private void showAlert(String title, String content) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void abrirVentas() {
         try {
-            // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            VentasController inventarioController = loader.getController();
-            
-            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            VentasController ventasController = loader.getController();
             home.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void abrirDevoluciones(){
-        try {
-            // Cargar el archivo FXML con el nuevo contenido
+    public void abrirCorteCaja() {
+        if ("administrador".equals(userRole)){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
+                Pane nuevoContenido = loader.load();
+                FXMLCorte corteController = loader.getController();
+                home.getChildren().setAll(nuevoContenido);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } 
+        } else {
+            showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
+        }
+        
+    }
+
+    public void abrirDevoluciones() {
+        if ("administrador".equals(userRole)){
+            try {  
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Pane nuevoContenido = loader.load();
-            
-            // Obtener el controlador del nuevo contenido
-            FXMLDevolucionesController inventarioController = loader.getController();
-            
-            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            FXMLDevolucionesController devolucionesController = loader.getController();
             home.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } 
+               
+            } else {
+                 showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
+            }
+    
+}}

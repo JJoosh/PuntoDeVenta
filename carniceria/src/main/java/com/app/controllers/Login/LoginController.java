@@ -9,7 +9,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import com.app.controllers.HomeController;
-import com.app.controllers.Ventas.VentasController;
 import com.app.models.Usuarios;
 
 import javafx.application.Platform;
@@ -27,7 +26,6 @@ import javafx.stage.Stage;
 public class LoginController {
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
 
@@ -65,48 +63,61 @@ public class LoginController {
             return;
         }
 
-        boolean isAuthenticated = authenticateUser(username, password);
+        String role = authenticateUser(username, password);
 
-        if (isAuthenticated) {
+        if (role != null) {
             try {
-                // Cargar la vista Ventas.fxml
+                // Cargar la vista home.fxml
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
                 Parent root = loader.load();
+
 
                 // Obtener el controlador de la vista Ventas.fxml
                 HomeController ventasController = loader.getController();
                 
                 
+    // Obtener el controlador de la vista home.fxml
+                HomeController homeController = loader.getController();
+
+                // Pasar el rol al HomeController
+                homeController.setUserRole(role);
+
+
                 Scene scene = new Scene(root);
                 
                 // Obtener la ventana actual desde la escena asociada a los campos de texto
                 Stage stage = (Stage) usernameField.getScene().getWindow();
-          
-               stage.setX(0); // Establece la posición X en 0 (esquina izquierda)
-               stage.setY(0); 
-               
-                ventasController.setStage(stage);
+
+                stage.setX(0); // Establece la posición X en 0 (esquina izquierda)
+                stage.setY(0);
+
+                homeController.setStage(stage);
                 stage.setScene(scene);
-                
+
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert(AlertType.ERROR, "Error", "Error al cargar la vista Ventas.fxml");
+                showAlert(AlertType.ERROR, "Error", "Error al cargar la vista home.fxml");
             }
         } else {
             showAlert(AlertType.ERROR, "Error de autenticación", "Usuario o contraseña incorrectos");
         }
     }
+
    
-    private boolean authenticateUser(String username, String password) {
+
+
+    private String authenticateUser(String username, String password) {
+
         try (SessionFactory sessionFactory = new Configuration().configure().addAnnotatedClass(Usuarios.class)
                 .buildSessionFactory();
                 Session session = sessionFactory.openSession()) {
-            // Consulta HQL para verificar las credenciales
-            String hql = "FROM Usuarios WHERE nombreUsuario = :username AND contrasena = :password";
-            Query<Usuarios> query = session.createQuery(hql, Usuarios.class);
+
+            String hql = "SELECT rol FROM Usuarios WHERE nombreUsuario = :username AND contrasena = :password";
+            Query<String> query = session.createQuery(hql, String.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
+
 
             List<Usuarios> usuarios = query.list();
             Usuarios rol= usuarios.get(0);
@@ -115,10 +126,17 @@ public class LoginController {
             
             System.out.println(RolUser);
             return !usuarios.isEmpty();
+
+            List<String> roles = query.list();
+
+            if (!roles.isEmpty()) {
+                return roles.get(0); 
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return null; 
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
