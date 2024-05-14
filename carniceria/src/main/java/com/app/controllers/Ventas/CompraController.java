@@ -32,6 +32,7 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSizeName;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -460,80 +461,80 @@ public void regresar() {
     }
 
     private void ImprimirTicket() {
-        try {
-            if (venta == null) {
-                mostrarAlertaError("Error al generar el ticket",
-                        "No se encontró información de la venta. Por favor, intente nuevamente.");
-                return;
-            }
-    
-        
-           generarContenidoTicket();
-    
-            mostrarAlertaInformacion("Ticket generado", "El ticket se ha generado e imprimido correctamente.");
-    
-        } catch (Exception e) {
-            mostrarAlertaError("Error al generar el ticket",
-                    "Ocurrió un error inesperado al generar el ticket. Por favor, intente nuevamente.");
-            e.printStackTrace();
+    try {
+        if (venta == null) {
+            mostrarAlertaError("Error al generar el ticket", "No se encontró información de la venta. Por favor, intente nuevamente.");
+            return;
         }
+
+        String contenidoTicket = generarContenidoTicket();
+
+       
+        PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+
+    
+        DocPrintJob printJob = printService.createPrintJob();
+
+      
+        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+        attributeSet.add(new Copies(1)); // Número de copias
+       
+        byte[] bytes = contenidoTicket.getBytes();
+        Doc doc = new SimpleDoc(bytes, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+
+        printJob.print(doc, attributeSet);
+
+        mostrarAlertaInformacion("Ticket generado", "El ticket se ha generado e imprimido correctamente.");
+    } catch (Exception e) {
+        mostrarAlertaError("Error al generar el ticket", "Ocurrió un error inesperado al generar el ticket. Por favor, intente nuevamente.");
+        e.printStackTrace();
+        System.out.println(e);
     }
+}
     
-    private void generarContenidoTicket() {
+    private String generarContenidoTicket() {
         StringBuilder sb = new StringBuilder();
-        PrintService ps = PrintServiceLookup.lookupDefaultPrintService();
-         DocPrintJob job = ps.createPrintJob();
-        try {
-            String rutaImagen = "/ticket/LOGO.jpg"; // Ruta relativa al directorio resources
-            
-            // Obtener la    ruta absoluta   del archivo
-            String absolutePath = new File(App.class.getResource(rutaImagen).getFile()).getAbsolutePath();
-    
-            FileInputStream FIS = new FileInputStream(absolutePath);
-    
-           
-           
-            DocFlavor DF = DocFlavor.INPUT_STREAM.JPEG;
-            Doc doc = new SimpleDoc(FIS, DF, null);
-            job.print(doc, null);
-    
-            FIS.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    
+        sb.append("--------SuKarne--------"); // Texto ampliado, seguido del comando para restablecer el tamaño de fuente
+        sb.append("\n");
         sb.append("Tenosique, Tabasco\n");
         sb.append("Prolongacion Calle 28, Carretera la Palma\n");
-    
-        // Agregar el número de ticket
+        
+        // Información de la venta
         sb.append("Ficha de compra\n");
         sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
         sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
         sb.append("------------------------------------------------\n");
+        
+        // Detalles de los productos
         sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
-    
+        
         for (DetallesVenta detalle : venta.getDetalles()) {
-            sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(), formatoDinero.format(detalle.getTotal())));
+            sb.append(String.format("%-10s %-20s %10s\n",
+                    detalle.getCantidad() + "Kg",
+                    detalle.getProducto().getNombre(),
+                    formatoDinero.format(detalle.getTotal())));
         }
-    
+        
         sb.append("------------------------------------------------\n");
-    
+        
+        // Totales y pago
         String montoIngresadoTexto = insertarPagoTextField.getText();
         BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
         BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
-    
+        
         sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
         sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
         sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
-        sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
-        sb.append("\n\n\n\n\n\n");
-        sb.append("\n\n\n\n\n\n");
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        Doc doc = new SimpleDoc(sb.toString(), flavor, null);
-        job = ps.createPrintJob(); 
+        
+        // Pie de página del ticket
+        sb.append("GRACIAS, VUELVA PRONTO!\n");
+        
+        // Agregar espacios en blanco al final del ticket
+        sb.append("\n\n\n\n\n");
+        sb.append("\n\n\n\n\n");
+        
+        return sb.toString();
     }
-
-    
     private void guardarMovimiento(Movimientos movimiento) {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");

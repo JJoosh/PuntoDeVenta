@@ -50,7 +50,11 @@ public class LoginController {
         // Enfocar el campo de nombre de usuario al iniciar
         Platform.runLater(() -> usernameField.requestFocus());
     }
-
+    private static String RolUser;
+    public String getRol(){
+        return RolUser;
+       }
+    
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
@@ -72,9 +76,9 @@ public class LoginController {
                 // Obtener el controlador de la vista Ventas.fxml
                 HomeController ventasController = loader.getController();
                 
-
+                
                 Scene scene = new Scene(root);
-
+                
                 // Obtener la ventana actual desde la escena asociada a los campos de texto
                 Stage stage = (Stage) usernameField.getScene().getWindow();
           
@@ -93,7 +97,7 @@ public class LoginController {
             showAlert(AlertType.ERROR, "Error de autenticación", "Usuario o contraseña incorrectos");
         }
     }
-
+   
     private boolean authenticateUser(String username, String password) {
         try (SessionFactory sessionFactory = new Configuration().configure().addAnnotatedClass(Usuarios.class)
                 .buildSessionFactory();
@@ -103,7 +107,13 @@ public class LoginController {
             Query<Usuarios> query = session.createQuery(hql, Usuarios.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
+
             List<Usuarios> usuarios = query.list();
+            Usuarios rol= usuarios.get(0);
+            
+            RolUser=rol.getRol();
+            
+            System.out.println(RolUser);
             return !usuarios.isEmpty();
         } catch (Exception e) {
             e.printStackTrace();

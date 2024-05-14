@@ -1,5 +1,6 @@
 package com.app.controllers.Inventario;
 
+import com.app.controllers.Login.LoginController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
 import com.app.models.Productos;
@@ -171,6 +172,8 @@ public class FXMLInventarioController implements Initializable {
     
     @FXML
     private void addInventario() {
+        LoginController rol=new LoginController();
+         
         try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLProductoNew.fxml"));

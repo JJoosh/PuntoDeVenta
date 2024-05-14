@@ -34,7 +34,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         menu_lateral.setOnKeyPressed(this::handleKeyPressed);
-        
+       
     }
 
     public void setStage(Stage stage){
@@ -43,6 +43,9 @@ public class HomeController implements Initializable {
         stage.setResizable(false);
    
     }
+    
+
+ 
     @FXML
     public void cerrar() {
         this.stage.close();
@@ -64,17 +67,20 @@ public class HomeController implements Initializable {
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode()==KeyCode.F1) {
             abrirVentas();
+         
         }
         if (event.getCode() == KeyCode.F2) {
             abrirInventario();   
-            System.err.println("SE PRESIONO PERRA");
+           
         }
         if (event.getCode()==KeyCode.F3) {
             abrirDevoluciones();
+            
         }
 
         if(event.getCode()==KeyCode.F4){
             abrirCorteCaja();
+           
         }
        
     }
