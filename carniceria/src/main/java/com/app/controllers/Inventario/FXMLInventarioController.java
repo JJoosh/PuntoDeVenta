@@ -547,6 +547,12 @@ public void ingresarCantidad() {
     }
 }
 
+private String rol;
+
+public void setRol(String rol) {
+    this.rol = rol;
+}
+
 
 
 }
