@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:controller="com.app.controllers.Inventario.MovimientosController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label id="Label_letras" layoutX="259.0" layoutY="121.0" prefHeight="59.0" prefWidth="137.0" stylesheets="@../css/styles.css" text="Del día:">
+         <font>
+            <Font size="35.0" />
+         </font></Label>
+      <Label id="Label_letras" layoutX="544.0" layoutY="226.0" text="Buscar por:">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></Label>
+      <TextField fx:id="fproducto" layoutX="547.0" layoutY="283.0" prefHeight="48.0" prefWidth="450.0" promptText="Cajero, producto o departamento" style="-fx-border-color: gray;" styleClass="b-white" stylesheets="@../css/styles.css" />
+      <Label id="Label_letras" layoutX="748.0" layoutY="137.0" text="Tipo de Movimiento:">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></Label>
+      <DatePicker fx:id="fechas" layoutX="399.0" layoutY="131.0" prefHeight="39.0" prefWidth="195.0" />
+      <ComboBox fx:id="boxMovimiento" layoutX="1079.0" layoutY="131.0" prefHeight="48.0" prefWidth="242.0" promptText="-Todos-" style="-fx-background-color: F0D9D1;" styleClass=".">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></ComboBox>
+      <Button id="Devo" layoutX="1079.0" layoutY="290.0" mnemonicParsing="false" onAction="#exportarExcell" prefHeight="41.0" prefWidth="195.0" text="Exportar excel">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Button>
+      <ComboBox fx:id="categorias" layoutX="236.0" layoutY="272.0" prefHeight="59.0" prefWidth="260.0" promptText="Categorias" style="-fx-background-color: CDDBE8;" styleClass="combo-box">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></ComboBox>
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" text="Historial de movimientos de inventario">
+         <font>
+            <Font size="35.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Label>
+      <ScrollPane layoutX="123.0" layoutY="393.0" prefHeight="394.0" prefWidth="1000.0">
+         <content>
+            <TableView fx:id="tablaDevolu" prefHeight="391.0" prefWidth="998.0" styleClass="table" stylesheets="@../css/styles.css">
+               <columns>
+                  <TableColumn fx:id="hora" prefWidth="132.00000512599945" text="Hora" />
+                  <TableColumn fx:id="fecha" prefWidth="162.0" text="Fecha" />
+                  <TableColumn fx:id="productos" prefWidth="178.0" text="Producto" />
+                  <TableColumn fx:id="movimiento" prefWidth="168.0" text="Tipo de movimiento" />
+                  <TableColumn fx:id="cantidad" prefWidth="170.0" text="Cantidad" />
+                  <TableColumn fx:id="columCategoria" prefWidth="188.0" text="Departamento" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <AnchorPane layoutY="104.0" prefHeight="795.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
+      <Button id="atras" layoutX="66.0" layoutY="125.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" onAction="#regresar" stylesheets="@../css/Fondo.css" text="Regresar" />
+   </children>
+</Pane>

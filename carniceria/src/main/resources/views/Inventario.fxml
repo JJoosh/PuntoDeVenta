@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXMLInventarioController">
+   <children>
+      <Label layoutX="29.0" layoutY="149.0" prefHeight="27.0" prefWidth="282.0" text="Costo total del inventario:">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="209.0" prefHeight="41.0" prefWidth="406.0" text="Cantidad de productos en el inventario:">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TextField layoutX="318.0" layoutY="142.0" prefHeight="41.0" prefWidth="397.0" promptText="\$0.00" style="-fx-border-color: gray;" styleClass="te" stylesheets="@../css/Fondo.css" />
+      <TextField layoutX="435.0" layoutY="213.0" prefHeight="41.0" prefWidth="282.0" promptText="0.00" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <ComboBox id="cat_inventario" fx:id="categorias" layoutX="743.0" layoutY="136.0" prefHeight="55.0" prefWidth="224.0" promptText="Categorias" style="-fx-background-color: F9ECDF; -fx-border-color: gray;" styleClass="combo" stylesheets="@../css/Fondo.css" />
+      <Button id="inv_modificar" layoutX="638.0" layoutY="316.0" mnemonicParsing="false" onAction="#ModProd" prefHeight="51.0" prefWidth="214.0" stylesheets="@../css/Fondo.css" text="Modificar producto" />
+      <Button id="devo" layoutX="999.0" layoutY="124.0" mnemonicParsing="false" onAction="#productosBajos" prefHeight="46.0" prefWidth="339.0" text="Productos bajos en existencias">
+         <stylesheets>
+            <URL value="@Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></Button>
+      <Button id="inv_eliminar" layoutX="884.0" layoutY="315.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="53.0" prefWidth="214.0" stylesheets="@../css/Fondo.css" text="Eliminar inventario" />
+      <Button id="Devo" layoutX="1169.0" layoutY="250.0" mnemonicParsing="false" onAction="#Exportar" prefHeight="41.0" prefWidth="165.0" stylesheets="@../css/Fondo.css" text="Exportar excel" />
+      <TextField fx:id="idP" layoutX="48.0" layoutY="321.0" prefHeight="42.0" prefWidth="269.0" promptText="ID" style="-fx-background-color: E4F2F6; -fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <Button id="inv_agregar" fx:id="btnAgregar" layoutX="388.0" layoutY="316.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="51.0" prefWidth="214.0" text="Agregar producto">
+         <stylesheets>
+            <URL value="@Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Button>
+      <Button id="inv_repomov" layoutX="1056.0" layoutY="186.0" mnemonicParsing="false" onAction="#movimientos" prefHeight="46.0" prefWidth="282.0" text="Reporte de movimiento">
+         <stylesheets>
+            <URL value="@Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Button>
+      <ScrollPane layoutX="52.0" layoutY="398.0" prefHeight="433.0" prefWidth="1225.0">
+         <content>
+            <TableView fx:id="tableView" prefHeight="422.0" prefWidth="1217.0">
+               <columns>
+                  <TableColumn fx:id="codigoColumn" prefWidth="183.99998223781586" text="Codigo" />
+                  <TableColumn fx:id="descripcionColumn" prefWidth="256.00001525878906" text="Descripcion del producto" />
+                  <TableColumn fx:id="costoColumn" prefWidth="195.33340454101562" text="Costo" />
+                  <TableColumn fx:id="precioVentaColumn" prefWidth="193.3333740234375" text="Precio venta" />
+                  <TableColumn fx:id="existenciaColumn" prefWidth="177.33331298828125" text="Existencia" />
+                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="213.33331298828125" text="Inventario minimo" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Reporte de inventario">
+         <stylesheets>
+            <URL value="@Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></Label>
+      <Button id="inv_eliminar" layoutX="1145.0" layoutY="315.0" mnemonicParsing="false" onAction="#ingresarCantidad" prefHeight="53.0" prefWidth="214.0" stylesheets="@../css/Fondo.css" text="Ingresar cantidad" />
+   </children>
+</Pane>
