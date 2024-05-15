@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.app.controllers.Configuracion.UsuariosController;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.controllers.corte.FXMLCorte;
@@ -34,14 +35,12 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         menu_lateral.setOnKeyPressed(this::handleKeyPressed);
-
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.setResizable(false);
     }
-
 
     public void setUserRole(String role) {
         this.userRole = role;
@@ -65,28 +64,26 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-
-        if (event.getCode()==KeyCode.F1) {
-            abrirVentas();
-         
+        switch (event.getCode()) {
+            case F1:
+                abrirVentas();
+                break;
+            case F2:
+                abrirInventario();
+                break;
+            case F3:
+                abrirDevoluciones();
+                break;
+            case F4:
+                abrirCorteCaja();
+                break;
+            case F5:
+                abrirConfiguracion();
+            default:
+                break;
         }
-        if (event.getCode() == KeyCode.F2) {
-            abrirInventario();   
-           
-        }
-        if (event.getCode()==KeyCode.F3) {
-            abrirDevoluciones();
-            
-        }
-
-        if(event.getCode()==KeyCode.F4){
-            abrirCorteCaja();
-           
-        }
-       
     }
 
-   
     @FXML
     private void abrirInventario() {
         if ("administrador".equals(userRole)) {
@@ -123,7 +120,7 @@ public class HomeController implements Initializable {
     }
 
     public void abrirCorteCaja() {
-        if ("administrador".equals(userRole)){
+       
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
                 Pane nuevoContenido = loader.load();
@@ -132,9 +129,7 @@ public class HomeController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             } 
-        } else {
-            showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
-        }
+       
         
     }
 
@@ -154,4 +149,22 @@ public class HomeController implements Initializable {
                  showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
             }
     
-}}
+}
+
+public void abrirConfiguracion() {
+    if ("administrador".equals(userRole)){
+        try {  
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Usuarios.fxml"));
+        Pane nuevoContenido = loader.load();
+        UsuariosController devolucionesController = loader.getController();
+        home.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+           
+        } else {
+             showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
+        }
+
+}
+}

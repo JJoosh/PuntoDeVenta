@@ -28,20 +28,27 @@ public class DetallesVenta {
     @Column(name = "Total")
     private BigDecimal total;
 
+    @Column(name = "Forma_Pago")
+    private String formaPago;
+
     public DetallesVenta() {
     }
-    public DetallesVenta(Long id,Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total) {
+
+    public DetallesVenta(Long id, Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total,
+            String formaPago) {
         this.id = id;
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;
         this.total = total;
+        this.formaPago = formaPago;
     }
-    public DetallesVenta(Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total) {
+    public DetallesVenta(Ventas venta, Productos producto, BigDecimal cantidad, BigDecimal total, String formaPago) {
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;
         this.total = total;
+        this.formaPago = formaPago;
     }
 
     public Long getId() {
@@ -82,5 +89,14 @@ public class DetallesVenta {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+
+    public String getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
     }
 }

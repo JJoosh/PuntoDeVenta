@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import com.app.controllers.HomeController;
+import com.app.controllers.Configuracion.modUsser;
 import com.app.models.Usuarios;
 
 import javafx.application.Platform;
@@ -48,11 +49,7 @@ public class LoginController {
         // Enfocar el campo de nombre de usuario al iniciar
         Platform.runLater(() -> usernameField.requestFocus());
     }
-    private static String RolUser;
-    public String getRol(){
-        return RolUser;
-       }
-    
+
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
@@ -71,20 +68,14 @@ public class LoginController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
                 Parent root = loader.load();
 
-
-                // Obtener el controlador de la vista Ventas.fxml
-                HomeController ventasController = loader.getController();
-                
-                
-    // Obtener el controlador de la vista home.fxml
+                // Obtener el controlador de la vista home.fxml
                 HomeController homeController = loader.getController();
 
                 // Pasar el rol al HomeController
                 homeController.setUserRole(role);
 
-
                 Scene scene = new Scene(root);
-                
+
                 // Obtener la ventana actual desde la escena asociada a los campos de texto
                 Stage stage = (Stage) usernameField.getScene().getWindow();
 
@@ -104,11 +95,7 @@ public class LoginController {
         }
     }
 
-   
-
-
     private String authenticateUser(String username, String password) {
-
         try (SessionFactory sessionFactory = new Configuration().configure().addAnnotatedClass(Usuarios.class)
                 .buildSessionFactory();
                 Session session = sessionFactory.openSession()) {
@@ -117,22 +104,11 @@ public class LoginController {
             Query<String> query = session.createQuery(hql, String.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
-
-
-            List<Usuarios> usuarios = query.list();
-            Usuarios rol= usuarios.get(0);
-            
-            RolUser=rol.getRol();
-            
-            System.out.println(RolUser);
-            return !usuarios.isEmpty();
-
             List<String> roles = query.list();
 
             if (!roles.isEmpty()) {
                 return roles.get(0); 
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,5 +121,26 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void abrirCambio(){
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/cambio_contra.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                cambiarcontra cantidadController = loader.getController();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                cantidadController.setDialogStage(stage);
+                stage.show();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+ 
+       
+
+         
     }
 }

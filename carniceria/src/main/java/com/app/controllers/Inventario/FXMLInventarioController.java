@@ -283,7 +283,6 @@ public class FXMLInventarioController implements Initializable {
         // Obtener los productos de la base de datos
         List<Productos> productos = obtenerProductos();
 
-        // Crear una lista observable a partir de la lista de productos
         productosOriginalData = FXCollections.observableArrayList(productos);
         productosData = FXCollections.observableArrayList(productos);
 

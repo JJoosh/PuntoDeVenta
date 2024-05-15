@@ -1,63 +1,34 @@
 package com.app.controllers.Ventas;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Date;
 
-import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
-import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
-import javax.print.attribute.standard.MediaSizeName;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
-import com.app.controllers.App;
 import com.app.models.DetallesVenta;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
 import com.app.models.Ventas;
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.SimpleDateFormat;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -65,9 +36,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -77,7 +48,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 
 public class CompraController {
@@ -107,6 +77,11 @@ public class CompraController {
     @FXML
     private TableColumn<Productos, BigDecimal> totalColumn;
 
+
+    @FXML
+    private ComboBox<String> formaPagoComboBox;
+
+
     @FXML
     private TextField insertarPagoTextField;
 
@@ -127,6 +102,15 @@ public class CompraController {
 
     @FXML
     private void initialize() {
+        formaPagoComboBox.getItems().addAll("Efectivo", "Tarjeta");
+        insertarPagoTextField.setVisible(false);
+        
+
+        // Agregar listener al ComboBox de forma de pago
+        formaPagoComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handlePaymentMethodChange(newValue);
+        });
+
         nombreProductoColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
@@ -156,10 +140,18 @@ public class CompraController {
         });
 
         rootPane.setOnKeyPressed(this::handleKeyPressed);
-
         Platform.runLater(() -> insertarPagoTextField.requestFocus());
     }
-    
+
+
+    private void handlePaymentMethodChange(String paymentMethod) {
+        if ("Efectivo".equals(paymentMethod)) {
+            insertarPagoTextField.setVisible(true);
+        } else if ("Tarjeta".equals(paymentMethod)) {
+            insertarPagoTextField.setVisible(false);
+            calcularCambio();
+        }
+    }
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
@@ -204,25 +196,34 @@ public class CompraController {
     @FXML
     private void finalizarCompra() {
         try {
-            String montoIngresadoTexto = insertarPagoTextField.getText();
-            if (montoIngresadoTexto.isEmpty()) {
-                mostrarAlertaError("Monto de pago no ingresado",
-                        "Por favor, ingrese el monto de pago antes de finalizar la compra.");
+            String formaPago = formaPagoComboBox.getSelectionModel().getSelectedItem();
+            if (formaPago == null) {
+                mostrarAlertaError("Forma de pago no seleccionada",
+                        "Por favor, seleccione una forma de pago antes de finalizar la compra.");
                 return;
             }
 
-            BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
-            BigDecimal cambio = montoIngresado.subtract(importeTotal);
-            if (cambio.compareTo(BigDecimal.ZERO) < 0) {
-                mostrarAlertaError("Cambio insuficiente",
-                        "El monto ingresado es insuficiente para realizar la compra.");
-                return;
+            if ("Efectivo".equals(formaPago)) {
+                String montoIngresadoTexto = insertarPagoTextField.getText();
+                if (montoIngresadoTexto.isEmpty()) {
+                    mostrarAlertaError("Monto de pago no ingresado",
+                            "Por favor, ingrese el monto de pago antes de finalizar la compra.");
+                    return;
+                }
+
+                BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
+                BigDecimal cambio = montoIngresado.subtract(importeTotal);
+                if (cambio.compareTo(BigDecimal.ZERO) < 0) {
+                    mostrarAlertaError("Cambio insuficiente",
+                            "El monto ingresado es insuficiente para realizar la compra.");
+                    return;
+                }
             }
 
-            guardarVenta();
+            guardarVenta(formaPago);
             ImprimirTicket();
             actualizarInventario();
-           
+
             importeTotal = BigDecimal.ZERO;
 
             regresarAVenta();
@@ -233,7 +234,7 @@ public class CompraController {
         }
     }
 
-    private void guardarVenta() {
+    private void guardarVenta(String formaPago) {
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Productos.class);
         configuration.addAnnotatedClass(Ventas.class);
@@ -258,7 +259,6 @@ public class CompraController {
 
             // Crear una instancia de BigDecimal para el total
             BigDecimal total = importeTotal != null ? importeTotal : BigDecimal.ZERO;
-            
 
             // Crear una instancia de la clase Ventas
             Ventas venta = new Ventas();
@@ -289,8 +289,9 @@ public class CompraController {
                 }
 
                 detalle.setTotal(precio.multiply(cantidad));
+                detalle.setFormaPago(formaPago); // Guardar la forma de pago en el detalle de venta
                 venta.addDetalle(detalle);
-               
+
                 Movimientos movimiento = new Movimientos();
                 movimiento.setIdProducto(producto);
                 movimiento.setTipoMovimiento("Salida");
@@ -385,11 +386,15 @@ public void regresar() {
 
     @FXML
     private void calcularCambio() {
-        try {
-            BigDecimal montoIngresado = new BigDecimal(insertarPagoTextField.getText());
-            BigDecimal cambio = montoIngresado.subtract(importeTotal);
-            cambioLabel.setText(formatoDinero.format(cambio));
-        } catch (NumberFormatException e) {
+        if (formaPagoComboBox.getSelectionModel().getSelectedItem().equals("Efectivo")) {
+            try {
+                BigDecimal montoIngresado = new BigDecimal(insertarPagoTextField.getText());
+                BigDecimal cambio = montoIngresado.subtract(importeTotal);
+                cambioLabel.setText(formatoDinero.format(cambio));
+            } catch (NumberFormatException e) {
+                cambioLabel.setText("0.00");
+            }
+        } else {
             cambioLabel.setText("0.00");
         }
     }
@@ -469,16 +474,16 @@ public void regresar() {
 
         String contenidoTicket = generarContenidoTicket();
 
-       
+
         PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
 
-    
+
         DocPrintJob printJob = printService.createPrintJob();
 
-      
+
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
         attributeSet.add(new Copies(1)); // Número de copias
-       
+
         byte[] bytes = contenidoTicket.getBytes();
         Doc doc = new SimpleDoc(bytes, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
 
@@ -491,50 +496,46 @@ public void regresar() {
         System.out.println(e);
     }
 }
+
+
     
-    private String generarContenidoTicket() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("--------SuKarne--------"); // Texto ampliado, seguido del comando para restablecer el tamaño de fuente
-        sb.append("\n");
-        sb.append("Tenosique, Tabasco\n");
-        sb.append("Prolongacion Calle 28, Carretera la Palma\n");
-        
-        // Información de la venta
-        sb.append("Ficha de compra\n");
-        sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
-        sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
-        sb.append("------------------------------------------------\n");
-        
-        // Detalles de los productos
-        sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
-        
-        for (DetallesVenta detalle : venta.getDetalles()) {
-            sb.append(String.format("%-10s %-20s %10s\n",
-                    detalle.getCantidad() + "Kg",
-                    detalle.getProducto().getNombre(),
-                    formatoDinero.format(detalle.getTotal())));
-        }
-        
-        sb.append("------------------------------------------------\n");
-        
-        // Totales y pago
+ private String generarContenidoTicket() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("       ----SuKarne----\n");
+    sb.append("Tenosique, Tabasco\n");
+    sb.append("Prolongacion Calle 28, Carretera la Palma\n");
+    sb.append("Ficha de compra\n");
+    sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
+    sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
+            .append("\n");
+    sb.append("------------------------------------------------\n");
+    sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
+
+    for (DetallesVenta detalle : venta.getDetalles()) {
+        sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(),
+                formatoDinero.format(detalle.getTotal())));
+    }
+
+    sb.append("------------------------------------------------\n");
+    String formaPago = venta.getDetalles().get(0).getFormaPago();
+    sb.append("Forma de Pago: ").append(formaPago).append("\n");
+
+    if ("Efectivo".equals(formaPago)) {
         String montoIngresadoTexto = insertarPagoTextField.getText();
         BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
         BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
-        
         sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
         sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
-        sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
-        
-        // Pie de página del ticket
-        sb.append("GRACIAS, VUELVA PRONTO!\n");
-        
-        // Agregar espacios en blanco al final del ticket
-        sb.append("\n\n\n\n\n");
-        sb.append("\n\n\n\n\n");
-        
-        return sb.toString();
     }
+
+    sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
+    sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
+    sb.append("\n\n\n\n\n\n");
+    sb.append("\n\n\n\n\n\n");
+
+    return sb.toString();
+}
+    
     private void guardarMovimiento(Movimientos movimiento) {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");

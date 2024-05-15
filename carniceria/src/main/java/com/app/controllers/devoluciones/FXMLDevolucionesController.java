@@ -225,55 +225,37 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
         return detalles;
     }
 
-    public void compararTicketConTextField(List<Ventas> listaVentas, List<Productos> listaProductos, List<DetallesVenta> listaDetalles) {
+    public void compararTicketConTextField(List<Ventas> listaVentas, List<Productos> listaProductos,
+            List<DetallesVenta> listaDetalles) {
         ticket.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 // Mostrar todos los datos cuando el campo de texto está vacío
                 mostartabla(listaVentas, listaDetalles, listaProductos);
             } else {
                 // Filtrar los datos según el valor del campo de texto
-                productofiltrado = new ArrayList<>();
-                detallesventasfiltrado = new ArrayList<>();
-                ventasfiltrado = new ArrayList<>();
+                List<Ventas> ventasFiltradas = new ArrayList<>();
+                List<DetallesVenta> detallesVentaFiltrados = new ArrayList<>();
+                List<Productos> productosFiltrados = new ArrayList<>();
 
                 for (Ventas venta : listaVentas) {
                     String ticketVenta = venta.getTicket();
                     if (ticketVenta.startsWith(newValue)) {
-                        Long idVenta = venta.getId();
-                        LocalDateTime fechaVenta = venta.getFecha();
-                        String ticket = venta.getTicket();
-                        BigDecimal totalVenta = venta.getTotal();
+                        ventasFiltradas.add(venta);
 
-                        Ventas ventasn = new Ventas(idVenta, ticket, fechaVenta, totalVenta);
-                        ventasfiltrado.add(ventasn);
-                        for (DetallesVenta detalles : listaDetalles) {
-                            Ventas idventasDetalle = detalles.getVenta();
-                            if (idVenta.equals(idventasDetalle.getId())) {
-                                Long id= detalles.getId();
-                                Productos idproductoDetalle = detalles.getProducto();
-                                BigDecimal cantidad = detalles.getCantidad();
-                                BigDecimal totalDetallesVenta = detalles.getTotal();
+                        for (DetallesVenta detalle : listaDetalles) {
+                            if (venta.equals(detalle.getVenta())) {
+                                detallesVentaFiltrados.add(detalle);
 
-                                DetallesVenta detallesn = new DetallesVenta(id,idventasDetalle, idproductoDetalle, cantidad, totalDetallesVenta);
-                                detallesventasfiltrado.add(detallesn);
-
-                                for (Productos producto : listaProductos) {
-                                    Long idproducto = producto.getId();
-                                    if (idproductoDetalle.getId().equals(idproducto)) {
-                                        BigDecimal cantidadProducto = producto.getCantidad();
-                                        BigDecimal precioProducto = producto.getPrecio();
-                                        String NombreProducto = producto.getNombre();
-                                        Categoria categoria = producto.getCategoria();
-                                        Productos productoN = new Productos(NombreProducto, categoria, cantidadProducto, precioProducto);
-                                        productofiltrado.add(productoN);
-                                    }
+                                Productos producto = detalle.getProducto();
+                                if (!productosFiltrados.contains(producto)) {
+                                    productosFiltrados.add(producto);
                                 }
                             }
                         }
                     }
                 }
 
-                mostartabla(ventasfiltrado, detallesventasfiltrado, productofiltrado);
+                mostartabla(ventasFiltradas, detallesVentaFiltrados, productosFiltrados);
             }
         });
     }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasHechas">
+   <children>
+      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Ventas Hechas">
+         <font>
+            <Font size="45.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets>
+      </Label>
+      <Button id="atras" fx:id="btn_atras" layoutX="46.0" layoutY="129.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
+      <Button id="compra_finalizar" fx:id="compra_finalizar" layoutX="600.0" layoutY="670.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#imprimirTicket" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Imprimir" />
+      <ScrollPane layoutX="66.0" layoutY="262.0" prefHeight="349.0" prefWidth="1254.0">
+         <content>
+            <TableView fx:id="tablaDetallesVenta" prefHeight="344.0" prefWidth="1251.0">
+               <columns>
+                  <TableColumn fx:id="ticketColumn" prefWidth="307.3333486318588" text="Ticket" />
+                  <TableColumn fx:id="fechaColumn" prefWidth="292.00006103515625" text="Fecha" />
+                  <TableColumn fx:id="totalColumn" editable="false" prefWidth="290.66668701171875" resizable="false" sortable="false" text="Total" />
+                  <TableColumn fx:id="formaPagoColumn" prefWidth="358.66650390625" text="Forma de Pago" />
+                   <TableColumn fx:id="detallesColumn" prefWidth="358.66650390625" text="Detalles" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

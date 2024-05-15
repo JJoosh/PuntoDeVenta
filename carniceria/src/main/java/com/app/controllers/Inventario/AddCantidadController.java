@@ -28,6 +28,10 @@ public class AddCantidadController implements Initializable {
 
     @FXML
     private TextField cantCajas;
+    @FXML private TextField pesoCaja;
+
+
+    private BigDecimal total;
 
     
     private BigDecimal cantidadactual=new BigDecimal(0);
@@ -38,10 +42,6 @@ public class AddCantidadController implements Initializable {
 
     private Stage stage;
     private FXMLInventarioController inventarioController;
-
-    private BigDecimal cantidad=new BigDecimal(0);
-
-    private BigDecimal pesoCaja=new BigDecimal(0);
      @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
@@ -56,20 +56,22 @@ public class AddCantidadController implements Initializable {
         id_nameProducto.setText("Nombre:"+ nombre);
         this.cantidadactual=cantidadactual;
         this.id=id;
-        this.pesoCaja=pesoCaja;
+        
     }
 
     @FXML
     public void ingresar() {
         if (cantCajas != null) {
             try {
-                cantidad = pesoCaja.multiply(BigDecimal.valueOf(Double.parseDouble(cantCajas.getText())));
+               BigDecimal cajas= BigDecimal.valueOf( Double.parseDouble(cantCajas.getText()));
+               BigDecimal peso=BigDecimal.valueOf(Double.parseDouble(pesoCaja.getText()));
+                total =cajas.multiply(peso);
                 
                 // Obtener el producto existente de la base de datos
                 Productos producto = obtenerProductoPorId(this.id);
                 
                 if (producto != null) {
-                    producto.actualizarCantidad(id, cantidad.add(cantidadactual));
+                    producto.actualizarCantidad(id, total.add(cantidadactual));
                     
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Correcto");
@@ -82,11 +84,9 @@ public class AddCantidadController implements Initializable {
                     Movimientos movimiento = new Movimientos();
                     movimiento.setIdProducto(producto);
                     movimiento.setTipoMovimiento("Entrada");
-                    movimiento.setCantidad(cantidad);
+                    movimiento.setCantidad(total);
                     LocalDateTime fechaHoraActual = LocalDateTime.now();
                     movimiento.setFecha(fechaHoraActual);
-                    
-                    // Guardar el movimiento en la base de datos
                     guardarMovimiento(movimiento);
                     
                     stage.close();

@@ -16,7 +16,6 @@ import org.hibernate.cfg.Configuration;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.devoluciones.FXMLDevolucionesController;
 import com.app.models.Productos;
-import com.ibm.icu.text.DecimalFormat;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -26,7 +25,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,7 +35,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class VentasController {
 
@@ -62,6 +59,7 @@ public class VentasController {
 
     @FXML
     private Button btnbuscarcode1;
+
 
     @FXML
     private TextField codigoProductoTextField;
@@ -446,4 +444,30 @@ private void cobrar() {
         }
     }
 
+    
+   @FXML 
+    public void abrirVentasHechas() {
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/VentasHechas.fxml"));
+            Pane nuevoContenido = loader.load();
+
+            // Obtener el controlador del nuevo contenido
+            VentasHechas ventasHechasController = loader.getController();
+
+            // Reemplazar el contenido del contenedor principal con el nuevo contenido
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+private void mostrarAlertaError(String titulo, String mensaje) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(titulo);
+    alert.setHeaderText(null);
+    alert.setContentText(mensaje);
+    alert.showAndWait();
+}
 }

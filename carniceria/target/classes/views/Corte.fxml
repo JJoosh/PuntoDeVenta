@@ -10,20 +10,24 @@
 
 <Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.corte.FXMLCorte">
    <children>
-      <ScrollPane layoutX="135.0" layoutY="266.0" prefHeight="468.0" prefWidth="982.0">
-         <content>
-            <TableView fx:id="Corte" prefHeight="463.0" prefWidth="975.0">
-              <columns>
-                <TableColumn fx:id="IDcorte" minWidth="281.0" prefWidth="344.666646361351" text="Total Producto" />
-                <TableColumn fx:id="Fecha" minWidth="281.0" prefWidth="316.0000305175781" text="Fecha" />
-               <TableColumn fx:id="CantidadC" prefWidth="314.00006103515625" text="Total Vendida" />
-              </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
       <Label id="Label_letras" layoutX="227.0" layoutY="154.0" prefHeight="41.0" prefWidth="177.0" stylesheets="@../css/Fondo.css" text="Buscar:" />
       <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Corte de caja" />
       <DatePicker fx:id="datePicker" layoutX="361.0" layoutY="155.0" prefHeight="41.0" prefWidth="232.0" />
-      <Button onAction="#corte" layoutX="804.0" layoutY="140.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="315.0" stylesheets="@../css/Fondo.css" text="Realizar corte de caja-F5" />
+      <Button layoutX="804.0" layoutY="140.0" mnemonicParsing="false" onAction="#corte" prefHeight="58.0" prefWidth="315.0" stylesheets="@../css/Fondo.css" text="Realizar corte de caja-F5" />
+      <ScrollPane layoutX="115.0" layoutY="258.0" prefHeight="468.0" prefWidth="1029.0">
+         <content>
+            <TableView fx:id="Corte" prefHeight="463.0" prefWidth="1027.0">
+               <columns>
+                  <TableColumn fx:id="Ticket" minWidth="95.20003968477249" prefWidth="115.99999696016312" text="Ticket" />
+                  <TableColumn fx:id="Producto" minWidth="95.19999694824219" prefWidth="113.59999084472656" text="ID PRODUCTO" />
+                  <TableColumn fx:id="Nombre" prefWidth="128.8000030517578" text="NOMBRE" />
+                  <TableColumn fx:id="cantidad" prefWidth="134.39995117187505" text="CANTIDAD" />
+                  <TableColumn fx:id="Fecha" prefWidth="236.0" text="FECHA" />
+                  <TableColumn fx:id="Total" prefWidth="143.20001220703125" text="TOTAL" />
+                  <TableColumn fx:id="Pago" prefWidth="152.00006103515625" text="PAGO" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
    </children>
 </Pane>

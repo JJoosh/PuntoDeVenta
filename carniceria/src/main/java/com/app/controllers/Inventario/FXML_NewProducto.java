@@ -2,19 +2,12 @@ package com.app.controllers.Inventario;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
-
-import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
@@ -31,8 +24,7 @@ import javafx.stage.Stage;
 public class FXML_NewProducto {
     @FXML
     private TextField layout1;
-    @FXML
-    private TextField layout4;
+   
     @FXML
     private TextField layout2;
     @FXML
@@ -41,8 +33,7 @@ public class FXML_NewProducto {
     private Spinner<Double> spinner2;
     @FXML
     private Spinner<Double> spinner3;
-    @FXML
-    private TextField layout5;
+    
     @FXML
     private ComboBox<String> categorias;
 
@@ -62,8 +53,8 @@ public class FXML_NewProducto {
    public void agregar() {
     LocalDateTime fechaHoraActual = LocalDateTime.now();
 
-    if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false && layout4.getText().isEmpty() == false
-            && spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
+    if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false &&
+             spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
             && spinner1.getValue() > 0 && spinner2.getValue() > 0 && spinner3.getValue() > 0) {
         try {
             long codigoBarras = Integer.parseInt(layout1.getText());
@@ -71,10 +62,10 @@ public class FXML_NewProducto {
             Double precioCosto = spinner1.getValue();
             double precioVenta = spinner2.getValue();
             double invMinimo = spinner3.getValue();
-            int cantidadCajas = Integer.parseInt(layout4.getText());
-            BigDecimal pesoCaja= BigDecimal.valueOf(Double.parseDouble(layout5.getText()));
+            
+           
 
-            BigDecimal cantidadKg = pesoCaja.multiply(BigDecimal.valueOf(cantidadCajas));
+           
 
             String Categoria = categorias.getValue().toString();
             System.out.println("Categoria: " + Categoria);
@@ -99,17 +90,17 @@ public class FXML_NewProducto {
                 productosbd.setNombre(descripcion);
                 productosbd.setCosto(BigDecimal.valueOf(precioCosto));
                 productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
-                productosbd.setCantidad(cantidadKg);
+               productosbd.setCantidad(BigDecimal.valueOf(0.0));
                 productosbd.setCategoria(categoria);
                 productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
-                productosbd.setPesoCaja(pesoCaja);
+                
                 productosbd.setActivo("S");
 
                 session.save(productosbd);
                 System.out.println("FECHA DE PRUEBA"+fechaHoraActual);
                 movimientos.setIdProducto(productosbd);
                 movimientos.setTipoMovimiento("Entrada");
-                movimientos.setCantidad(cantidadKg);
+                movimientos.setCantidad(BigDecimal.valueOf(0.0));
                 movimientos.setFecha(fechaHoraActual);
                 session.save(movimientos);
                 tx.commit();
@@ -125,7 +116,7 @@ public class FXML_NewProducto {
                 spinner1.getValueFactory().setValue((double) 0);
                 spinner2.getValueFactory().setValue((double) 0);
                 spinner3.getValueFactory().setValue((double) 0);
-                layout4.setText("");
+                
             } catch (ConstraintViolationException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
