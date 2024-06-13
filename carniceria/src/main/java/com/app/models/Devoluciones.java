@@ -25,7 +25,7 @@ public class Devoluciones {
     @JoinColumn(name = "ID_Venta")
     private Ventas venta;
 
-    @Column(name = "Cantidad_devuelta")
+    @Column(name = "Cantidad_devuelta", precision = 6, scale = 3)
     private Double cantidadDevuelta;
 
     @Column(name = "Motivo")

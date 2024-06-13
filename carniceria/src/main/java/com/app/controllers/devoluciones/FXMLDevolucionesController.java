@@ -92,9 +92,6 @@ public class FXMLDevolucionesController implements Initializable {
     private TableColumn<tabledata, Long> detalles;
 
     @FXML
-    private Spinner<Double> spinner;
-
-    @FXML
     private TextArea textoArea;
 
     @FXML
@@ -113,6 +110,7 @@ public class FXMLDevolucionesController implements Initializable {
     List<Productos> productofiltrado;
     String ticketglobal="";
     String opcion3="";
+    BigDecimal CantidadMaxima=null;
     @Override
 public void initialize(URL url, ResourceBundle rb) {
     cargarCategorias(this.motivos, 1);
@@ -123,17 +121,7 @@ public void initialize(URL url, ResourceBundle rb) {
     nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     detalles.setCellValueFactory(new PropertyValueFactory<>("detalle"));
     iniciarcomponentes();
-    SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-            Double.MIN_VALUE, Double.MAX_VALUE, 0.0, 0.1);
-    spinner.setValueFactory(valueFactory1);
 
-    tabladev.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue != null) {
-
-            actualizarSpinnerMaximo(newValue.getCantidad());
-           
-        }
-    });
     if (rootPane != null) {
         rootPane.setOnKeyPressed(this::handleKeyPressed);
     } else {
@@ -145,7 +133,7 @@ public void initialize(URL url, ResourceBundle rb) {
 
 private void cargarCategorias(ComboBox<String> motivos, int opcion){
     motivos.getItems().clear();
-    motivos.getItems().addAll("producto en mal estado", "Error de pedido", "otro");
+    motivos.getItems().addAll("producto en mal estado","otro");
     motivos.setOnAction(event -> {
         String selectedOption = motivos.getSelectionModel().getSelectedItem();
         if (selectedOption ==null) {
@@ -164,16 +152,11 @@ private void cargarCategorias(ComboBox<String> motivos, int opcion){
             }
             else{
                 opcion3="";
-                System.out.println("ummm");
             }
         }
         });
 }
-private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
-    SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-        Double.MIN_VALUE, cantidadVenta.doubleValue(), 0.0, 0.1);
-    spinner.setValueFactory(valueFactory);
-}
+
     public void iniciarcomponentes() { 
         listaVentas = obtenerListaDeVentas();
         ListaProducto = obtenerListaDeProductos();
@@ -225,8 +208,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
         return detalles;
     }
 
-    public void compararTicketConTextField(List<Ventas> listaVentas, List<Productos> listaProductos,
-            List<DetallesVenta> listaDetalles) {
+    public void compararTicketConTextField(List<Ventas> listaVentas, List<Productos> listaProductos, List<DetallesVenta> listaDetalles) {
         ticket.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 // Mostrar todos los datos cuando el campo de texto está vacío
@@ -240,12 +222,15 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
                 for (Ventas venta : listaVentas) {
                     String ticketVenta = venta.getTicket();
                     if (ticketVenta.startsWith(newValue)) {
+                        System.out.println(ticketVenta+" comprobando");
+                        Long IDventa = venta.getId();
+                        System.out.println(IDventa);
                         ventasFiltradas.add(venta);
 
                         for (DetallesVenta detalle : listaDetalles) {
-                            if (venta.equals(detalle.getVenta())) {
+                            Ventas IdDVENTA= detalle.getVenta();
+                            if  (IDventa.equals(IdDVENTA.getId())) {
                                 detallesVentaFiltrados.add(detalle);
-
                                 Productos producto = detalle.getProducto();
                                 if (!productosFiltrados.contains(producto)) {
                                     productosFiltrados.add(producto);
@@ -262,37 +247,34 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
 
     private void mostartabla(List<Ventas> ventasfiltrado, List<DetallesVenta> detallesventasfiltrado, List<Productos> productofiltrado) {
         datosTabla.clear(); // Limpiar los datos existentes en la tabla
-
+    
         for (Ventas venta : ventasfiltrado) {
             String ticket1 = venta.getTicket();
             LocalDateTime fecha = venta.getFecha();
-            BigDecimal total = venta.getTotal();
-
-            String nombre = "";
-            Long id=null;
-            BigDecimal cantidadventa = null;
-            for (DetallesVenta detalle : detallesventasfiltrado) {
-                id = detalle.getId();
-                
-                if (detalle.getVenta().getId().equals(venta.getId())) {
-                    Productos producto = detalle.getProducto();
-                    nombre = producto.getNombre();
-                    cantidadventa = detalle.getCantidad();
-                    break;
-                }
-            }
             DateTimeFormatter formatoSinT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String fechaFormateada = fecha.format(formatoSinT);
-            datosTabla.add(new tabledata(ticket1, fechaFormateada, total, cantidadventa, nombre,id));
-            tabladev.setItems(datosTabla);
+    
+            for (DetallesVenta detalle : detallesventasfiltrado) {
+                if (detalle.getVenta().getId().equals(venta.getId())) {
+                    Long id = detalle.getId();
+                    Productos producto = detalle.getProducto();
+                    String nombre = producto.getNombre();
+                    BigDecimal cantidadventa = detalle.getCantidad();
+                    BigDecimal total = detalle.getTotal();
+                    
+                    datosTabla.add(new tabledata(ticket1, fechaFormateada, total, cantidadventa, nombre, id));
+                }
+            }
         }
-
-        
+    
+        tabladev.setItems(datosTabla);
     }
 
+    
     public void calculo(LocalDateTime fechaHoraActual,BigDecimal cantidadventa, Long idVenta, Long idDetalle, String texto,Double Devolucion) {
         BigDecimal resultadoResta = cantidadventa.subtract(BigDecimal.valueOf(Devolucion));
-        actualizarCantidadDetalleVenta(idVenta, idDetalle, resultadoResta,cantidadventa);
+        BigDecimal Devuelto= BigDecimal.valueOf(Devolucion);
+        actualizarCantidadDetalleVenta(idVenta, idDetalle, Devuelto, resultadoResta);
         llenartabladevolucion(resultadoResta, fechaHoraActual, texto, idVenta);
     }
 
@@ -306,8 +288,6 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
         LocalDate localDate = LocalDate.now();
         LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
         Timestamp timestamp = Timestamp.valueOf(fechaSQL);
-        System.out.println(fechaSQL+"vamosss ");
-        System.out.println(timestamp+"vamosss ");
         try {
             // Buscar la entidad Ventas por su ID
             Ventas venta = entityManager.find(Ventas.class, idVenta);
@@ -322,8 +302,6 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
             // Guardar la entidad Devoluciones en la base de datos
             entityManager.persist(devolucion);
             entityManager.getTransaction().commit();
-    
-            System.out.println("Devolución agregada correctamente");
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             e.printStackTrace();
@@ -332,7 +310,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
             emf.close();
         }
     }
-    private void actualizarCantidadDetalleVenta(Long idVenta, Long idDetalle, BigDecimal nuevaCantidad, BigDecimal cantidadventa) {
+    private void actualizarCantidadDetalleVenta(Long idVenta, Long idDetalle, BigDecimal nuevaCantidad,  BigDecimal resultadoResta) {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
@@ -383,8 +361,7 @@ private void actualizarSpinnerMaximo(BigDecimal cantidadVenta) {
 tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         String selectedItem = motivos.getSelectionModel().getSelectedItem();
-        Double Devolucion = spinner.getValue();
-    
+
         if (ticketseleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -393,79 +370,80 @@ tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
             alert.showAndWait();
             return;
         } else {
-            ticketglobal = ticketseleccionado.getTicket1();
-            Long idDetalle = ticketseleccionado.getDetalle();
-            BigDecimal cantidadVenta = ticketseleccionado.getCantidad();
-            String fechaVenta = ticketseleccionado.getFecha();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime fechaLocalDateTime = LocalDateTime.parse(fechaVenta, formatter);
-
-            LocalDateTime fechaVentaMas24Horas = fechaLocalDateTime.plusHours(24);
-
-            if (fechaHoraActual.isAfter(fechaVentaMas24Horas)) {
-                // Se pasaron más de 24 horas desde la venta
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Advertencia");
-                alert.setHeaderText(null);
-                alert.setContentText("Se pasaron más de 24 horas desde la venta. No se puede realizar la devolución.");
-                alert.showAndWait();
-                motivos.getSelectionModel().clearSelection();
-
-                spinner.getValueFactory().setValue(0.0);
-            } else {
-                // No se pasaron más de 24 horas desde la venta
-                if (selectedItem != null && spinner.getValue() > 0) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Exitosa");
-                    alert.setHeaderText(null);
-                    alert.setContentText("¿Seguro? El siguiente ticket " + ticketglobal + " se le aplicará una devolución con la ID " + idDetalle);
+                ticketglobal = ticketseleccionado.getTicket1();
+                Long idDetalle = ticketseleccionado.getDetalle();
+                BigDecimal cantidadVenta = ticketseleccionado.getCantidad();
+                String fechaVenta = ticketseleccionado.getFecha();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime fechaLocalDateTime = LocalDateTime.parse(fechaVenta, formatter);
+                Double Devolucion= 0.0;
+                LocalDateTime fechaVentaMas24Horas = fechaLocalDateTime.plusHours(24);
     
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        Long idVenta = buscarIdVentaPorDetalle(idDetalle);
-                        if (idVenta != null) {
-                            String selectedOption = motivos.getSelectionModel().getSelectedItem();
-                            System.out.println(selectedOption+"--------ya");
-                            if(motivos.getSelectionModel().getSelectedItem().equals("producto en mal estado") && selectedOption!= null){
-                                System.out.println("no se agrega a productos");
-                            }
-                            else{
-                                if(motivos.getSelectionModel().getSelectedItem().equals("otro")){
-                                    selectedItem=opcion3;
-                                }
-                                actualizarproductos(Devolucion, idVenta, idDetalle);
-                            }
-                            calculo(fechaHoraActual,cantidadVenta, idVenta, idDetalle,selectedItem,Devolucion);
-                            listaVentas = null;
-                            ListaProducto = null;
-                            Listadetalles = null;
-                            iniciarcomponentes();
-    
-                            Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
-                            secondAlert.setTitle("Devolución exitosa");
-                            secondAlert.setHeaderText(null);
-                            secondAlert.setContentText("Ticket " + ticketglobal + " con la ID " + idDetalle);
-                            secondAlert.showAndWait();
-
-                            motivos.getSelectionModel().clearSelection();
-
-                            spinner.getValueFactory().setValue(0.0);
-                        } else {
-                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                            errorAlert.setTitle("Error");
-                            errorAlert.setHeaderText(null);
-                            errorAlert.setContentText("No se encontró la venta correspondiente al detalle seleccionado");
-                            errorAlert.showAndWait();
-                        }
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
+                if (fechaHoraActual.isAfter(fechaVentaMas24Horas)) {
+                    // Se pasaron más de 24 horas desde la venta
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Advertencia");
                     alert.setHeaderText(null);
-                    alert.setContentText("Llena todos los campos correctamente");
+                    alert.setContentText("Se pasaron más de 24 horas desde la venta. No se puede realizar la devolución.");
                     alert.showAndWait();
-                }
+                    motivos.getSelectionModel().clearSelection();
+    
+                   
+                } else {
+                    // No se pasaron más de 24 horas desde la venta
+                    if (selectedItem != null) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Exitosa");
+                        alert.setHeaderText(null);
+                        alert.setContentText("¿Seguro? El siguiente ticket " + ticketglobal + " se le aplicará una devolución con la ID " + idDetalle);
+        
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            Long idVenta = buscarIdVentaPorDetalle(idDetalle);
+                            if (idVenta != null) {
+                                String selectedOption = motivos.getSelectionModel().getSelectedItem();
+                                if(motivos.getSelectionModel().getSelectedItem().equals("producto en mal estado") && selectedOption!= null){
+                                    System.out.println("no se agrega a productos");
+                                }
+                                else{
+                                    if(motivos.getSelectionModel().getSelectedItem().equals("otro")){
+                                        selectedItem=opcion3;
+                                    }
+                                    
+                                    actualizarproductos(cantidadVenta, idVenta, idDetalle);
+                                }
+                                calculo(fechaHoraActual,cantidadVenta, idVenta, idDetalle,selectedItem,Devolucion);
+                                listaVentas = null;
+                                ListaProducto = null;
+                                Listadetalles = null;
+                                iniciarcomponentes();
+        
+                                Alert secondAlert = new Alert(Alert.AlertType.INFORMATION);
+                                secondAlert.setTitle("Devolución exitosa");
+                                secondAlert.setHeaderText(null);
+                                secondAlert.setContentText("Ticket " + ticketglobal + " con la ID " + idDetalle);
+                                secondAlert.showAndWait();
+    
+                                motivos.getSelectionModel().clearSelection();
+    
+                              
+                            } else {
+                                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                                errorAlert.setTitle("Error");
+                                errorAlert.setHeaderText(null);
+                                errorAlert.setContentText("No se encontró la venta correspondiente al detalle seleccionado");
+                                errorAlert.showAndWait();
+                            }
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Llena todos los campos correctamente");
+                        alert.showAndWait();
+                    }
             }
+            
         }
     }
     @FXML
@@ -510,8 +488,7 @@ tabledata ticketseleccionado = tabladev.getSelectionModel().getSelectedItem();
         }
         
     }
-    public void actualizarproductos(Double Devolucion, Long idVenta, Long idDetalle){
-
+    public void actualizarproductos(BigDecimal Devolucion, Long idVenta, Long idDetalle){
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
@@ -530,11 +507,10 @@ try {
     Productos producto = detalleVenta.getProducto();
     
     BigDecimal cantidad =producto.getCantidad();
-    BigDecimal doubleComoBigDecimal = BigDecimal.valueOf(Devolucion);
+    BigDecimal doubleComoBigDecimal = Devolucion;
     BigDecimal resultado = cantidad.add(doubleComoBigDecimal);
     
     producto.setCantidad(resultado);
-    
     entityManager.merge(producto);
     entityManager.getTransaction().commit();
     System.out.println("Actualización realizada correctamente");

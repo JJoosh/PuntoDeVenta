@@ -1,6 +1,5 @@
 package com.app.controllers.devoluciones;
 
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -42,9 +41,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
+import java.text.DecimalFormat;
 
-
-public class FXMLVerTabla{
+public class FXMLVerTabla {
     @FXML
     private FXMLDevolucionesController devolucionesController;
     @FXML
@@ -66,15 +68,14 @@ public class FXMLVerTabla{
     List<Devoluciones> devolucion;
     private ObservableList<Devoluciones> DevolucionData;
     List<Devoluciones> devolucionFiltrado;
-    @FXML 
+    @FXML
     private Pane rootPane;
 
     @FXML
-
-
-     public void setDevolucionesController(FXMLDevolucionesController devolucionesController) {
+    public void setDevolucionesController(FXMLDevolucionesController devolucionesController) {
         this.devolucionesController = devolucionesController;
-     }
+    }
+
     public void initialize() {
         devolucion = obtenerdevolucion();
         devolucionFiltrado = new ArrayList<>(); // Inicializar la lista
@@ -90,20 +91,20 @@ public class FXMLVerTabla{
     public void compararTicketConTextField(List<Devoluciones> devolucion) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat formatoDeseado = new SimpleDateFormat("dd-MM-yyyy"); // Formato deseado DD-MM-AA
-    
+
         iddev.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 // Mostrar todos los datos cuando el campo de texto está vacío
                 mostartabla(devolucion);
             } else {
                 devolucionFiltrado.clear();
-    
+
                 for (Devoluciones devoluciones : devolucion) {
                     Long idDevolucion = devoluciones.getId();
                     java.sql.Timestamp fecha = devoluciones.getFechaDevolucion();
                     String fechaString = sdf.format(fecha);
                     String fechaFormateada = formatoDeseado.format(fecha); // Convertir fecha al formato deseado
-    
+
                     String idString = idDevolucion.toString(); // Convertir Long a String
                     if (idString.startsWith(newValue) || fechaFormateada.startsWith(newValue)) {
                         Ventas venta = devoluciones.getVenta();
@@ -113,25 +114,38 @@ public class FXMLVerTabla{
                         devolucionFiltrado.add(devn);
                     }
                 }
-    
+
                 mostartabla(devolucionFiltrado);
             }
         });
     }
-    public void mostartabla(List<Devoluciones> lista){
+
+    public void mostartabla(List<Devoluciones> lista) {
         venta.setCellValueFactory(cellData -> {
             return new SimpleLongProperty(cellData.getValue().getVenta().getId()).asObject();
         });
 
         IdDevoluciones.setCellValueFactory(new PropertyValueFactory<>("id"));
         cantidadDevuelta.setCellValueFactory(new PropertyValueFactory<>("cantidadDevuelta"));
-        Motivo.setCellValueFactory(new PropertyValueFactory<>("Motivo"));
+        cantidadDevuelta.setCellFactory(new Callback<TableColumn<Devoluciones, Double>, TableCell<Devoluciones, Double>>() {
+            @Override
+            public TableCell<Devoluciones, Double> call(TableColumn<Devoluciones, Double> param) {
+                return new DoubleTableCell<>();
+            }
+        });
+        Motivo.setCellValueFactory(new PropertyValueFactory<>("motivo"));
         fecha.setCellValueFactory(new PropertyValueFactory<>("fechaDevolucion"));
-        DevolucionData = FXCollections.observableArrayList(lista);
+        fecha.setCellFactory(new Callback<TableColumn<Devoluciones, java.sql.Timestamp>, TableCell<Devoluciones, java.sql.Timestamp>>() {
+            @Override
+            public TableCell<Devoluciones, java.sql.Timestamp> call(TableColumn<Devoluciones, java.sql.Timestamp> param) {
+                return new DateTableCell<>();
+            }
+        });
 
+        DevolucionData = FXCollections.observableArrayList(lista);
         Devoluciones.setItems(DevolucionData);
-        
     }
+
     private List<Devoluciones> obtenerdevolucion() {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
@@ -141,36 +155,69 @@ public class FXMLVerTabla{
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
         TypedQuery<Devoluciones> query = entityManager.createQuery("SELECT d FROM Devoluciones d", Devoluciones.class);
-     
+
         List<Devoluciones> devolucion = query.getResultList();
         // Suponiendo que ventas es una lista de objetos Ventas
         entityManager.close();
         emf.close();
         return devolucion;
     }
-@FXML
+
+    @FXML
     private void regresar(ActionEvent event) {
         regresara();
     }
-@FXML
+
+    @FXML
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.F5) {
-           regresara();
+            regresara();
         }
     }
-    public void regresara(){
+
+    public void regresara() {
         try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Pane nuevoContenido = loader.load();
-            
+
             // Obtener el controlador del nuevo contenido
             FXMLDevolucionesController inventarioController = loader.getController();
-            
+
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
             rootPane.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Custom TableCell for Double values to format them to 3 decimal places
+    public class DoubleTableCell<S> extends TableCell<S, Double> {
+        private final DecimalFormat format = new DecimalFormat("#.000");
+
+        @Override
+        protected void updateItem(Double item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+            } else {
+                setText(format.format(item));
+            }
+        }
+    }
+
+    // Custom TableCell for Date values to format them as DD-MM-AAAA
+    public class DateTableCell<S> extends TableCell<S, java.sql.Timestamp> {
+        private final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+        @Override
+        protected void updateItem(java.sql.Timestamp item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+            } else {
+                setText(format.format(item));
+            }
         }
     }
 }
