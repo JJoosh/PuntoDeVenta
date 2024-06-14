@@ -45,6 +45,12 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.text.SimpleDateFormat;
+import javafx.scene.control.TableCell;
+import javafx.util.Callback;
+import javafx.scene.control.TableColumn;
 
 public class FXMLVerTabla {
     @FXML
@@ -121,10 +127,18 @@ public class FXMLVerTabla {
     }
 
     public void mostartabla(List<Devoluciones> lista) {
+        // Ordenar la lista por fecha más reciente
+        Collections.sort(lista, new Comparator<Devoluciones>() {
+            @Override
+            public int compare(Devoluciones d1, Devoluciones d2) {
+                return d2.getFechaDevolucion().compareTo(d1.getFechaDevolucion()); // Ordenar en orden descendente
+            }
+        });
+    
         venta.setCellValueFactory(cellData -> {
             return new SimpleLongProperty(cellData.getValue().getVenta().getId()).asObject();
         });
-
+    
         IdDevoluciones.setCellValueFactory(new PropertyValueFactory<>("id"));
         cantidadDevuelta.setCellValueFactory(new PropertyValueFactory<>("cantidadDevuelta"));
         cantidadDevuelta.setCellFactory(new Callback<TableColumn<Devoluciones, Double>, TableCell<Devoluciones, Double>>() {
@@ -141,11 +155,10 @@ public class FXMLVerTabla {
                 return new DateTableCell<>();
             }
         });
-
+    
         DevolucionData = FXCollections.observableArrayList(lista);
         Devoluciones.setItems(DevolucionData);
     }
-
     private List<Devoluciones> obtenerdevolucion() {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");

@@ -55,6 +55,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import java.util.Collections;
+import java.util.Comparator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -247,7 +249,13 @@ private void cargarCategorias(ComboBox<String> motivos, int opcion){
 
     private void mostartabla(List<Ventas> ventasfiltrado, List<DetallesVenta> detallesventasfiltrado, List<Productos> productofiltrado) {
         datosTabla.clear(); // Limpiar los datos existentes en la tabla
-    
+     // Ordenar ventasfiltrado por fecha más reciente
+     Collections.sort(ventasfiltrado, new Comparator<Ventas>() {
+        @Override
+        public int compare(Ventas v1, Ventas v2) {
+            return v2.getFecha().compareTo(v1.getFecha()); // Ordenar en orden descendente
+        }
+    });
         for (Ventas venta : ventasfiltrado) {
             String ticket1 = venta.getTicket();
             LocalDateTime fecha = venta.getFecha();
