@@ -1,16 +1,15 @@
 package com.app.controllers.Inventario;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
-
+import java.time.LocalDateTime;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import javafx.scene.Parent;
-
-
+import org.hibernate.exception.ConstraintViolationException;
 import com.app.models.Categoria;
+import com.app.models.Movimientos;
 import com.app.models.Productos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +18,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class FXML_NewProducto {
     @FXML
     private TextField layout1;
-    @FXML
-    private TextField layout4;
+   
     @FXML
     private TextField layout2;
     @FXML
@@ -33,11 +33,11 @@ public class FXML_NewProducto {
     private Spinner<Double> spinner2;
     @FXML
     private Spinner<Double> spinner3;
-
+    
     @FXML
     private ComboBox<String> categorias;
 
-
+    private Stage stage;
     private FXMLInventarioController inventarioController;
     
     
@@ -45,91 +45,107 @@ public class FXML_NewProducto {
         this.inventarioController = inventarioController;
     }
 
+    public void setStage(Stage stage){
+        this.stage=stage;
+    }
+
     @FXML
-    public void agregar() {
-        if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false && layout4.getText().isEmpty() == false
-                && spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
-                && spinner1.getValue() > 0 && spinner2.getValue() > 0 && spinner3.getValue() > 0) {
-            try {
-                long codigoBarras = Integer.parseInt(layout1.getText());
-                String descripcion = layout2.getText();
-                Double precioCosto = spinner1.getValue();
-                double precioVenta = spinner2.getValue();
-                double precioMayoreo = spinner3.getValue();
-                double cantidadKg = Double.parseDouble(layout4.getText());
+   public void agregar() {
+    LocalDateTime fechaHoraActual = LocalDateTime.now();
 
-                String Categoria=categorias.getValue().toString();
-                System.out.println("Categoria: " +Categoria);
-                Categoria id= new Categoria();
-                Long categoriaId = id.getIDconName(Categoria);
-                Categoria categoria = null;
-
-                Configuration configuration = new Configuration().configure();
-                SessionFactory sessionFactory = configuration.buildSessionFactory();
-                Session session = sessionFactory.openSession();
-                Transaction tx = null;
-
-                try {
-                    tx = session.beginTransaction();
-
-                    // Buscar la categoría por su ID
-                    categoria = session.get(Categoria.class, categoriaId);
-                 
-                
-
-                    Productos productosbd = new Productos();
-                    productosbd.setId(codigoBarras);
-                    productosbd.setNombre(descripcion);
-                    productosbd.setCosto(BigDecimal.valueOf(precioCosto));
-                    productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
-                    productosbd.setCantidad(BigDecimal.valueOf(cantidadKg));
-                    productosbd.setCategoria(categoria);
-
-                    session.save(productosbd);
-                    tx.commit();
-                    System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
-                    System.out.println("Categoria: " +Categoria);
-        
-            inventarioController.actualizarTabla();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    if (layout1.getText().isEmpty() == false && layout2.getText().isEmpty() == false &&
+             spinner1.getValue() != 4.9E-324 && spinner2.getValue() != 4.9E-324 && spinner3.getValue() != 4.9E-324
+            && spinner1.getValue() > 0 && spinner2.getValue() > 0 && spinner3.getValue() > 0) {
+        try {
+            long codigoBarras = Integer.parseInt(layout1.getText());
+            String descripcion = layout2.getText();
+            Double precioCosto = spinner1.getValue();
+            double precioVenta = spinner2.getValue();
+            double invMinimo = spinner3.getValue();
             
-            alert.setHeaderText(null);
-            alert.setContentText("Se guardo el producto correctamente\nID:"+productosbd.getId()+"\nNombre: "+productosbd.getNombre());
-            alert.showAndWait();
+           
+
+           
+
+            String Categoria = categorias.getValue().toString();
+            System.out.println("Categoria: " + Categoria);
+            Categoria id = new Categoria();
+            Long categoriaId = id.getIDconName(Categoria);
+            Categoria categoria = null;
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            Transaction tx = null;
+
+            try {
+                tx = session.beginTransaction();
+
+                // Buscar la categoría por su ID
+                categoria = session.get(Categoria.class, categoriaId);
+
+                Movimientos movimientos = new Movimientos();
+
+                Productos productosbd = new Productos();
+                productosbd.setId(codigoBarras);
+                productosbd.setNombre(descripcion);
+                productosbd.setCosto(BigDecimal.valueOf(precioCosto));
+                productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
+               productosbd.setCantidad(BigDecimal.valueOf(0.0));
+                productosbd.setCategoria(categoria);
+                productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
+                
+                productosbd.setActivo("S");
+
+                session.save(productosbd);
+                System.out.println("FECHA DE PRUEBA"+fechaHoraActual);
+                movimientos.setIdProducto(productosbd);
+                movimientos.setTipoMovimiento("Entrada");
+                movimientos.setCantidad(BigDecimal.valueOf(0.0));
+                movimientos.setFecha(fechaHoraActual);
+                session.save(movimientos);
+                tx.commit();
+                System.out.println("Producto insertado correctamente con ID: " + productosbd.getId());
+                System.out.println("Categoria: " + Categoria);
+                
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Se guardo el producto correctamente\nID:" + productosbd.getId() + "\nNombre: " + productosbd.getNombre());
+                alert.showAndWait();
                 layout1.setText("");
                 layout2.setText("");
                 spinner1.getValueFactory().setValue((double) 0);
-                spinner2.getValueFactory().setValue((double)0);
+                spinner2.getValueFactory().setValue((double) 0);
                 spinner3.getValueFactory().setValue((double) 0);
-                layout4.setText("");;
-                    
-
-                } catch (Exception e) {
-                    
-                        System.out.println(e);
-                   
-                    e.printStackTrace();
-                } finally {
-                    session.close();
-                    sessionFactory.close();
-                }
-
                 
-            } catch (Exception e) {
+            } catch (ConstraintViolationException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Por favor escribe los valores correctamente");
+                alert.setContentText("El ID del producto ya existe en la base de datos.");
                 alert.showAndWait();
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println(e);
+                e.printStackTrace();
+            } finally {
+                session.close();
+                sessionFactory.close();
             }
-        } else {
-             Alert alert = new Alert(Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Falto algo por escribir");
+            alert.setContentText("Por favor escribe los valores correctamente.");
             alert.showAndWait();
         }
+    } else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Faltó algo por escribir.");
+        alert.showAndWait();
     }
+}
 
   
 
@@ -151,5 +167,21 @@ public class FXML_NewProducto {
         loadCat.cargarCategorias(this.categorias, 0);
 
 
+    }
+    @FXML
+    private Pane rootPane;
+    public void cerrar(){
+        try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+        Pane nuevoContenido = loader.load();
+        
+        
+        FXMLInventarioController inventarioController = loader.getController();
+       
+        rootPane.getChildren().setAll(nuevoContenido);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }

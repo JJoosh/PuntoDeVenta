@@ -18,5 +18,8 @@
         <mapping class="com.app.models.Devoluciones"/>
         <mapping class="com.app.models.Usuarios"/>
         <mapping class="com.app.models.DetallesVenta"/>
+        <mapping class="com.app.models.Movimientos"/>
+        <mapping class="com.app.models.CortedeCaja"/>
+        <mapping class="com.app.models.Clientes"/>
     </session-factory>
 </hibernate-configuration>

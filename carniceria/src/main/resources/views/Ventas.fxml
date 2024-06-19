@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="900.0" maxWidth="1385.0" minHeight="900.0" minWidth="1385.0" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
       <Label id="Label_letras" layoutX="27.0" layoutY="153.0" prefHeight="41.0" prefWidth="488.0" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
          <font>
@@ -19,27 +19,27 @@
          </font>
       </Label>
       <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" layoutX="522.0" layoutY="160.0" prefHeight="28.0" prefWidth="363.0" style="-fx-background-color: F5D6D8; -fx-border-color: black;" />
-      <Label id="Label_letras" layoutX="47.0" layoutY="225.0" prefHeight="41.0" prefWidth="307.0" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad:">
+      <Label id="Label_letras" layoutX="47.0" layoutY="225.0" prefHeight="41.0" prefWidth="381.0" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad(Kg):">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button id="bventas_agregar" fx:id="btnbuscarcode1" layoutX="873.0" layoutY="223.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" stylesheets="@../css/Fondo.css" text="Agregar-F5" />
-      <Label id="osc" layoutX="594.0" layoutY="753.0" prefHeight="67.0" prefWidth="289.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
-      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="243.0" layoutY="751.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Cobrar-F6" />
-      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="1107.0" layoutY="209.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Cancelar compra-F8" />
-      <Button id="bventas_peso" fx:id="btnbuscarcode1" layoutX="1107.0" layoutY="137.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Obtener peso-F7" />
-      <TextField id="v_ingreso_cant" fx:id="pesoTextField" layoutX="373.0" layoutY="232.0" prefHeight="28.0" prefWidth="431.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="891.0" layoutY="737.0" prefHeight="80.0" prefWidth="439.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
-      <ScrollPane layoutX="208.0" layoutY="298.0" prefHeight="403.0" prefWidth="885.0">
+      <Button id="bventas_agregar" fx:id="btnbuscarcode1" layoutX="992.0" layoutY="270.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" stylesheets="@../css/Fondo.css" text="Agregar-F5" />
+      <Label id="osc" layoutX="589.0" layoutY="793.0" prefHeight="67.0" prefWidth="289.0" stylesheets="@../css/Fondo.css" text="Importe Total:" />
+      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="354.0" layoutY="799.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Cobrar-F6" />
+      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="992.0" layoutY="209.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Cancelar compra-F8" />
+      <Button id="bventas_peso" fx:id="btnbuscarcode1" layoutX="992.0" layoutY="151.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="234.0" stylesheets="@../css/Fondo.css" text="Obtener peso-F7" />
+      <TextField id="v_ingreso_cant" fx:id="pesoTextField" layoutX="436.0" layoutY="232.0" prefHeight="28.0" prefWidth="431.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
+      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="874.0" layoutY="772.0" prefHeight="80.0" prefWidth="439.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
+      <ScrollPane layoutX="47.0" layoutY="293.0" prefHeight="403.0" prefWidth="885.0">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="908.0">
                <children>
-                  <TableView fx:id="tablaProductos" layoutX="-2.0" prefHeight="396.0" prefWidth="914.0">
+                  <TableView fx:id="tablaProductos" layoutX="-2.0" prefHeight="396.0" prefWidth="885.0">
                      <columns>
                         <TableColumn fx:id="Cbarra" editable="false" prefWidth="240.66668462753296" resizable="false" text="Código de barras" />
-                        <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="199.3333282470703" resizable="false" text="Descripción producto" />
-                        <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="196.66671752929688" resizable="false" text="Precio de venta" />
+                        <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="201.0" resizable="false" text="Descripción producto" />
+                        <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="196.0" resizable="false" text="Precio de venta" />
                         <TableColumn fx:id="Cantidad" editable="false" prefWidth="210.0" resizable="false" text="Cantidad" />
                      </columns>
                   </TableView>
@@ -56,5 +56,6 @@
             <URL value="@../css/Fondo.css" />
          </stylesheets>
       </Label>
+      <Button id="bventas_cobrar" fx:id="imprimirticket" layoutX="108.0" layoutY="799.0" mnemonicParsing="false" onAction="#abrirVentasHechas" prefHeight="55.0" prefWidth="223.0" stylesheets="@../css/Fondo.css" text="Reimprimir Ticket" />
    </children>
 </Pane>

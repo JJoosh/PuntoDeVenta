@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="500.0" maxWidth="700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Configuracion.modUsser">
+   <children>
+      <Label id="Titulo_modulo" layoutX="-8.0" prefHeight="77.0" prefWidth="708.0" style="-fx-background-color: #814448;" stylesheets="@../../../../../../../../../css/Fondo.css" text="Cambiar contraseña:" />
+      <Label layoutX="58.0" layoutY="184.0" stylesheets="@../../../../../../../../../css/Fondo.css" text="Usuario:" />
+      <Label layoutX="58.0" layoutY="242.0" stylesheets="@../../../../../../../../../css/Fondo.css" text="Nueva Contraseña:" />
+      <Label layoutX="58.0" layoutY="300.0" stylesheets="@../../../../../../../../../css/Fondo.css" text="Confirmar Contraseña:" />
+      <Button layoutX="275.0" layoutY="402.0" mnemonicParsing="false" onAction="#modificarUser" prefHeight="50.0" prefWidth="150.0" stylesheets="@../../../../../../../../../css/Fondo.css" text="Confirmar" />
+      <ImageView fitHeight="50.0" fitWidth="160.0" layoutX="279.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../img/LOGO.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="lblUsser" layoutX="322.0" layoutY="187.0" prefHeight="25.0" prefWidth="223.0" style="-fx-border-color: gray; -fx-border-radius: 5px;" />
+      <TextField fx:id="lblPasswor" layoutX="322.0" layoutY="246.0" prefHeight="25.0" prefWidth="223.0" style="-fx-border-color: gray; -fx-border-radius: 5px;" />
+      <TextField fx:id="lblPasswordConfirmada" layoutX="322.0" layoutY="295.0" prefHeight="25.0" prefWidth="223.0" style="-fx-border-color: gray; -fx-border-radius: 5px;" />
+   </children>
+</Pane>
