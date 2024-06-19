@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="fondo-login" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="700.0">
@@ -40,12 +39,12 @@
                   </Label>
                   <TextField fx:id="usernameField" layoutX="33.0" layoutY="181.0" maxHeight="33.0" maxWidth="281.0" minHeight="20.0" minWidth="100.0" prefHeight="33.0" prefWidth="280.0" promptText="Ingresa tu nombre de usuario" style="-fx-alignment: center;" styleClass="text-login" stylesheets="@../css/Styles.css" />
                   <PasswordField fx:id="passwordField" layoutX="33.0" layoutY="249.0" maxHeight="33.0" maxWidth="283.0" minHeight="20.0" minWidth="100.0" prefHeight="33.0" prefWidth="283.0" promptText="Ingresa tu contraseña" style="-fx-alignment: center;" styleClass="text-login" />
-                  <Label id="login_contra" accessibleRole="BUTTON" layoutX="35.0" layoutY="292.0" onMouseClicked="#abrirCambio" prefHeight="37.0" prefWidth="174.0" style="-fx-text-shadow: 1px; -fx-text-fill: yellow; -fx-border-image-insets: white;" stylesheets="@../css/Fondo.css" text="¿Cambiar contraseña?" textFill="WHITE">
+                  <Label accessibleRole="BUTTON" layoutX="33.0" layoutY="297.0" onMouseClicked="#abrirCambio" prefHeight="33.0" prefWidth="174.0" style="-fx-text-shadow: 1px; -fx-text-fill: yellow; -fx-border-image-insets: white;" text="¿Cambiar contraseña?" textFill="WHITE" underline="true">
                      <padding>
                         <Insets bottom="20.0" />
                      </padding>
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                   <Button fx:id="primaryButton" layoutX="31.0" layoutY="358.0" onAction="#handleLogin" prefHeight="39.0" prefWidth="290.0" style="-fx-background-radius: 30px; -fx-background-image: ./carniceria/src/main/resources/img;" styleClass="btn_login" text="Ingresar">

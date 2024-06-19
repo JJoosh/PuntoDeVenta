@@ -38,8 +38,8 @@
 
 /*MENU PRINCIPAL */
 .menu-modulos{
-    -fx-font-family: "helvetica";
-    font-weight: bold;
+    -fx-font-family: "helvetica",  sans-serif;
+    -fx-font-weight: 600;
     -fx-font-size: 20px;
     -fx-text-fill: #f8e7e7;
 
@@ -121,6 +121,14 @@
     -fx-background-color: #2c3cb2;
     -fx-background-radius: 15px;
     -fx-text-fill: white; 
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn_cont{
+    -fx-background-radius: 15px;
     -fx-padding: 8px 16px; 
     -fx-border-radius: 5px;
     -fx-border-radius: 15px;

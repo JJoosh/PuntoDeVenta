@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.AddCantidadController">
    <children>
-      <Label fx:id="id_nameProducto" layoutX="199.0" layoutY="42.0" stylesheets="@../css/Fondo.css" text="ID del producto" />
-      <Button layoutX="238.0" layoutY="304.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="52.0" prefWidth="138.0" stylesheets="@../css/Fondo.css" text="Ingresar" />
-      <TextField fx:id="cantCajas" layoutX="284.0" layoutY="107.0" prefHeight="42.0" prefWidth="288.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <Label fx:id="id_nameProducto" layoutX="95.0" layoutY="29.0" prefHeight="42.0" prefWidth="533.0" style="-fx-alignment: center;" text="ID del producto" textAlignment="CENTER">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets>
+         <font>
+            <Font name="Arial Bold" size="28.0" />
+         </font></Label>
+      <Button layoutX="173.0" layoutY="296.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="52.0" prefWidth="365.0" styleClass="btn_agre" text="Ingresa el producto al inventario">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></Button>
+      <TextField fx:id="cantCajas" layoutX="297.0" layoutY="103.0" prefHeight="42.0" prefWidth="288.0" promptText="0.00" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
       <AnchorPane prefHeight="400.0" prefWidth="24.0" style="-fx-background-color: crimson;" />
-      <Label layoutX="35.0" layoutY="113.0" prefHeight="30.0" prefWidth="220.0" stylesheets="@../css/Fondo.css" text="Cantidad de cajas:" />
-      <Label layoutX="35.0" layoutY="213.0" prefHeight="30.0" prefWidth="220.0" stylesheets="@../css/Fondo.css" text="Peso por caja" />
-      <TextField fx:id="pesoCaja" layoutX="284.0" layoutY="192.0" prefHeight="42.0" prefWidth="288.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
-      <Label layoutX="598.0" layoutY="198.0" prefHeight="30.0" prefWidth="60.0" stylesheets="@../css/Fondo.css" text="Kg" />
+      <Label layoutX="55.0" layoutY="110.0" prefHeight="32.0" prefWidth="236.0" styleClass="label-conte" text="Cantidad de cajas:">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></Label>
+      <Label layoutX="55.0" layoutY="209.0" prefHeight="30.0" prefWidth="220.0" styleClass="label-conte" text="Peso por caja:">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></Label>
+      <TextField fx:id="pesoCaja" layoutX="297.0" layoutY="203.0" prefHeight="42.0" prefWidth="288.0" promptText="0.00" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <Label layoutX="602.0" layoutY="209.0" prefHeight="30.0" prefWidth="60.0" styleClass="label-conte" text="Kg">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></Label>
    </children>
 </Pane>
