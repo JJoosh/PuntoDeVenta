@@ -1,5 +1,6 @@
 package com.app.controllers.Clientes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -8,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -41,7 +43,6 @@ public class ClientesController implements Initializable {
 
     @FXML Button eliminar;
     @FXML Button modificar;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        mostrarTabla();
@@ -88,11 +89,11 @@ public class ClientesController implements Initializable {
                              editButton.getStyleClass().add("btn_mod");
                              editButton.setOnAction(event -> {
                                  Clientes cliente = getTableView().getItems().get(getIndex());
-                                 // Lógica para modificar el cliente
+                                abrirMod(cliente.getId(),cliente.getNombre(), cliente.getApellido(), cliente.getDescuento());
                                  System.out.println("Modificar: " + cliente.getNombre() + " " + cliente.getApellido());
                              });
  
-                             setGraphic(new HBox(5, editButton, deleteButton)); // 5 es el espacio entre los botones
+                             setGraphic(new HBox(5, editButton, deleteButton)); 
                          }
                      }
                  };
@@ -151,5 +152,19 @@ public class ClientesController implements Initializable {
     }
     
 }
+
+public void abrirMod(int ID, String nombre, String apellido, int descuento) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/mod_cli.fxml"));
+        Pane nuevoContenido = loader.load();
+        modClientesController clienteController = loader.getController();
+        rootPane.getChildren().setAll(nuevoContenido);
+        clienteController.getData(ID, nombre, apellido, descuento);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
 
 }

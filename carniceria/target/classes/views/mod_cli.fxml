@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.modClientesController">
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1385.0" style="-fx-border-color: gray;" styleClass="letra_text" stylesheets="@../css/Styles.css">
          <children>
-            <Button layoutX="517.0" layoutY="622.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="352.0" styleClass="btn_mod" stylesheets="@../css/Styles.css" text="Realizar la modificación">
+            <Button layoutX="517.0" layoutY="622.0" mnemonicParsing="false" onAction="#modificarCliente" prefHeight="72.0" prefWidth="352.0" styleClass="btn_mod" stylesheets="@../css/Styles.css" text="Realizar la modificación">
                <font>
                   <Font size="13.0" />
                </font>
@@ -46,9 +46,9 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
-            <TextField layoutX="461.0" layoutY="240.0" prefHeight="41.0" prefWidth="564.0" promptText="Ingrese el nuevo nombre del cliente" styleClass="letra_text" stylesheets="@../css/Styles.css" />
-            <TextField layoutX="470.0" layoutY="337.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo apellido del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
-            <Spinner editable="true" layoutX="679.0" layoutY="497.0" prefHeight="34.0" prefWidth="192.0" stylesheets="@../css/Styles.css">
+            <TextField fx:id="txtNombre" layoutX="461.0" layoutY="240.0" prefHeight="41.0" prefWidth="564.0" promptText="Ingrese el nuevo nombre del cliente" styleClass="letra_text" stylesheets="@../css/Styles.css" />
+            <TextField fx:id="txtApellido" layoutX="470.0" layoutY="337.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo apellido del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
+            <Spinner fx:id="txtPorcentaje" editable="true" layoutX="679.0" layoutY="497.0" prefHeight="34.0" prefWidth="192.0" stylesheets="@../css/Styles.css">
                <styleClass>
                   <String fx:value="spinner-text-field" />
                   <String fx:value="porcentajeSpinner" />

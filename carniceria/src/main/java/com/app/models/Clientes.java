@@ -121,7 +121,26 @@ public class Clientes {
 
     
 
-    public void modCliente(Clientes cliente){
+    public void modCliente(int id, String nombre, String apellido, int descuento) {
+        System.err.println("Se está cambiando el usuario con el ID: " + id);
     
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+    
+            Clientes cliente = session.get(Clientes.class, id);
+            if (cliente != null) {
+                cliente.setNombre(nombre);
+                cliente.setApellido(apellido);
+                cliente.setDescuento(descuento);
+                session.update(cliente);
+                tx.commit();
+                System.out.println("Cliente actualizado correctamente.");
+            } else {
+                System.err.println("Cliente no encontrado.");
+            }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
+    
 }
