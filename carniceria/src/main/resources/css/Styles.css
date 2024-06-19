@@ -1,4 +1,70 @@
+/* LOGIN */
+.fondo-login {
+    -fx-background-color: linear-gradient(#A63D46, #49191e);
+}
+.Fondo-login2 {
+    -fx-background-color: rgba(000, 000, 00, 0.5); /* 50% de transparencia */
+}
+
+.text-login{
+    -fx-background-color: #ffffff; 
+    -fx-border-color: #cccccc; 
+    -fx-padding: 5px;
+    -fx-font-size: 15px;
+}
+
+.label_login{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 25px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.btn_login {
+    -fx-background-color: #007bff;
+    -fx-text-fill: #ffffff; 
+    -fx-border-radius: 20px; 
+    -fx-padding: 8px 16px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 18px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.btn_login:hover {
+    -fx-background-color: #0056b3; /* Color de fondo azul más oscuro */
+}
+
 /*MENU PRINCIPAL */
+.menu-modulos{
+    -fx-font-family: "helvetica";
+    font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #f8e7e7;
+
+}
+
+.menu-modulos:hover{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-background-color: #58050B;
+}
+
+.usuario{
+    -fx-text-fill:#ffffff;
+    -fx-font-family: "Arial";
+    -fx-border-color: #ffffff; 
+    -fx-border-radius: 15px;
+}
+
+.usuario:hover{
+    -fx-background-color:#4d9a99;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+}
 
 /* TEXTOS */
 .Label-titulos{
@@ -32,7 +98,6 @@
     -fx-background-radius: 15px;
     -fx-text-fill: white; 
     -fx-padding: 8px 16px; 
-    -fx-border-radius: 5px;
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
@@ -111,7 +176,7 @@
 
 .table-view .table-row-cell:hover {
     -fx-background-color: #FFCFCF;
-    -fx-text-background-color: red;
+    -fx-text-background-color: rgb(7, 9, 25);
 }
 
 .table-row-cell:odd {
@@ -121,7 +186,7 @@
 }
 
 .table-row-cell:even {
-    -fx-background-color: #A23B3B;
+    -fx-background-color: #ded2d2;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
@@ -131,7 +196,7 @@
     -fx-background-color: #0073e6; /* Color de fondo de las flechas */
 }
 
-.porcentajeSpinner .increment-arrow-button, 
+.porcentajeSpinner .increment-arrow-button,
 .porcentajeSpinner .decrement-arrow-button {
     -fx-background-color: #005cb2; /* Color de fondo de los botones de flecha */
     -fx-shape: "M 0 0 L 5 5 L 10 0 Z"; /* Cambia la forma de las flechas si es necesario */
