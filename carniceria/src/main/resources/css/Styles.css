@@ -104,7 +104,7 @@
 }
 
 .btn_agre:hover,.btn_eli:hover, .btn_mod:hover{
-    -fx-background-color: #000000;}
+    -fx-background-color: #1E2C50;}
 
 .btn_eli{
     -fx-background-color: #ca3730;
@@ -134,6 +134,23 @@
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #000000; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color: rgb(0, 0, 0);
+    -fx-text-fill: white; 
+}
+
+.btn:hover{
+    -fx-background-color: White;
+    -fx-border-color: #000000;
+    -fx-text-fill: black;
 }
 
 /* TABLAS */
@@ -183,7 +200,7 @@
 }
 
 .table-view .table-row-cell:hover {
-    -fx-background-color: #FFCFCF;
+    -fx-background-color: #cff9ff;
     -fx-text-background-color: rgb(7, 9, 25);
 }
 
@@ -199,19 +216,4 @@
     -fx-padding: 0.0em;
 }
 
-
-.porcentajeSpinner .spinner-arrow {
-    -fx-background-color: #0073e6; /* Color de fondo de las flechas */
-}
-
-.porcentajeSpinner .increment-arrow-button,
-.porcentajeSpinner .decrement-arrow-button {
-    -fx-background-color: #005cb2; /* Color de fondo de los botones de flecha */
-    -fx-shape: "M 0 0 L 5 5 L 10 0 Z"; /* Cambia la forma de las flechas si es necesario */
-}
-
-.porcentajeSpinner .spinner-text-field {
-    -fx-background-color: #ffffff; /* Color de fondo del campo de texto */
-    -fx-text-fill: #000000; /* Color del texto */
-}
 

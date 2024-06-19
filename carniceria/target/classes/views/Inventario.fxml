@@ -106,5 +106,6 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Button layoutX="959.0" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
    </children>
 </Pane>
