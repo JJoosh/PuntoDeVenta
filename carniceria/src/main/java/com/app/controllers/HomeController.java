@@ -9,7 +9,7 @@ import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.controllers.corte.FXMLCorte;
 import com.app.controllers.devoluciones.FXMLDevolucionesController;
-
+import com.app.controllers.Clientes.ClientesController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -166,5 +166,16 @@ public void abrirConfiguracion() {
              showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
         }
 
+}
+
+public void openClients(){
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clientes2.fxml"));
+        Pane nuevoContenido = loader.load();
+        ClientesController clienteController = loader.getController();
+        home.getChildren().setAll(nuevoContenido);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } 
 }
 }

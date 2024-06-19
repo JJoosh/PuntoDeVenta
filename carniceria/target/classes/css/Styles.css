@@ -1,0 +1,144 @@
+/*MENU PRINCIPAL */
+
+/* TEXTOS */
+.Label-titulos{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-size: 50px;
+    -fx-background-color: black;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.letra_text{
+    -fx-text-fill:#090415;
+    -fx-font-family: "Arial";
+    -fx-font-size: 25px;
+}
+
+.label-conte{
+    -fx-text-fill:#000000;
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+}
+
+.label-letra1{
+    -fx-font-family: "Verdana";
+}
+
+/* BOTONES */
+.btn_agre{
+    -fx-background-color: #6fc764;
+    -fx-background-radius: 15px;
+    -fx-text-fill: white; 
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn_agre:hover,.btn_eli:hover, .btn_mod:hover{
+    -fx-background-color: #000000;}
+
+.btn_eli{
+    -fx-background-color: #ca3730;
+    -fx-background-radius: 15px;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn_mod{
+    -fx-background-color: #2c3cb2;
+    -fx-background-radius: 15px;
+    -fx-text-fill: white; 
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+}
+
+/* TABLAS */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #d79595, #E68989);
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 17px; /* Ajusta el tamaño de la fuente según tu preferencia */
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 14px; /* Ajusta el tamaño de la fuente según tu preferencia */
+}
+
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #FFCFCF;
+    -fx-text-background-color: red;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #E68989;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #A23B3B;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+
+.porcentajeSpinner .spinner-arrow {
+    -fx-background-color: #0073e6; /* Color de fondo de las flechas */
+}
+
+.porcentajeSpinner .increment-arrow-button, 
+.porcentajeSpinner .decrement-arrow-button {
+    -fx-background-color: #005cb2; /* Color de fondo de los botones de flecha */
+    -fx-shape: "M 0 0 L 5 5 L 10 0 Z"; /* Cambia la forma de las flechas si es necesario */
+}
+
+.porcentajeSpinner .spinner-text-field {
+    -fx-background-color: #ffffff; /* Color de fondo del campo de texto */
+    -fx-text-fill: #000000; /* Color del texto */
+}
+
