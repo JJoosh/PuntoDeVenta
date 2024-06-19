@@ -96,15 +96,12 @@
 .btn_agre{
     -fx-background-color: #6fc764;
     -fx-background-radius: 15px;
-    -fx-text-fill: white; 
+    -fx-text-fill: #000;
     -fx-padding: 8px 16px; 
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
 }
-
-.btn_agre:hover,.btn_eli:hover, .btn_mod:hover{
-    -fx-background-color: #1E2C50;}
 
 .btn_eli{
     -fx-background-color: #ca3730;
@@ -127,13 +124,35 @@
     -fx-font-weight: bold; /* Texto en negritas */
 }
 
+.btn_canti{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #000000; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color: rgb(244, 237, 38);
+    -fx-text-fill: rgb(0, 0, 0); 
+}
+
 .btn_cont{
     -fx-background-radius: 15px;
     -fx-padding: 8px 16px; 
-    -fx-border-radius: 5px;
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color:  #98D3E9;
+}
+
+.btn_eli:hover, .btn_mod:hover {
+    -fx-background-color: #1E2C50;
+}
+.btn_agre:hover {
+    -fx-background-color: #0b3106;
+    -fx-text-fill: white; 
+}
+.btn_canti:hover, .btn_cont:hover{
+    -fx-background-color: #1E2C50;
+    -fx-text-fill: #FFF;
 }
 
 .btn{
@@ -176,14 +195,13 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-font-family: "Verdana";
-    -fx-font-size: 17px; /* Ajusta el tamaño de la fuente según tu preferencia */
+
 }
 
 .table-view .table-cell {
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
     -fx-font-family: "Verdana";
-    -fx-font-size: 14px; /* Ajusta el tamaño de la fuente según tu preferencia */
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,

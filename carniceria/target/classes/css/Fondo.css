@@ -129,11 +129,6 @@
 }
 
 
-.button-1{
-    -fx-background-color: #D62934;
-
-}
-
 .label-1 {
     -fx-text-fill:#332C2C;
     -fx-font-family: "Arial";
@@ -171,26 +166,6 @@
     -fx-font-weight: bold;
 }
 
-.anchor-pane {
-    -fx-background-color: #ac3d45;
-}
-
-#Fondo {
-    -fx-background-image: url('/resources/img/fondo2.png');
-    -fx-background-size: cover; /* Esto ajustará la imagen para cubrir todo el AnchorPane */
-    -fx-background-repeat: no-repeat; /* Esto evitará que la imagen se repita */
-    -fx-background-position: center; /* Esto centrará la imagen */
-}
-
-
-.button {
-    -fx-background-color: #D62934;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: Arial;
-    -fx-font-weight: bold;
-    -fx-font-size: 20px;
-}
-
 
 /* Boton pa cerrar sesion*/
 #boton_cs{
@@ -205,25 +180,6 @@
 #boton_cs:hover{
     -fx-background-color: blue;
     -fx-text-fill: #ffffff;
-}
-
-
-
-
-.button:pressed {
-    -fx-background-color: #FFFFFF;
-    -fx-text-fill: #573C3E;
-}
-
-.button:hover {
-    -fx-background-color: #FFA500;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 20px;
-}
-
-
-.menu-button .menu-item:hover {
-    -fx-text-fill: blue; /* Cambia el color del texto al pasar el ratón sobre los elementos del menú */
 }
 
 
@@ -255,7 +211,7 @@
     -fx-font-family: "Arial";
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-background-color: #92E583;
+    -fx-background-color: #139678;
 }
 
 .Devo:hover{
@@ -263,7 +219,7 @@
     -fx-font-family: "Arial";
     -fx-font-size: 17px;
     -fx-font-weight: bold;
-    -fx-background-color: #105005;
+    -fx-background-color: #0B574E;
 }
 
 #inv_agregar:hover , #inv_eliminar:hover , #inv_modificar:hover, #bventas_cancelar:hover {

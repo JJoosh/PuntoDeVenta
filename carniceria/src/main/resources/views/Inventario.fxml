@@ -32,7 +32,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ComboBox>
-      <Button id="devo" layoutX="1006.0" layoutY="127.0" mnemonicParsing="false" onAction="#productosBajos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black;" text="Productos bajos en existencias">
+      <Button id="inv_repomov" layoutX="1006.0" layoutY="127.0" mnemonicParsing="false" onAction="#productosBajos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-font-size: 20px; -fx-font-weight: bold;" text="Productos bajos en existencias">
          <stylesheets>
             <URL value="@Fondo.css" />
             <URL value="@../css/Fondo.css" />
@@ -44,34 +44,38 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="idP" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="269.0" promptText="ID" style="-fx-background-color: E4F2F6; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
+      <TextField fx:id="idP" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" style="-fx-background-color: E4F2F6; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
-      <Button fx:id="btnAgregar" layoutX="674.0" layoutY="327.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="51.0" prefWidth="214.0" style="-fx-background-color: green;" styleClass="btn_agre" stylesheets="@../css/styles.css" text="Agregar producto">
+      <Button fx:id="btnAgregar" layoutX="1122.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="46.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_agre" text="Agregar producto">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
             <Font size="18.0" />
          </font>
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets>
       </Button>
       <Button id="inv_repomov" layoutX="1006.0" layoutY="186.0" mnemonicParsing="false" onAction="#movimientos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-border-color: black;" stylesheets="@Fondo.css" text="Reporte de movimientos">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ScrollPane layoutX="52.0" layoutY="398.0" prefHeight="433.0" prefWidth="1284.0">
+      <ScrollPane layoutX="33.0" layoutY="423.0" prefHeight="411.0" prefWidth="1319.0">
          <content>
-            <TableView fx:id="tableView" prefHeight="422.0" prefWidth="1279.0">
+            <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1315.0">
                <columns>
                   <TableColumn fx:id="codigoColumn" prefWidth="137.33334481716156" style="-fx-border-color: black;" text="Codigo" />
                   <TableColumn fx:id="descripcionColumn" prefWidth="262.66664123535156" style="-fx-border-color: black;" text="Descripcion del producto" />
                   <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" style="-fx-border-color: black;" text="Costo" />
-                  <TableColumn fx:id="precioVentaColumn" prefWidth="222.00006103515625" style="-fx-border-color: black;" text="Precio venta" />
-                  <TableColumn fx:id="existenciaColumn" prefWidth="151.3333740234375" style="-fx-border-color: black;" text="Existencia" />
-                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="153.33331298828125" style="-fx-border-color: black;" text="Inventario minimo" />
-                  <TableColumn prefWidth="206.0" style="-fx-border-color: black; -fx-background-color: D1E4EB;" text="Opciones" />
+                  <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" style="-fx-border-color: black;" text="Precio venta" />
+                  <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" style="-fx-border-color: black;" text="Existencia" />
+                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" style="-fx-border-color: black;" text="Inventario minimo" />
+                  <TableColumn prefWidth="232.666748046875" style="-fx-border-color: black; -fx-background-color: D1E4EB;" text="Opciones" />
                </columns>
             </TableView>
          </content>
@@ -81,7 +85,7 @@
             <URL value="@../css/Fondo.css" />
             <URL value="@../css/Styles.css" />
          </stylesheets></Label>
-      <Button layoutX="1122.0" layoutY="327.0" mnemonicParsing="false" onAction="#ingresarCantidad" prefHeight="53.0" prefWidth="214.0" style="-fx-background-color: yellow; -fx-text-fill: black;" styleClass="btn_mod" stylesheets="@../css/styles.css" text="Ingresar cantidad">
+      <Button layoutX="959.0" layoutY="343.0" mnemonicParsing="false" onAction="#ingresarCantidad" prefHeight="34.0" prefWidth="128.0" style="-fx-font-size: 10px;" styleClass="btn_canti" stylesheets="@../css/styles.css" text="Ingresar cantidad">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -98,7 +102,7 @@
             <Image url="@../../../src/main/resources/img/LOGO.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAgregar1" layoutX="899.0" layoutY="328.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="51.0" prefWidth="214.0" style="-fx-background-color: #98D3E9;" styleClass="btn_cont" stylesheets="@../css/styles.css" text="Agregar categoria">
+      <Button fx:id="btnAgregar1" layoutX="52.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="14.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_cont" stylesheets="@../css/styles.css" text="Agregar categoria">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -107,5 +111,6 @@
          </font>
       </Button>
       <Button layoutX="959.0" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
+      <TextField layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="309.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
    </children>
 </Pane>

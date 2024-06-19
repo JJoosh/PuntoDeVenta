@@ -14,13 +14,13 @@
 <Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.ClientesController">
    <children>
       <Label prefHeight="105.0" prefWidth="1385.0" styleClass="Label-titulos" stylesheets="@../css/Styles.css" text="Clientes" />
-      <Button layoutX="893.0" layoutY="174.0" mnemonicParsing="false" onAction="#agregarCliente" prefHeight="81.0" prefWidth="340.0" style="-fx-font-size: 28px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar nuevo Cliente">
+      <Button layoutX="893.0" layoutY="174.0" mnemonicParsing="false" onAction="#agregarCliente" prefHeight="68.0" prefWidth="350.0" style="-fx-font-size: 28px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar nuevo Cliente">
          <font>
             <Font size="28.0" />
          </font></Button>
-      <ScrollPane layoutX="144.0" layoutY="382.0" prefHeight="460.0" prefWidth="1058.0">
+      <ScrollPane layoutX="144.0" layoutY="382.0" prefHeight="471.0" prefWidth="1036.0">
          <content>
-            <TableView fx:id="tableView" prefHeight="461.0" prefWidth="1056.0" stylesheets="@../css/Styles.css">
+            <TableView fx:id="tableView" prefHeight="455.0" prefWidth="1045.0" stylesheets="@../css/Styles.css">
               <columns>
                 <TableColumn fx:id="nombre" prefWidth="250.0" styleClass="colu1" text="Nombre" />
                   <TableColumn fx:id="apellido" prefWidth="250.0" styleClass="colu2" text="Apellido" />
@@ -51,7 +51,7 @@
             <Font name="System Bold" size="50.0" />
          </font>
       </Label>
-      <Button layoutX="897.0" layoutY="280.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="340.0" style="-fx-font-size: 18px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" textFill="WHITE">
+      <Button layoutX="897.0" layoutY="280.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="350.0" style="-fx-font-size: 18px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
