@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "Ventas")
 public class Ventas {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -79,4 +80,5 @@ public class Ventas {
         detalles.remove(detalle);
         detalle.setVenta(null);
     }
+    
 }

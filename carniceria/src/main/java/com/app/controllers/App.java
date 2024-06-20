@@ -1,5 +1,4 @@
 package com.app.controllers;
-
 import java.io.IOException;
 
 import org.hibernate.Session;
@@ -29,13 +28,8 @@ public class App extends Application {
         // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root = loader.load();
-
-        scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/css/Fondo.css").toExternalForm());
         scene = new Scene(root, 640, 480);
-
         stage.setScene(scene);
-        stage.setMaximized(false);
         stage.show();
     }
 
@@ -52,5 +46,7 @@ public class App extends Application {
         launch(args);
 
     }
+
+
 
 }

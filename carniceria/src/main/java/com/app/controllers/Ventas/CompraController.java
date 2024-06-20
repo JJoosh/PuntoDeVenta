@@ -2,8 +2,10 @@ package com.app.controllers.Ventas;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,6 +24,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.app.models.Clientes;
 import com.app.models.DetallesVenta;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
@@ -47,6 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 
@@ -59,6 +63,7 @@ public class CompraController {
     private static final Font NEGRITA_DOS = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+    
     private DecimalFormat formatoDinero = new DecimalFormat("$#,##0.00");
 
     private VentasController ventasController1;
@@ -77,6 +82,7 @@ public class CompraController {
     @FXML
     private TableColumn<Productos, BigDecimal> totalColumn;
 
+    @FXML TableColumn<Productos, Void> ColumAcciones;
 
     @FXML
     private ComboBox<String> formaPagoComboBox;
@@ -121,6 +127,8 @@ public class CompraController {
             return new SimpleObjectProperty<>(total);
         });
 
+       
+
         // Formatear la columna total con el signo de $ y dos decimales
         totalColumn.setCellFactory(column -> new TableCell<Productos, BigDecimal>() {
             @Override
@@ -139,7 +147,28 @@ public class CompraController {
             calcularCambio();
         });
 
-        rootPane.setOnKeyPressed(this::handleKeyPressed);
+        ColumAcciones.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Productos producto = getTableView().getItems().get(getIndex());
+        
+                    Button deleteButton = new Button("Eliminar");
+                    deleteButton.getStyleClass().add("btn_eli");
+                    deleteButton.setOnAction(event -> {
+                        System.out.println("Eliminar: " + producto.getNombre());
+                        // Aquí va la lógica para eliminar el producto
+                    });
+        
+                    setGraphic(new HBox(5, deleteButton)); 
+                }
+            }
+        });
+        
+         rootPane.setOnKeyPressed(this::handleKeyPressed);
         Platform.runLater(() -> insertarPagoTextField.requestFocus());
     }
 

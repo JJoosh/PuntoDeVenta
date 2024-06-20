@@ -104,6 +104,12 @@
     -fx-font-weight: bold; /* Texto en negritas */
 }
 
+<<<<<<< Updated upstream
+=======
+.btn_agre:hover,.btn_eli:hover, .btn_mod:hover, .btn_peso:hover{
+    -fx-background-color: #1E2C50;}
+
+>>>>>>> Stashed changes
 .btn_eli{
     -fx-background-color: #ca3730;
     -fx-background-radius: 15px;
@@ -154,6 +160,17 @@
 .btn_canti:hover, .btn_cont:hover{
     -fx-background-color: #1E2C50;
     -fx-text-fill: #FFF;
+}
+
+.btn_peso{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-background-color: rgb(89, 58, 114);
+    -fx-border-color: #000000; 
+    -fx-text-fill: white; 
+    -fx-font-weight: bold; /* Texto en negritas */
 }
 
 .btn{
@@ -241,3 +258,76 @@
 }
 
 
+/* styles.css */
+
+.check-box {
+    -fx-font-size: 14px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #007bff; /* Color de fondo cuando está seleccionado */
+}
+
+.check-box:selected .box .mark {
+    -fx-background-color: white; /* Color de la marca cuando está seleccionado */
+}
+
+.check-box:hover .box {
+    -fx-background-color: #007bff; /* Color de fondo al pasar el mouse sobre el CheckBox */
+}
+
+.check-box:hover .box .mark {
+    -fx-background-color: white; /* Color de la marca al pasar el mouse sobre el CheckBox */
+}
+
+.toggle-button {
+    -fx-background-color: #a8206b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 0.5em 1em;
+    -fx-background-radius: 20;
+    -fx-background-insets: -1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+}
+
+.toggle-button:selected {
+    -fx-background-color: #66bb6a;
+}
+
+
+/*combo box*/
+
+.custom-combo-box {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.custom-combo-box .arrow {
+    -fx-background-color: #ccc;
+}
+
+.custom-combo-box .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+}
+
+.custom-combo-box .list-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.custom-combo-box .list-cell:filled:selected {
+    -fx-background-color: #66bb6a;
+    -fx-text-fill: white;
+}
+
+.custom-combo-box .combo-box-popup {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+}
