@@ -50,7 +50,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" style="-fx-font-size: 20px;">
+      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="264.0" layoutY="264.0" prefHeight="42.0" prefWidth="455.0" promptText="Ingrese el código del producto" style="-fx-font-size: 20px;">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
@@ -95,7 +95,7 @@
             <URL value="@../css/Fondo.css" />
             <URL value="@../css/Styles.css" />
          </stylesheets></Label>
-      <Label layoutX="52.0" layoutY="264.0" prefHeight="41.0" prefWidth="140.0" style="-fx-font-weight: bold;" text="Ingrese la ID:">
+      <Label layoutX="52.0" layoutY="264.0" prefHeight="41.0" prefWidth="191.0" style="-fx-font-weight: bold;" text="Ingrese el código:">
          <font>
             <Font size="22.0" />
          </font>

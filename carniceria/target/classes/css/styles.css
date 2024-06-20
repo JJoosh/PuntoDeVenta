@@ -43,7 +43,6 @@
     -fx-font-size: 20px;
     -fx-text-fill: #f8e7e7;
     -fx-font-weight: bold;
-
 }
 
 .menu-modulos:hover{
@@ -73,6 +72,15 @@
     -fx-font-family: "Trebuchet MS";
     -fx-font-size: 50px;
     -fx-background-color: black;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.Label-arc{
+    -fx-text-fill:#ffffff;
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-size: 60px;
+    -fx-background-color: #BC202D;
     -fx-alignment:center;
     -fx-font-weight: bold;
 }
@@ -147,7 +155,17 @@
     -fx-background-color:  #98D3E9;
 }
 
-.btn_eli:hover, .btn_mod:hover {
+.btn_habi{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color:  #342aba;
+    -fx-text-fill: white;
+}
+
+.btn_eli:hover, .btn_mod:hover , .btn_habi:hover{
     -fx-background-color: #1E2C50;
 }
 .btn_agre:hover {
