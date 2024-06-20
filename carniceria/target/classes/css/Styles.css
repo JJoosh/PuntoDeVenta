@@ -1,4 +1,70 @@
+/* LOGIN */
+.fondo-login {
+    -fx-background-color: linear-gradient(#A63D46, #49191e);
+}
+.Fondo-login2 {
+    -fx-background-color: rgba(000, 000, 00, 0.5); /* 50% de transparencia */
+}
+
+.text-login{
+    -fx-background-color: #ffffff; 
+    -fx-border-color: #cccccc; 
+    -fx-padding: 5px;
+    -fx-font-size: 15px;
+}
+
+.label_login{
+    -fx-text-fill:#FFFFFF;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 25px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.btn_login {
+    -fx-background-color: #007bff;
+    -fx-text-fill: #ffffff; 
+    -fx-border-radius: 20px; 
+    -fx-padding: 8px 16px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 18px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.btn_login:hover {
+    -fx-background-color: #0056b3; /* Color de fondo azul más oscuro */
+}
+
 /*MENU PRINCIPAL */
+.menu-modulos{
+    -fx-font-family: "helvetica",  sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 20px;
+    -fx-text-fill: #f8e7e7;
+    -fx-font-weight: bold;
+}
+
+.menu-modulos:hover{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-background-color: #58050B;
+}
+
+.usuario{
+    -fx-text-fill:#ffffff;
+    -fx-font-family: "Arial";
+    -fx-border-color: #ffffff; 
+    -fx-border-radius: 15px;
+}
+
+.usuario:hover{
+    -fx-background-color:#4d9a99;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+}
 
 /* TEXTOS */
 .Label-titulos{
@@ -6,6 +72,15 @@
     -fx-font-family: "Trebuchet MS";
     -fx-font-size: 50px;
     -fx-background-color: black;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+}
+
+.Label-arc{
+    -fx-text-fill:#ffffff;
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-size: 60px;
+    -fx-background-color: #BC202D;
     -fx-alignment:center;
     -fx-font-weight: bold;
 }
@@ -21,6 +96,11 @@
     -fx-font-family: "Arial";
     -fx-font-size: 28px;
 }
+.label-conte1{
+    -fx-text-fill:#000000;
+    -fx-font-family: "Arial";
+    -fx-font-size: 25px;
+}
 
 .label-letra1{
     -fx-font-family: "Verdana";
@@ -30,16 +110,15 @@
 .btn_agre{
     -fx-background-color: #6fc764;
     -fx-background-radius: 15px;
-    -fx-text-fill: white; 
+    -fx-text-fill: #000;
     -fx-padding: 8px 16px; 
-    -fx-border-radius: 5px;
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
 }
 
-.btn_agre:hover,.btn_eli:hover, .btn_mod:hover{
-    -fx-background-color: #000000;}
+.btn_agre:hover,.btn_eli:hover, .btn_mod:hover, .btn_peso:hover{
+    -fx-background-color: #1E2C50;}
 
 .btn_eli{
     -fx-background-color: #ca3730;
@@ -57,10 +136,78 @@
     -fx-background-radius: 15px;
     -fx-text-fill: white; 
     -fx-padding: 8px 16px; 
-    -fx-border-radius: 5px;
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn_canti{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #000000; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color: rgb(244, 237, 38);
+    -fx-text-fill: rgb(0, 0, 0);
+}
+
+.btn_cont{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color:  #98D3E9;
+}
+
+.btn_habi{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 15px;
+    -fx-border-color: #141418; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color:  #342aba;
+    -fx-text-fill: white;
+}
+
+.btn_eli:hover, .btn_mod:hover , .btn_habi:hover{
+    -fx-background-color: #1E2C50;
+}
+.btn_agre:hover {
+    -fx-background-color: #0b3106;
+    -fx-text-fill: white; 
+}
+.btn_canti:hover, .btn_cont:hover{
+    -fx-background-color: #1E2C50;
+    -fx-text-fill: #FFF;
+}
+
+.btn_peso{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-background-color: rgb(89, 58, 114);
+    -fx-border-color: #000000; 
+    -fx-text-fill: white; 
+    -fx-font-weight: bold; /* Texto en negritas */
+}
+
+.btn{
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 16px; 
+    -fx-border-radius: 5px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #000000; 
+    -fx-font-weight: bold; /* Texto en negritas */
+    -fx-background-color: rgb(0, 0, 0);
+    -fx-text-fill: white; 
+}
+
+.btn:hover{
+    -fx-background-color: White;
+    -fx-border-color: #000000;
+    -fx-text-fill: black;
 }
 
 /* TABLAS */
@@ -86,14 +233,13 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-font-family: "Verdana";
-    -fx-font-size: 17px; /* Ajusta el tamaño de la fuente según tu preferencia */
+
 }
 
 .table-view .table-cell {
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
     -fx-font-family: "Verdana";
-    -fx-font-size: 14px; /* Ajusta el tamaño de la fuente según tu preferencia */
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,
@@ -110,35 +256,101 @@
 }
 
 .table-view .table-row-cell:hover {
-    -fx-background-color: #FFCFCF;
-    -fx-text-background-color: red;
+    -fx-background-color: #cff9ff;
+    -fx-text-background-color: rgb(7, 9, 25);
+    -fx-text-fill: black;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #E68989;
+    -fx-background-color: #cec6c6;
+    -fx-text-fill: black;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell:even {
-    -fx-background-color: #A23B3B;
+    -fx-background-color: #e7e7e7;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
+}
+
+/* FONDOS */
+.fondo-su{
+    -fx-background-color: linear-gradient(#A63D46 30%, #734146 79%);
 }
 
 
-.porcentajeSpinner .spinner-arrow {
-    -fx-background-color: #0073e6; /* Color de fondo de las flechas */
+/* styles.css */
+
+.check-box {
+    -fx-font-size: 14px;
 }
 
-.porcentajeSpinner .increment-arrow-button, 
-.porcentajeSpinner .decrement-arrow-button {
-    -fx-background-color: #005cb2; /* Color de fondo de los botones de flecha */
-    -fx-shape: "M 0 0 L 5 5 L 10 0 Z"; /* Cambia la forma de las flechas si es necesario */
+.check-box:selected .box {
+    -fx-background-color: #007bff; /* Color de fondo cuando está seleccionado */
 }
 
-.porcentajeSpinner .spinner-text-field {
-    -fx-background-color: #ffffff; /* Color de fondo del campo de texto */
-    -fx-text-fill: #000000; /* Color del texto */
+.check-box:selected .box .mark {
+    -fx-background-color: white; /* Color de la marca cuando está seleccionado */
 }
 
+.check-box:hover .box {
+    -fx-background-color: #007bff; /* Color de fondo al pasar el mouse sobre el CheckBox */
+}
+
+.check-box:hover .box .mark {
+    -fx-background-color: white; /* Color de la marca al pasar el mouse sobre el CheckBox */
+}
+
+.toggle-button {
+    -fx-background-color: #a8206b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 0.5em 1em;
+    -fx-background-radius: 20;
+    -fx-background-insets: -1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+}
+
+.toggle-button:selected {
+    -fx-background-color: #66bb6a;
+}
+
+
+/*combo box*/
+
+.custom-combo-box {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.custom-combo-box .arrow {
+    -fx-background-color: #ccc;
+}
+
+.custom-combo-box .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+}
+
+.custom-combo-box .list-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.custom-combo-box .list-cell:filled:selected {
+    -fx-background-color: #66bb6a;
+    -fx-text-fill: white;
+}
+
+.custom-combo-box .combo-box-popup {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+}

@@ -20,9 +20,14 @@ public class Ventas {
     private LocalDateTime fecha;
 
     private BigDecimal total;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Clientes cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallesVenta> detalles = new ArrayList<>();
+
+    
 
     public Ventas(Long id, String ticket, LocalDateTime fecha, BigDecimal total) {
         this.id = id;
@@ -79,4 +84,8 @@ public class Ventas {
         detalles.remove(detalle);
         detalle.setVenta(null);
     }
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
+    }
+    
 }

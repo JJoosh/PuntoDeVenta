@@ -53,16 +53,20 @@ public class Productos {
     @Column(name = "Activo")
     private String activo;
 
+
+  
+
     public Productos(){
         
     }
     
-    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
+    public Productos(String nombre, Categoria categoria, BigDecimal cantidad, BigDecimal precio ) {
         this.nombre = nombre;
 
         this.categoria = categoria;
         this.cantidad = cantidad;
         this.precio = precio;
+      
     }
     public Productos(Productos producto) {
         this.id = producto.id;
@@ -70,6 +74,7 @@ public class Productos {
         this.categoria = producto.categoria;
         this.cantidad = producto.cantidad;
         this.precio = producto.precio;
+     
     }
 
     public Productos(String nombre, BigDecimal costo, Categoria categoria, BigDecimal cantidad, BigDecimal precio) {
@@ -159,6 +164,8 @@ public class Productos {
     public void setProductosBajos_inventario(BigDecimal productosBajos){
         this.productosBajos_inventario=productosBajos;
     }
+
+   
 
     public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio, BigDecimal pesoCaja ) {
        

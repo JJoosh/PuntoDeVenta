@@ -15,8 +15,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 @Entity
 @Table(name = "Categoria")
@@ -34,11 +32,15 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria")
     private List<Productos> productos;
 
+    @Column(name = "Empaquetado")
+    private String empaquetado;
+
     public Categoria() {
     }
 
-    public Categoria(String nombreCategoria) {
+    public Categoria(String nombreCategoria, String empaquetado) {
         this.nombreCategoria = nombreCategoria;
+        this.empaquetado=empaquetado;
     }
 
     // Getters y setters
@@ -99,5 +101,13 @@ public class Categoria {
         }
     
         return id;
+    }
+
+    public String getEmpaquetado(){
+        return empaquetado;
+    }
+
+    public void setEmpaquetado(String empaquetado){
+        this.empaquetado=empaquetado;
     }
 }

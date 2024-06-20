@@ -27,11 +27,10 @@ public class AddCantidadController implements Initializable {
     private Label id_nameProducto;
 
     @FXML
-    private TextField cantCajas;
-    @FXML private TextField pesoCaja;
+    private TextField cantidad;
 
 
-    private BigDecimal total;
+    
 
     
     private BigDecimal cantidadactual=new BigDecimal(0);
@@ -61,17 +60,17 @@ public class AddCantidadController implements Initializable {
 
     @FXML
     public void ingresar() {
-        if (cantCajas != null) {
+        if (cantidad != null) {
             try {
-               BigDecimal cajas= BigDecimal.valueOf( Double.parseDouble(cantCajas.getText()));
-               BigDecimal peso=BigDecimal.valueOf(Double.parseDouble(pesoCaja.getText()));
-                total =cajas.multiply(peso);
+               BigDecimal cajas= BigDecimal.valueOf( Double.parseDouble(cantidad.getText()));
+              
+                
                 
                 // Obtener el producto existente de la base de datos
                 Productos producto = obtenerProductoPorId(this.id);
                 
                 if (producto != null) {
-                    producto.actualizarCantidad(id, total.add(cantidadactual));
+                    producto.actualizarCantidad(id, cajas.add(cantidadactual));
                     
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Correcto");
@@ -84,7 +83,7 @@ public class AddCantidadController implements Initializable {
                     Movimientos movimiento = new Movimientos();
                     movimiento.setIdProducto(producto);
                     movimiento.setTipoMovimiento("Entrada");
-                    movimiento.setCantidad(total);
+                    movimiento.setCantidad(cajas);
                     LocalDateTime fechaHoraActual = LocalDateTime.now();
                     movimiento.setFecha(fechaHoraActual);
                     guardarMovimiento(movimiento);

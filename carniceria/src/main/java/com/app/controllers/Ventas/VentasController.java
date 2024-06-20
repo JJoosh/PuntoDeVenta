@@ -15,6 +15,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.devoluciones.FXMLDevolucionesController;
+import com.app.models.Clientes;
 import com.app.models.Productos;
 
 import gnu.io.NoSuchPortException;
@@ -27,7 +28,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -40,6 +43,7 @@ public class VentasController {
 
     private static String nombreUsser;
     private static String rol;
+    private final Clientes[] clienteSeleccionado = {null}; // Array de una sola posición para almacenar el cliente seleccionado
 
     public void setNombreUsser(String nombreUsser) { 
         this.nombreUsser = nombreUsser;
@@ -77,7 +81,16 @@ public class VentasController {
     private Label totalImporteLabel;
     @FXML
     private TextField pesoTextField;
+    @FXML
+    private TextField txtCliente;
 
+    @FXML
+    private ListView<Clientes> clienteListView;
+
+    @FXML
+    private CheckBox clienteCheckBox;
+
+    private ObservableList<Clientes> clientesData = FXCollections.observableArrayList();
     @FXML 
     private Pane rootPane;
     
@@ -90,6 +103,40 @@ public class VentasController {
     private bascula peso;
 
     public void initialize() {
+
+        txtCliente.setVisible(false);
+        clienteListView.setVisible(false);
+
+        // Configurar el CheckBox para mostrar/ocultar el TextField
+        clienteCheckBox.setOnAction(event -> {
+            boolean isSelected = clienteCheckBox.isSelected();
+            txtCliente.setVisible(isSelected);
+            clienteListView.setVisible(false); // Ocultar el ListView cuando se muestra el TextField
+        });
+
+        // Configurar el TextField para filtrar los clientes
+        txtCliente.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            String text = txtCliente.getText();
+            if (text.isEmpty()) {
+                clienteListView.setVisible(false);
+            } else {
+                ObservableList<Clientes> filteredItems = FXCollections.observableArrayList();
+                for (Clientes cliente : clientesData) {
+                    if (cliente.getNombre().toLowerCase().contains(text.toLowerCase())) {
+                        filteredItems.add(cliente);
+                    }
+                }
+                clienteListView.setItems(filteredItems);
+                clienteListView.setVisible(!filteredItems.isEmpty());
+        
+                // Ajustar la altura de la lista según el número de elementos filtrados
+                clienteListView.setPrefHeight(filteredItems.size() * 24 + 2);
+            }
+        });
+        
+
+        // Cargar los datos de los clientes
+        cargarClientes();
         codigoProductoTextField.setText("");
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -110,6 +157,22 @@ public class VentasController {
         
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
 
+    }
+
+    private void cargarClientes() {
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(Clientes.class);
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        String query = "SELECT c FROM Clientes c WHERE c.activo = 'A'";
+        TypedQuery<Clientes> typedQuery = entityManager.createQuery(query, Clientes.class);
+        List<Clientes> clientesEncontrados = typedQuery.getResultList();
+
+        entityManager.close();
+        entityManagerFactory.close();
+        clientesData.addAll(clientesEncontrados);
     }
 
    
@@ -258,6 +321,7 @@ public class VentasController {
         totalImporteLabel.setText("0"); // Limpiar la etiqueta del importe total
     }
 
+ 
     @FXML
 private void cobrar() {
     cerrarBascula();
@@ -272,10 +336,18 @@ private void cobrar() {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
             Pane nuevoContenido = loader.load();
             
-            // Obtener el controlador de CompraController
             CompraController compraController = loader.getController();
-            
-            // Pasar los datos necesarios a CompraController
+
+            // Obtener el ID del cliente seleccionado si el checkbox está seleccionado
+            Long clienteId = null;
+            if (clienteCheckBox.isSelected() && clienteListView.getSelectionModel().getSelectedItem() != null) {
+                clienteId = (long) clienteListView.getSelectionModel().getSelectedItem().getId();
+                compraController.getIDandDescuento( clienteListView.getSelectionModel().getSelectedItem(), 2);  //AQUI TERMINAR
+                System.out.println("ID del cliente seleccionado: " + clienteId);
+            } else {
+                System.out.println("No se ha seleccionado ningún cliente.");
+            }
+
             compraController.initData(productosAgregados, importeTotal);
             
             rootPane.getChildren().setAll(nuevoContenido);
@@ -285,6 +357,7 @@ private void cobrar() {
     }
 }
 
+    
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
@@ -428,7 +501,7 @@ private void cobrar() {
             e.printStackTrace();
         }
     }
-    public void abrirInventario(){
+    public void abrirInventario(){  
           try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));

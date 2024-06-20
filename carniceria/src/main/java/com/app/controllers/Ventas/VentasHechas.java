@@ -236,7 +236,7 @@ public class VentasHechas {
 
     private boolean imprimir(Node node) {
         if (node == null || node.getScene() == null || node.getScene().getWindow() == null) {
-            return false; // O manejar el caso nulo de otra manera
+            return false; 
         }
 
         PrinterJob job = PrinterJob.createPrinterJob();

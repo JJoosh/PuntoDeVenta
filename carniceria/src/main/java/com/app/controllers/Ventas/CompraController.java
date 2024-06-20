@@ -22,6 +22,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.app.models.Clientes;
 import com.app.models.DetallesVenta;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
@@ -47,6 +48,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 
@@ -69,7 +71,7 @@ public class CompraController {
     @FXML
     private TableView<Productos> tablaDetallesVenta;
     @FXML
-    private TableColumn<Productos, String> nombreProductoColumn;
+    private TableColumn<Productos, String>      nombreProductoColumn;
     @FXML
     private TableColumn<Productos, BigDecimal> precioColumn;
     @FXML
@@ -90,16 +92,20 @@ public class CompraController {
 
     @FXML
     private Label cambioLabel;
-
+    
     @FXML
     private Pane rootPane;
 
     private Ventas venta;
     // private Productos id;
     private BigDecimal importeTotal;
+    private Clientes cliente;
+
+    @FXML TableColumn<Productos, String> columAcciones;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
 
+   
     @FXML
     private void initialize() {
         formaPagoComboBox.getItems().addAll("Efectivo", "Tarjeta");
@@ -138,11 +144,33 @@ public class CompraController {
         insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             calcularCambio();
         });
+        columAcciones.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Productos producto = getTableView().getItems().get(getIndex());
 
+                    Button deleteButton = new Button("Eliminar");
+                    deleteButton.getStyleClass().add("btn_eli");
+                    deleteButton.setOnAction(event -> {
+                        System.out.println("Eliminar: " + producto.getNombre());
+                        getTableView().getSelectionModel().select(getTableRow().getIndex());
+                        borrarArticuloSeleccionado();
+                    });
+                    setGraphic(new HBox(5, deleteButton)); 
+                }
+            }
+        });
         rootPane.setOnKeyPressed(this::handleKeyPressed);
         Platform.runLater(() -> insertarPagoTextField.requestFocus());
     }
 
+    public void getIDandDescuento(Clientes cliente, int Descuento){
+       this.cliente=cliente;
+    }
 
     private void handlePaymentMethodChange(String paymentMethod) {
         if ("Efectivo".equals(paymentMethod)) {
@@ -265,6 +293,10 @@ public class CompraController {
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
             venta.setFecha(LocalDateTime.now());
             venta.setTotal(total);
+            
+            // Asociar el cliente a la venta
+            venta.setCliente(cliente);
+                
 
             for (Productos producto : productosData) {
                 if (producto == null) {
@@ -367,7 +399,6 @@ public void regresar() {
         mostrarAlertaError("Error al regresar", "Ocurrió un error al regresar. Por favor, intente nuevamente.");
     }
 }
-
     private void mostrarAlertaInformacion(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);

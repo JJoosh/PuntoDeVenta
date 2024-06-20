@@ -35,6 +35,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import java.time.format.DateTimeFormatter;
 
 import com.app.models.Movimientos;
 
@@ -62,32 +63,32 @@ public class MovimientosController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar la lista observable
         tablaDevoluciones = FXCollections.observableArrayList();
-
+    
         // Asignar la lista observable a la tabla
         tablaDevolu.setItems(tablaDevoluciones);
-
+    
         // Configurar las celdas de la tabla
         fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         productos.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
         movimiento.setCellValueFactory(new PropertyValueFactory<>("tipoMovimiento"));
         cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        hora.setCellValueFactory(new PropertyValueFactory<>("hora") );
+        hora.setCellValueFactory(new PropertyValueFactory<>("hora"));
         columCategoria.setCellValueFactory(new PropertyValueFactory<>("nombreCategoria"));
-
+    
         cargarTabla();
-
-        FXMLInventarioController loadCat= new FXMLInventarioController();
-
+    
+        FXMLInventarioController loadCat = new FXMLInventarioController();
+    
         loadCat.cargarCategorias(this.categorias, 1);
         filtrarCategorias();
         ObservableList<String> movimientos = FXCollections.observableArrayList(
-            "Todos",  "Entrada", "Salida"
+            "Todos", "Entrada", "Salida"
         );
         boxMovimiento.setItems(movimientos);
         boxMovimiento.setValue("Todos");
         LocalDate fechaActual = LocalDate.now();
         fechas.setValue(fechaActual);
-
+    
         fechas.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 List<Movimientos> movimientosFiltrados = obtenerMovimientosPorFecha(newValue);
@@ -95,7 +96,7 @@ public class MovimientosController implements Initializable {
                 tablaDevoluciones.addAll(movimientosFiltrados);
             }
         });
-
+    
         boxMovimiento.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 List<Movimientos> movimientosFiltrados = obtenerMovimientosPorTipo(newValue);
@@ -103,8 +104,7 @@ public class MovimientosController implements Initializable {
                 tablaDevoluciones.addAll(movimientosFiltrados);
             }
         });
-
-
+    
         fproducto.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.isEmpty()) {
                 List<Movimientos> movimientosFiltrados = obtenerMovimientosPorNombreProducto(newValue);
@@ -114,32 +114,44 @@ public class MovimientosController implements Initializable {
                 cargarTabla();
             }
         });
+    
+        // Establecer la fecha más reciente por defecto en el DatePicker
+        List<Movimientos> movimientoss = obtenerMovimientosOrdenadosPorFecha();
+        if (!movimientos.isEmpty()) {
+            String fechaRecienteStr = movimientoss.get(0).getFecha();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Ajusta el patrón al formato de tu fecha
+            LocalDate fechaReciente = LocalDate.parse(fechaRecienteStr, formatter);
+            fechas.setValue(fechaReciente);
+        }
     }
+    
 
     @FXML
     private void cargarTabla() {
-        List<Movimientos> movimientos = obtenerMovimientos();
+        List<Movimientos> movimientos = obtenerMovimientosOrdenadosPorFecha();
         tablaDevoluciones.clear();
         tablaDevoluciones.addAll(movimientos);
     }
+    
 
-    private List<Movimientos> obtenerMovimientos() {
+    private List<Movimientos> obtenerMovimientosOrdenadosPorFecha() {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         configuration.addAnnotatedClass(Movimientos.class);
-
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         EntityManagerFactory emf = sessionFactory.unwrap(EntityManagerFactory.class);
         EntityManager entityManager = emf.createEntityManager();
-
-        TypedQuery<Movimientos> query = entityManager.createQuery("SELECT m FROM Movimientos m", Movimientos.class);
+    
+        TypedQuery<Movimientos> query = entityManager.createQuery(
+            "SELECT m FROM Movimientos m ORDER BY m.fecha DESC, m.hora DESC", Movimientos.class);
         List<Movimientos> movimientos = query.getResultList();
-
+    
         entityManager.close();
         emf.close();
-
+    
         return movimientos;
     }
+    
 
     private List<Movimientos> obtenerMovimientosPorFecha(LocalDate fecha) {
         Configuration configuration = new Configuration();

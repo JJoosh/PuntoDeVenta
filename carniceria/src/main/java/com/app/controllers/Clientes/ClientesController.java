@@ -33,7 +33,7 @@ public class ClientesController implements Initializable {
     @FXML
     private TableColumn<Clientes, String> nombre, apellido;
     @FXML
-    private TableColumn<Clientes, Number> descuento;
+    private TableColumn<Clientes, String> descuento;
     @FXML
     private TableColumn<Clientes, Void> acciones;
     @FXML Pane rootPane;
@@ -109,18 +109,17 @@ public class ClientesController implements Initializable {
     if (txtApellido.getText().isEmpty()==false && txtNombre.getText().isEmpty()==false && txtDescuento.getText().isEmpty()==false) {
         String apellido="";
         String nombre="";
-        int descuento=0;
+        String numero;
         try {
             apellido = this.txtApellido.getText().toString();
             nombre= this.txtNombre.getText().toString();
-            descuento = Integer.parseInt(this.txtDescuento.getText().toString());
-            
+            numero=this.txtDescuento.getText().toString();            
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 Transaction tx = session.beginTransaction();
                 Clientes nuevoCliente = new Clientes();
                 nuevoCliente.setNombre(nombre);
                 nuevoCliente.setApellido(apellido);
-                nuevoCliente.setDescuento(descuento);
+                nuevoCliente.setDescuento(numero);
                 nuevoCliente.setActivo("A");
     
                 session.save(nuevoCliente);
@@ -153,7 +152,7 @@ public class ClientesController implements Initializable {
     
 }
 
-public void abrirMod(int ID, String nombre, String apellido, int descuento) {
+public void abrirMod(int ID, String nombre, String apellido, String descuento) {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/mod_cli.fxml"));
         Pane nuevoContenido = loader.load();

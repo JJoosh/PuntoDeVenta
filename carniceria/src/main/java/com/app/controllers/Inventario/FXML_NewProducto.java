@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
+
 import com.app.models.Categoria;
 import com.app.models.Movimientos;
 import com.app.models.Productos;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -36,6 +39,10 @@ public class FXML_NewProducto {
     
     @FXML
     private ComboBox<String> categorias;
+
+    @FXML private TextField txtcantEntrante;
+    @FXML private Label lblCantidad;
+    @FXML private Label lblCantidad1;
 
     private Stage stage;
     private FXMLInventarioController inventarioController;
@@ -166,6 +173,22 @@ public class FXML_NewProducto {
 
         loadCat.cargarCategorias(this.categorias, 0);
 
+        txtcantEntrante.setVisible(false);
+        lblCantidad.setVisible(false);
+        lblCantidad1.setVisible(false);
+
+        categorias.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if (newValue != null) {
+                
+                String empaque=searchEmpaque(newValue);
+                lblCantidad.setVisible(true);
+                txtcantEntrante.setVisible(true);
+                lblCantidad1.setVisible(true);
+                lblCantidad1.setText(empaque);
+
+                
+            }
+        });
 
     }
     @FXML
@@ -184,4 +207,19 @@ public class FXML_NewProducto {
         e.printStackTrace();
     }
     }
+
+    public String searchEmpaque(String nombreCategoria) {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        String empaquetado="";
+        try (Session session = sessionFactory.openSession()) {
+            // Consulta para obtener el empaquetado por nombre de categoría
+            Query<String> query = session.createQuery("SELECT c.empaquetado FROM Categoria c WHERE c.nombreCategoria = :nombre", String.class);
+            query.setParameter("nombre", nombreCategoria);
+            empaquetado = query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return empaquetado;
+    }
+    
 }

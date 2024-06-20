@@ -18,23 +18,23 @@ public class Clientes {
     private SimpleIntegerProperty id;
     private SimpleStringProperty nombre;
     private SimpleStringProperty apellido;
-    private SimpleIntegerProperty descuento;
+    private SimpleStringProperty descuento;
     private SimpleStringProperty activo;
 
     public Clientes() {
         this.id = new SimpleIntegerProperty();
         this.nombre = new SimpleStringProperty();
         this.apellido = new SimpleStringProperty();
-        this.descuento = new SimpleIntegerProperty();
+        this.descuento = new SimpleStringProperty();
         this.activo= new SimpleStringProperty();
         
     }
 
-    public Clientes(int id, String nombre, String apellido, int descuento, String activo) {
+    public Clientes(int id, String nombre, String apellido, String descuento, String activo) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.apellido = new SimpleStringProperty(apellido);
-        this.descuento = new SimpleIntegerProperty(descuento);
+        this.descuento = new SimpleStringProperty(descuento);
         this.activo= new SimpleStringProperty(activo);
 
     }
@@ -80,16 +80,16 @@ public class Clientes {
         return apellido;
     }
 
-    @Column(name = "descuento")
-    public int getDescuento() {
+    @Column(name = "numero")
+    public String getDescuento() {
         return descuento.get();
     }
 
-    public void setDescuento(int descuento) {
+    public void setDescuento(String descuento) {
         this.descuento.set(descuento);
     }
 
-    public SimpleIntegerProperty descuentoProperty() {
+    public SimpleStringProperty descuentoProperty() {
         return descuento;
     }
 
@@ -121,7 +121,7 @@ public class Clientes {
 
     
 
-    public void modCliente(int id, String nombre, String apellido, int descuento) {
+    public void modCliente(int id, String nombre, String apellido, String descuento) {
         System.err.println("Se está cambiando el usuario con el ID: " + id);
     
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -142,5 +142,8 @@ public class Clientes {
             e.printStackTrace();
         }
     }
-    
+    @Override
+    public String toString() {
+        return nombre.get() + " " + apellido.get(); // Ajusta esto según los datos que desees mostrar
+    }
 }

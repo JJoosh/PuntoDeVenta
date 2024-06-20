@@ -3,7 +3,10 @@ package com.app.controllers.Inventario;
 import com.app.controllers.Login.LoginController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
+import com.app.models.Clientes;
 import com.app.models.Productos;
+import com.app.utils.HibernateUtil;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
@@ -42,8 +45,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -72,7 +77,8 @@ public class FXMLInventarioController implements Initializable {
     @FXML private Pane rootPane;
     
     @FXML private Button btnAgregar;
-
+    @FXML private TextField txtCategoria;
+    @FXML private ComboBox<String> boxEmpaquetado;
     private ObservableList<Productos> productosData;
     private ObservableList<Productos> productosOriginalData;
 
@@ -257,6 +263,14 @@ public class FXMLInventarioController implements Initializable {
         filtarCategorias();
         buscarforID();
         rootPane.setOnKeyPressed(this::handleKeyPressed);
+        ObservableList<String> listEmpaquetado = FXCollections.observableArrayList(
+            "Paquete",
+            "Kilos",
+            "Gramos",
+            "Pieza",
+            "Cajas"
+        );
+        boxEmpaquetado.setItems(listEmpaquetado);
     }
     
     @FXML
@@ -549,12 +563,42 @@ public void ingresarCantidad() {
     }
 }
 
-private String rol;
+    private String rol;
 
-public void setRol(String rol) {
-    this.rol = rol;
-}
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 
+    public void addCategoria() {
+        String categoria = txtCategoria.getText().toString();
+        String empaquetado = boxEmpaquetado.getSelectionModel().getSelectedItem(); 
+    
+        if (!categoria.isEmpty() && empaquetado != null) {
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                Transaction tx = session.beginTransaction();
+                Categoria nuevaCategoria = new Categoria();
+                nuevaCategoria.setNombreCategoria(categoria);
+                nuevaCategoria.setEmpaquetado(empaquetado); 
+                session.save(nuevaCategoria);
+                tx.commit();
+                txtCategoria.setText("");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Acción confirmada");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agregó la nueva categoría \"" + categoria + "\".");
+                alert.showAndWait();
+                cargarCategorias(categorias, 1);
+            } catch (HibernateException e) {
 
-
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, escriba un nombre para la categoría y seleccione un empaquetado.");
+            alert.showAndWait();
+        }
+    }
+    
 }
