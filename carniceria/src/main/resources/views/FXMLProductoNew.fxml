@@ -17,7 +17,7 @@
             <TextField fx:id="layout1" layoutX="753.0" layoutY="146.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese el código del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
             <TextField fx:id="layout2" layoutX="754.0" layoutY="223.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese la descripción del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
             <ComboBox fx:id="categorias" layoutX="756.0" layoutY="619.0" prefHeight="53.0" prefWidth="398.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <Button layoutX="593.0" layoutY="741.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="443.0" style="-fx-font-size: 30px;" styleClass="btn_agre" text="Ingresar">
+            <Button layoutX="593.0" layoutY="741.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="443.0" style="-fx-font-size: 30px;" styleClass="btn_agre" text="Ingresar el producto">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/styles.css" />

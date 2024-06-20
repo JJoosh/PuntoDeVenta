@@ -26,8 +26,7 @@
                   <TableColumn fx:id="ticket1" prefWidth="138.66666412353516" text="Ticket" />
                   <TableColumn fx:id="fecha" prefWidth="151.9999542236328" text="Fecha" />
                   <TableColumn fx:id="nombre" prefWidth="286.0" text="Nombre del producto" />
-                  <TableColumn fx:id="cantidad" minWidth="0.0" prefWidth="163.33331298828125" text="Cantidad" />
-                  <TableColumn fx:id="total" prefWidth="178.6666259765625" text="Total" />
+                  <TableColumn fx:id="total" prefWidth="250.0" text="Total" />
                   <TableColumn fx:id="detalles" prefWidth="186.66656494140625" text="ID del detalle" />
                </columns>
             </TableView>
