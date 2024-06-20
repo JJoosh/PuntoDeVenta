@@ -1,4 +1,5 @@
 package com.app.controllers;
+
 import java.io.IOException;
 
 import org.hibernate.Session;
@@ -46,7 +47,5 @@ public class App extends Application {
         launch(args);
 
     }
-
-
 
 }

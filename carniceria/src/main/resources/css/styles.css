@@ -228,7 +228,6 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-font-family: "Verdana";
-
 }
 
 .table-view .table-cell {
@@ -253,18 +252,26 @@
 .table-view .table-row-cell:hover {
     -fx-background-color: #cff9ff;
     -fx-text-background-color: rgb(7, 9, 25);
+    -fx-text-fill: black;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #E68989;
+    -fx-background-color: #cec6c6;
+    -fx-text-fill: black;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell:even {
-    -fx-background-color: #ded2d2;
+    -fx-background-color: #e7e7e7;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-fill: black;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #4D94AC;
+    -fx-text-fill: white;
 }
 
 /* FONDOS */

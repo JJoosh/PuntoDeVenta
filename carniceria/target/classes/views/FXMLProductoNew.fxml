@@ -14,10 +14,10 @@
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: white;">
          <children>
-            <TextField fx:id="layout1" layoutX="753.0" layoutY="146.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese el código del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <TextField fx:id="layout2" layoutX="754.0" layoutY="223.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese la descripción del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <ComboBox fx:id="categorias" layoutX="756.0" layoutY="619.0" prefHeight="53.0" prefWidth="398.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <Button layoutX="593.0" layoutY="741.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="443.0" style="-fx-font-size: 30px;" styleClass="btn_agre" text="Ingresar el producto">
+            <TextField fx:id="layout1" layoutX="682.0" layoutY="145.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese el código del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray; -fx-font-size: 25px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <TextField fx:id="layout2" layoutX="682.0" layoutY="222.0" prefHeight="52.0" prefWidth="564.0" promptText="Ingrese la descripción del nuevo producto" style="-fx-background-color: #F1EAE8; -fx-border-color: gray; -fx-font-size: 25px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <ComboBox fx:id="categorias" layoutX="682.0" layoutY="483.0" prefHeight="53.0" prefWidth="398.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: gray; -fx-font-size: 28px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <Button layoutX="534.0" layoutY="771.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="443.0" style="-fx-font-size: 30px;" styleClass="btn_agre" text="Ingresar el producto">
                <stylesheets>
                   <URL value="@../css/Fondo.css" />
                   <URL value="@../css/styles.css" />
@@ -26,8 +26,8 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Spinner id="pro_cantidad" fx:id="spinner2" editable="true" layoutX="756.0" layoutY="404.0" prefHeight="57.0" prefWidth="398.0" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <Label layoutX="422.0" layoutY="153.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Código de barras:">
+            <Spinner id="pro_cantidad" fx:id="spinner2" editable="true" layoutX="682.0" layoutY="385.0" prefHeight="57.0" prefWidth="398.0" style="-fx-font-size: 28px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <Label layoutX="348.0" layoutY="153.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Código de barras:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -36,7 +36,7 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Label layoutX="422.0" layoutY="229.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Descripción:">
+            <Label layoutX="351.0" layoutY="230.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Descripción:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -45,7 +45,7 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Label layoutX="424.0" layoutY="325.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Precio costo:">
+            <Label layoutX="353.0" layoutY="308.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Precio costo:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -54,7 +54,7 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Label layoutX="422.0" layoutY="509.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Cantidad mínima:">
+            <Label layoutX="354.0" layoutY="583.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Cantidad mínima:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -63,7 +63,7 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Label layoutX="424.0" layoutY="626.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Categoría:">
+            <Label layoutX="357.0" layoutY="483.0" prefHeight="53.0" prefWidth="169.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Categoría:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -72,7 +72,7 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Label layoutX="425.0" layoutY="413.0" style="-fx-font-weight: bold; -fx-font-size: 34px;" styleClass="label-conte" text="Precio venta:">
+            <Label layoutX="354.0" layoutY="396.0" style="-fx-font-weight: bold; -fx-font-size: 30px;" styleClass="label-conte" text="Precio venta:">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -81,8 +81,10 @@
                   <URL value="@../css/styles.css" />
                </stylesheets>
             </Label>
-            <Spinner id="pro_cantidad" fx:id="spinner1" editable="true" layoutX="758.0" layoutY="319.0" prefHeight="51.0" prefWidth="398.0" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <Spinner fx:id="spinner3" editable="true" layoutX="756.0" layoutY="500.0" prefHeight="57.0" prefWidth="398.0" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <Spinner id="pro_cantidad" fx:id="spinner1" editable="true" layoutX="682.0" layoutY="300.0" prefHeight="51.0" prefWidth="398.0" style="-fx-font-size: 28px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <Spinner fx:id="spinner3" editable="true" layoutX="682.0" layoutY="576.0" prefHeight="36.0" prefWidth="398.0" style="-fx-font-size: 28px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
+            <Label layoutX="354.0" layoutY="669.0" prefHeight="39.0" prefWidth="285.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/styles.css" text="Cantidad ingresada:" />
+            <TextField layoutX="682.0" layoutY="663.0" prefHeight="51.0" prefWidth="543.0" promptText="Ingrese la cantidad de producto entrante" styleClass="label-conte" stylesheets="@../css/styles.css" />
          </children>
       </AnchorPane>
       <Label layoutX="197.0" layoutY="175.0" />

@@ -34,14 +34,6 @@
                <padding>
                   <Insets left="20.0" />
                </padding></Label>
-            <Label accessibleRole="BUTTON" layoutX="21.0" layoutY="727.0" onMouseClicked="#abrirConfiguracion" prefHeight="50.0" prefWidth="173.0" style="-fx-alignment: center; -fx-font-size: 15px;" styleClass="usuario" stylesheets="@../css/Styles.css" text="Administrar Usuarios">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="16.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-               </opaqueInsets>
-            </Label>
             <ImageView fx:id="cerrar_sesion" accessibleRole="BUTTON" fitHeight="43.0" fitWidth="47.0" layoutX="34.0" layoutY="809.0" onDragDetected="#cerrar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/Salir-b.png" />
@@ -71,6 +63,14 @@
                <font>
                   <Font name="Yu Gothic UI Bold" size="15.0" />
                </font>
+            </Label>
+            <Label accessibleRole="BUTTON" layoutX="41.0" layoutY="191.0" onMouseClicked="#abrirConfiguracion" prefHeight="50.0" prefWidth="173.0" style="-fx-alignment: center; -fx-font-size: 15px;" styleClass="usuario" stylesheets="@../css/Styles.css" text="Administrar Usuarios">
+               <font>
+                  <Font name="Yu Gothic UI Semibold" size="16.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+               </opaqueInsets>
             </Label>
          </children>
       </Pane>
