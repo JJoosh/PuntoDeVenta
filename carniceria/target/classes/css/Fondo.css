@@ -1,7 +1,19 @@
-/* Estilo del login */
-#login{
-    -fx-background-image: url(/css/img/carne.jpg);
+.button-1{
+    -fx-background-color: #D62934;
+    -fx-text-fill: white;
+    -fx-background-radius: 10px;
+    -fx-font-family: "Tahoma";
+    -fx-font-weight: bold;
+
 }
+.button-1:hover {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20px;
+}
+
+
+/* Estilo del login */
 
 .text-field {
     -fx-background-color: #ffffff; /* Color de fondo blanco */
@@ -32,7 +44,7 @@
 #importe_total{
     -fx-text-fill:#011ADB;
     -fx-font-family: "Arial";
-    -fx-font-size: 70px;
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
 }
 
