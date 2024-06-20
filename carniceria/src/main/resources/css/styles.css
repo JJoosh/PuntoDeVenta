@@ -104,12 +104,9 @@
     -fx-font-weight: bold; /* Texto en negritas */
 }
 
-<<<<<<< Updated upstream
-=======
 .btn_agre:hover,.btn_eli:hover, .btn_mod:hover, .btn_peso:hover{
     -fx-background-color: #1E2C50;}
 
->>>>>>> Stashed changes
 .btn_eli{
     -fx-background-color: #ca3730;
     -fx-background-radius: 15px;

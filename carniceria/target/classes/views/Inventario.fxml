@@ -24,8 +24,16 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" styleClass="te" stylesheets="@../css/Fondo.css" />
-      <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" stylesheets="@../css/Fondo.css" />
+      <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" style="-fx-font-size: 20px;">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></TextField>
+      <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" style="-fx-font-size: 20px;">
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></TextField>
       <ComboBox fx:id="categorias" layoutX="727.0" layoutY="129.0" prefHeight="42.0" prefWidth="242.0" promptText="Categorias" style="-fx-background-color: F9ECDF; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -42,10 +50,14 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" stylesheets="@../css/Fondo.css">
+      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" style="-fx-font-size: 20px;">
          <cursor>
             <Cursor fx:constant="TEXT" />
-         </cursor></TextField>
+         </cursor>
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets></TextField>
       <Button fx:id="btnAgregar" layoutX="1122.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="46.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_agre" text="Agregar producto">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -63,17 +75,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ScrollPane layoutX="33.0" layoutY="423.0" prefHeight="411.0" prefWidth="1319.0">
+      <ScrollPane layoutX="33.0" layoutY="423.0" prefHeight="411.0" prefWidth="1319.0" stylesheets="@../css/styles.css">
          <content>
-            <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1315.0">
+            <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1325.0">
                <columns>
-                  <TableColumn fx:id="codigoColumn" prefWidth="137.33334481716156" style="-fx-border-color: black;" text="Codigo" />
-                  <TableColumn fx:id="descripcionColumn" prefWidth="262.66664123535156" style="-fx-border-color: black;" text="Descripcion del producto" />
-                  <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" style="-fx-border-color: black;" text="Costo" />
-                  <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" style="-fx-border-color: black;" text="Precio venta" />
-                  <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" style="-fx-border-color: black;" text="Existencia" />
-                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" style="-fx-border-color: black;" text="Inventario minimo" />
-                  <TableColumn prefWidth="232.666748046875" style="-fx-border-color: black; -fx-background-color: D1E4EB;" text="Opciones" />
+                  <TableColumn fx:id="codigoColumn" prefWidth="137.33334481716156" text="Codigo" />
+                  <TableColumn fx:id="descripcionColumn" prefWidth="262.66664123535156" text="Descripcion del producto" />
+                  <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" text="Costo" />
+                  <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" text="Precio venta" />
+                  <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" text="Existencia" />
+                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" text="Inventario minimo" />
+                  <TableColumn prefWidth="232.666748046875" text="Opciones" />
                </columns>
             </TableView>
          </content>
