@@ -51,7 +51,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Parent;
 
 public class FXMLInventarioController implements Initializable {
@@ -67,7 +67,7 @@ public class FXMLInventarioController implements Initializable {
     @FXML
     private TableColumn<Productos, BigDecimal> precioVentaColumn;
     @FXML
-    private TableColumn<Productos, BigDecimal> existenciaColumn;
+    private TableColumn<Productos, String> existenciaColumn;
     @FXML
     private TableColumn<Productos, BigDecimal> inventarioMinimoColumn;
     @FXML
@@ -286,22 +286,47 @@ public class FXMLInventarioController implements Initializable {
             abrirVentas();
         }
     }
-    public void agregaraTabla(){
-        
+    public void agregaraTabla() {
+        // Asignar las propiedades a las columnas
         codigoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descripcionColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         costoColumn.setCellValueFactory(new PropertyValueFactory<>("costo"));
         precioVentaColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        existenciaColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    
+        // Modificación para mostrar la cantidad con la unidad de medida
+        existenciaColumn.setCellValueFactory(cellData -> {
+            Productos producto = cellData.getValue();
+            String cantidadConUnidad;
+            if (producto.getCategoria() != null && producto.getCategoria().getEmpaquetado() != null) {
+                cantidadConUnidad = producto.getCantidad() + " " + producto.getCategoria().getEmpaquetado();
+            } else {
+                cantidadConUnidad = producto.getCantidad().toString();
+            }
+            return new SimpleStringProperty(cantidadConUnidad);
+        });
+    
         inventarioMinimoColumn.setCellValueFactory(new PropertyValueFactory<>("productosBajos_inventario"));
+    
         // Obtener los productos de la base de datos
         List<Productos> productos = obtenerProductos();
-
-        productosOriginalData = FXCollections.observableArrayList(productos);
-        productosData = FXCollections.observableArrayList(productos);
-
-        tableView.setItems(productosData);
+    
+        // Verificar que la lista de productos no sea null
+        if (productos != null) {
+            productosOriginalData = FXCollections.observableArrayList(productos);
+            productosData = FXCollections.observableArrayList(productos);
+    
+            tableView.setItems(productosData);
+        } else {
+            // Manejar el caso en el que no se obtuvieron productos
+            productosOriginalData = FXCollections.observableArrayList();
+            productosData = FXCollections.observableArrayList();
+            
+            tableView.setItems(productosData);
+            // Opcional: Mostrar un mensaje de error o advertencia al usuario
+        }
     }
+    
+    
 
     private List<Productos> obtenerProductos() {
         Configuration configuration = new Configuration();

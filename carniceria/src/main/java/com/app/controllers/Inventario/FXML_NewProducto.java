@@ -97,17 +97,24 @@ public class FXML_NewProducto {
                 productosbd.setNombre(descripcion);
                 productosbd.setCosto(BigDecimal.valueOf(precioCosto));
                 productosbd.setPrecio(BigDecimal.valueOf(precioVenta));
-               productosbd.setCantidad(BigDecimal.valueOf(0.0));
-                productosbd.setCategoria(categoria);
-                productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));
-                
+                productosbd.setCategoria(categoria);    
+                productosbd.setProductosBajos_inventario(BigDecimal.valueOf(invMinimo));       
+                if(txtcantEntrante.getText().isEmpty()==false){
+                    productosbd.setCantidad(BigDecimal.valueOf(Double.parseDouble( txtcantEntrante.getText())));
+                }else{
+                    productosbd.setCantidad(BigDecimal.valueOf(0.0));
+                }             
                 productosbd.setActivo("S");
 
                 session.save(productosbd);
                 System.out.println("FECHA DE PRUEBA"+fechaHoraActual);
                 movimientos.setIdProducto(productosbd);
                 movimientos.setTipoMovimiento("Entrada");
-                movimientos.setCantidad(BigDecimal.valueOf(0.0));
+                if(txtcantEntrante.getText().isEmpty()==false){
+                    movimientos.setCantidad(BigDecimal.valueOf(Double.parseDouble( txtcantEntrante.getText())));
+                }else{
+                    movimientos.setCantidad(BigDecimal.valueOf(0.0));
+                }  
                 movimientos.setFecha(fechaHoraActual);
                 session.save(movimientos);
                 tx.commit();

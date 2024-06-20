@@ -251,5 +251,12 @@ public class Productos {
             }
         }
     }
+
+    public String getCantidadConUnidad() {
+        if (this.categoria != null && this.categoria.getEmpaquetado() != null) {
+            return this.cantidad + " " + this.categoria.getEmpaquetado();
+        }
+        return this.cantidad.toString();
+    }
     
 }
