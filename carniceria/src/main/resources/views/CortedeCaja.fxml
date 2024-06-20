@@ -8,11 +8,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.corte.FXMLCorte">
+<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.corte.FXMLCorte">
    <children>
       <ScrollPane layoutX="135.0" layoutY="266.0" prefHeight="468.0" prefWidth="982.0">
          <content>
-            <TableView fx:id="Corte" prefHeight="463.0" prefWidth="975.0">
+            <TableView fx:id="Corte" prefHeight="450.0" prefWidth="979.0">
               <columns>
                 <TableColumn fx:id="IDcorte" minWidth="281.0" prefWidth="344.666646361351" text="TOTAL VENDIDO" />
                 <TableColumn fx:id="Fecha" minWidth="281.0" prefWidth="316.0000305175781" text="FECHA" />
@@ -21,9 +21,9 @@
             </TableView>
          </content>
       </ScrollPane>
-      <Label id="Label_letras" layoutX="227.0" layoutY="154.0" prefHeight="41.0" prefWidth="177.0" stylesheets="@../css/Fondo.css" text="Buscar:" />
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" stylesheets="@../css/Fondo.css" text="Corte de caja" />
-      <DatePicker layoutX="361.0" layoutY="155.0" prefHeight="41.0" prefWidth="232.0" styleClass="text-field" stylesheets="@../css/Fondo.css" />
-      <Button layoutX="804.0" layoutY="140.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="315.0" stylesheets="@../css/Fondo.css" text="Realizar corte de caja" />
+      <Label layoutX="136.0" layoutY="153.0" prefHeight="41.0" prefWidth="129.0" style="-fx-font-weight: bold;" styleClass="label-1" stylesheets="@../css/Fondo.css" text="Buscar:" />
+      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" styleClass="Label-titulos" stylesheets="@../css/Fondo.css" text="Corte de caja" />
+      <DatePicker layoutX="288.0" layoutY="154.0" prefHeight="44.0" prefWidth="443.0" promptText="Consulta una fecha de corte" styleClass="label-conte" stylesheets="@../css/Fondo.css" />
+      <Button layoutX="923.0" layoutY="147.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="315.0" style="-fx-font-size: 25px;" styleClass="btn_cont" stylesheets="@../css/Fondo.css" text="Realizar corte de caja" />
    </children>
 </Pane>

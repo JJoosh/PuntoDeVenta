@@ -9,8 +9,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,8 +24,8 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" style="-fx-border-color: gray;" styleClass="te" stylesheets="@../css/Fondo.css" />
-      <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
+      <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" styleClass="te" stylesheets="@../css/Fondo.css" />
+      <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" stylesheets="@../css/Fondo.css" />
       <ComboBox fx:id="categorias" layoutX="727.0" layoutY="129.0" prefHeight="42.0" prefWidth="242.0" promptText="Categorias" style="-fx-background-color: F9ECDF; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -44,7 +42,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="idP" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" style="-fx-background-color: E4F2F6; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
+      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="201.0" layoutY="264.0" prefHeight="42.0" prefWidth="517.0" promptText="ID" stylesheets="@../css/Fondo.css">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
@@ -85,23 +83,11 @@
             <URL value="@../css/Fondo.css" />
             <URL value="@../css/Styles.css" />
          </stylesheets></Label>
-      <Button layoutX="959.0" layoutY="343.0" mnemonicParsing="false" onAction="#ingresarCantidad" prefHeight="34.0" prefWidth="128.0" style="-fx-font-size: 10px;" styleClass="btn_canti" stylesheets="@../css/styles.css" text="Ingresar cantidad">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font size="18.0" />
-         </font></Button>
       <Label layoutX="52.0" layoutY="264.0" prefHeight="41.0" prefWidth="140.0" style="-fx-font-weight: bold;" text="Ingrese la ID:">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="48.0" layoutY="20.0">
-         <image>
-            <Image url="@../../../src/main/resources/img/LOGO.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btnAgregar1" layoutX="52.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="14.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_cont" stylesheets="@../css/styles.css" text="Agregar categoria">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -111,6 +97,7 @@
          </font>
       </Button>
       <Button layoutX="959.0" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
-      <TextField layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="309.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
+      <TextField layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="304.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
+      <ComboBox layoutX="613.0" layoutY="340.0" prefHeight="40.0" prefWidth="250.0" promptText="Seleccione el tipo de empaquetado" style="-fx-background-color: #AAE7F5; -fx-border-color: gray;" />
    </children>
 </Pane>

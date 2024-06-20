@@ -42,6 +42,7 @@
     -fx-font-weight: 600;
     -fx-font-size: 20px;
     -fx-text-fill: #f8e7e7;
+    -fx-font-weight: bold;
 
 }
 
@@ -131,7 +132,7 @@
     -fx-border-color: #000000; 
     -fx-font-weight: bold; /* Texto en negritas */
     -fx-background-color: rgb(244, 237, 38);
-    -fx-text-fill: rgb(0, 0, 0); 
+    -fx-text-fill: rgb(0, 0, 0);
 }
 
 .btn_cont{
@@ -232,6 +233,11 @@
     -fx-background-color: #ded2d2;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+}
+
+/* FONDOS */
+.fondo-su{
+    -fx-background-color: linear-gradient(#A63D46 30%, #734146 79%);
 }
 
 

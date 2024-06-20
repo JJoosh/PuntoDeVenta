@@ -13,41 +13,45 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:controller="com.app.controllers.Inventario.MovimientosController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.MovimientosController">
    <children>
-      <Label id="Label_letras" layoutX="259.0" layoutY="121.0" prefHeight="59.0" prefWidth="137.0" stylesheets="@../css/styles.css" text="Del día:">
+      <Label id="Label_letras" layoutX="259.0" layoutY="121.0" prefHeight="59.0" prefWidth="137.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/styles.css" text="Del día:">
          <font>
             <Font size="35.0" />
          </font></Label>
-      <Label id="Label_letras" layoutX="544.0" layoutY="226.0" text="Buscar por:">
+      <Label id="Label_letras" layoutX="537.0" layoutY="234.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Buscar por:">
          <stylesheets>
             <URL value="@../css/styles.css" />
             <URL value="@../css/Fondo.css" />
          </stylesheets></Label>
-      <TextField fx:id="fproducto" layoutX="547.0" layoutY="283.0" prefHeight="48.0" prefWidth="450.0" promptText="Cajero, producto o departamento" style="-fx-border-color: gray;" styleClass="b-white" stylesheets="@../css/styles.css" />
-      <Label id="Label_letras" layoutX="748.0" layoutY="137.0" text="Tipo de Movimiento:">
+      <TextField fx:id="fproducto" layoutX="540.0" layoutY="291.0" prefHeight="48.0" prefWidth="490.0" promptText="Cajero, producto o departamento" style="-fx-border-color: gray;" styleClass="label-conte">
+         <stylesheets>
+            <URL value="@../css/styles.css" />
+            <URL value="@../css/Fondo.css" />
+         </stylesheets></TextField>
+      <Label id="Label_letras" layoutX="717.0" layoutY="139.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Tipo de Movimiento:">
          <stylesheets>
             <URL value="@../css/styles.css" />
             <URL value="@../css/Fondo.css" />
          </stylesheets></Label>
-      <DatePicker fx:id="fechas" layoutX="399.0" layoutY="131.0" prefHeight="39.0" prefWidth="195.0" />
-      <ComboBox fx:id="boxMovimiento" layoutX="1079.0" layoutY="131.0" prefHeight="48.0" prefWidth="242.0" promptText="-Todos-" style="-fx-background-color: F0D9D1;" styleClass=".">
+      <DatePicker fx:id="fechas" layoutX="399.0" layoutY="131.0" prefHeight="39.0" prefWidth="213.0" />
+      <ComboBox fx:id="boxMovimiento" layoutX="1020.0" layoutY="131.0" prefHeight="48.0" prefWidth="301.0" promptText="-Todos-" style="-fx-background-color: F0D9D1;" styleClass="label-1">
          <stylesheets>
             <URL value="@../css/styles.css" />
             <URL value="@../css/Fondo.css" />
          </stylesheets></ComboBox>
-      <Button id="Devo" layoutX="1079.0" layoutY="290.0" mnemonicParsing="false" onAction="#exportarExcell" prefHeight="41.0" prefWidth="195.0" text="Exportar excel">
+      <Button layoutX="1089.0" layoutY="289.0" mnemonicParsing="false" onAction="#exportarExcell" prefHeight="48.0" prefWidth="232.0" style="-fx-background-radius: 15px; -fx-border-color: black; -fx-border-radius: 15px; -fx-font-size: 18px;" styleClass="Devo" text="Exportar excel">
          <stylesheets>
             <URL value="@../css/styles.css" />
             <URL value="@../css/Fondo.css" />
          </stylesheets>
       </Button>
-      <ComboBox fx:id="categorias" layoutX="236.0" layoutY="272.0" prefHeight="59.0" prefWidth="260.0" promptText="Categorias" style="-fx-background-color: CDDBE8;" styleClass="combo-box">
+      <ComboBox fx:id="categorias" layoutX="123.0" layoutY="278.0" prefHeight="59.0" prefWidth="325.0" promptText="Categorias" style="-fx-background-color: FFF7CD; -fx-border-color: gray;" styleClass="label-1">
          <stylesheets>
             <URL value="@../css/styles.css" />
             <URL value="@../css/Fondo.css" />
          </stylesheets></ComboBox>
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" text="Historial de movimientos de inventario">
+      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" styleClass="Label-titulos" text="Historial de movimientos de inventario">
          <font>
             <Font size="35.0" />
          </font>
@@ -71,6 +75,6 @@
          </content>
       </ScrollPane>
       <AnchorPane layoutY="104.0" prefHeight="795.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
-      <Button id="atras" layoutX="66.0" layoutY="125.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" onAction="#regresar" stylesheets="@../css/Fondo.css" text="Regresar" />
+      <Button id="atras" layoutX="66.0" layoutY="125.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="128.0" stylesheets="@../css/Fondo.css" text="Regresar" />
    </children>
 </Pane>
