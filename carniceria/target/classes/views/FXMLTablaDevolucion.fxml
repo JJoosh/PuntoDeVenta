@@ -25,7 +25,7 @@
             </TableView>
          </content>
       </ScrollPane>
-      <Button id="atras" layoutX="103.0" layoutY="143.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar-F5" />
+      <Button id="atras" layoutX="68.0" layoutY="136.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="179.0" stylesheets="@../css/Fondo.css" text="Regresar     F5" />
       <TextField fx:id="iddev" layoutX="563.0" layoutY="251.0" prefHeight="42.0" prefWidth="432.0" promptText="DD-MM-YYYY" style="-fx-border-color: gray; -fx-background-color: E5EAF2;" styleClass="letra_text" stylesheets="@../css/Fondo.css" />
       <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" styleClass="Label-titulos" text="Tabla de devoluciones">
          <font>
