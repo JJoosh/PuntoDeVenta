@@ -258,5 +258,8 @@ public class Productos {
         }
         return this.cantidad.toString();
     }
-    
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

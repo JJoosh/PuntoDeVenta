@@ -3,6 +3,7 @@ package com.app.controllers.Ventas;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TooManyListenersException;
 
@@ -23,15 +24,20 @@ import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,6 +45,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class VentasController {
@@ -85,7 +92,7 @@ public class VentasController {
     private TextField pesoTextField;
     @FXML
     private TextField txtCliente;
-
+    @FXML TabPane tabpane;
     @FXML private Slider slider;
 
     @FXML private TextField txtPorcentaje;
@@ -99,22 +106,47 @@ public class VentasController {
     @FXML 
     private Pane rootPane;
     
+    @FXML private ListView<Productos> listProductos;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
     private BigDecimal importeTotal = BigDecimal.ZERO;
     private BufferedReader reader;
+    private List<ObservableList<Productos>> productosDataList = new ArrayList<>();
+    private List<TableView<Productos>> tablaProductosList = new ArrayList<>();
 
     private bascula peso;
-
+    private void initializeTab(TableView<Productos> tablaProductos) {
+        int index = tablaProductosList.indexOf(tablaProductos);
+        if (index >= 0 && index < productosDataList.size()) {
+            tablaProductos.setItems(productosDataList.get(index));
+        }
+    }
     public void initialize() {
 
         txtCliente.setVisible(false);
         clienteListView.setVisible(false);
         txtPorcentaje.setVisible(false);
         slider.setVisible(false);
-    
-        // Configurar el CheckBox para mostrar/ocultar el TextField y el Slider
+        tablaProductosList.add(tablaProductos);
+        productosDataList.add(FXCollections.observableArrayList());
+        // Configurar el CheckBox para mostrar/ocultar el TextField y el 
+        initializeTab(tablaProductos);
+
+        listProductos.setVisible(false);
+        tabpane.getTabs().addListener((ListChangeListener<Tab>) c -> {
+        while (c.next()) {
+            if (c.wasRemoved()) {
+                for (Tab tab : c.getRemoved()) {
+                    int index = tablaProductosList.indexOf(tab.getContent());
+                    if (index != -1) {
+                        tablaProductosList.remove(index);
+                        productosDataList.remove(index);
+                    }
+                }
+            }
+        }
+    });
         clienteCheckBox.setOnAction(event -> {
             boolean isSelected = clienteCheckBox.isSelected();
             txtCliente.setVisible(isSelected);
@@ -122,7 +154,7 @@ public class VentasController {
             txtPorcentaje.setVisible(isSelected);
             slider.setVisible(isSelected);
         });
-    
+
         // Configurar el TextField para filtrar los clientes
         txtCliente.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             String text = txtCliente.getText();
@@ -142,14 +174,12 @@ public class VentasController {
                 clienteListView.setPrefHeight(filteredItems.size() * 24 + 2);
             }
         });
-    
-        // Configurar el Slider para que suba en incrementos enteros
+        
         slider.setBlockIncrement(1);
         slider.setMajorTickUnit(1);
         slider.setMinorTickCount(0);
         slider.setSnapToTicks(true);
     
-        // Agregar un ChangeListener al Slider para actualizar el TextField en tiempo real
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             txtPorcentaje.setText(String.format("%d%%", newValue.intValue()));
         });
@@ -169,8 +199,24 @@ public class VentasController {
                 System.out.println("Invalid input: " + txtPorcentaje.getText());
             }
         });
+
+        codigoProductoTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DOWN) {
+                listProductos.requestFocus(); 
+                listProductos.getSelectionModel().selectFirst(); 
+            }
+        });
     
-        // Cargar los datos de los clientes
+      
+        listProductos.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+               
+                String selectedProductName = listProductos.getSelectionModel().getSelectedItem().getNombre();
+                codigoProductoTextField.setText(selectedProductName); 
+                listProductos.setVisible(false); 
+            }
+        });
+        
         cargarClientes();
         codigoProductoTextField.setText("");
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -182,12 +228,57 @@ public class VentasController {
         totalImporteLabel.setText("0.00");
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
+            if(newValue.isEmpty())listProductos.setVisible(false);
         });
     
         rootPane.setOnKeyPressed(this::handleKeyPressed);
     
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
     }
+    @FXML
+private void addNewTicket() {
+    Tab newTab = new Tab("Ticket " + (tabpane.getTabs().size() + 1));
+    newTab.setClosable(true);
+    
+    TableView<Productos> newTablaProductos = new TableView<>();
+    newTablaProductos.setId("tablaProductos");
+    
+    // Configurar las columnas de la nueva tabla
+    TableColumn<Productos, Long> newCbarra = new TableColumn<>("Código de barras");
+    newCbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+    TableColumn<Productos, String> newDescriptions = new TableColumn<>("Descripción producto");
+    newDescriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+    TableColumn<Productos, BigDecimal> newPrecioV = new TableColumn<>("Precio de venta");
+    newPrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
+
+    TableColumn<Productos, BigDecimal> newCantidad = new TableColumn<>("Cantidad");
+    newCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+
+    newTablaProductos.getColumns().addAll(newCbarra, newDescriptions, newPrecioV, newCantidad);
+    newTablaProductos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    
+    AnchorPane anchorPane = new AnchorPane();
+    anchorPane.getChildren().add(newTablaProductos);
+    AnchorPane.setTopAnchor(newTablaProductos, 0.0);
+    AnchorPane.setRightAnchor(newTablaProductos, 0.0);
+    AnchorPane.setBottomAnchor(newTablaProductos, 0.0);
+    AnchorPane.setLeftAnchor(newTablaProductos, 0.0);
+    
+    newTab.setContent(anchorPane);
+
+    tabpane.getTabs().add(newTab);
+    tablaProductosList.add(newTablaProductos);
+    productosDataList.add(FXCollections.observableArrayList());
+    
+    // Seleccionar la nueva pestaña
+    tabpane.getSelectionModel().select(newTab);
+
+    // Inicializar la tabla
+    initializeTab(newTablaProductos);
+}
+
     
     private void cargarClientes() {
         Configuration configuration = new Configuration().configure();
@@ -210,11 +301,16 @@ public class VentasController {
     @FXML
     private void buscarProductos() {
         String consultaTexto = codigoProductoTextField.getText();
-        List<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
-        actualizarTablaProductos(productosEncontrados);
+        ObservableList<Productos> productosEncontrados = buscarProductosPorCodigoONombre(consultaTexto);
+        
+        listProductos.setItems(productosEncontrados);
+        listProductos.setVisible(!productosEncontrados.isEmpty());
+    
+        // Ajustar la altura de la lista según el número de elementos filtrados
+        listProductos.setPrefHeight(productosEncontrados.size() * 24 + 2);
     }
 
-    private List<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
+    private ObservableList<Productos> buscarProductosPorCodigoONombre(String consultaTexto) {
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Productos.class);
         SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -225,98 +321,57 @@ public class VentasController {
         String query = "SELECT p FROM Productos p WHERE (p.id LIKE :consultaTexto OR p.nombre LIKE :consultaTexto) AND p.activo = 'S'";
         TypedQuery<Productos> typedQuery = entityManager.createQuery(query, Productos.class);
         typedQuery.setParameter("consultaTexto", "%" + consultaTexto + "%");
-        List<Productos> productosEncontrados = typedQuery.getResultList();
+        List<Productos> productosList = typedQuery.getResultList();
 
         entityManager.close();
         entityManagerFactory.close();
+
+        // Convertir la lista a ObservableList
+        ObservableList<Productos> productosEncontrados = FXCollections.observableArrayList(productosList);
         return productosEncontrados;
     }
-
-    private void actualizarTablaProductos(List<Productos> productos) {
-        productosData.clear();
-        productosData.addAll(productos);
-        tablaProductos.setItems(productosData);
-    }
-
     @FXML
-    private void agregarProducto() {
-        Productos productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+public void agregarProducto() {
+    String codigoProducto = codigoProductoTextField.getText();
+    ObservableList<Productos> productosEncontrados = buscarProductosPorCodigoONombre(codigoProducto);
 
-        if (productoSeleccionado != null) {
-            String cantidadTexto = pesoTextField.getText();
-            if (cantidadTexto.isEmpty()) {
-                try {
-                    obtenerPesoBascula();
-                } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Error al obtener el peso de la báscula: " + e.getMessage());
-                    alert.showAndWait();
-                    return;
-                }
-            } else {
-                try {
-                    BigDecimal cantidadIngresada = new BigDecimal(cantidadTexto);
-                    BigDecimal cantidadDisponible = productoSeleccionado.getCantidad();
+    if (!productosEncontrados.isEmpty()) {
+        Productos producto = productosEncontrados.get(0);
 
-                    if (cantidadIngresada.compareTo(cantidadDisponible) <= 0) {
-                        Productos nuevoProducto = new Productos(productoSeleccionado); // Crear una copia del producto
-                        nuevoProducto.setCantidad(cantidadIngresada); // Establecer la cantidad ingresada
-                        productosAgregados.add(nuevoProducto);
-                        actualizarTotalImporte(); // Actualizar el importe con la cantidad ingresada
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText("La cantidad ingresada excede la cantidad disponible");
-                        alert.showAndWait();
-                    }
-                } catch (NumberFormatException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Cantidad inválida");
-                    alert.showAndWait();
-                }
-            }
-        } else {
-            String codigoProductoTexto = codigoProductoTextField.getText();
-
-            if (!codigoProductoTexto.isEmpty()) {
-                try {
-                    Long codigoProducto = Long.parseLong(codigoProductoTexto);
-                    Productos producto = buscarProductoPorCodigo(codigoProducto);
-
-                    if (producto != null) {
-                        productosAgregados.add(producto);
-                        actualizarTotalImporte(); // Actualizar el importe con el precio del producto
-                        codigoProductoTextField.clear();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Producto no encontrado");
-                        alert.showAndWait();
-                    }
-                } catch (NumberFormatException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Código de producto inválido");
-                    alert.showAndWait();
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Debe ingresar un código de producto o seleccionar uno de la tabla");
-                alert.showAndWait();
-            }
+        try {
+            BigDecimal cantidad = new BigDecimal(pesoTextField.getText().trim());
+            producto.setCantidad(cantidad);
+        } catch (NumberFormatException e) {
+            mostrarAlertaError("Error", "La cantidad ingresada no es válida.");
+            return;
         }
 
-        Platform.runLater(() -> btnbuscarcode1.requestFocus());
+        Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null) {
+            int tabIndex = tabpane.getTabs().indexOf(selectedTab);
+            if (tabIndex >= 0 && tabIndex < tablaProductosList.size()) {
+                TableView<Productos> tablaProductos = tablaProductosList.get(tabIndex);
+                ObservableList<Productos> productosTab = productosDataList.get(tabIndex);
+                productosTab.add(producto);
+                tablaProductos.setItems(productosTab);
+            } else {
+                mostrarAlertaError("Error", "Índice de pestaña inválido.");
+            }
+        } else {
+            mostrarAlertaError("Error", "No hay ningún Ticket abierto.");
+        }
+    } else {
+        mostrarAlertaError("Error", "No se encontró ningún producto con el código ingresado.");
     }
+
+    codigoProductoTextField.clear();
+    pesoTextField.clear();
+}
+    
+    
+    
+
+    
 
     public void actualizarTotalImporte() {
         BigDecimal total = BigDecimal.ZERO;
@@ -330,19 +385,7 @@ public class VentasController {
         totalImporteLabel.setText(importeTotal.toString());
     }
 
-    private Productos buscarProductoPorCodigo(Long codigoProducto) {
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(Productos.class);
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
-        EntityManagerFactory entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Productos producto = entityManager.find(Productos.class, codigoProducto);
-
-        entityManager.close();
-        entityManagerFactory.close();
-        return producto;
-    }
 
     @FXML
     public void borrarArticulo() {
@@ -478,7 +521,7 @@ private void cobrar() {
         }
 
         if (event.getCode() == KeyCode.F5) {
-            agregarProducto();
+            // agregarProducto();
 
         }
         if (event.getCode() == KeyCode.F7) {
@@ -573,4 +616,4 @@ private void mostrarAlertaError(String titulo, String mensaje) {
     alert.setContentText(mensaje);
     alert.showAndWait();
 }
-}
+} 
