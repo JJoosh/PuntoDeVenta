@@ -7,9 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+
+
+
 @Entity
 @Table(name = "Usuarios")
 public class Usuarios {
+
+    
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,4 +73,6 @@ public class Usuarios {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    
 }

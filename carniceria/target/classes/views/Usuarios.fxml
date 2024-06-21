@@ -37,24 +37,22 @@
          </stylesheets></Label>
       <TextField fx:id="lblNombre" layoutX="421.0" layoutY="210.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa el nombre del nuevo usuario" style="-fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/Fondo.css" />
       <TextField fx:id="lblPassword" layoutX="421.0" layoutY="263.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa su contraseña" style="-fx-border-color: gray;" styleClass="label-conte" stylesheets="@../css/Fondo.css" />
-      <Button layoutX="1014.0" layoutY="174.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="258.0" style="-fx-font-size: 28px;" styleClass="btn_agre" text="Agregar usuario">
+      <Button layoutX="1000.0" layoutY="219.0" mnemonicParsing="false" onAction="#agregar" prefHeight="71.0" prefWidth="258.0" style="-fx-font-size: 28px;" styleClass="btn_agre" text="Agregar usuario">
          <stylesheets>
             <URL value="@../css/Fondo.css" />
             <URL value="@../css/styles.css" />
          </stylesheets></Button>
-      <ScrollPane layoutX="216.0" layoutY="432.0" prefHeight="383.0" prefWidth="798.0">
+      <ScrollPane layoutX="106.0" layoutY="410.0" prefHeight="462.0" prefWidth="1201.0">
          <content>
-            <TableView fx:id="tableUsuarios" prefHeight="377.0" prefWidth="794.0">
+            <TableView fx:id="tableUsuarios" prefHeight="459.0" prefWidth="1203.0">
               <columns>
-                <TableColumn fx:id="clmName" prefWidth="250.0" resizable="false" text="Nombre" />
-                  <TableColumn fx:id="clmRol" prefWidth="270.0" resizable="false" text="Rol del usuario" />
-                  <TableColumn prefWidth="270.0" resizable="false" text="Opciones" />
+                <TableColumn fx:id="clmName" prefWidth="401.0" resizable="false" text="Nombre" />
+                  <TableColumn fx:id="clmRol" prefWidth="554.0" resizable="false" text="Rol del usuario" />
+                  <TableColumn fx:id="ColumAcciones" prefWidth="231.0" resizable="false" text="Opciones" />
               </columns>
             </TableView>
          </content>
       </ScrollPane>
-      <Button layoutX="1075.0" layoutY="282.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="246.0" styleClass="btn_eli" stylesheets="@../css/Fondo.css" text="Eliminar usuario" />
-      <Button layoutX="1075.0" layoutY="364.0" mnemonicParsing="false" onAction="#abrirModUser" prefHeight="71.0" prefWidth="252.0" styleClass="btn_mod" stylesheets="@../css/Fondo.css" text="Modificar usuario" />
       <ComboBox fx:id="boxRoles" layoutX="226.0" layoutY="335.0" prefHeight="53.0" prefWidth="363.0" promptText="Selecciona un rol" style="-fx-background-color: D1E4EB; -fx-border-color: gray;" styleClass="label-conte">
          <stylesheets>
             <URL value="@../css/Fondo.css" />

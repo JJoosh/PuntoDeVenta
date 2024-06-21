@@ -1,9 +1,12 @@
 package com.app.controllers.Inventario;
 
+import com.app.controllers.InventarioController;
 import com.app.controllers.Login.LoginController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
 import com.app.models.Productos;
+import com.app.models.Usuarios;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
@@ -30,12 +33,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -75,6 +80,8 @@ public class FXMLInventarioController implements Initializable {
 
     @FXML
     private Button btnAgregar;
+
+    @FXML TableColumn<Productos, Void> ColumAcciones;
 
     private ObservableList<Productos> productosData;
     private ObservableList<Productos> productosOriginalData;
@@ -262,7 +269,43 @@ public class FXMLInventarioController implements Initializable {
         filtarCategorias();
         buscarforID();
         rootPane.setOnKeyPressed(this::handleKeyPressed);
-    }
+
+
+ColumAcciones.setCellFactory(param -> new TableCell<>() {
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                Productos inventUsuarios = getTableView().getItems().get(getIndex());
+
+                Button AgregarButton = new Button("Agregar");
+                AgregarButton.getStyleClass().add("btn_canti");
+                AgregarButton.setOnAction(event -> {
+                    System.out.println("Agregar: " + inventUsuarios.getNombre());
+                    // Aquí va la lógica para abrir la ventana de modificación del producto
+                });
+
+                Button editButton = new Button("Modificar");
+                editButton.getStyleClass().add("btn_mod");
+                editButton.setOnAction(event -> {
+                    System.out.println("Modificar: " + inventUsuarios.getNombre());
+                    // Aquí va la lógica para abrir la ventana de modificación del producto
+                });
+                Button deleteButton = new Button("Eliminar");
+                deleteButton.getStyleClass().add("btn_eli");
+                deleteButton.setOnAction(event -> {
+                    System.out.println("Eliminar: " + inventUsuarios.getNombre());
+                    // Aquí va la lógica para eliminar el usuariProductos
+                });
+
+                setGraphic(new HBox(5, editButton, deleteButton, AgregarButton)); 
+            }
+        }
+    });
+}
+    
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {

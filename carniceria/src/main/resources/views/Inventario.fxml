@@ -79,13 +79,13 @@
          <content>
             <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1325.0">
                <columns>
-                  <TableColumn fx:id="codigoColumn" prefWidth="150.0" text="Codigo" />
-                  <TableColumn fx:id="descripcionColumn" prefWidth="220.0" resizable="false" text="Descripcion del producto" />
-                  <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" resizable="false" text="Costo" />
-                  <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" resizable="false" text="Precio venta" />
-                  <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" resizable="false" text="Existencia" />
-                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" resizable="false" text="Inventario minimo" />
-                  <TableColumn prefWidth="250.0" resizable="false" text="Opciones" />
+                  <TableColumn fx:id="codigoColumn" prefWidth="127.0" text="Codigo" />
+                  <TableColumn fx:id="descripcionColumn" prefWidth="228.0" resizable="false" text="Descripcion del producto" />
+                  <TableColumn fx:id="costoColumn" prefWidth="145.0" resizable="false" text="Costo" />
+                  <TableColumn fx:id="precioVentaColumn" prefWidth="169.0" resizable="false" text="Precio venta" />
+                  <TableColumn fx:id="existenciaColumn" prefWidth="178.0" resizable="false" text="Existencia" />
+                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="150.0" resizable="false" text="Inventario minimo" />
+                  <TableColumn fx:id="ColumAcciones" prefWidth="303.0" resizable="false" text="Opciones" />
                </columns>
             </TableView>
          </content>
