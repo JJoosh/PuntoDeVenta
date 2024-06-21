@@ -372,12 +372,12 @@ private void cobrar() {
             Long clienteId = null;
             if (clienteCheckBox.isSelected() && clienteListView.getSelectionModel().getSelectedItem() != null) {
                 clienteId = (long) clienteListView.getSelectionModel().getSelectedItem().getId();
-                compraController.getIDandDescuento( clienteListView.getSelectionModel().getSelectedItem(), 2);  //AQUI TERMINAR
+                compraController.getIDandDescuento( clienteListView.getSelectionModel().getSelectedItem(),txtPorcentaje.getText());  //AQUI TERMINAR
                 System.out.println("ID del cliente seleccionado: " + clienteId);
             } else {
                 System.out.println("No se ha seleccionado ningún cliente.");
             }
-
+        
             compraController.initData(productosAgregados, importeTotal);
             
             rootPane.getChildren().setAll(nuevoContenido);

@@ -100,6 +100,7 @@ public class CompraController {
     // private Productos id;
     private BigDecimal importeTotal;
     private Clientes cliente;
+    private String descuento="0";
 
     @FXML TableColumn<Productos, String> columAcciones;
 
@@ -168,8 +169,9 @@ public class CompraController {
         Platform.runLater(() -> insertarPagoTextField.requestFocus());
     }
 
-    public void getIDandDescuento(Clientes cliente, int Descuento){
+    public void getIDandDescuento(Clientes cliente, String descuento){
        this.cliente=cliente;
+       this.descuento=descuento;
     }
 
     private void handlePaymentMethodChange(String paymentMethod) {
@@ -200,7 +202,6 @@ public class CompraController {
         setProductosData(productosData);
         setImporteTotal(importeTotal);
         actualizarTablaDetallesVenta();
-
         // Formatear el importe total con dos decimales y el signo de dólar
         DecimalFormat formato = new DecimalFormat("$#,##0.00");
         String importeFormateado = formato.format(importeTotal);
@@ -284,15 +285,26 @@ public class CompraController {
                 mostrarAlertaError("Error al guardar la venta", "No se encontraron productos en la venta.");
                 return;
             }
-
+       
             // Crear una instancia de BigDecimal para el total
+            descuento = descuento.replaceAll("%", "");
             BigDecimal total = importeTotal != null ? importeTotal : BigDecimal.ZERO;
 
-            // Crear una instancia de la clase Ventas
+            BigDecimal Descuento = new BigDecimal(descuento);
+            BigDecimal valorPorcentaje = total.multiply(Descuento).divide(BigDecimal.valueOf(100));
+
+            // Mostrar el valor del porcentaje
+            System.out.println(descuento +" Valor del " + Descuento + "% de " + total + " es: " + valorPorcentaje);
+    
+            // Restar el valor del porcentaje al total original
+            BigDecimal nuevoTotal = total.subtract(valorPorcentaje);
+    
+            // Mostrar el nuevo total
+            System.out.println("Nuevo total después de restar el porcentaje: " + nuevoTotal);
             Ventas venta = new Ventas();
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
             venta.setFecha(LocalDateTime.now());
-            venta.setTotal(total);
+            venta.setTotal(nuevoTotal);
             
             // Asociar el cliente a la venta
             venta.setCliente(cliente);
