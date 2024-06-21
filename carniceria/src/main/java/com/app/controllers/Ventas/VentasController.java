@@ -31,9 +31,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -84,11 +86,14 @@ public class VentasController {
     @FXML
     private TextField txtCliente;
 
+    @FXML private Slider slider;
+
+    @FXML private TextField txtPorcentaje;
     @FXML
     private ListView<Clientes> clienteListView;
 
     @FXML
-    private CheckBox clienteCheckBox;
+    private ToggleButton clienteCheckBox;
 
     private ObservableList<Clientes> clientesData = FXCollections.observableArrayList();
     @FXML 
@@ -106,14 +111,18 @@ public class VentasController {
 
         txtCliente.setVisible(false);
         clienteListView.setVisible(false);
-
-        // Configurar el CheckBox para mostrar/ocultar el TextField
+        txtPorcentaje.setVisible(false);
+        slider.setVisible(false);
+    
+        // Configurar el CheckBox para mostrar/ocultar el TextField y el Slider
         clienteCheckBox.setOnAction(event -> {
             boolean isSelected = clienteCheckBox.isSelected();
             txtCliente.setVisible(isSelected);
-            clienteListView.setVisible(false); // Ocultar el ListView cuando se muestra el TextField
+            clienteListView.setVisible(false);
+            txtPorcentaje.setVisible(isSelected);
+            slider.setVisible(isSelected);
         });
-
+    
         // Configurar el TextField para filtrar los clientes
         txtCliente.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             String text = txtCliente.getText();
@@ -128,13 +137,39 @@ public class VentasController {
                 }
                 clienteListView.setItems(filteredItems);
                 clienteListView.setVisible(!filteredItems.isEmpty());
-        
+    
                 // Ajustar la altura de la lista según el número de elementos filtrados
                 clienteListView.setPrefHeight(filteredItems.size() * 24 + 2);
             }
         });
-        
-
+    
+        // Configurar el Slider para que suba en incrementos enteros
+        slider.setBlockIncrement(1);
+        slider.setMajorTickUnit(1);
+        slider.setMinorTickCount(0);
+        slider.setSnapToTicks(true);
+    
+        // Agregar un ChangeListener al Slider para actualizar el TextField en tiempo real
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            txtPorcentaje.setText(String.format("%d%%", newValue.intValue()));
+        });
+    
+        // Agregar un manejador de eventos para actualizar el Slider cuando se presione Enter en el TextField
+        txtPorcentaje.setOnAction(event -> {
+            try {
+                // Remover el símbolo de porcentaje y convertir a número entero
+                String text = txtPorcentaje.getText().replace("%", "").trim();
+                int value = Integer.parseInt(text);
+                // Actualizar el Slider solo si el valor está dentro de los límites del Slider
+                if (value >= slider.getMin() && value <= slider.getMax()) {
+                    slider.setValue(value);
+                }
+            } catch (NumberFormatException e) {
+                // Manejar la excepción si la entrada no es un número válido
+                System.out.println("Invalid input: " + txtPorcentaje.getText());
+            }
+        });
+    
         // Cargar los datos de los clientes
         cargarClientes();
         codigoProductoTextField.setText("");
@@ -142,23 +177,18 @@ public class VentasController {
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         PrecioV.setCellValueFactory(new PropertyValueFactory<>("precio"));
         Cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-
+    
         tablaProductos.setItems(productosData);
         totalImporteLabel.setText("0.00");
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
-        
-
-
-
+    
         rootPane.setOnKeyPressed(this::handleKeyPressed);
-
-        
+    
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
-
     }
-
+    
     private void cargarClientes() {
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Clientes.class);
