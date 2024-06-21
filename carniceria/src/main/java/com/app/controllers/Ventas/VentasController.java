@@ -16,8 +16,6 @@ import org.hibernate.cfg.Configuration;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.devoluciones.FXMLDevolucionesController;
 import com.app.models.Productos;
-import com.app.models.Usuarios;
-import com.app.models.Ventas;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -30,14 +28,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class VentasController {
@@ -45,7 +41,7 @@ public class VentasController {
     private static String nombreUsser;
     private static String rol;
 
-    public void setNombreUsser(String nombreUsser) {
+    public void setNombreUsser(String nombreUsser) { 
         this.nombreUsser = nombreUsser;
     }
 
@@ -64,6 +60,7 @@ public class VentasController {
     @FXML
     private Button btnbuscarcode1;
 
+
     @FXML
     private TextField codigoProductoTextField;
     @FXML
@@ -81,11 +78,9 @@ public class VentasController {
     @FXML
     private TextField pesoTextField;
 
-    @FXML
-    TableColumn<Ventas, Void> ColumAcciones;
-
-    @FXML
+    @FXML 
     private Pane rootPane;
+    
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
     private ObservableList<Productos> productosAgregados = FXCollections.observableArrayList();
@@ -106,32 +101,18 @@ public class VentasController {
         codigoProductoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             buscarProductos();
         });
+        
+
+
 
         rootPane.setOnKeyPressed(this::handleKeyPressed);
 
+        
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
 
-        ColumAcciones.setCellFactory(param -> new TableCell<>() {
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Ventas ventas = getTableView().getItems().get(getIndex());
-
-                    Button deleteButton = new Button("Eliminar");
-                    deleteButton.getStyleClass().add("btn_eli");
-                    deleteButton.setOnAction(event -> {
-                        System.out.println("Eliminar: " + ventas.getDetalles());
-                        // Aquí va la lógica para eliminar el usuariProductos
-                    });
-
-                    setGraphic(new HBox(5, deleteButton));
-                }
-            }
-        });
     }
+
+   
 
     @FXML
     private void buscarProductos() {
@@ -278,41 +259,40 @@ public class VentasController {
     }
 
     @FXML
-    private void cobrar() {
-        cerrarBascula();
-        if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe agregar al menos un producto y su cantidad");
-            alert.showAndWait();
-        } else {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
-                Pane nuevoContenido = loader.load();
-
-                // Obtener el controlador de CompraController
-                CompraController compraController = loader.getController();
-
-                // Pasar los datos necesarios a CompraController
-                compraController.initData(productosAgregados, importeTotal);
-
-                rootPane.getChildren().setAll(nuevoContenido);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+private void cobrar() {
+    cerrarBascula();
+    if (importeTotal.compareTo(BigDecimal.ZERO) == 0) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Debe agregar al menos un producto y su cantidad");
+        alert.showAndWait();
+    } else {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
+            Pane nuevoContenido = loader.load();
+            
+            // Obtener el controlador de CompraController
+            CompraController compraController = loader.getController();
+            
+            // Pasar los datos necesarios a CompraController
+            compraController.initData(productosAgregados, importeTotal);
+            
+            rootPane.getChildren().setAll(nuevoContenido);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
 
     public void actualizarDatos(ObservableList<Productos> productosData, BigDecimal importeTotal) {
         this.productosData = productosData;
         this.importeTotal = importeTotal;
         totalImporteLabel.setText(importeTotal.toString());
-
+    
         // Actualizar la tabla de productos
         tablaProductos.setItems(productosData);
     }
-
     public void obtenerPesoBascula() {
         try {
             if (peso == null) {
@@ -342,6 +322,7 @@ public class VentasController {
         this.productosAgregados.clear();
         this.productosAgregados.addAll(productosData);
     }
+    
 
     public BigDecimal getImporteTotal() {
         return this.importeTotal;
@@ -364,8 +345,7 @@ public class VentasController {
             entityManager = entityManagerFactory.createEntityManager();
 
             // Realizar la consulta para obtener todos los productos
-            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p WHERE p.activo='S'",
-                    Productos.class);
+            TypedQuery<Productos> query = entityManager.createQuery("SELECT p FROM Productos p WHERE p.activo='S'", Productos.class);
             List<Productos> productos = query.getResultList();
 
             // Actualizar la tabla de productos
@@ -406,59 +386,57 @@ public class VentasController {
             borrarArticulo();
         }
 
-        if (event.getCode() == KeyCode.F2) {
+        if(event.getCode()==KeyCode.F2){
             abrirInventario();
         }
-        if (event.getCode() == KeyCode.F4) {
+        if(event.getCode()==KeyCode.F4){
             abrirCorteCaja();
         }
 
-        if (event.getCode() == KeyCode.F3) {
+        if(event.getCode()==KeyCode.F3){
             abrirDevoluciones();
         }
     }
 
-    public void abrirDevoluciones() {
+    public void abrirDevoluciones(){
         try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Pane nuevoContenido = loader.load();
-
+            
             // Obtener el controlador del nuevo contenido
             FXMLDevolucionesController inventarioController = loader.getController();
-
+            
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
             rootPane.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void abrirCorteCaja() {
+    public void abrirCorteCaja(){
         try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Pane nuevoContenido = loader.load();
-
+            
             // Obtener el controlador del nuevo contenido
             FXMLDevolucionesController inventarioController = loader.getController();
-
+            
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
             rootPane.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void abrirInventario() {
-        try {
+    public void abrirInventario(){
+          try {
             // Cargar el archivo FXML con el nuevo contenido
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
             Pane nuevoContenido = loader.load();
-
+            
             // Obtener el controlador del nuevo contenido
             FXMLInventarioController inventarioController = loader.getController();
-
+            
             // Reemplazar el contenido del contenedor principal con el nuevo contenido
             rootPane.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
@@ -466,7 +444,8 @@ public class VentasController {
         }
     }
 
-    @FXML
+    
+   @FXML 
     public void abrirVentasHechas() {
         try {
             // Cargar el archivo FXML con el nuevo contenido
@@ -483,11 +462,12 @@ public class VentasController {
         }
     }
 
-    private void mostrarAlertaError(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
+
+private void mostrarAlertaError(String titulo, String mensaje) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(titulo);
+    alert.setHeaderText(null);
+    alert.setContentText(mensaje);
+    alert.showAndWait();
+}
 }
