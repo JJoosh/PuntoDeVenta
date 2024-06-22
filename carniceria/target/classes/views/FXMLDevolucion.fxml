@@ -3,37 +3,41 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLDevolucionesController">
    <children>
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: BLACK;" stylesheets="@../css/Fondo.css" text="Devoluciones">
+      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: BLACK;" styleClass="Label-titulos" stylesheets="@../css/Fondo.css" text="Devoluciones">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label id="Label_letras" layoutX="37.0" layoutY="150.0" stylesheets="@../css/Fondo.css" text="Ingrese el número ticker de compra:" />
-      <TextField fx:id="ticket" layoutX="624.0" layoutY="156.0" prefHeight="42.0" prefWidth="420.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" />
-      <TableView fx:id="tabladev" layoutX="115.0" layoutY="258.0" prefHeight="338.0" prefWidth="1101.0">
-         <columns>
-            <TableColumn fx:id="ticket1" prefWidth="138.66666412353516" text="Ticket" />
-            <TableColumn fx:id="fecha" prefWidth="151.9999542236328" text="Fecha" />
-            <TableColumn fx:id="nombre" prefWidth="286.0" text="Nombre del producto" />
-            <TableColumn fx:id="cantidad" minWidth="0.0" prefWidth="163.33331298828125" text="Cantidad" />
-            <TableColumn fx:id="total" prefWidth="178.6666259765625" text="Total" />
-            <TableColumn fx:id="detalles" prefWidth="186.66656494140625" text="ID del detalle" />
-         </columns>
-      </TableView>
+      <Label layoutX="48.0" layoutY="165.0" prefHeight="32.0" prefWidth="246.0" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Ticket de compra:" />
+      <TextField fx:id="ticket" layoutX="302.0" layoutY="156.0" prefHeight="44.0" prefWidth="629.0" promptText="Ingrese el número de ticket" styleClass="label-conte" stylesheets="@../css/Fondo.css" />
+      <ScrollPane layoutX="75.0" layoutY="253.0" prefHeight="395.0" prefWidth="1190.0">
+         <content>
+            <TableView fx:id="tabladev" prefHeight="391.0" prefWidth="1183.0">
+               <columns>
+                  <TableColumn fx:id="ticket1" prefWidth="138.66666412353516" text="Ticket" />
+                  <TableColumn fx:id="fecha" prefWidth="151.9999542236328" text="Fecha" />
+                  <TableColumn fx:id="nombre" prefWidth="286.0" text="Nombre del producto" />
+                   <TableColumn fx:id="cantidad" minWidth="0.0" prefWidth="163.33331298828125" text="Cantidad" />
+                  <TableColumn fx:id="total" prefWidth="250.0" text="Total" />
+                  <TableColumn fx:id="detalles" prefWidth="186.66656494140625" text="ID del detalle" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
       <!-- <Label id="Label_letras" layoutX="115.0" layoutY="671.0" stylesheets="@../css/Fondo.css" text="Cantidad a devolver:" />7 -->
-      <Button layoutX="1053.0" layoutY="687.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="237.0" stylesheets="@../css/Fondo.css" text="Insertar-F5" />
-      <Label id="Label_letras" layoutX="115.0" layoutY="767.0" prefHeight="41.0" prefWidth="393.0" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
+      <Button layoutX="1015.0" layoutY="700.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="297.0" style="-fx-font-size: 18px;" styleClass="btn_agre" stylesheets="@../css/Fondo.css" text="Agregar devolución    F5" />
+      <Label layoutX="61.0" layoutY="709.0" prefHeight="41.0" prefWidth="339.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
       <!-- <Spinner fx:id="spinner" editable="true" layoutX="474.0" layoutY="662.0" prefHeight="50.0" prefWidth="169.0" /> -->
-      <Button layoutX="1103.0" layoutY="152.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="246.0" stylesheets="@../css/Fondo.css" text="Tabla de devoluciones-F6" />
-      <ComboBox fx:id="motivos" layoutX="525.0" layoutY="771.0" prefHeight="34.0" prefWidth="361.0" style="-fx-border-color: gray; -fx-background-color: DAE5F0;" />
+      <Button layoutX="1029.0" layoutY="147.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="297.0" style="-fx-font-size: 16px;" styleClass="btn_canti" stylesheets="@../css/Fondo.css" text="Consulte las devoluciones      F6" />
+      <ComboBox fx:id="motivos" layoutX="422.0" layoutY="713.0" prefHeight="34.0" prefWidth="389.0" promptText="Motivo de las devoluciones" style="-fx-border-color: gray; -fx-background-color: DAE5F0;" styleClass="label-letra1" />
    </children>
 </Pane>

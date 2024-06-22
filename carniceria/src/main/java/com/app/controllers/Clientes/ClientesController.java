@@ -11,12 +11,15 @@ import org.hibernate.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -24,6 +27,8 @@ import javafx.util.Callback;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.app.models.Clientes;
+import com.app.models.Productos;
+import com.app.models.Usuarios;
 import com.app.utils.HibernateUtil;
 
 public class ClientesController implements Initializable {
@@ -65,41 +70,47 @@ public class ClientesController implements Initializable {
          tableView.setItems(data);
  
          // Configurar la columna de acciones con los botones existentes
-         acciones.setCellFactory(new Callback<TableColumn<Clientes, Void>, TableCell<Clientes, Void>>() {
-             @Override
-             public TableCell<Clientes, Void> call(final TableColumn<Clientes, Void> param) {
-                 final TableCell<Clientes, Void> cell = new TableCell<Clientes, Void>() {
- 
-                     @Override
-                     public void updateItem(Void item, boolean empty) {
-                         super.updateItem(item, empty);
-                         if (empty) {
-                             setGraphic(null);
-                         } else {
-                             Button deleteButton = new Button("Eliminar");
-                             deleteButton.getStyleClass().add("btn_eli");
-                             deleteButton.setOnAction(event -> {
-                                 Clientes cliente = getTableView().getItems().get(getIndex());
-                                 System.out.println("Eliminar: " + cliente.getNombre() + " " + cliente.getApellido());
-                                 cliente.setActivo("N"); 
-                                 mostrarTabla();
-                             });
- 
-                             Button editButton = new Button("Modificar");
-                             editButton.getStyleClass().add("btn_mod");
-                             editButton.setOnAction(event -> {
-                                 Clientes cliente = getTableView().getItems().get(getIndex());
-                                abrirMod(cliente.getId(),cliente.getNombre(), cliente.getApellido(), cliente.getDescuento());
-                                 System.out.println("Modificar: " + cliente.getNombre() + " " + cliente.getApellido());
-                             });
- 
-                             setGraphic(new HBox(5, editButton, deleteButton)); 
-                         }
-                     }
-                 };
-                 return cell;
-             }
-         });
+         acciones.setCellFactory(param -> new TableCell<>() {
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            Clientes inventUsuarios = getTableView().getItems().get(getIndex());
+
+
+            Button editButton = new Button();
+            ImageView iconoEditar = new ImageView(new Image(getClass().getResourceAsStream("/img/edit.png")));
+            iconoEditar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEditar.setFitHeight(23); // Establecer el alto dese
+            editButton.setGraphic(iconoEditar);
+            editButton.getStyleClass().add("btn_mod");
+            editButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                Clientes cliente=tableView.getSelectionModel().getSelectedItem();
+                abrirMod(cliente.getId(), cliente.getNombre(), cliente.getApellido(), cliente.getDescuento());
+                
+            });
+
+            Button deleteButton = new Button();
+            ImageView iconoEliminar = new ImageView(new Image(getClass().getResourceAsStream("/img/elim.png")));
+            iconoEliminar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEliminar.setFitHeight(23); // Establecer el alto dese
+            deleteButton.setGraphic(iconoEliminar);
+            deleteButton.getStyleClass().add("btn_eli");
+            deleteButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                
+            });
+            setGraphic(new HBox(10, editButton, deleteButton) {{
+                setAlignment(Pos.CENTER);
+                setSpacing(10);
+            }});
+        }
+    }
+});
+
     }
 
 

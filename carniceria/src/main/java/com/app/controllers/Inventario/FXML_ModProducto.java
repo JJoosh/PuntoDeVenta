@@ -25,7 +25,7 @@ public class FXML_ModProducto implements Initializable {
     @FXML private TextField cantidad;
     @FXML private TextField costo;
     @FXML private ComboBox<String> categoria;
-    @FXML private TextField pesoCaja;
+   
     private FXMLInventarioController table;
     
     private Stage stage; 
@@ -52,8 +52,8 @@ public class FXML_ModProducto implements Initializable {
                 BigDecimal.valueOf(Double.parseDouble(costo.getText())), 
                 categorias.getIDconName(categoria.getValue()), 
                 BigDecimal.valueOf(Double.parseDouble(cantidad.getText())), 
-                BigDecimal.valueOf(Double.parseDouble(precio.getText())),
-                BigDecimal.valueOf(Double.parseDouble(pesoCaja.getText()))
+                BigDecimal.valueOf(Double.parseDouble(precio.getText()))
+               
             );
 
             table.actualizarTabla();
@@ -81,7 +81,7 @@ public class FXML_ModProducto implements Initializable {
         categorias.cargarCategorias(this.categoria, 0);
     }
 
-    public void setDatos(String nombre, BigDecimal costo, BigDecimal cantidad, long id, BigDecimal precio, String categoria, BigDecimal pesoCaja) {
+    public void setDatos(String nombre, BigDecimal costo, BigDecimal cantidad, long id, BigDecimal precio, String categoria) {
         
         
         this.nombre.setText(nombre);
@@ -90,7 +90,7 @@ public class FXML_ModProducto implements Initializable {
         this.id.setText(String.valueOf(id));
         this.precio.setText(String.valueOf(precio));
         this.categoria.setValue(categoria);
-        this.pesoCaja.setText(String.valueOf(pesoCaja));
+  
     }
 
     public void cerrar(){

@@ -47,9 +47,6 @@ public class Productos {
     @Column(name = "ProduBajos_Inventario")
     private BigDecimal productosBajos_inventario;
 
-    @Column(name = "Peso_Caja")
-    private BigDecimal peso_caja;
-
     @Column(name = "Activo")
     private String activo;
 
@@ -101,13 +98,7 @@ public class Productos {
     public void setActivo(String activo){
         this.activo=activo;
     }
-    public BigDecimal getPesoCaja(){
-        return peso_caja;
-    }
-
-    public void setPesoCaja(BigDecimal peso_caja){
-        this.peso_caja=peso_caja;
-    }
+    
     public Long getId() {
         return id;
     }
@@ -167,7 +158,7 @@ public class Productos {
 
    
 
-    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio, BigDecimal pesoCaja ) {
+    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio ) {
        
     
         Configuration configuration = new Configuration();
@@ -192,7 +183,7 @@ public class Productos {
                 producto.setCategoria(categoria);
                 producto.setCantidad(cantidad);
                 producto.setPrecio(precio);
-                producto.setPesoCaja(pesoCaja);
+               
                 entityManager.merge(producto);
                 
                 transaction.commit();

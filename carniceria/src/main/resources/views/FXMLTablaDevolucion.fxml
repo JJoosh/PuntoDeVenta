@@ -10,25 +10,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLVerTabla">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.devoluciones.FXMLVerTabla">
    <children>
-      <ScrollPane layoutX="167.0" layoutY="362.0">
+      <ScrollPane layoutX="101.0" layoutY="351.0" prefHeight="470.0" prefWidth="1141.0">
          <content>
-            <TableView fx:id="Devoluciones" prefHeight="467.0" prefWidth="1064.0">
+            <TableView fx:id="Devoluciones" prefHeight="467.0" prefWidth="1138.0">
               <columns>
                 <TableColumn fx:id="IdDevoluciones" prefWidth="176.6667022705078" resizable="false" text="ID Devolucion" />
                 <TableColumn fx:id="Motivo" prefWidth="288.6665954589844" resizable="false" text="Motivo" />
-                <TableColumn fx:id="venta" prefWidth="202.0" resizable="false" text="ID Venta" />
-                <TableColumn fx:id="fecha" prefWidth="202.0" resizable="false" text="Fecha Devolucion" />
-                <TableColumn fx:id="cantidadDevuelta" prefWidth="202.0" resizable="false" text="Cantidad de vuelta" />
+                <TableColumn fx:id="venta" prefWidth="210.0" resizable="false" text="ID Venta" />
+                <TableColumn fx:id="fecha" prefWidth="250.0" resizable="false" text="Fecha Devolucion" />   
+                  <TableColumn fx:id="cantidadDevuelta" prefWidth="202.0" resizable="false" text="Cantidad de vuelta" />
       
               </columns>
             </TableView>
          </content>
       </ScrollPane>
-      <Button id="atras" layoutX="103.0" layoutY="143.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar-F5" />
-      <TextField fx:id="iddev" layoutX="674.0" layoutY="250.0" prefHeight="42.0" prefWidth="432.0" promptText="DD-MM-YYYY" style="-fx-border-color: gray; -fx-background-color: E5EAF2;" stylesheets="@../css/Fondo.css" />
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" text="Tabla de devoluciones">
+      <Button id="atras" layoutX="68.0" layoutY="136.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="179.0" stylesheets="@../css/Fondo.css" text="Regresar     F5" />
+      <TextField fx:id="iddev" layoutX="563.0" layoutY="251.0" prefHeight="42.0" prefWidth="432.0" promptText="DD-MM-YYYY" style="-fx-border-color: gray; -fx-background-color: E5EAF2;" styleClass="letra_text" stylesheets="@../css/Fondo.css" />
+      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-text-fill: white; -fx-background-color: black; -fx-alignment: center;" styleClass="Label-titulos" text="Tabla de devoluciones">
          <font>
             <Font size="35.0" />
          </font>
@@ -37,6 +37,6 @@
             <URL value="@../css/Fondo.css" />
          </stylesheets>
       </Label>
-      <Label id="Label_letras" layoutX="157.0" layoutY="251.0" prefHeight="41.0" prefWidth="492.0" stylesheets="@../css/Fondo.css" text="ID de la devolución o la fecha:" />
+      <Label id="Label_letras" layoutX="157.0" layoutY="251.0" prefHeight="41.0" prefWidth="383.0" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="ID de la devolucion o la fecha:" />
    </children>
 </Pane>

@@ -51,7 +51,7 @@ public class AddCantidadController implements Initializable {
     public void setStage (Stage stage){
         this.stage=stage;
     }
-    public void setDatos(String nombre, BigDecimal pesoCaja, BigDecimal cantidadactual, long id){
+    public void setDatos(String nombre, BigDecimal cantidadactual, long id){
         id_nameProducto.setText("Nombre:"+ nombre);
         this.cantidadactual=cantidadactual;
         this.id=id;

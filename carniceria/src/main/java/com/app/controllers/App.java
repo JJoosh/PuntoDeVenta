@@ -28,7 +28,7 @@ public class App extends Application {
         // Cargar la vista principal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
         Parent root = loader.load();
-        scene = new Scene(root, 640, 480);
+        scene = new Scene(root, 675, 480);
         stage.setScene(scene);
         stage.show();
     }

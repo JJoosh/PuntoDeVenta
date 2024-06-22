@@ -5,22 +5,28 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
+import com.app.models.Clientes;
+import com.app.models.Productos;
 import com.app.models.Usuarios;
-
+import javafx.scene.control.TableCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -40,10 +46,12 @@ public class UsuariosController {
     private TableColumn<Usuarios, String> clmName;
     @FXML
     private TableColumn<Usuarios, String> clmRol;
+    @FXML
+    private Button borrararticulo;
 
     private Stage stage;
 
-
+    @FXML TableColumn<Usuarios, Void> ColumAcciones;
     @FXML
     private void initialize() {
         ObservableList<String> listRoles = FXCollections.observableArrayList(
@@ -53,7 +61,47 @@ public class UsuariosController {
        boxRoles.setItems(listRoles);
         
        cargarTabla();
+
+       ColumAcciones.setCellFactory(param -> new TableCell<>() {
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            Usuarios usuarios = getTableView().getItems().get(getIndex());
+
+
+            Button editButton = new Button();
+            ImageView iconoEditar = new ImageView(new Image(getClass().getResourceAsStream("/img/edit.png")));
+            iconoEditar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEditar.setFitHeight(23); // Establecer el alto dese
+            editButton.setGraphic(iconoEditar);
+            editButton.getStyleClass().add("btn_mod");
+            editButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                
+            });
+
+            Button deleteButton = new Button();
+            ImageView iconoEliminar = new ImageView(new Image(getClass().getResourceAsStream("/img/elim.png")));
+            iconoEliminar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEliminar.setFitHeight(23); // Establecer el alto dese
+            deleteButton.setGraphic(iconoEliminar);
+            deleteButton.getStyleClass().add("btn_eli");
+            deleteButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                
+            });
+            setGraphic(new HBox(10, editButton, deleteButton) {{
+                setAlignment(Pos.CENTER);
+                setSpacing(10);
+            }});
+        }
     }
+});
+}
+    
 
     @FXML
 private void agregar() {

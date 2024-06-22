@@ -85,7 +85,7 @@
             <Spinner fx:id="spinner3" editable="true" layoutX="682.0" layoutY="576.0" prefHeight="36.0" prefWidth="398.0" style="-fx-font-size: 28px;" styleClass="label-conte" stylesheets="@../css/styles.css" />
             <Label fx:id="lblCantidad" layoutX="354.0" layoutY="669.0" prefHeight="39.0" prefWidth="285.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/styles.css" text="Cantidad ingresada:" />
             <TextField fx:id="txtcantEntrante" layoutX="682.0" layoutY="663.0" prefHeight="51.0" prefWidth="543.0" promptText="Ingrese la cantidad de producto entrante" styleClass="label-conte" stylesheets="@../css/styles.css" />
-            <Label fx:id="lblCantidad1" layoutX="1246.0" layoutY="669.0" prefHeight="39.0" prefWidth="303.0" style="-fx-font-weight: bold;" styleClass="label-conte1" stylesheets="@../css/styles.css" text="KG" />
+            <Label fx:id="lblCantidad1" layoutX="1246.0" layoutY="669.0" prefHeight="39.0" prefWidth="269.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/styles.css" text="Cantidad ingresada:" />
          </children>
       </AnchorPane>
       <Label layoutX="197.0" layoutY="175.0" />

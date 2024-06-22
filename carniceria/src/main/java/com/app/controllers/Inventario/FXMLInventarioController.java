@@ -25,21 +25,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -75,7 +79,7 @@ public class FXMLInventarioController implements Initializable {
     @FXML
     private ComboBox<String> categorias;
     @FXML private Pane rootPane;
-    
+    @FXML TableColumn<Productos, Void> ColumAcciones;
     @FXML private Button btnAgregar;
     @FXML private TextField txtCategoria;
     @FXML private ComboBox<String> boxEmpaquetado;
@@ -140,7 +144,7 @@ public class FXMLInventarioController implements Initializable {
             BigDecimal Cantidad=productoSeleccionado.getCantidad();
             BigDecimal Costo=productoSeleccionado.getCosto();
             Categoria categoria=productoSeleccionado.getCategoria();
-            BigDecimal pesoCaja=productoSeleccionado.getPesoCaja();
+           
             
             
             try {
@@ -149,7 +153,7 @@ public class FXMLInventarioController implements Initializable {
                 
                 FXML_ModProducto modProductoController = loader.getController();
                 modProductoController.setInventarioController(this);
-                modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria(), pesoCaja);
+                modProductoController.setDatos(nombre, Costo, Cantidad, id, precio, categoria.getNombreCategoria());
                 Scene scene = new Scene(root);
                 
                 Stage stage = new Stage();
@@ -304,7 +308,55 @@ public class FXMLInventarioController implements Initializable {
         });
     
         inventarioMinimoColumn.setCellValueFactory(new PropertyValueFactory<>("productosBajos_inventario"));
-    
+        ColumAcciones.setCellFactory(param -> new TableCell<>() {
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            Productos inventUsuarios = getTableView().getItems().get(getIndex());
+
+            Button AgregarButton = new Button();
+            ImageView iconoAgregar = new ImageView(new Image(getClass().getResourceAsStream("/img/agre.png")));
+            iconoAgregar.setFitWidth(23); // Establecer el ancho deseado
+            iconoAgregar.setFitHeight(23); // Establecer el alto deseado
+            AgregarButton.setGraphic(iconoAgregar);
+            AgregarButton.getStyleClass().add("btn_canti");
+            AgregarButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                ingresarCantidad();
+            });
+
+            Button editButton = new Button();
+            ImageView iconoEditar = new ImageView(new Image(getClass().getResourceAsStream("/img/edit.png")));
+            iconoEditar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEditar.setFitHeight(23); // Establecer el alto dese
+            editButton.setGraphic(iconoEditar);
+            editButton.getStyleClass().add("btn_mod");
+            editButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                ModProd();
+            });
+
+            Button deleteButton = new Button();
+            ImageView iconoEliminar = new ImageView(new Image(getClass().getResourceAsStream("/img/elim.png")));
+            iconoEliminar.setFitWidth(23); // Establecer el ancho deseado
+            iconoEliminar.setFitHeight(23); // Establecer el alto dese
+            deleteButton.setGraphic(iconoEliminar);
+            deleteButton.getStyleClass().add("btn_eli");
+            deleteButton.setOnAction(event -> {
+                getTableView().getSelectionModel().select(getIndex());
+                eliminarProducto();
+            });
+            setGraphic(new HBox(10, editButton, deleteButton, AgregarButton) {{
+                setAlignment(Pos.CENTER);
+                setSpacing(10);
+            }});
+        }
+    }
+});
+
         // Obtener los productos de la base de datos
         List<Productos> productos = obtenerProductos();
     
@@ -318,11 +370,12 @@ public class FXMLInventarioController implements Initializable {
             // Manejar el caso en el que no se obtuvieron productos
             productosOriginalData = FXCollections.observableArrayList();
             productosData = FXCollections.observableArrayList();
-            
+    
             tableView.setItems(productosData);
             // Opcional: Mostrar un mensaje de error o advertencia al usuario
         }
     }
+    
     
     
 
@@ -562,11 +615,11 @@ public void ingresarCantidad() {
             AddCantidadController cantidadController = loader.getController();
             
             String nombre = productoSeleccionado.getNombre();
-            BigDecimal pesoCaja = productoSeleccionado.getPesoCaja();
+     
             BigDecimal cantidad = productoSeleccionado.getCantidad();
             long id = productoSeleccionado.getId();
             
-            cantidadController.setDatos(nombre, pesoCaja, cantidad, id);
+            cantidadController.setDatos(nombre, cantidad, id);
             cantidadController.setInventarioController(this);
             
             Scene scene = new Scene(root);
