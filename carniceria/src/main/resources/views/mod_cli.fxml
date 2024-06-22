@@ -4,20 +4,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:controller="com.app.controllers.Clientes.modClientesController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.modClientesController">
    <children>
       <AnchorPane layoutY="-1.0" prefHeight="900.0" prefWidth="1385.0" style="-fx-border-color: gray;" styleClass="letra_text" stylesheets="@../css/Styles.css">
          <children>
-            <Button layoutX="517.0" layoutY="622.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="392.0" styleClass="btn_mod" stylesheets="@../css/Styles.css" text="Realizar la modificación">
+            <Button layoutX="517.0" layoutY="622.0" mnemonicParsing="false" onAction="#modificarCliente" prefHeight="72.0" prefWidth="392.0" styleClass="btn_mod" stylesheets="@../css/Styles.css" text="Realizar la modificación">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Label layoutX="-3.0" layoutY="14.0" prefHeight="95.0" prefWidth="1390.0" style="-fx-background-color: #A63D46;" styleClass="Label-titulos" stylesheets="@../css/Styles.css" text="Modificar clientes">
+            <Label prefHeight="95.0" prefWidth="1390.0" style="-fx-background-color: #A63D46;" styleClass="Label-titulos" stylesheets="@../css/Styles.css" text="Modificar clientes">
                <font>
                   <Font size="45.0" />
                </font>
@@ -32,15 +34,19 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
-            <Button id="atras" layoutX="27.0" layoutY="138.0" mnemonicParsing="false" onAction="#cerrar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
             <Label layoutX="272.0" layoutY="435.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Teléfono:">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
             <TextField fx:id="txtNombre" layoutX="461.0" layoutY="240.0" prefHeight="41.0" prefWidth="564.0" promptText="Ingrese el nuevo nombre del cliente" styleClass="letra_text" stylesheets="@../css/Styles.css" />
-            <TextField  fx:id="txtApellido" layoutX="470.0" layoutY="337.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo apellido del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
-            <TextField  fx:id="txtNumero" layoutX="470.0" layoutY="430.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo teléfono del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
+            <TextField fx:id="txtApellido" layoutX="470.0" layoutY="337.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo apellido del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
+            <TextField fx:id="txtNumero" layoutX="470.0" layoutY="430.0" prefHeight="41.0" prefWidth="554.0" promptText="Ingrese el nuevo teléfono del cliente" style="-fx-border-color: gray;" styleClass="letra_text" />
+            <ImageView fitHeight="95.0" fitWidth="101.0" layoutX="14.0" onMouseClicked="#cerrar" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/regresar.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

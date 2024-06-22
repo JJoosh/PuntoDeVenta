@@ -29,7 +29,7 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-
+    private  String nombre;
     @FXML
     private void initialize() {
         // Agregar listener de teclado al campo de usuario
@@ -83,6 +83,7 @@ public class LoginController {
                 stage.setY(0);
 
                 homeController.setStage(stage);
+                homeController.setNombre(nombre);
                 stage.setScene(scene);
 
                 stage.show();
@@ -106,7 +107,7 @@ public class LoginController {
             query.setParameter("username", username);
             query.setParameter("password", password);
             List<String> roles = query.list();
-
+                nombre=username;
             if (!roles.isEmpty()) {
                 return roles.get(0); 
             }

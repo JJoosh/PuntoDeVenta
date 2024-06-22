@@ -162,17 +162,16 @@ public class FXMLCorte {
                     String formaPago = detalle.getFormaPago();
                     System.out.println(formaPago + "---");
                     System.out.println(fechaVenta + "---");
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // Formato de fecha y hora sin 'T'
-
-                    // Ahora puedes formatear la fecha y la hora como una cadena de texto sin la 'T'
+                
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                
                     String fechaYHoraSinT = fechaVenta1.format(formatter);
-
-                    BigDecimal totalVenta = detalle.getTotal();
-
+                
+                    BigDecimal totalVenta = venta.getTotal();
+                
                     tablecorte corte = new tablecorte(ticket, producto.getId(), nombreProducto, cantidad, fechaYHoraSinT, totalVenta, formaPago);
                     cortesDeCaja.add(corte);
-
+                
                     totalCantidadProductos = totalCantidadProductos.add(cantidad);
                 }
             }
@@ -295,7 +294,7 @@ public class FXMLCorte {
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.F5) {
+        if (event.getCode() == KeyCode.F) {
             proceso();
         }
     }

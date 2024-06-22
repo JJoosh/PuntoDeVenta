@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +26,9 @@ public class FXML_ModProducto implements Initializable {
     @FXML private TextField cantidad;
     @FXML private TextField costo;
     @FXML private ComboBox<String> categoria;
-   
+    @FXML private TextField txtMinima;
+    
+    private Long idantigua;
     private FXMLInventarioController table;
     
     private Stage stage; 
@@ -47,13 +50,14 @@ public class FXML_ModProducto implements Initializable {
         try {
             
             modProducto.modificarProducto(
+                idantigua,
                 Long.parseLong(this.id.getText()), 
                 nombre.getText(), 
                 BigDecimal.valueOf(Double.parseDouble(costo.getText())), 
                 categorias.getIDconName(categoria.getValue()), 
                 BigDecimal.valueOf(Double.parseDouble(cantidad.getText())), 
-                BigDecimal.valueOf(Double.parseDouble(precio.getText()))
-               
+                BigDecimal.valueOf(Double.parseDouble(precio.getText())),
+                BigDecimal.valueOf(Double.parseDouble(txtMinima.getText()))
             );
 
             table.actualizarTabla();
@@ -79,11 +83,18 @@ public class FXML_ModProducto implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLInventarioController categorias=new FXMLInventarioController();
         categorias.cargarCategorias(this.categoria, 0);
+        
+        Categoria categoria=new Categoria();
+        System.err.println(categoria.getEmpaquetado());
+        
+       
+
     }
 
     public void setDatos(String nombre, BigDecimal costo, BigDecimal cantidad, long id, BigDecimal precio, String categoria) {
         
-        
+        this.idantigua=id;
+        System.out.println("ESTA ES LA ID ANTIGUA= " +id);
         this.nombre.setText(nombre);
         this.costo.setText(String.valueOf(costo));
         this.cantidad.setText(String.valueOf(cantidad));

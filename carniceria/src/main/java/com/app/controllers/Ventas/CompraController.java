@@ -151,176 +151,158 @@ public void initialize(URL url, ResourceBundle rb) {
         }
     }
 
-    public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal, Tab selectedTab) {
+    public void initData(ObservableList<Productos> productosData, BigDecimal importeConDescuento, Tab selectedTab) {
         this.productosData = productosData;
-        setImporteTotal(importeTotal);
+        this.importeTotal = importeConDescuento;
         this.selectedTab = selectedTab;
         
         DecimalFormat formato = new DecimalFormat("$#,##0.00");
-        String importeFormateado = formato.format(importeTotal);
-    
+        String importeFormateado = formato.format(importeConDescuento);
+        System.out.println(importeFormateado+"este es el importeee");
         totalImporteLabel.setText(importeFormateado);
     }
 
     
 
-    public void setImporteTotal(BigDecimal importeTotal) {
-        this.importeTotal = importeTotal;
-    }
 
     @FXML
-private void finalizarCompra() {
+    private void finalizarCompra() {
+        try {
+            String formaPago = efectivoButton.isSelected() ? "Efectivo" : "Tarjeta";
+            
+            if ("Efectivo".equals(formaPago)) {
+                String montoIngresadoTexto = insertarPagoTextField.getText();
+                if (montoIngresadoTexto.isEmpty()) {
+                    mostrarAlertaError("Monto de pago no ingresado",
+                            "Por favor, ingrese el monto de pago antes de finalizar la compra.");
+                    return;
+                }
+    
+                BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
+                BigDecimal cambio = montoIngresado.subtract(importeTotal);
+                if (cambio.compareTo(BigDecimal.ZERO) < 0) {
+                    mostrarAlertaError("Cambio insuficiente",
+                            "El monto ingresado es insuficiente para realizar la compra.");
+                    return;
+                }
+            }
+    
+            guardarVenta(formaPago);
+            ImprimirTicket();
+            actualizarInventario();
+    
+            // Eliminar el ticket completamente
+            if (ventasController1 != null && selectedTab != null) {
+                Platform.runLater(() -> {
+                    ventasController1.eliminarTicketCompletamente(selectedTab);
+                    selectedTab = null;
+                });
+            }
+    
+            // Cerrar la ventana de compra
+            Stage stage = (Stage) totalImporteLabel.getScene().getWindow();
+            stage.close();
+    
+            importeTotal = BigDecimal.ZERO;
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlertaError("Error al finalizar la compra",
+                    "Ocurrió un error al finalizar la compra. Por favor, intente nuevamente.");
+        }
+    }
+
+
+private void guardarVenta(String formaPago) {
+    Configuration configuration = new Configuration().configure();
+    configuration.addAnnotatedClass(Productos.class);
+    configuration.addAnnotatedClass(Ventas.class);
+    configuration.addAnnotatedClass(DetallesVenta.class);
+
+    SessionFactory sessionFactory = null;
+    EntityManagerFactory entityManagerFactory = null;
+    EntityManager entityManager = null;
+
     try {
-        String formaPago = efectivoButton.isSelected() ? "Efectivo" : "Tarjeta";
-        
-        if ("Efectivo".equals(formaPago)) {
-            String montoIngresadoTexto = insertarPagoTextField.getText();
-            if (montoIngresadoTexto.isEmpty()) {
-                mostrarAlertaError("Monto de pago no ingresado",
-                        "Por favor, ingrese el monto de pago antes de finalizar la compra.");
+        sessionFactory = configuration.buildSessionFactory();
+        entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
+        entityManager = entityManagerFactory.createEntityManager();
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        if (productosData == null || productosData.isEmpty()) {
+            mostrarAlertaError("Error al guardar la venta", "No se encontraron productos en la venta.");
+            return;
+        }
+
+        Ventas venta = new Ventas();
+        venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
+        venta.setFecha(LocalDateTime.now());
+        System.out.println("SE ESTA GUARDANDO LA VENTA CON" + importeTotal);
+        venta.setTotal(importeTotal); 
+
+        // Asociar el cliente a la venta
+        venta.setCliente(cliente);
+
+        for (Productos producto : productosData) {
+            if (producto == null) {
+                mostrarAlertaError("Error al guardar la venta", "Se encontró un producto nulo en la venta.");
                 return;
             }
 
-            BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
-            BigDecimal cambio = montoIngresado.subtract(importeTotal);
-            if (cambio.compareTo(BigDecimal.ZERO) < 0) {
-                mostrarAlertaError("Cambio insuficiente",
-                        "El monto ingresado es insuficiente para realizar la compra.");
+            DetallesVenta detalle = new DetallesVenta();
+            detalle.setProducto(producto);
+
+            BigDecimal cantidad = producto.getCantidad();
+            if (cantidad == null) {
+                mostrarAlertaError("Error al guardar la venta", "Se encontró una cantidad nula en un producto.");
                 return;
             }
+            detalle.setCantidad(cantidad);
+
+            BigDecimal precio = producto.getPrecio();
+            if (precio == null) {
+                mostrarAlertaError("Error al guardar la venta", "Se encontró un precio nulo en un producto.");
+                return;
+            }
+
+            detalle.setTotal(precio.multiply(cantidad));
+            detalle.setFormaPago(formaPago); // Guardar la forma de pago en el detalle de venta
+            venta.addDetalle(detalle);
+
+            Movimientos movimiento = new Movimientos();
+            movimiento.setIdProducto(producto);
+            movimiento.setTipoMovimiento("Salida");
+            movimiento.setCantidad(cantidad);
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            movimiento.setFecha(fechaHoraActual);
+            guardarMovimiento(movimiento);
         }
 
-        guardarVenta(formaPago);
-        ImprimirTicket();
-        actualizarInventario();
+        entityManager.persist(venta);
+        transaction.commit();
 
-        // Eliminar el ticket completamente
-        if (ventasController1 != null && selectedTab != null) {
-            Platform.runLater(() -> {
-                ventasController1.eliminarTicketCompletamente(selectedTab);
-                selectedTab=null;
-            });
+        mostrarAlertaInformacion("Venta generada",
+                "La venta se ha generado correctamente. Ticket: " + venta.getTicket());
+
+        this.venta = venta;
+        totalImporteLabel.setText("Ticket: " + venta.getTicket());
+    } catch (HibernateException e) {
+        mostrarAlertaError("Error al guardar la venta",
+                "Ocurrió un error al guardar la venta. Por favor, intente nuevamente.");
+    } finally {
+        if (entityManager != null) {
+            entityManager.close();
         }
-
-        // Cerrar la ventana de compra
-        Stage stage = (Stage) totalImporteLabel.getScene().getWindow();
-        stage.close();
-
-        importeTotal = BigDecimal.ZERO;
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        mostrarAlertaError("Error al finalizar la compra",
-                "Ocurrió un error al finalizar la compra. Por favor, intente nuevamente.");
+        if (entityManagerFactory != null) {
+            entityManagerFactory.close();
+        }
+        if (sessionFactory != null) {
+            sessionFactory.close();
+        }
     }
 }
-
-
-    private void guardarVenta(String formaPago) {
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(Productos.class);
-        configuration.addAnnotatedClass(Ventas.class);
-        configuration.addAnnotatedClass(DetallesVenta.class);
-
-        SessionFactory sessionFactory = null;
-        EntityManagerFactory entityManagerFactory = null;
-        EntityManager entityManager = null;
-
-        try {
-            sessionFactory = configuration.buildSessionFactory();
-            entityManagerFactory = sessionFactory.unwrap(EntityManagerFactory.class);
-            entityManager = entityManagerFactory.createEntityManager();
-
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-
-            if (productosData == null || productosData.isEmpty()) {
-                mostrarAlertaError("Error al guardar la venta", "No se encontraron productos en la venta.");
-                return;
-            }
-       
-            // Crear una instancia de BigDecimal para el total
-            descuento = descuento.replaceAll("%", "");
-            BigDecimal total = importeTotal != null ? importeTotal : BigDecimal.ZERO;
-
-            BigDecimal Descuento = new BigDecimal(descuento);
-            BigDecimal valorPorcentaje = total.multiply(Descuento).divide(BigDecimal.valueOf(100));
-
-            // Mostrar el valor del porcentaje
-            System.out.println(descuento +" Valor del " + Descuento + "% de " + total + " es: " + valorPorcentaje);
-    
-            // Restar el valor del porcentaje al total original
-            BigDecimal nuevoTotal = total.subtract(valorPorcentaje);
-    
-            // Mostrar el nuevo total
-            System.out.println("Nuevo total después de restar el porcentaje: " + nuevoTotal);
-            Ventas venta = new Ventas();
-            venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
-            venta.setFecha(LocalDateTime.now());
-            venta.setTotal(nuevoTotal);
-            
-            // Asociar el cliente a la venta
-            venta.setCliente(cliente);
-                
-
-            for (Productos producto : productosData) {
-                if (producto == null) {
-                    mostrarAlertaError("Error al guardar la venta", "Se encontró un producto nulo en la venta.");
-                    return;
-                }
-
-                DetallesVenta detalle = new DetallesVenta();
-                detalle.setProducto(producto);
-
-                BigDecimal cantidad = producto.getCantidad();
-                if (cantidad == null) {
-                    mostrarAlertaError("Error al guardar la venta", "Se encontró una cantidad nula en un producto.");
-                    return;
-                }
-                detalle.setCantidad(cantidad);
-
-                BigDecimal precio = producto.getPrecio();
-                if (precio == null) {
-                    mostrarAlertaError("Error al guardar la venta", "Se encontró un precio nulo en un producto.");
-                    return;
-                }
-
-                detalle.setTotal(precio.multiply(cantidad));
-                detalle.setFormaPago(formaPago); // Guardar la forma de pago en el detalle de venta
-                venta.addDetalle(detalle);
-
-                Movimientos movimiento = new Movimientos();
-                movimiento.setIdProducto(producto);
-                movimiento.setTipoMovimiento("Salida");
-                movimiento.setCantidad(cantidad);
-                LocalDateTime fechaHoraActual = LocalDateTime.now();
-                movimiento.setFecha(fechaHoraActual);
-                guardarMovimiento(movimiento);
-            }
-
-            entityManager.persist(venta);
-            transaction.commit();
-
-            mostrarAlertaInformacion("Venta generada",
-                    "La venta se ha generado correctamente. Ticket: " + venta.getTicket());
-
-            this.venta = venta;
-            totalImporteLabel.setText("Ticket: " + venta.getTicket());
-        } catch (HibernateException e) {
-            mostrarAlertaError("Error al guardar la venta",
-                    "Ocurrió un error al guardar la venta. Por favor, intente nuevamente.");
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-            if (entityManagerFactory != null) {
-                entityManagerFactory.close();
-            }
-            if (sessionFactory != null) {
-                sessionFactory.close();
-            }
-        }
-    }
 
     @FXML
 public void regresar() {
@@ -455,7 +437,7 @@ public void regresar() {
         System.out.println(e);
     }
 }
- private String generarContenidoTicket() {
+private String generarContenidoTicket() {
     StringBuilder sb = new StringBuilder();
     sb.append("       ----SuKarne----\n");
     sb.append("Tenosique, Tabasco\n");
@@ -464,15 +446,33 @@ public void regresar() {
     sb.append("No. ticket: ").append(venta.getTicket()).append("\n");
     sb.append("Fecha: ").append(venta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
             .append("\n");
+    
+    // Add client information
+    sb.append("Cliente: ").append(cliente.getNombre()).append("\n");
+    
     sb.append("------------------------------------------------\n");
     sb.append(String.format("%-10s %-20s %10s\n", "Cantidad", "Descripcion", "Monto"));
 
+    BigDecimal subtotal = BigDecimal.ZERO;
     for (DetallesVenta detalle : venta.getDetalles()) {
         sb.append(String.format("%-10s %-20s %10s\n", detalle.getCantidad() + "Kg", detalle.getProducto().getNombre(),
                 formatoDinero.format(detalle.getTotal())));
+        subtotal = subtotal.add(detalle.getTotal());
     }
 
     sb.append("------------------------------------------------\n");
+    
+    // Display subtotal (before discount)
+    sb.append("Subtotal: ").append(formatoDinero.format(subtotal)).append("\n");
+    
+    // Calculate and display discount
+    BigDecimal descuentoDecimal = new BigDecimal(descuento).divide(new BigDecimal("100"));
+    BigDecimal descuentoAmount = subtotal.multiply(descuentoDecimal);
+    sb.append("Descuento (").append(descuento).append("%): ").append(formatoDinero.format(descuentoAmount)).append("\n");
+    
+    // Display total after discount
+    sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal())).append("\n");
+
     String formaPago = venta.getDetalles().get(0).getFormaPago();
     sb.append("Forma de Pago: ").append(formaPago).append("\n");
 
@@ -480,11 +480,10 @@ public void regresar() {
         String montoIngresadoTexto = insertarPagoTextField.getText();
         BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
         BigDecimal cambio = montoIngresado.subtract(venta.getTotal());
-        sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado.doubleValue())).append("\n");
-        sb.append("Su Cambio: ").append(formatoDinero.format(cambio.doubleValue())).append("\n");
+        sb.append("Su Pago: ").append(formatoDinero.format(montoIngresado)).append("\n");
+        sb.append("Su Cambio: ").append(formatoDinero.format(cambio)).append("\n");
     }
 
-    sb.append("TOTAL: ").append(formatoDinero.format(venta.getTotal().doubleValue())).append("\n");
     sb.append("\n¡GRACIAS, VUELVA PRONTO!\n");
     sb.append("\n\n\n\n\n\n");
     sb.append("\n\n\n\n\n\n");

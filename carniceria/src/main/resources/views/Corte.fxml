@@ -18,7 +18,7 @@
             <URL value="@../css/styles.css" />
          </stylesheets></Label>
       <DatePicker fx:id="datePicker" layoutX="292.0" layoutY="155.0" prefHeight="44.0" prefWidth="527.0" promptText="Consulta una fecha de corte" style="-fx-background-color: white; -fx-border-color: gray;" styleClass="label-conte" />
-      <Button layoutX="987.0" layoutY="147.0" mnemonicParsing="false" onAction="#corte" prefHeight="58.0" prefWidth="315.0" style="-fx-font-size: 20px;" styleClass="btn_cont" text="Realizar corte de caja         F5" />
+      <Button layoutX="987.0" layoutY="147.0" mnemonicParsing="false" onAction="#corte" prefHeight="58.0" prefWidth="315.0" style="-fx-font-size: 20px;" styleClass="btn_cont" text="Realizar corte de caja         F7" />
       <ScrollPane layoutX="76.0" layoutY="257.0" prefHeight="535.0" prefWidth="1201.0" stylesheets="@../css/styles.css">
          <content>
             <TableView fx:id="Corte" prefHeight="533.0" prefWidth="1195.0">

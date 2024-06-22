@@ -101,6 +101,9 @@ public class ClientesController implements Initializable {
             deleteButton.getStyleClass().add("btn_eli");
             deleteButton.setOnAction(event -> {
                 getTableView().getSelectionModel().select(getIndex());
+                Clientes clienteSeleccionado = getTableView().getItems().get(getIndex());
+                eliminarCliente(clienteSeleccionado);
+
                 
             });
             setGraphic(new HBox(10, editButton, deleteButton) {{
@@ -113,7 +116,31 @@ public class ClientesController implements Initializable {
 
     }
 
-
+    public void eliminarCliente(Clientes cliente) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            
+            cliente.setActivo("N");
+            session.update(cliente);
+            
+            tx.commit();
+            
+            mostrarTabla(); // Actualizar la tabla después de eliminar
+            
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Cliente Eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El cliente ha sido eliminado exitosamente.");
+            alert.showAndWait();
+        } catch (HibernateException e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocurrió un error al eliminar el cliente: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+    }
    public void agregarCliente(){
     System.out.println("Iniciando agregarxd");
 
@@ -176,5 +203,27 @@ public void abrirMod(int ID, String nombre, String apellido, String descuento) {
 }
 
 
+public void archivoclientes() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLClientesEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
+        
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
 
+        if (controller instanceof FXMLClienteEliminados) {
+            FXMLClienteEliminados clienteEliminadosController = (FXMLClienteEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }

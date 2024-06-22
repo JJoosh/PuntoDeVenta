@@ -26,11 +26,11 @@
                <padding>
                   <Insets left="20.0" />
                </padding></Label>
-            <Label fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="4.0" layoutY="410.0" onMouseClicked="#abrirCorteCaja" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Corte                F4">
+            <Label fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="4.0" layoutY="410.0" onMouseClicked="#abrirCorteCaja" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Corte                F3">
                <padding>
                   <Insets left="20.0" />
                </padding></Label>
-            <Label fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="4.0" layoutY="475.0" onMouseClicked="#abrirDevoluciones" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Devoluciones  F3">
+            <Label fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="4.0" layoutY="475.0" onMouseClicked="#abrirDevoluciones" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Devoluciones  F4">
                <padding>
                   <Insets left="20.0" />
                </padding></Label>
@@ -39,12 +39,12 @@
                   <Image url="@../img/Salir-b.png" />
                </image>
             </ImageView>
-            <Label accessibleRole="BUTTON" layoutX="4.0" layoutY="541.0"  onMouseClicked="#openClients" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Clientes           F">
+            <Label accessibleRole="BUTTON" layoutX="4.0" layoutY="541.0" onMouseClicked="#openClients" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Clientes           F5">
                <padding>
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="187.0" prefHeight="50.0" prefWidth="191.0" style="-fx-text-alignment: center;" text="Usuario" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="usser" alignment="CENTER" layoutX="14.0" layoutY="187.0" prefHeight="50.0" prefWidth="191.0" style="-fx-text-alignment: center;" text="Usuario" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Yu Gothic UI Semibold" size="20.0" />
                </font>
@@ -54,7 +54,7 @@
                   <Image url="@../img/user.png" />
                </image>
             </ImageView>
-            <ImageView accessibleRole="BUTTON" fitHeight="50.0" fitWidth="56.0" layoutX="86.0" layoutY="640.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView accessibleRole="BUTTON" fitHeight="50.0" fitWidth="56.0" layoutX="86.0" layoutY="640.0" onMouseClicked="#openHome" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/casa.png" />
                </image>

@@ -13,12 +13,18 @@ import com.app.controllers.Clientes.ClientesController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
@@ -28,18 +34,25 @@ public class HomeController implements Initializable {
     Pane menu_lateral;
     @FXML
     Label ventas;
-
+    @FXML
+    Label usser;
     private Stage stage;
     private String userRole; // Variable para almacenar el rol del usuario
-
+    private String nombre;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         menu_lateral.setOnKeyPressed(this::handleKeyPressed);
+        
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
         stage.setResizable(false);
+    }
+
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+        usser.setText(nombre);
     }
 
     public void setUserRole(String role) {
@@ -72,14 +85,14 @@ public class HomeController implements Initializable {
             case F2:
                 abrirInventario();
                 break;
-            case F3:
+            case F4:
                 abrirDevoluciones();
                 break;
-            case F4:
+            case F3:
                 abrirCorteCaja();
                 break;
             case F5:
-                abrirConfiguracion();
+                openClients();
             default:
                 break;
         }
@@ -184,6 +197,7 @@ public void abrirConfiguracion() {
 }
 
 public void openClients(){
+    if ("administrador".equals(userRole)){
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clientes2.fxml"));
         Pane nuevoContenido = loader.load();
@@ -193,6 +207,41 @@ public void openClients(){
         home.getChildren().setAll(nuevoContenido);
     } catch (IOException e) {
         e.printStackTrace();
-    } 
+    } }
+    else{
+        showAlert("Acceso Denegado", "No tienes permiso para acceder a esta sección.");
+
+    }
+}
+
+@FXML
+public void openHome() {
+    // Limpia el contenido actual del panel home
+    home.getChildren().clear();
+
+    // Agrega nuevamente los elementos originales del panel home
+    Label bienvenidoLabel = new Label("Bienvenido");
+    bienvenidoLabel.setAlignment(Pos.CENTER);
+    bienvenidoLabel.setPrefSize(1368, 176);
+    bienvenidoLabel.setLayoutX(9);
+    bienvenidoLabel.setLayoutY(426);
+    bienvenidoLabel.setStyle("-fx-text-alignment: center;");
+    bienvenidoLabel.setTextAlignment(TextAlignment.CENTER);
+    bienvenidoLabel.setTextFill(Color.web("#4d2d12"));
+    bienvenidoLabel.setFont(new Font("Yu Gothic UI Regular", 120));
+
+    ImageView homeImageView = new ImageView(new Image(getClass().getResourceAsStream("/img/Home.png")));
+    homeImageView.setFitHeight(243);
+    homeImageView.setFitWidth(260);
+    homeImageView.setLayoutX(571);
+    homeImageView.setLayoutY(152);
+    homeImageView.setPickOnBounds(true);
+    homeImageView.setPreserveRatio(true);
+
+    // Agrega los elementos al panel home
+    home.getChildren().addAll(bienvenidoLabel, homeImageView);
+
+    // Establece el fondo blanco
+    home.setStyle("-fx-background-color: white;");
 }
 }

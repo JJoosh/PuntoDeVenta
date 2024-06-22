@@ -92,7 +92,7 @@ public class UsuariosController {
             deleteButton.getStyleClass().add("btn_eli");
             deleteButton.setOnAction(event -> {
                 getTableView().getSelectionModel().select(getIndex());
-                
+                DeleteUser();
             });
             setGraphic(new HBox(10, editButton, deleteButton) {{
                 setAlignment(Pos.CENTER);
@@ -168,8 +168,7 @@ private void agregar() {
 }
 
 public void cargarTabla() {
-    
-  
+    // Configuración de Hibernate
     Configuration configuration = new Configuration();
     configuration.configure("hibernate.cfg.xml");
     configuration.addAnnotatedClass(Usuarios.class);
@@ -178,25 +177,24 @@ public void cargarTabla() {
     Session session = sessionFactory.openSession();
 
     try {
-     
         session.beginTransaction();
 
+        // Consulta HQL para obtener solo los usuarios activos
         ObservableList<Usuarios> usuariosList = FXCollections.observableArrayList(
-            session.createQuery("from Usuarios", Usuarios.class).list()
+            session.createQuery("from Usuarios where activo = 'A'", Usuarios.class).list()
         );
 
         tableUsuarios.setItems(usuariosList);
         clmName.setCellValueFactory(new PropertyValueFactory<>("nombreUsuario"));
         clmRol.setCellValueFactory(new PropertyValueFactory<>("rol"));
-   
+
         session.getTransaction().commit();
     } catch (Exception e) {
         e.printStackTrace();
 
-      
         session.getTransaction().rollback();
 
-        
+        // Mostrar mensaje de error en caso de fallo
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
@@ -237,5 +235,75 @@ public void abrirModUser(){
         alert.showAndWait();
     }
 }
+public void archivousuarios() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLUsuariosEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
 
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
+
+        if (controller instanceof FXMLUsuariosEliminados) {
+            FXMLUsuariosEliminados clienteEliminadosController = (FXMLUsuariosEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+@FXML
+private void DeleteUser() {
+    Usuarios selectedUser = tableUsuarios.getSelectionModel().getSelectedItem();
+    if (selectedUser != null) {
+        try {
+            // Configuración de Hibernate
+            Configuration configuration = new Configuration();
+            configuration.configure("hibernate.cfg.xml");
+            configuration.addAnnotatedClass(Usuarios.class);
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            // Actualización del usuario seleccionado a inactivo (N)
+            selectedUser.setActivo("N");
+            session.update(selectedUser);
+
+            session.getTransaction().commit();
+
+            // Mostrar mensaje de éxito
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Éxito");
+            alert.setHeaderText(null);
+            alert.setContentText("Usuario eliminado correctamente");
+            alert.showAndWait();
+
+            cargarTabla();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // En caso de error, mostrar un mensaje de error
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Error al eliminar el usuario");
+            alert.showAndWait();
+        }
+    } else {
+        // Si no se ha seleccionado ningún usuario, mostrar un mensaje de advertencia
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setHeaderText(null);
+        alert.setContentText("Por favor seleccione un usuario de la tabla.");
+        alert.showAndWait();
+    }
+}
 }

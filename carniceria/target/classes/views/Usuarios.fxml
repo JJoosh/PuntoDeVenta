@@ -58,7 +58,7 @@
             <URL value="@../css/Fondo.css" />
             <URL value="@../css/styles.css" />
          </stylesheets></ComboBox>
-      <Button layoutX="996.0" layoutY="193.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="311.0" style="-fx-font-size: 18px;" stylesheets="@../css/styles.css" text="Archivo de usuarios">
+      <Button onAction="#archivousuarios" layoutX="996.0" layoutY="193.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="311.0" style="-fx-font-size: 18px;" stylesheets="@../css/styles.css" text="Archivo de usuarios">
          <styleClass>
             <String fx:value="btn_peso" />
             <String fx:value="btn" />

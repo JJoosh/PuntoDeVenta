@@ -5,79 +5,80 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_ModProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXML_ModProducto">
    <children>
-      <AnchorPane prefHeight="900.0" prefWidth="1385.0" styleClass="mo" stylesheets="@../css/styles.css">
-         <children>
-            <Button layoutX="595.0" layoutY="728.0" mnemonicParsing="false" onAction="#modificar" prefHeight="71.0" prefWidth="478.0" style="-fx-font-size: 25px;" styleClass="btn_mod" stylesheets="@../css/Fondo.css" text="Realizar la modificación">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Label layoutY="-8.0" prefHeight="95.0" prefWidth="1385.0" style="-fx-background-color: black;" styleClass="Label-titulos" stylesheets="@../css/styles.css" text="Modificar producto">
-               <font>
-                  <Font size="45.0" />
-               </font>
-            </Label>
-            <Label layoutX="461.0" layoutY="122.0" prefHeight="41.0" prefWidth="147.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Nombre:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-               <stylesheets>
-                  <URL value="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
-                  <URL value="@../OneDrive/Documentos/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
-               </stylesheets>
-            </Label>
-            <TextField fx:id="nombre" layoutX="695.0" layoutY="122.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa el nuevo nombre del producto" style="-fx-background-color: F1EAE8; -fx-border-color: gray;" styleClass="letra_text" />
-            <Label layoutX="461.0" layoutY="192.0" prefHeight="32.0" prefWidth="159.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Código:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <TextField fx:id="id" layoutX="695.0" layoutY="192.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa el nuevo código del producto" style="-fx-background-color: WHITE; -fx-border-color: gray;" styleClass="letra_text" />
-            <Label layoutX="461.0" layoutY="352.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Costo:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <TextField fx:id="costo" layoutX="695.0" layoutY="349.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-font-size: 30px;" styleClass="letra_text" />
-            <ComboBox fx:id="categoria" layoutX="695.0" layoutY="531.0" prefHeight="52.0" prefWidth="314.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: GRAY;" styleClass="letra_text" stylesheets="@../css/Fondo.css" />
-            <Label layoutX="460.0" layoutY="446.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Cantidad:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <AnchorPane layoutY="87.0" prefHeight="812.0" prefWidth="49.0" style="-fx-background-color: crimson;" />
-            <Button id="atras" layoutX="108.0" layoutY="122.0" mnemonicParsing="false" onAction="#cerrar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
-            <Label layoutX="462.0" layoutY="272.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Precio:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <TextField fx:id="precio" layoutX="695.0" layoutY="269.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: F1EDE0; -fx-font-size: 30px;" styleClass="letra_text" />
-            <Label layoutX="463.0" layoutY="536.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Categoría:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <Label layoutX="1031.0" layoutY="451.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="KG">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <TextField fx:id="cantidad" layoutX="695.0" layoutY="443.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-font-size: 30px;" styleClass="letra_text" />
-            <Label layoutX="469.0" layoutY="638.0" style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Inventario minimo:">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <TextField layoutX="808.0" layoutY="635.0" prefHeight="48.0" prefWidth="407.0" promptText="Ingrese una cantidad minima" style="-fx-border-color: gray; -fx-font-size: 30px;" styleClass="letra_text" />
-         </children>
-      </AnchorPane>
+      <Button layoutX="313.0" layoutY="668.0" mnemonicParsing="false" onAction="#modificar" prefHeight="57.0" prefWidth="375.0" style="-fx-font-size: 20px;" styleClass="btn_mod" text="Realizar la modificación">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../css/Fondo.css" />
+            <URL value="@../css/styles.css" />
+         </stylesheets>
+      </Button>
+      <Label layoutY="-8.0" prefHeight="95.0" prefWidth="1000.0" style="-fx-background-color: black;" styleClass="Label-titulos" stylesheets="@../css/styles.css" text="Modificar producto">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+      <Label layoutX="161.0" layoutY="128.0" prefHeight="41.0" prefWidth="149.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Nombre:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+            <URL value="@../OneDrive/Documentos/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
+         </stylesheets>
+      </Label>
+      <TextField fx:id="nombre" layoutX="335.0" layoutY="127.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa el nuevo nombre del producto" style="-fx-background-color: F1EAE8; -fx-font-size: 20px; -fx-border-color: gray;" styleClass="letra_text" />
+      <Label layoutX="159.0" layoutY="197.0" prefHeight="38.0" prefWidth="132.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Código:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField fx:id="id" layoutX="335.0" layoutY="195.0" prefHeight="42.0" prefWidth="507.0" promptText="Ingresa el nuevo código del producto" style="-fx-background-color: WHITE; -fx-border-color: gray; -fx-font-size: 20px;" styleClass="letra_text" />
+      <Label layoutX="162.0" layoutY="329.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Costo:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField fx:id="costo" layoutX="335.0" layoutY="324.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-font-size: 20px;" styleClass="letra_text" />
+      <ComboBox fx:id="categoria" layoutX="335.0" layoutY="464.0" prefHeight="52.0" prefWidth="314.0" promptText="Cerdo" style="-fx-background-color: FFF7CD; -fx-border-color: GRAY; -fx-font-size: 20px;" styleClass="letra_text" stylesheets="@../css/Fondo.css" />
+      <Label layoutX="160.0" layoutY="393.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Cantidad:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutY="87.0" prefHeight="713.0" prefWidth="57.0" style="-fx-background-color: crimson;" />
+      <Label layoutX="160.0" layoutY="263.0" prefHeight="38.0" prefWidth="117.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Precio:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField fx:id="precio" layoutX="335.0" layoutY="258.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-background-color: F1EDE0; -fx-font-size: 20px;" styleClass="letra_text" />
+      <Label layoutX="162.0" layoutY="471.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Categoría:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cantidad" layoutX="335.0" layoutY="391.0" prefHeight="48.0" prefWidth="314.0" promptText="0.00" style="-fx-border-color: gray; -fx-font-size: 20px;" styleClass="letra_text" />
+      <Label layoutX="160.0" layoutY="560.0" style="-fx-font-weight: bold; -fx-font-size: 26px;" styleClass="label-conte" text="Inventario minimo:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField layoutX="411.0" layoutY="551.0" prefHeight="48.0" prefWidth="407.0" promptText="Ingrese una cantidad minima" style="-fx-border-color: gray; -fx-font-size: 20px;" styleClass="letra_text" />
+      <ImageView fitHeight="82.0" fitWidth="88.0" layoutX="25.0" layoutY="5.0" onMouseClicked="#cerrar" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/regresarb.png" />
+         </image>
+      </ImageView>
    </children>
    <stylesheets>
       <URL value="@../css/Fondo.css" />

@@ -34,7 +34,7 @@
          </content>
       </ScrollPane>
       <!-- <Label id="Label_letras" layoutX="115.0" layoutY="671.0" stylesheets="@../css/Fondo.css" text="Cantidad a devolver:" />7 -->
-      <Button layoutX="1015.0" layoutY="700.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="297.0" style="-fx-font-size: 18px;" styleClass="btn_agre" stylesheets="@../css/Fondo.css" text="Agregar devolución    F5" />
+      <Button layoutX="1015.0" layoutY="700.0" mnemonicParsing="false" onAction="#enviar" prefHeight="50.0" prefWidth="297.0" style="-fx-font-size: 18px;" styleClass="btn_agre" stylesheets="@../css/Fondo.css" text="Agregar devolución   ENTER" />
       <Label layoutX="61.0" layoutY="709.0" prefHeight="41.0" prefWidth="339.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Motivo de la devolución:" />
       <!-- <Spinner fx:id="spinner" editable="true" layoutX="474.0" layoutY="662.0" prefHeight="50.0" prefWidth="169.0" /> -->
       <Button layoutX="1029.0" layoutY="147.0" mnemonicParsing="false" onAction="#vertabla" prefHeight="50.0" prefWidth="297.0" style="-fx-font-size: 16px;" styleClass="btn_canti" stylesheets="@../css/Fondo.css" text="Consulte las devoluciones      F6" />

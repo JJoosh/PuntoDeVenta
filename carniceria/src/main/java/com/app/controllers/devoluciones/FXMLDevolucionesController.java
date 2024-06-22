@@ -19,9 +19,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.app.controllers.Producto;
+import com.app.controllers.Clientes.ClientesController;
 import com.app.controllers.Inventario.FXMLInventarioController;
 import com.app.controllers.Inventario.FXML_NewProducto;
 import com.app.controllers.Ventas.VentasController;
+import com.app.controllers.corte.FXMLCorte;
 import com.app.controllers.devoluciones.tabledata;
 
 import com.app.models.Categoria;
@@ -532,9 +534,80 @@ try {
 
     }
 
+    private void abrirInventario() {
+       
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
+                Pane nuevoContenido = loader.load();
+                FXMLInventarioController inventarioController = loader.getController();
+                VentasController ventasController=new VentasController();
+               ventasController.onClose();
+                rootPane.getChildren().setAll(nuevoContenido);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } 
+        public void abrirVentas() {
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
+                Pane nuevoContenido = loader.load();
+                VentasController ventasController = loader.getController();
+               
+                rootPane.getChildren().setAll(nuevoContenido);
+                ventasController.refrescarVistaVentas();
+                ventasController.onClose();
+                
+    
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+public void abrirCorteCaja() {
+       
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
+                Pane nuevoContenido = loader.load();
+                FXMLCorte corteController = loader.getController();
+                VentasController ventasController=new VentasController();
+            ventasController.onClose();
+                rootPane.getChildren().setAll(nuevoContenido);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } 
+       
+        
+    }
+
+    public void openClients(){
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clientes2.fxml"));
+        Pane nuevoContenido = loader.load();
+        ClientesController clienteController = loader.getController();
+        VentasController ventasController=new VentasController();
+             ventasController.onClose();
+        rootPane.getChildren().setAll(nuevoContenido);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } 
+}
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.F5) {
+        if (event.getCode() == KeyCode.F2) {
+            abrirInventario();
+         }
+         if (event.getCode() == KeyCode.F1) {
+           abrirVentas();
+         }
+         if (event.getCode() == KeyCode.F3) {
+            abrirCorteCaja();
+          }
+
+          if (event.getCode() == KeyCode.F5) {
+            openClients();
+          }
+
+        if (event.getCode() == KeyCode.ENTER) {
            proceso();
         }
 

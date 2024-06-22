@@ -158,7 +158,7 @@ public class Productos {
 
    
 
-    public void modificarProducto(Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio ) {
+    public void modificarProducto(Long idantigua,Long id, String nombre, BigDecimal costo, Long id_cat, BigDecimal cantidad, BigDecimal precio, BigDecimal invMinimo) {
        
     
         Configuration configuration = new Configuration();
@@ -175,15 +175,17 @@ public class Productos {
             transaction = entityManager.getTransaction();
             transaction.begin();
             
-            Productos producto = entityManager.find(Productos.class, id);
+            Productos producto = entityManager.find(Productos.class, idantigua);
             if (producto != null) {
+                System.out.println("Esta es la ID: " +id+" Este es el minimo"+ invMinimo);
                 producto.setNombre(nombre);
                 producto.setCosto(costo);
+                
                 Categoria categoria = entityManager.find(Categoria.class, id_cat);
                 producto.setCategoria(categoria);
                 producto.setCantidad(cantidad);
                 producto.setPrecio(precio);
-               
+                producto.setProductosBajos_inventario(invMinimo);
                 entityManager.merge(producto);
                 
                 transaction.commit();

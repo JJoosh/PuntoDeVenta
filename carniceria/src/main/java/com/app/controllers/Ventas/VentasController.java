@@ -3,6 +3,7 @@ package com.app.controllers.Ventas;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,6 +174,7 @@ public class VentasController {
     
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             txtPorcentaje.setText(String.format("%d%%", newValue.intValue()));
+            recalcularImporteTotalConDescuento(newValue.intValue());
         });
     
         txtPorcentaje.setOnAction(event -> {
@@ -181,6 +183,7 @@ public class VentasController {
                 int value = Integer.parseInt(text);
                 if (value >= slider.getMin() && value <= slider.getMax()) {
                     slider.setValue(value);
+                    recalcularImporteTotalConDescuento(value);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input: " + txtPorcentaje.getText());
@@ -204,9 +207,6 @@ public class VentasController {
         
         cargarClientes();
      
-        // Cargar tickets guardados
-       
-        
         // Si no hay tickets guardados, crear uno por defecto
         if (productosDataMap.isEmpty()) {
             crearTicketDefault();
@@ -220,7 +220,6 @@ public class VentasController {
     
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
     }
-
    
     
     
@@ -487,19 +486,22 @@ public void agregarProducto() {
 }
     
    
-    private void actualizarImporteTotalLabel() {
-        Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) {
-            BigDecimal importeTotal = importeTotalMap.get(selectedTab);
-            if (importeTotal != null) {
-                totalImporteLabel.setText(importeTotal.toString());
-            } else {
-                totalImporteLabel.setText("0.00");
-            }
+private void actualizarImporteTotalLabel() {
+    Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
+    if (selectedTab != null) {
+        BigDecimal importeTotal = importeTotalMap.get(selectedTab);
+        if (importeTotal != null) {
+            int porcentajeDescuento = (int) slider.getValue();
+            BigDecimal descuento = importeTotal.multiply(BigDecimal.valueOf(porcentajeDescuento).divide(BigDecimal.valueOf(100)));
+            BigDecimal importeConDescuento = importeTotal.subtract(descuento);
+            totalImporteLabel.setText(importeConDescuento.setScale(2, RoundingMode.HALF_UP).toString());
         } else {
             totalImporteLabel.setText("0.00");
         }
+    } else {
+        totalImporteLabel.setText("0.00");
     }
+}
     @FXML
     public void borrarArticulo() {
         Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
@@ -548,6 +550,12 @@ private void cobrar() {
         return;
     }
 
+    // Verificar si el toggleButton de clientes está seleccionado pero no se ha elegido un cliente
+    if (clienteCheckBox.isSelected() && clienteListView.getSelectionModel().getSelectedItem() == null) {
+        mostrarAlertaError("Error", "Ha seleccionado aplicar descuento de cliente pero no ha seleccionado ningún cliente. Por favor, seleccione un cliente o desactive la opción de descuento.");
+        return;
+    }
+
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Compra.fxml"));
         Parent root = loader.load();
@@ -563,19 +571,24 @@ private void cobrar() {
 
         newStage.show();
 
-        if (clienteCheckBox.isSelected() && clienteListView.getSelectionModel().getSelectedItem() != null) {
-            Clientes clienteSeleccionado = clienteListView.getSelectionModel().getSelectedItem();
-            String descuento = txtPorcentaje.getText();
-            compraController.getIDandDescuento(clienteSeleccionado, descuento);
+        Clientes clienteSeleccionado = null;
+        String descuento = "0";
+        if (clienteCheckBox.isSelected()) {
+            clienteSeleccionado = clienteListView.getSelectionModel().getSelectedItem();
+            descuento = txtPorcentaje.getText().replace("%", "");
         }
 
-        compraController.initData(productosData, importeTotal, selectedTab);
+        // Calcular el importe con descuento
+        BigDecimal descuentoPorcentaje = new BigDecimal(descuento).divide(new BigDecimal("100"));
+        BigDecimal importeConDescuento = importeTotal.subtract(importeTotal.multiply(descuentoPorcentaje));
+
+        compraController.initData(productosData, importeConDescuento, selectedTab);
+        compraController.getIDandDescuento(clienteSeleccionado, descuento);
         
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
-
 public void limpiarTablaProductos(Tab selectTab) {
     if (selectTab != null) {
         ObservableList<Productos> productosData = productosDataMap.get(selectTab);
@@ -849,6 +862,18 @@ public void refrescarVistaVentas() {
 
         actualizarImporteTotalLabel();
     });
+}
+
+private void recalcularImporteTotalConDescuento(int porcentajeDescuento) {
+    Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
+    if (selectedTab != null) {
+        BigDecimal importeTotal = importeTotalMap.get(selectedTab);
+        if (importeTotal != null) {
+            BigDecimal descuento = importeTotal.multiply(BigDecimal.valueOf(porcentajeDescuento).divide(BigDecimal.valueOf(100)));
+            BigDecimal importeConDescuento = importeTotal.subtract(descuento);
+            totalImporteLabel.setText(importeConDescuento.setScale(2, RoundingMode.HALF_UP).toString());
+        }
+    }
 }
 public void eliminarTicketCompletamente(Tab tab) {
     Platform.runLater(() -> {

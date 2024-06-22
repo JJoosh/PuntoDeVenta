@@ -51,12 +51,12 @@
             <Font name="System Bold" size="50.0" />
          </font>
       </Label>
-      <Button layoutX="897.0" layoutY="280.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="350.0" style="-fx-font-size: 18px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" textFill="WHITE">
+      <Button onAction="#archivoclientes" layoutX="897.0" layoutY="280.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="350.0" style="-fx-font-size: 18px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField layoutX="328.0" layoutY="281.0" prefHeight="49.0" prefWidth="333.0" promptText="000-000-000" style="-fx-border-color: gray;" styleClass="letra_text" stylesheets="@../css/styles.css">
+      <TextField fx:id="txtDescuento" layoutX="328.0" layoutY="281.0" prefHeight="49.0" prefWidth="333.0" promptText="000-000-000" style="-fx-border-color: gray;" styleClass="letra_text" stylesheets="@../css/styles.css">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

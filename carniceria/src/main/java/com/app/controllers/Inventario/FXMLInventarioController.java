@@ -270,9 +270,8 @@ public class FXMLInventarioController implements Initializable {
         ObservableList<String> listEmpaquetado = FXCollections.observableArrayList(
             "Paquete",
             "Kilos",
-            "Gramos",
-            "Pieza",
-            "Cajas"
+            "Pieza"
+            
         );
         boxEmpaquetado.setItems(listEmpaquetado);
     }
@@ -674,6 +673,29 @@ public void ingresarCantidad() {
             alert.setHeaderText(null);
             alert.setContentText("Por favor, escriba un nombre para la categoría y seleccione un empaquetado.");
             alert.showAndWait();
+        }
+    }
+    public void archivoproductos() {
+        try {
+            // Cargar el archivo FXML con el nuevo contenido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLProductosEliminados.fxml"));
+            Pane nuevoContenido1 = loader.load();
+            
+            // Obtener el controlador del nuevo contenido
+            Object controller = loader.getController();
+    
+            if (controller instanceof FXMLProductosEliminados) {
+                FXMLProductosEliminados clienteEliminadosController = (FXMLProductosEliminados) controller;
+                // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+            } else {
+                System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+                // Opcional: Lanza una excepción si es un caso crítico
+                throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+            }
+    
+            rootPane.getChildren().setAll(nuevoContenido1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
