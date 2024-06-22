@@ -353,3 +353,31 @@
     -fx-border-color: #ccc;
     -fx-border-width: 1px;
 }
+
+.toggle-button-efectivo {
+    -fx-background-color: #258528; /* Verde */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px 20px;
+}
+
+.toggle-button-efectivo:selected {
+    -fx-background-color: #b2cf49; /* Verde oscuro */
+}
+
+.toggle-button-tarjeta:selected {
+    -fx-background-color: #b2cf49; /* Verde oscuro */
+}
+
+.toggle-button-tarjeta {
+    -fx-background-color: #2196F3; /* Azul */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px 
+}

@@ -95,6 +95,9 @@ public class VentasController {
     private bascula peso;
 
     public void initialize() {
+
+
+
         codigoProductoTextField.setText("");
         Cbarra.setCellValueFactory(new PropertyValueFactory<>("id"));
         Descriptions.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -110,6 +113,7 @@ public class VentasController {
         rootPane.setOnKeyPressed(this::handleKeyPressed);
 
         Platform.runLater(() -> codigoProductoTextField.requestFocus());
+        
 
         ColumAcciones.setCellFactory(param -> new TableCell<>() {
             @Override
@@ -131,6 +135,7 @@ public class VentasController {
                 }
             }
         });
+       
     }
 
     @FXML

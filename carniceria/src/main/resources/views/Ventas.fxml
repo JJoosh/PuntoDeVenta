@@ -96,7 +96,7 @@
                                     <TableColumn fx:id="Descriptions1" editable="false" maxWidth="7000.0" prefWidth="230.0" resizable="false" text="Descripción producto" />
                                     <TableColumn fx:id="PrecioV1" editable="false" maxWidth="7000.0" prefWidth="241.0" resizable="false" text="Precio de venta" />
                                     <TableColumn fx:id="Cantidad1" editable="false" prefWidth="252.0" resizable="false" text="Cantidad" />
-                                    <TableColumn prefWidth="140.0" text="Opciones" />
+                                    <TableColumn fx:id="ColumAcciones" prefWidth="140.0"  text="Opciones" />
                                  </columns>
                               </TableView>
                            </content>
