@@ -1,5 +1,8 @@
 package com.app.controllers.Inventario;
 
+import com.app.controllers.Clientes.FXMLClienteEliminados;
+import com.app.controllers.Configuracion.FXMLUsuariosEliminados;
+import com.app.controllers.Inventario.FXMLProductosEliminados;
 import com.app.controllers.Login.LoginController;
 import com.app.controllers.Ventas.VentasController;
 import com.app.models.Categoria;
@@ -625,5 +628,77 @@ public void ingresarCantidad() {
             alert.showAndWait();
         }
     }
-    
+   public void archivoproductos() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLProductosEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
+        
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
+
+        if (controller instanceof FXMLProductosEliminados) {
+            FXMLProductosEliminados clienteEliminadosController = (FXMLProductosEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+public void archivoclientes() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLClientesEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
+        
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
+
+        if (controller instanceof FXMLClienteEliminados) {
+            FXMLClienteEliminados clienteEliminadosController = (FXMLClienteEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+public void archivousuarios() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLUsuariosEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
+
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
+
+        if (controller instanceof FXMLUsuariosEliminados) {
+            FXMLUsuariosEliminados clienteEliminadosController = (FXMLUsuariosEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }

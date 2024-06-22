@@ -13,103 +13,115 @@
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXMLInventarioController">
-   <children>
-      <Label layoutX="43.0" layoutY="137.0" prefHeight="27.0" prefWidth="258.0" stylesheets="@../css/Styles.css" text="Costo total del inventario:">
-         <font>
-            <Font name="Arial" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="47.0" layoutY="198.0" prefHeight="41.0" prefWidth="394.0" text="Cantidad de productos en el inventario:">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" style="-fx-font-size: 20px;">
-         <stylesheets>
-            <URL value="@../css/Fondo.css" />
-            <URL value="@../css/styles.css" />
-         </stylesheets></TextField>
-      <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" style="-fx-font-size: 20px;">
-         <stylesheets>
-            <URL value="@../css/Fondo.css" />
-            <URL value="@../css/styles.css" />
-         </stylesheets></TextField>
-      <ComboBox fx:id="categorias" layoutX="727.0" layoutY="129.0" prefHeight="42.0" prefWidth="242.0" promptText="Categorias" style="-fx-background-color: F9ECDF; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></ComboBox>
-      <Button id="inv_repomov" layoutX="1006.0" layoutY="127.0" mnemonicParsing="false" onAction="#productosBajos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-font-size: 20px; -fx-font-weight: bold;" text="Productos bajos en existencias">
-         <stylesheets>
-            <URL value="@Fondo.css" />
-            <URL value="@../css/Fondo.css" />
-         </stylesheets>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button layoutX="1171.0" layoutY="251.0" mnemonicParsing="false" onAction="#Exportar" prefHeight="41.0" prefWidth="165.0" style="-fx-border-color: black; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="Devo" stylesheets="@../css/Fondo.css" text="Exportar excel">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="264.0" layoutY="264.0" prefHeight="42.0" prefWidth="455.0" promptText="Ingrese el código del producto" style="-fx-font-size: 20px;">
-         <cursor>
-            <Cursor fx:constant="TEXT" />
-         </cursor>
-         <stylesheets>
-            <URL value="@../css/Fondo.css" />
-            <URL value="@../css/styles.css" />
-         </stylesheets></TextField>
-      <Button fx:id="btnAgregar" layoutX="1122.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="46.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_agre" text="Agregar producto">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font size="18.0" />
-         </font>
-         <stylesheets>
-            <URL value="@../css/styles.css" />
-            <URL value="@../css/styles.css" />
-         </stylesheets>
-      </Button>
-      <Button id="inv_repomov" layoutX="1006.0" layoutY="186.0" mnemonicParsing="false" onAction="#movimientos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-border-color: black;" stylesheets="@Fondo.css" text="Reporte de movimientos">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <ScrollPane layoutX="33.0" layoutY="423.0" prefHeight="411.0" prefWidth="1319.0" stylesheets="@../css/styles.css">
-         <content>
-            <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1325.0">
-               <columns>
-                  <TableColumn fx:id="codigoColumn" prefWidth="150.0" text="Codigo" />
-                  <TableColumn fx:id="descripcionColumn" prefWidth="220.0" resizable="false" text="Descripcion del producto" />
-                  <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" resizable="false" text="Costo" />
-                  <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" resizable="false" text="Precio venta" />
-                  <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" resizable="false" text="Existencia" />
-                  <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" resizable="false" text="Inventario minimo" />
-                  <TableColumn prefWidth="250.0" resizable="false" text="Opciones" />
-               </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" styleClass="Label-titulos" text="Reporte de Inventario">
-         <stylesheets>
-            <URL value="@../css/Fondo.css" />
-            <URL value="@../css/Styles.css" />
-         </stylesheets></Label>
-      <Label layoutX="52.0" layoutY="264.0" prefHeight="41.0" prefWidth="191.0" style="-fx-font-weight: bold;" text="Ingrese el código:">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnAgregar1" layoutX="52.0" layoutY="337.0" mnemonicParsing="false" onAction="#addCategoria" prefHeight="14.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_cont" stylesheets="@../css/styles.css" text="Agregar categoria">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="959.0" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
-      <TextField fx:id="txtCategoria" layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="304.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
-      <ComboBox fx:id="boxEmpaquetado" layoutX="613.0" layoutY="340.0" prefHeight="40.0" prefWidth="250.0" promptText="Seleccione el tipo de empaquetado" style="-fx-background-color: #AAE7F5; -fx-border-color: gray;" />
-   </children>
+    <children>
+        <Label layoutX="43.0" layoutY="137.0" prefHeight="27.0" prefWidth="258.0" stylesheets="@../css/Styles.css" text="Costo total del inventario:">
+            <font>
+                <Font name="Arial" size="22.0" />
+            </font>
+        </Label>
+        <Label layoutX="47.0" layoutY="198.0" prefHeight="41.0" prefWidth="394.0" text="Cantidad de productos en el inventario:">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <TextField layoutX="306.0" layoutY="129.0" prefHeight="42.0" prefWidth="408.0" promptText="\$0.00" style="-fx-font-size: 20px;">
+            <stylesheets>
+                <URL value="@../css/Fondo.css" />
+                <URL value="@../css/styles.css" />
+            </stylesheets>
+        </TextField>
+        <TextField layoutX="441.0" layoutY="197.0" prefHeight="42.0" prefWidth="276.0" promptText="0.00" style="-fx-font-size: 20px;">
+            <stylesheets>
+                <URL value="@../css/Fondo.css" />
+                <URL value="@../css/styles.css" />
+            </stylesheets>
+        </TextField>
+        <ComboBox fx:id="categorias" layoutX="727.0" layoutY="129.0" prefHeight="42.0" prefWidth="242.0" promptText="Categorias" style="-fx-background-color: F9ECDF; -fx-border-color: gray;" stylesheets="@../css/Fondo.css">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ComboBox>
+        <Button id="inv_repomov" layoutX="1006.0" layoutY="127.0" mnemonicParsing="false" onAction="#productosBajos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-font-size: 20px; -fx-font-weight: bold;" text="Productos bajos en existencias">
+            <stylesheets>
+                <URL value="@Fondo.css" />
+                <URL value="@../css/Fondo.css" />
+            </stylesheets>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Button layoutX="1171.0" layoutY="251.0" mnemonicParsing="false" onAction="#Exportar" prefHeight="41.0" prefWidth="165.0" style="-fx-border-color: black; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="Devo" stylesheets="@../css/Fondo.css" text="Exportar excel">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <TextField fx:id="idP" accessibleRole="COMBO_BOX" layoutX="264.0" layoutY="264.0" prefHeight="42.0" prefWidth="455.0" promptText="Ingrese el código del producto" style="-fx-font-size: 20px;">
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+            <stylesheets>
+                <URL value="@../css/Fondo.css" />
+                <URL value="@../css/styles.css" />
+            </stylesheets>
+        </TextField>
+        <Button fx:id="btnAgregar" layoutX="1122.0" layoutY="337.0" mnemonicParsing="false" onAction="#addInventario" prefHeight="46.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_agre" text="Agregar producto">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="18.0" />
+            </font>
+            <stylesheets>
+                <URL value="@../css/styles.css" />
+                <URL value="@../css/styles.css" />
+            </stylesheets>
+        </Button>
+        <Button id="inv_repomov" layoutX="1006.0" layoutY="186.0" mnemonicParsing="false" onAction="#movimientos" prefHeight="46.0" prefWidth="330.0" style="-fx-background-color: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-border-color: black;" stylesheets="@Fondo.css" text="Reporte de movimientos">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <ScrollPane layoutX="33.0" layoutY="423.0" prefHeight="411.0" prefWidth="1319.0" stylesheets="@../css/styles.css">
+            <content>
+                <TableView fx:id="tableView" prefHeight="405.0" prefWidth="1325.0">
+                    <columns>
+                        <TableColumn fx:id="codigoColumn" prefWidth="150.0" text="Codigo" />
+                        <TableColumn fx:id="descripcionColumn" prefWidth="220.0" resizable="false" text="Descripcion del producto" />
+                        <TableColumn fx:id="costoColumn" prefWidth="138.66671752929688" resizable="false" text="Costo" />
+                        <TableColumn fx:id="precioVentaColumn" prefWidth="196.0" resizable="false" text="Precio venta" />
+                        <TableColumn fx:id="existenciaColumn" prefWidth="159.33331298828125" resizable="false" text="Existencia" />
+                        <TableColumn fx:id="inventarioMinimoColumn" prefWidth="184.66656494140625" resizable="false" text="Inventario minimo" />
+                        <TableColumn prefWidth="250.0" resizable="false" text="Opciones" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
+        <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" styleClass="Label-titulos" text="Reporte de Inventario">
+            <stylesheets>
+                <URL value="@../css/Fondo.css" />
+                <URL value="@../css/Styles.css" />
+            </stylesheets>
+        </Label>
+        <Label layoutX="52.0" layoutY="264.0" prefHeight="41.0" prefWidth="191.0" style="-fx-font-weight: bold;" text="Ingrese el código:">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnAgregar1" layoutX="52.0" layoutY="337.0" mnemonicParsing="false" onAction="#addCategoria" prefHeight="14.0" prefWidth="214.0" style="-fx-font-size: 18px;" styleClass="btn_cont" stylesheets="@../css/styles.css" text="Agregar categoria">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button layoutX="901.0" layoutY="364.0" mnemonicParsing="false" onAction="#archivoclientes" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" />
+        <Button layoutX="893.0" layoutY="307.0" mnemonicParsing="false" onAction="#archivousuarios" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de usuarios" />
+        <Button layoutX="959.0" onAction="#archivoproductos" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
+        <TextField fx:id="txtCategoria" layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="304.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
+        <ComboBox fx:id="boxEmpaquetado" layoutX="613.0" layoutY="340.0" prefHeight="40.0" prefWidth="250.0" promptText="Seleccione el tipo de empaquetado" style="-fx-background-color: #AAE7F5; -fx-border-color: gray;" />
+        
+        <!-- Botones añadidos -->
+        
+    </children>
 </Pane>

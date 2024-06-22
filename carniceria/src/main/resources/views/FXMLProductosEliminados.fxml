@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXMLProductosEliminados">
+   <children>
+      <Label prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: #168430;" styleClass="Label-arc" stylesheets="@../css/Styles.css" text="Archivo de productos" />
+      <Button layoutX="966.0" fx:id="cambiarEstadoButton" onAction="#cambiarEstadoProducto" layoutY="194.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="346.0" style="-fx-font-size: 28px;" styleClass="btn_habi" stylesheets="@../css/Styles.css" text="Habilitar producto">
+         <font>
+            <Font size="28.0" />
+         </font></Button>
+      <Label layoutX="71.0" layoutY="207.0" prefHeight="41.0" prefWidth="131.0" styleClass="label-conte" stylesheets="@../css/Styles.css" text="Consultar:">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField fx:id="buscarTextField" layoutX="215.0" layoutY="203.0" prefHeight="49.0" prefWidth="532.0" promptText="Ingrese nombre o ID del producto" style="-fx-border-color: gray;" styleClass="letra_text" stylesheets="@../css/Styles.css" />
+      <ImageView accessibleRole="BUTTON" fitHeight="62.0" fitWidth="62.0" layoutX="769.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/buscar.png" />
+         </image>
+      </ImageView>
+      <ScrollPane layoutX="63.0" layoutY="333.0" prefHeight="502.0" prefWidth="1209.0">
+         <content>
+            <TableView fx:id="productosTableView" prefHeight="498.0" prefWidth="1207.0">
+              <columns>
+                <TableColumn fx:id="codigoColumn" prefWidth="220.0" resizable="false" text="Código" />
+                <TableColumn fx:id="nombreColumn" prefWidth="230.0" resizable="false" text="Nombre" />
+                <TableColumn fx:id="costoColumn" prefWidth="200.0" resizable="false" text="Costo" />
+                <TableColumn fx:id="precioColumn" prefWidth="200.0" resizable="false" text="Precio venta" />
+                <TableColumn fx:id="categoriaColumn" prefWidth="200.0" resizable="false" text="Categoria" />
+                <TableColumn fx:id="estadoColumn" prefWidth="150.0" resizable="false" text="Estado" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

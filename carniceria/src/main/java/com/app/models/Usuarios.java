@@ -23,15 +23,19 @@ public class Usuarios {
 
     @Column(name = "Rol")
     private String rol;
+    
+    @Column(name = "Activo")
+    private String activo;
 
     public Usuarios() {
     }
 
-    public Usuarios(long id, String nombreUsuario, String contrasena, String rol) {
+    public Usuarios(Long id, String nombreUsuario, String contrasena, String rol, String activo) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.rol = rol;
+        this.activo = activo;
     }
 
     public Long getId() {
@@ -64,5 +68,13 @@ public class Usuarios {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+    
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
 }
