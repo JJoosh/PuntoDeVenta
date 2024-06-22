@@ -91,6 +91,8 @@ public class HomeController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));
                 Pane nuevoContenido = loader.load();
                 FXMLInventarioController inventarioController = loader.getController();
+                VentasController ventasController=new VentasController();
+                ventasController.onClose();
                 home.getChildren().setAll(nuevoContenido);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -109,11 +111,17 @@ public class HomeController implements Initializable {
     }
 
     public void abrirVentas() {
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
             Pane nuevoContenido = loader.load();
             VentasController ventasController = loader.getController();
+           
             home.getChildren().setAll(nuevoContenido);
+            ventasController.refrescarVistaVentas();
+            //ventasController.onClose();
+            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,6 +133,8 @@ public class HomeController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Corte.fxml"));
                 Pane nuevoContenido = loader.load();
                 FXMLCorte corteController = loader.getController();
+                VentasController ventasController=new VentasController();
+                ventasController.onClose();
                 home.getChildren().setAll(nuevoContenido);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -139,6 +149,8 @@ public class HomeController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLDevolucion.fxml"));
             Pane nuevoContenido = loader.load();
             FXMLDevolucionesController devolucionesController = loader.getController();
+            VentasController ventasController=new VentasController();
+                ventasController.onClose();
             home.getChildren().setAll(nuevoContenido);
 
             } catch (IOException e) {
@@ -157,6 +169,8 @@ public void abrirConfiguracion() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Usuarios.fxml"));
         Pane nuevoContenido = loader.load();
         UsuariosController devolucionesController = loader.getController();
+        VentasController ventasController=new VentasController();
+                ventasController.onClose();
         home.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,6 +187,8 @@ public void openClients(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/clientes2.fxml"));
         Pane nuevoContenido = loader.load();
         ClientesController clienteController = loader.getController();
+        VentasController ventasController=new VentasController();
+                ventasController.onClose();
         home.getChildren().setAll(nuevoContenido);
     } catch (IOException e) {
         e.printStackTrace();

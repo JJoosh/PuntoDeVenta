@@ -2,18 +2,16 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
-   <children>
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Detalles de compra">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.CompraController">
+   <top>
+      <Label fx:id="Titulo_modulo" prefHeight="95.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Detalles de compra">
          <font>
             <Font size="45.0" />
          </font>
@@ -22,41 +20,86 @@
             <URL value="@../css/Fondo.css" />
          </stylesheets>
       </Label>
-      <Button id="atras" fx:id="btn_atras" layoutX="46.0" layoutY="129.0" mnemonicParsing="false" onAction="#regresar" prefHeight="50.0" prefWidth="150.0" stylesheets="@../css/Fondo.css" text="Regresar" />
-      <Label id="osc" layoutX="70.0" layoutY="588.0" prefHeight="47.0" prefWidth="371.0" stylesheets="@../css/Fondo.css" text="Total de la compra:">
-         <font>
-            <Font name="Arial Black" size="35.0" />
-         </font>
-      </Label>
-      <Label id="Label_letras" layoutX="70.0" layoutY="638.0" prefHeight="52.0" prefWidth="326.0" stylesheets="@../css/Fondo.css" text="Forma de pago">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label id="osc" layoutX="70.0" layoutY="807.0" prefHeight="65.0" prefWidth="170.0" stylesheets="@../css/Fondo.css" text="Cambio:">
-         <font>
-            <Font name="Arial Black" size="35.0" />
-         </font>
-      </Label>
-      <Button id="compra_finalizar" fx:id="compra_finalizar" layoutX="1059.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#finalizarCompra" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: #14DB7B;" stylesheets="@../css/Fondo.css" text="Finalizar" />
-      <Button id="compra_borrar" fx:id="borrararticulo" layoutX="753.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#borrarArticuloSeleccionado" prefHeight="65.0" prefWidth="205.0" stylesheets="@../css/Fondo.css" text="Borrar articulo" />
-      <Label id="compra_total" fx:id="totalImporteLabel" layoutX="454.0" layoutY="586.0" prefHeight="52.0" prefWidth="315.0" stylesheets="@../css/Fondo.css" text="0.0" />
-      <Label id="compra_cambio" fx:id="cambioLabel" layoutX="240.0" layoutY="814.0" prefHeight="52.0" prefWidth="371.0" stylesheets="@../css/Fondo.css" text="0.0" />
-      <TextField id="insertarPagoTextField" fx:id="insertarPagoTextField" layoutX="70.0" layoutY="751.0" onAction="#calcularCambio" prefHeight="47.0" prefWidth="326.0" />
-      <ScrollPane layoutX="71.0" layoutY="215.0" prefHeight="349.0" prefWidth="1254.0">
-         <content>
-            <TableView fx:id="tablaDetallesVenta" prefHeight="344.0" prefWidth="1253.0">
-               <columns>
-                  <TableColumn fx:id="nombreProductoColumn" prefWidth="200.0" text="Producto" />
-                  <TableColumn fx:id="precioColumn" prefWidth="200.0" text="Precio" />
-                  <TableColumn fx:id="cantidadColumn" editable="false" prefWidth="200.0" resizable="false" sortable="false" text="Cantidad" />
-                  <TableColumn fx:id="totalColumn" prefWidth="200.0" text="Total" />
-                  <TableColumn fx:id="columAcciones" prefWidth="200.0" text="Acciones" />
-               </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-      <ComboBox fx:id="formaPagoComboBox" layoutX="71.0" layoutY="694.0" prefHeight="47.0" prefWidth="326.0" />
-
-   </children>
-</Pane>
+   </top>
+   <left>
+      <Pane prefHeight="792.0" prefWidth="1367.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="37.0" layoutY="17.0" prefHeight="47.0" prefWidth="230.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Total a Cobrar">
+               <font>
+                  <Font name="Arial Black" size="35.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@../css/Fondo.css" />
+                  <URL value="@../css/styles.css" />
+               </stylesheets>
+            </Label>
+            <Label alignment="TOP_CENTER" layoutX="217.0" layoutY="381.0" prefHeight="52.0" prefWidth="254.0" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Ingresar cantidad">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="504.0" layoutY="8.0" prefHeight="65.0" prefWidth="119.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Cambio">
+               <font>
+                  <Font name="Arial Black" size="35.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@../css/Fondo.css" />
+                  <URL value="@../css/styles.css" />
+               </stylesheets>
+            </Label>
+            <Label fx:id="totalImporteLabel" alignment="CENTER" layoutX="14.0" layoutY="73.0" prefHeight="52.0" prefWidth="230.0" style="-fx-text-fill: red;" stylesheets="@../css/Fondo.css" text="0.0">
+               <font>
+                  <Font name="System Bold" size="60.0" />
+               </font></Label>
+            <Label fx:id="cambioLabel" alignment="CENTER" layoutX="461.0" layoutY="73.0" prefHeight="52.0" prefWidth="199.0" style="-fx-text-fill: blue;" stylesheets="@../css/Fondo.css" text="0.0">
+               <font>
+                  <Font name="System Bold" size="60.0" />
+               </font></Label>
+            <TextField fx:id="insertarPagoTextField" layoutX="181.0" layoutY="439.0" onAction="#calcularCambio" prefHeight="47.0" prefWidth="326.0" stylesheets="@../css/styles.css" />
+            <!-- Encapsular elementos de la derecha en un Pane con borde -->
+            <Pane layoutX="712.0" layoutY="-2.0" prefHeight="610.0" prefWidth="291.0" style="-fx-border-color: black; -fx-border-width: 2;">
+               <children>
+                  <Button layoutX="56.0" layoutY="61.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="180.0" styleClass="btn_eli" stylesheets="@../css/styles.css" text="ESC - Cancelar">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="21.0" layoutY="272.0" prefHeight="47.0" prefWidth="250.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="Total de Articulos:">
+                     <font>
+                        <Font name="Arial Black" size="30.0" />
+                     </font>
+                     <stylesheets>
+                        <URL value="@../css/Fondo.css" />
+                        <URL value="@../css/styles.css" />
+                     </stylesheets>
+                  </Label>
+                  <Label fx:id="ArtiTotal" alignment="CENTER" layoutX="21.0" layoutY="347.0" prefHeight="47.0" prefWidth="250.0" style="-fx-font-weight: bold;" styleClass="label-conte" text="0">
+                     <font>
+                        <Font name="Arial Black" size="31.0" />
+                     </font>
+                     <stylesheets>
+                        <URL value="@../css/Fondo.css" />
+                        <URL value="@../css/styles.css" />
+                     </stylesheets>
+                  </Label>
+               </children>
+            </Pane>
+            <ToggleButton fx:id="efectivoButton" layoutX="45.0" layoutY="279.0" prefHeight="47.0" prefWidth="150.0" styleClass="toggle-button-efectivo" text="Efectivo">
+               <stylesheets>
+                  <URL value="@../css/styles.css" />
+               </stylesheets>
+            </ToggleButton>
+            <ToggleButton fx:id="tarjetaButton" layoutX="480.0" layoutY="279.0" prefHeight="47.0" prefWidth="150.0" styleClass="toggle-button-tarjeta" text="Tarjeta">
+               <stylesheets>
+                  <URL value="@../css/styles.css" />
+               </stylesheets>
+            </ToggleButton>
+            <Button layoutX="205.0" layoutY="520.0" mnemonicParsing="false" onAction="#finalizarCompra" prefHeight="47.0" prefWidth="279.0" styleClass="btn" stylesheets="@../css/styles.css" text="ENTER - Cobrar y Terminar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </left>
+</BorderPane>

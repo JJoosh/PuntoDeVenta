@@ -96,11 +96,6 @@
     -fx-font-family: "Arial";
     -fx-font-size: 28px;
 }
-.label-conte1{
-    -fx-text-fill:#000000;
-    -fx-font-family: "Arial";
-    -fx-font-size: 25px;
-}
 
 .label-letra1{
     -fx-font-family: "Verdana";
@@ -233,7 +228,6 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-font-family: "Verdana";
-
 }
 
 .table-view .table-cell {
@@ -275,6 +269,10 @@
     -fx-text-fill: black;
 }
 
+.table-view .table-row-cell:selected {
+    -fx-background-color: #4D94AC;
+    -fx-text-fill: white;
+}
 /* FONDOS */
 .fondo-su{
     -fx-background-color: linear-gradient(#A63D46 30%, #734146 79%);
@@ -353,4 +351,32 @@
     -fx-background-color: white;
     -fx-border-color: #ccc;
     -fx-border-width: 1px;
+}
+
+.toggle-button-efectivo {
+    -fx-background-color: #3b5bc4; /* Verde */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px 20px;
+}
+
+.toggle-button-efectivo:selected {
+    -fx-background-color: #1aa82d; /* Verde oscuro */
+}
+
+.toggle-button-tarjeta:selected {
+    -fx-background-color: #1aa82d; /* Verde oscuro */
+}
+
+.toggle-button-tarjeta {
+    -fx-background-color: #3b5bc4; /* Azul */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px 
 }

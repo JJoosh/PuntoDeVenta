@@ -67,7 +67,7 @@ public class LoginController {
                 // Cargar la vista home.fxml
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
                 Parent root = loader.load();
-
+                
                 // Obtener el controlador de la vista home.fxml
                 HomeController homeController = loader.getController();
 
@@ -86,6 +86,7 @@ public class LoginController {
                 stage.setScene(scene);
 
                 stage.show();
+                
             } catch (IOException e) {
                 e.printStackTrace();
                 showAlert(AlertType.ERROR, "Error", "Error al cargar la vista home.fxml");

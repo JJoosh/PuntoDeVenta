@@ -69,7 +69,7 @@
                      <children>
                         <ScrollPane layoutY="23.0" prefHeight="389.0" prefWidth="967.0">
                            <content>
-                              <TableView fx:id="tablaProductos" prefHeight="371.0" prefWidth="1131.0" stylesheets="@../css/styles.css">
+                              <TableView fx:id="tablaProductos" id="tablaProductos" prefHeight="371.0" prefWidth="1131.0" stylesheets="@../css/styles.css">
                                  <columns>
                                     <TableColumn fx:id="Cbarra" editable="false" prefWidth="260.0" resizable="false" text="Código de barras" />
                                     <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="230.0" resizable="false" text="Descripción producto" />

@@ -2,8 +2,10 @@ package com.app.controllers.Ventas;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,27 +34,25 @@ import com.ibm.icu.text.SimpleDateFormat;
 import com.itextpdf.text.Font;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
-public class CompraController {
+public class CompraController implements Initializable {
 
     private static final Font NORMAL_FONT = new Font(Font.FontFamily.COURIER, 3);
     private static final Font FUENTE = new Font(Font.FontFamily.COURIER, 9);
@@ -68,22 +68,18 @@ public class CompraController {
     private Label totalImporteLabel;
     @FXML
     private Label ticketLabel;
-    @FXML
-    private TableView<Productos> tablaDetallesVenta;
-    @FXML
-    private TableColumn<Productos, String>      nombreProductoColumn;
-    @FXML
-    private TableColumn<Productos, BigDecimal> precioColumn;
-    @FXML
-    private TableColumn<Productos, BigDecimal> cantidadColumn;
-    @FXML
-    private TableColumn<Productos, BigDecimal> totalColumn;
+    private Stage stage;
+    
+    private Tab selectedTab;
 
+   public void setStage(Stage stage) {
+    this.stage = stage;
+    stage.setResizable(false);
+}
 
-    @FXML
-    private ComboBox<String> formaPagoComboBox;
-
-
+    @FXML private Label ArtiTotal;
+    @FXML private ToggleButton efectivoButton;
+    @FXML private ToggleButton tarjetaButton;
     @FXML
     private TextField insertarPagoTextField;
 
@@ -93,98 +89,57 @@ public class CompraController {
     @FXML
     private Label cambioLabel;
     
-    @FXML
-    private Pane rootPane;
+    
 
     private Ventas venta;
     // private Productos id;
     private BigDecimal importeTotal;
     private Clientes cliente;
+    private String descuento="0";
 
-    @FXML TableColumn<Productos, String> columAcciones;
 
     private ObservableList<Productos> productosData = FXCollections.observableArrayList();
 
    
-    @FXML
-    private void initialize() {
-        formaPagoComboBox.getItems().addAll("Efectivo", "Tarjeta");
-        insertarPagoTextField.setVisible(false);
-        
-
-        // Agregar listener al ComboBox de forma de pago
-        formaPagoComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            handlePaymentMethodChange(newValue);
-        });
-
-        nombreProductoColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        cantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-
-        // Modificar la forma en que se muestra el importe total en la columna
-        totalColumn.setCellValueFactory(cellData -> {
-            BigDecimal total = cellData.getValue().getPrecio().multiply(cellData.getValue().getCantidad());
-            return new SimpleObjectProperty<>(total);
-        });
-
-        // Formatear la columna total con el signo de $ y dos decimales
-        totalColumn.setCellFactory(column -> new TableCell<Productos, BigDecimal>() {
-            @Override
-            protected void updateItem(BigDecimal item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    DecimalFormat formato = new DecimalFormat("$#,##0.00");
-                    setText(formato.format(item));
-                }
-            }
-        });
-
-        insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            calcularCambio();
-        });
-        columAcciones.setCellFactory(param -> new TableCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Productos producto = getTableView().getItems().get(getIndex());
-
-                    Button deleteButton = new Button("Eliminar");
-                    deleteButton.getStyleClass().add("btn_eli");
-                    deleteButton.setOnAction(event -> {
-                        System.out.println("Eliminar: " + producto.getNombre());
-                        getTableView().getSelectionModel().select(getTableRow().getIndex());
-                        borrarArticuloSeleccionado();
-                    });
-                    setGraphic(new HBox(5, deleteButton)); 
-                }
-            }
-        });
-        rootPane.setOnKeyPressed(this::handleKeyPressed);
-        Platform.runLater(() -> insertarPagoTextField.requestFocus());
+    public void setVentasController(VentasController ventasController) {
+        this.ventasController1 = ventasController;
     }
+    
+    @Override
+public void initialize(URL url, ResourceBundle rb) {
+    insertarPagoTextField.setVisible(false); // Inicialmente invisible
 
-    public void getIDandDescuento(Clientes cliente, int Descuento){
-       this.cliente=cliente;
-    }
+    ToggleGroup toggleGroup = new ToggleGroup();
+    tarjetaButton.setToggleGroup(toggleGroup);
+    efectivoButton.setToggleGroup(toggleGroup);
 
-    private void handlePaymentMethodChange(String paymentMethod) {
-        if ("Efectivo".equals(paymentMethod)) {
+    // Agregar un ChangeListener al ToggleGroup
+    toggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+        if (newToggle == efectivoButton) {
             insertarPagoTextField.setVisible(true);
-        } else if ("Tarjeta".equals(paymentMethod)) {
+        } else {
             insertarPagoTextField.setVisible(false);
-            calcularCambio();
+            insertarPagoTextField.setText("");
         }
+    });
+
+    insertarPagoTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        calcularCambio();
+    });
+
+    Platform.runLater(() -> insertarPagoTextField.requestFocus());
+}
+    public void getIDandDescuento(Clientes cliente, String descuento){
+       this.cliente=cliente;
+       this.descuento=descuento;
     }
+
+
 
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
-            borrarArticuloSeleccionado();
+            
         }
 
         if (event.getCode() == KeyCode.F2) {
@@ -196,71 +151,70 @@ public class CompraController {
         }
     }
 
-    public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal) {
-        setProductosData(productosData);
+    public void initData(ObservableList<Productos> productosData, BigDecimal importeTotal, Tab selectedTab) {
+        this.productosData = productosData;
         setImporteTotal(importeTotal);
-        actualizarTablaDetallesVenta();
-
-        // Formatear el importe total con dos decimales y el signo de dólar
+        this.selectedTab = selectedTab;
+        
         DecimalFormat formato = new DecimalFormat("$#,##0.00");
         String importeFormateado = formato.format(importeTotal);
-
+    
         totalImporteLabel.setText(importeFormateado);
     }
 
-    private void actualizarTablaDetallesVenta() {
-        tablaDetallesVenta.setItems(productosData);
-    }
-
-    public void setProductosData(ObservableList<Productos> productosData) {
-        this.productosData = productosData;
-        tablaDetallesVenta.setItems(productosData);
-    }
+    
 
     public void setImporteTotal(BigDecimal importeTotal) {
         this.importeTotal = importeTotal;
     }
 
     @FXML
-    private void finalizarCompra() {
-        try {
-            String formaPago = formaPagoComboBox.getSelectionModel().getSelectedItem();
-            if (formaPago == null) {
-                mostrarAlertaError("Forma de pago no seleccionada",
-                        "Por favor, seleccione una forma de pago antes de finalizar la compra.");
+private void finalizarCompra() {
+    try {
+        String formaPago = efectivoButton.isSelected() ? "Efectivo" : "Tarjeta";
+        
+        if ("Efectivo".equals(formaPago)) {
+            String montoIngresadoTexto = insertarPagoTextField.getText();
+            if (montoIngresadoTexto.isEmpty()) {
+                mostrarAlertaError("Monto de pago no ingresado",
+                        "Por favor, ingrese el monto de pago antes de finalizar la compra.");
                 return;
             }
 
-            if ("Efectivo".equals(formaPago)) {
-                String montoIngresadoTexto = insertarPagoTextField.getText();
-                if (montoIngresadoTexto.isEmpty()) {
-                    mostrarAlertaError("Monto de pago no ingresado",
-                            "Por favor, ingrese el monto de pago antes de finalizar la compra.");
-                    return;
-                }
-
-                BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
-                BigDecimal cambio = montoIngresado.subtract(importeTotal);
-                if (cambio.compareTo(BigDecimal.ZERO) < 0) {
-                    mostrarAlertaError("Cambio insuficiente",
-                            "El monto ingresado es insuficiente para realizar la compra.");
-                    return;
-                }
+            BigDecimal montoIngresado = new BigDecimal(montoIngresadoTexto);
+            BigDecimal cambio = montoIngresado.subtract(importeTotal);
+            if (cambio.compareTo(BigDecimal.ZERO) < 0) {
+                mostrarAlertaError("Cambio insuficiente",
+                        "El monto ingresado es insuficiente para realizar la compra.");
+                return;
             }
-
-            guardarVenta(formaPago);
-            ImprimirTicket();
-            actualizarInventario();
-
-            importeTotal = BigDecimal.ZERO;
-
-            regresarAVenta();
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlertaError("Error al finalizar la compra",
-                    "Ocurrió un error al finalizar la compra. Por favor, intente nuevamente.");
         }
+
+        guardarVenta(formaPago);
+        ImprimirTicket();
+        actualizarInventario();
+
+        // Eliminar el ticket completamente
+        if (ventasController1 != null && selectedTab != null) {
+            Platform.runLater(() -> {
+                ventasController1.eliminarTicketCompletamente(selectedTab);
+                selectedTab=null;
+            });
+        }
+
+        // Cerrar la ventana de compra
+        Stage stage = (Stage) totalImporteLabel.getScene().getWindow();
+        stage.close();
+
+        importeTotal = BigDecimal.ZERO;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        mostrarAlertaError("Error al finalizar la compra",
+                "Ocurrió un error al finalizar la compra. Por favor, intente nuevamente.");
     }
+}
+
 
     private void guardarVenta(String formaPago) {
         Configuration configuration = new Configuration().configure();
@@ -284,15 +238,26 @@ public class CompraController {
                 mostrarAlertaError("Error al guardar la venta", "No se encontraron productos en la venta.");
                 return;
             }
-
+       
             // Crear una instancia de BigDecimal para el total
+            descuento = descuento.replaceAll("%", "");
             BigDecimal total = importeTotal != null ? importeTotal : BigDecimal.ZERO;
 
-            // Crear una instancia de la clase Ventas
+            BigDecimal Descuento = new BigDecimal(descuento);
+            BigDecimal valorPorcentaje = total.multiply(Descuento).divide(BigDecimal.valueOf(100));
+
+            // Mostrar el valor del porcentaje
+            System.out.println(descuento +" Valor del " + Descuento + "% de " + total + " es: " + valorPorcentaje);
+    
+            // Restar el valor del porcentaje al total original
+            BigDecimal nuevoTotal = total.subtract(valorPorcentaje);
+    
+            // Mostrar el nuevo total
+            System.out.println("Nuevo total después de restar el porcentaje: " + nuevoTotal);
             Ventas venta = new Ventas();
             venta.setTicket(String.format("%06d", (int) (Math.random() * 1000000)));
             venta.setFecha(LocalDateTime.now());
-            venta.setTotal(total);
+            venta.setTotal(nuevoTotal);
             
             // Asociar el cliente a la venta
             venta.setCliente(cliente);
@@ -357,28 +322,6 @@ public class CompraController {
         }
     }
 
-    private void regresarAVenta() {
-        // Limpiar la lista de productos
-        productosData.clear();
-    
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Ventas.fxml"));
-            Pane nuevoContenido = loader.load();
-    
-            // Obtener el controlador del nuevo contenido
-            VentasController ventasController = loader.getController();
-    
-            // Actualizar los datos en el controlador de ventas
-            ventasController.actualizarDatos(productosData, importeTotal);
-            ventasController.actualizarProductosAgregados(productosData);
-            ventasController.actualizarTotalImporte();
-    
-            rootPane.getChildren().setAll(nuevoContenido);
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlertaError("Error al regresar", "Ocurrió un error al regresar. Por favor, intente nuevamente.");
-        }
-    }
     @FXML
 public void regresar() {
     try {
@@ -391,9 +334,9 @@ public void regresar() {
         // Actualizar los datos en el controlador de ventas
         ventasController.actualizarDatos(productosData, importeTotal);
         ventasController.actualizarProductosAgregados(productosData);
-        ventasController.actualizarTotalImporte();
+        //ventasController.actualizarTotalImporte();
 
-        rootPane.getChildren().setAll(nuevoContenido);
+       
     } catch (IOException e) {
         e.printStackTrace();
         mostrarAlertaError("Error al regresar", "Ocurrió un error al regresar. Por favor, intente nuevamente.");
@@ -417,7 +360,7 @@ public void regresar() {
 
     @FXML
     private void calcularCambio() {
-        if (formaPagoComboBox.getSelectionModel().getSelectedItem().equals("Efectivo")) {
+        
             try {
                 BigDecimal montoIngresado = new BigDecimal(insertarPagoTextField.getText());
                 BigDecimal cambio = montoIngresado.subtract(importeTotal);
@@ -425,10 +368,10 @@ public void regresar() {
             } catch (NumberFormatException e) {
                 cambioLabel.setText("0.00");
             }
-        } else {
-            cambioLabel.setText("0.00");
-        }
-    }
+        } 
+          
+       
+    
 
     private void actualizarInventario() {
         try {
@@ -478,23 +421,8 @@ public void regresar() {
         }
     }
 
-    @FXML
-    public void borrarArticuloSeleccionado() {
-        Productos productoSeleccionado = tablaDetallesVenta.getSelectionModel().getSelectedItem();
-        if (productoSeleccionado != null) {
-            productosData.remove(productoSeleccionado);
-            actualizarTotalImporte();
-            totalImporteLabel.setText(formatoDinero.format(importeTotal));
-        } else {
-            mostrarAlertaError("Error al borrar artículo", "Debe seleccionar un artículo de la tabla para eliminar.");
-        }
-    }
+    
 
-    private void actualizarTotalImporte() {
-        importeTotal = productosData.stream()
-                .map(producto -> producto.getPrecio().multiply(producto.getCantidad()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 
     private void ImprimirTicket() {
     try {
@@ -527,9 +455,6 @@ public void regresar() {
         System.out.println(e);
     }
 }
-
-
-    
  private String generarContenidoTicket() {
     StringBuilder sb = new StringBuilder();
     sb.append("       ----SuKarne----\n");
@@ -583,4 +508,4 @@ public void regresar() {
         entityManager.close();
         emf.close();
     }
-}   
+}

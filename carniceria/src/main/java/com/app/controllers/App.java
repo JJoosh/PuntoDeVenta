@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     private static Scene scene;
-
+    
     @Override
     public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
         // Inicializar Hibernate

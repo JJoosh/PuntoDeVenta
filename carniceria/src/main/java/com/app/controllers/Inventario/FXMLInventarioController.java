@@ -282,9 +282,7 @@ public class FXMLInventarioController implements Initializable {
         if(event.getCode()==KeyCode.F6){
             ModProd();
         }
-        if(event.getCode()==KeyCode.F1){
-            abrirVentas();
-        }
+       
     }
     public void agregaraTabla() {
         // Asignar las propiedades a las columnas
