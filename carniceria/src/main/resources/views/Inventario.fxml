@@ -115,8 +115,6 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button layoutX="901.0" layoutY="364.0" mnemonicParsing="false" onAction="#archivoclientes" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" />
-        <Button layoutX="893.0" layoutY="307.0" mnemonicParsing="false" onAction="#archivousuarios" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de usuarios" />
         <Button layoutX="959.0" onAction="#archivoproductos" layoutY="251.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" />
         <TextField fx:id="txtCategoria" layoutX="285.0" layoutY="340.0" prefHeight="40.0" prefWidth="304.0" promptText="Ingresa el nombre de una nueva categoria" style="-fx-font-size: 14px; -fx-alignment: center;" />
         <ComboBox fx:id="boxEmpaquetado" layoutX="613.0" layoutY="340.0" prefHeight="40.0" prefWidth="250.0" promptText="Seleccione el tipo de empaquetado" style="-fx-background-color: #AAE7F5; -fx-border-color: gray;" />

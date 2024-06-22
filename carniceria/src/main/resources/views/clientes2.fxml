@@ -65,4 +65,5 @@
          </font>
       </Label>
    </children>
+    <Button layoutX="680.0" layoutY="190.0" mnemonicParsing="false" onAction="#archivoclientes" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de clientes" />
 </Pane>

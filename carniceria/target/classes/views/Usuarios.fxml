@@ -35,8 +35,9 @@
             </TableView>
          </content>
       </ScrollPane>
-      <Button layoutX="1014.0" layoutY="268.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="192.0" stylesheets="@../css/Fondo.css" text="Eliminar usuario" />
-      <Button layoutX="1014.0" layoutY="388.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="252.0" stylesheets="@../css/Fondo.css" onAction="#abrirModUser" text="Modificar usuario" />
+      <Button layoutX="1014.0" layoutY="268.0" mnemonicParsing="false" onAction="#DeleteUser" prefHeight="71.0" prefWidth="192.0" stylesheets="@../css/Fondo.css" text="Eliminar usuario" />
+      <Button layoutX="1014.0" layoutY="388.0" mnemonicParsing="false" onAction="#abrirModUser" prefHeight="71.0" prefWidth="252.0" stylesheets="@../css/Fondo.css" text="Modificar usuario" />
       <ComboBox fx:id="boxRoles" layoutX="504.0" layoutY="329.0" prefHeight="25.0" prefWidth="239.0" promptText="Rol" />
+      <Button layoutX="1000.0" layoutY="534.0" mnemonicParsing="false" onAction="#archivousuarios" prefHeight="33.0" prefWidth="191.0" style="-fx-font-size: 15px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de usuarios" />
    </children>
 </Pane>

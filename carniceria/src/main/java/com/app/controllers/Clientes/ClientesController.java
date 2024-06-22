@@ -163,7 +163,29 @@ public void abrirMod(int ID, String nombre, String apellido, String descuento) {
         e.printStackTrace();
     }
 }
+public void archivoclientes() {
+    try {
+        // Cargar el archivo FXML con el nuevo contenido
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FXMLClientesEliminados.fxml"));
+        Pane nuevoContenido1 = loader.load();
+        
+        // Obtener el controlador del nuevo contenido
+        Object controller = loader.getController();
 
+        if (controller instanceof FXMLClienteEliminados) {
+            FXMLClienteEliminados clienteEliminadosController = (FXMLClienteEliminados) controller;
+            // Aquí puedes usar clienteEliminadosController si necesitas realizar alguna acción específica
+        } else {
+            System.err.println("Error: El controlador no es una instancia de FFXMLProductosEliminados");
+            // Opcional: Lanza una excepción si es un caso crítico
+            throw new IllegalStateException("El controlador no es una instancia deFXMLProductosEliminados");
+        }
+
+        rootPane.getChildren().setAll(nuevoContenido1);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 
 }

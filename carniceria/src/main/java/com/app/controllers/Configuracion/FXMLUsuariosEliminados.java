@@ -121,6 +121,7 @@ public class FXMLUsuariosEliminados {
 
             // Actualizar la tabla
             usuariosTableView.refresh();
+            cargarDatos();
         }
     }
 

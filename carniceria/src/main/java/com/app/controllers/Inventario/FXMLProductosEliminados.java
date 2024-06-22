@@ -127,6 +127,7 @@ public class FXMLProductosEliminados {
 
             // Actualizar la tabla
             productosTableView.refresh();
+            cargarDatos();
         }
     }
 

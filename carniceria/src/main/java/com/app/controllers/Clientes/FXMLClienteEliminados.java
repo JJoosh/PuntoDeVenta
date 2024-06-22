@@ -127,6 +127,8 @@ public class FXMLClienteEliminados {
 
             // Actualizar la tabla
             clientesTableView.refresh();
+
+            cargarDatos();
         }
     }
 
