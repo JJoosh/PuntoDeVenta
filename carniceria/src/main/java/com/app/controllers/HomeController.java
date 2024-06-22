@@ -93,7 +93,7 @@ public class HomeController implements Initializable {
                 Pane nuevoContenido = loader.load();
                 FXMLInventarioController inventarioController = loader.getController();
                 VentasController ventasController=new VentasController();
-               // ventasController.onClose();
+               ventasController.onClose();
                 home.getChildren().setAll(nuevoContenido);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -120,7 +120,7 @@ public class HomeController implements Initializable {
            
             home.getChildren().setAll(nuevoContenido);
             ventasController.refrescarVistaVentas();
-            //ventasController.onClose();
+            ventasController.onClose();
             
 
         } catch (IOException e) {
@@ -135,7 +135,7 @@ public class HomeController implements Initializable {
                 Pane nuevoContenido = loader.load();
                 FXMLCorte corteController = loader.getController();
                 VentasController ventasController=new VentasController();
-                //ventasController.onClose();
+            ventasController.onClose();
                 home.getChildren().setAll(nuevoContenido);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -151,7 +151,7 @@ public class HomeController implements Initializable {
             Pane nuevoContenido = loader.load();
             FXMLDevolucionesController devolucionesController = loader.getController();
             VentasController ventasController=new VentasController();
-              // ventasController.onClose();
+              ventasController.onClose();
             home.getChildren().setAll(nuevoContenido);
 
             } catch (IOException e) {
@@ -171,7 +171,7 @@ public void abrirConfiguracion() {
         Pane nuevoContenido = loader.load();
         UsuariosController devolucionesController = loader.getController();
         VentasController ventasController=new VentasController();
-                //ventasController.onClose();
+            ventasController.onClose();
         home.getChildren().setAll(nuevoContenido);
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +189,7 @@ public void openClients(){
         Pane nuevoContenido = loader.load();
         ClientesController clienteController = loader.getController();
         VentasController ventasController=new VentasController();
-               // ventasController.onClose();
+             ventasController.onClose();
         home.getChildren().setAll(nuevoContenido);
     } catch (IOException e) {
         e.printStackTrace();

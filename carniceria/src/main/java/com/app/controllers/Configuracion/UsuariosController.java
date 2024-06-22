@@ -80,6 +80,7 @@ public class UsuariosController {
             editButton.getStyleClass().add("btn_mod");
             editButton.setOnAction(event -> {
                 getTableView().getSelectionModel().select(getIndex());
+                abrirModUser();
                 
             });
 
