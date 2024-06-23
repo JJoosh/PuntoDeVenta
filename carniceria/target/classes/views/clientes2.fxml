@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.ClientesController">
    <children>
@@ -45,21 +46,23 @@
          </rowConstraints>
       </GridPane>
       
-      <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="800.0">
-         <TableView fx:id="tableView" maxWidth="800.0" stylesheets="@../css/Styles.css">
-           <columns>
-             <TableColumn fx:id="nombre" minWidth="200.0" prefWidth="200.0" styleClass="colu1" text="Nombre" />
-             <TableColumn fx:id="apellido" minWidth="200.0" prefWidth="200.0" styleClass="colu2" text="Apellido" />
-             <TableColumn fx:id="descuento" minWidth="200.0" prefWidth="200.0" resizable="false" styleClass="colu3" text="Teléfono" />
-             <TableColumn fx:id="acciones" minWidth="200.0" prefWidth="200.0" text="Opciones" />
-           </columns>
-           <VBox.margin>
-            <Insets bottom="5.0" left="100.0" right="100.0" />
-         </VBox.margin>
-         </TableView>
-         <VBox.margin>
-            <Insets bottom="5.0" left="100.0" right="100.0" top="5.0" />
-         </VBox.margin>
-      </ScrollPane>
+      <StackPane VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets left="20" right="20" bottom="20" />
+         </padding>
+         <ScrollPane fitToHeight="true" fitToWidth="true">
+            <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
+               <columns>
+                  <TableColumn fx:id="nombre" styleClass="colu1" text="Nombre" />
+                  <TableColumn fx:id="apellido" styleClass="colu2" text="Apellido" />
+                  <TableColumn fx:id="descuento" styleClass="colu3" text="Teléfono" />
+                  <TableColumn fx:id="acciones" text="Opciones" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </ScrollPane>
+      </StackPane>
    </children>
 </VBox>

@@ -16,9 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -34,18 +31,12 @@ public class HomeController implements Initializable {
     private VBox menu_lateral;
     @FXML
     private Label usser;
-    private Stage stage;
     private String userRole;
     private String nombre;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         root.setOnKeyPressed(this::handleKeyPressed);
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-        stage.setResizable(true);
     }
 
     public void setNombre(String nombre) {
@@ -59,7 +50,8 @@ public class HomeController implements Initializable {
 
     @FXML
     public void cerrar() {
-        this.stage.close();
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
             Parent root = loader.load();

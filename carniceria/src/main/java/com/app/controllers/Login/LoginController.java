@@ -54,14 +54,14 @@ public class LoginController {
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-
+    
         if (username.isEmpty() || password.isEmpty()) {
             showAlert(AlertType.ERROR, "Error", "Por favor, ingrese un nombre de usuario y una contraseña.");
             return;
         }
-
+    
         String role = authenticateUser(username, password);
-
+    
         if (role != null) {
             try {
                 // Cargar la vista home.fxml
@@ -70,22 +70,21 @@ public class LoginController {
                 
                 // Obtener el controlador de la vista home.fxml
                 HomeController homeController = loader.getController();
-
+    
                 // Pasar el rol al HomeController
                 homeController.setUserRole(role);
-
+    
                 Scene scene = new Scene(root);
-
+    
                 // Obtener la ventana actual desde la escena asociada a los campos de texto
                 Stage stage = (Stage) usernameField.getScene().getWindow();
-
-                stage.setX(0); // Establece la posición X en 0 (esquina izquierda)
-                stage.setY(0);
-
-                homeController.setStage(stage);
+    
                 homeController.setNombre(nombre);
                 stage.setScene(scene);
-
+    
+                // Maximizar la ventana
+                stage.setMaximized(true);
+    
                 stage.show();
                 
             } catch (IOException e) {
