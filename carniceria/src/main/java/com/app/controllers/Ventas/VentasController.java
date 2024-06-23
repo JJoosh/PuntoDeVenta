@@ -50,6 +50,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class VentasController {
@@ -85,10 +86,11 @@ public class VentasController {
     private TextField pesoTextField;
     @FXML
     private TextField txtCliente;
-    @FXML TabPane tabpane;
+    @FXML private TabPane tabpane;
     @FXML private Slider slider;
 
-    @FXML private TextField txtPorcentaje;
+    @FXML
+    private TextField txtPorcentaje;
     @FXML
     private ListView<Clientes> clienteListView;
 
@@ -117,7 +119,9 @@ public class VentasController {
     public void initialize() {
         txtCliente.setVisible(false);
         clienteListView.setVisible(false);
-        txtPorcentaje.setVisible(false);
+       // txtPorcentaje.setVisible(false);\
+       txtPorcentaje.setText("%");
+
         slider.setVisible(false);
         cargarTicketsGuardados();
         rootPane.setOnKeyPressed(this::handleKeyPressed);

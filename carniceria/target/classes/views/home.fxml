@@ -4,88 +4,64 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="900.0" maxWidth="1600.0" minHeight="900.0" minWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.HomeController">
-   <children>
-      <Pane fx:id="menu_lateral" maxHeight="900.0" maxWidth="215.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="215.0" styleClass="fondo-login" stylesheets="@../css/Styles.css">
-         <children>
-            <ImageView fitHeight="48.0" fitWidth="133.0" layoutX="45.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/LOGO.png" />
-               </image>
+<HBox fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.HomeController">
+   <VBox fx:id="menu_lateral" styleClass="fondo-login" stylesheets="@../css/Styles.css" HBox.hgrow="NEVER" alignment="CENTER" spacing="15" prefWidth="215">
+      <padding>
+         <Insets top="20" bottom="20" left="10" right="10"/>
+      </padding>
+      <ImageView fitHeight="48.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../img/LOGO.png" />
+      </ImageView>
+      <ImageView fitHeight="81.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../img/user.png" />
+      </ImageView>
+      <Label fx:id="usser" alignment="CENTER" text="Usuario" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="20.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" startX="-100.0" stroke="#fffbfb" strokeWidth="3.0" />
+      <VBox spacing="10" alignment="CENTER">
+         <Label fx:id="menu_ventas" onMouseClicked="#abrirVentas" styleClass="menu-modulos" text="Ventas             F1" />
+         <Label fx:id="menu_inventario" onMouseClicked="#abrirInventario" styleClass="menu-modulos" text="Inventario        F2" />
+         <Label fx:id="menu_kardex" onMouseClicked="#abrirCorteCaja" styleClass="menu-modulos" text="Corte                F3" />
+         <Label fx:id="menu_devoluciones" onMouseClicked="#abrirDevoluciones" styleClass="menu-modulos" text="Devoluciones  F4" />
+         <Label onMouseClicked="#openClients" styleClass="menu-modulos" text="Clientes           F5" />
+      </VBox>
+      <VBox VBox.vgrow="ALWAYS" />
+      <VBox alignment="CENTER" spacing="10">
+         <ImageView onMouseClicked="#openHome" fitHeight="50.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/casa.png" />
+         </ImageView>
+         <Label onMouseClicked="#abrirConfiguracion" styleClass="usuario" text="Administrar Usuarios" />
+         <HBox alignment="CENTER" spacing="10">
+            <ImageView fx:id="cerrar_sesion" onMouseClicked="#cerrar" fitHeight="43.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../img/Salir-b.png" />
             </ImageView>
-            <Line endX="100.33332824707031" layoutX="107.0" layoutY="259.0" startX="-97.66666412353516" stroke="#fffbfb" strokeWidth="3.0" />
-            <Label fx:id="menu_ventas" accessibleRole="BUTTON" layoutX="4.0" layoutY="278.0" onMouseClicked="#abrirVentas" prefHeight="66.0" prefWidth="215.0" style="-fx-font-weight: semibold;" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Ventas             F1">
-               <padding>
-                  <Insets left="20.0" />
-               </padding></Label>
-            <Label fx:id="menu_inventario" accessibleRole="BUTTON" layoutX="4.0" layoutY="343.0" onMouseClicked="#abrirInventario" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Inventario        F2">
-               <padding>
-                  <Insets left="20.0" />
-               </padding></Label>
-            <Label fx:id="menu_kardex" accessibleRole="BUTTON" layoutX="4.0" layoutY="410.0" onMouseClicked="#abrirCorteCaja" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Corte                F3">
-               <padding>
-                  <Insets left="20.0" />
-               </padding></Label>
-            <Label fx:id="menu_devoluciones" accessibleRole="BUTTON" layoutX="4.0" layoutY="475.0" onMouseClicked="#abrirDevoluciones" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Devoluciones  F4">
-               <padding>
-                  <Insets left="20.0" />
-               </padding></Label>
-            <ImageView fx:id="cerrar_sesion" accessibleRole="BUTTON" fitHeight="43.0" fitWidth="47.0" layoutX="34.0" layoutY="809.0" onMouseClicked="#cerrar" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/Salir-b.png" />
-               </image>
-            </ImageView>
-            <Label accessibleRole="BUTTON" layoutX="4.0" layoutY="541.0" onMouseClicked="#openClients" prefHeight="66.0" prefWidth="215.0" styleClass="menu-modulos" stylesheets="@../css/Styles.css" text="Clientes           F5">
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <Label fx:id="usser" alignment="CENTER" layoutX="14.0" layoutY="187.0" prefHeight="50.0" prefWidth="191.0" style="-fx-text-alignment: center;" text="Usuario" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="20.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="81.0" fitWidth="76.0" layoutX="70.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/user.png" />
-               </image>
-            </ImageView>
-            <ImageView accessibleRole="BUTTON" fitHeight="50.0" fitWidth="56.0" layoutX="86.0" layoutY="640.0" onMouseClicked="#openHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/casa.png" />
-               </image>
-            </ImageView>
-            <Label accessibleRole="BUTTON" layoutX="91.0" layoutY="820.0" onMouseClicked="#cerrar" text="Cerrrar sesion" textFill="WHITE">
+            <Label onMouseClicked="#cerrar" text="Cerrar sesion" textFill="WHITE">
                <font>
                   <Font name="Yu Gothic UI Bold" size="15.0" />
                </font>
             </Label>
-            <Label accessibleRole="BUTTON" layoutX="23.0" layoutY="717.0" onMouseClicked="#abrirConfiguracion" prefHeight="50.0" prefWidth="173.0" style="-fx-alignment: center; -fx-font-size: 15px;" styleClass="usuario" stylesheets="@../css/Styles.css" text="Administrar Usuarios">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="16.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-               </opaqueInsets>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="home" layoutX="215.0" maxHeight="900.0" maxWidth="1385.0" minHeight="900.0" minWidth="1385.0" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;">
-         <children>
-            <Label alignment="CENTER" layoutX="9.0" layoutY="426.0" prefHeight="176.0" prefWidth="1368.0" style="-fx-text-alignment: center;" text="Bienvenido" textAlignment="CENTER" textFill="#4d2d12">
-               <font>
-                  <Font name="Yu Gothic UI Regular" size="120.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="cerrar_sesion1" accessibleRole="BUTTON" fitHeight="243.0" fitWidth="260.0" layoutX="571.0" layoutY="152.0" onDragDetected="#cerrar" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/Home.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
-   </children>
-</Pane>
+         </HBox>
+      </VBox>
+   </VBox>
+   <StackPane fx:id="home" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+      <VBox alignment="CENTER" spacing="20">
+         <ImageView fx:id="cerrar_sesion1" fitHeight="243.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/Home.png" />
+         </ImageView>
+         <Label alignment="CENTER" text="Bienvenido" textAlignment="CENTER" textFill="#4d2d12">
+            <font>
+               <Font name="Yu Gothic UI Regular" size="60.0" />
+            </font>
+         </Label>
+      </VBox>
+   </StackPane>
+</HBox>
