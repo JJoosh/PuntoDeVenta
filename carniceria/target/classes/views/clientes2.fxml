@@ -50,10 +50,10 @@
                               <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="800.0">
          <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
            <columns>
-             <TableColumn fx:id="nombre" prefWidth="200.0" styleClass="colu1" text="Nombre" />
-             <TableColumn fx:id="apellido" prefWidth="200.0" styleClass="colu2" text="Apellido" />
-             <TableColumn fx:id="descuento" prefWidth="200.0" resizable="false" styleClass="colu3" text="Teléfono" />
-             <TableColumn fx:id="acciones" prefWidth="200.0" text="Opciones" />
+             <TableColumn fx:id="nombre" minWidth="200.0" prefWidth="-1.0" styleClass="colu1" text="Nombre" />
+             <TableColumn fx:id="apellido" minWidth="200.0" prefWidth="-1.0" styleClass="colu2" text="Apellido" />
+             <TableColumn fx:id="descuento" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="colu3" text="Teléfono" />
+             <TableColumn fx:id="acciones" minWidth="200.0" prefWidth="-1.0" text="Opciones" />
            </columns>
            <styleClass>
               <String fx:value="colu1" />
@@ -61,7 +61,7 @@
            </styleClass>
          </TableView>
          <VBox.margin>
-            <Insets left="100.0" right="100.0" />
+            <Insets bottom="5.0" left="100.0" right="100.0" />
          </VBox.margin>
       </ScrollPane>
    </children>
