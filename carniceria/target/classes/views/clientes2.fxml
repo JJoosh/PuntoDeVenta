@@ -8,61 +8,66 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" 
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="com.app.controllers.Clientes.ClientesController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.ClientesController">
    <children>
-      <Label styleClass="Label-titulos" text="Clientes" VBox.vgrow="NEVER" maxWidth="Infinity" />
+      <Label maxWidth="Infinity" styleClass="Label-titulos" text="Clientes" VBox.vgrow="NEVER" />
       
       <GridPane hgap="10" vgap="10" VBox.vgrow="NEVER">
          <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
+            <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
          <children>
-            <Label text="Nombre:" styleClass="label-conte" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="txtNombre" promptText="Ingrese el nombre del cliente" styleClass="letra_text" 
-                       GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS" />
+            <Label styleClass="label-conte" text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtNombre" promptText="Ingrese el nombre del cliente" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
             
-            <Label text="Apellido:" styleClass="label-conte" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="txtApellido" promptText="Ingrese un apellido del cliente" styleClass="letra_text" 
-                       GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" />
+            <Label styleClass="label-conte" text="Apellido:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="txtApellido" promptText="Ingrese un apellido del cliente" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
             
-            <Label text="Número de teléfono:" styleClass="label-conte" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="txtDescuento" promptText="000-000-000" styleClass="letra_text" 
-                       GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" />
+            <Label styleClass="label-conte" text="Número de teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="txtDescuento" promptText="000-000-000" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
             
-            <Button text="Agregar nuevo Cliente" onAction="#agregarCliente" styleClass="btn_agre" 
-                    GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="2" GridPane.hgrow="ALWAYS" />
+            <Button onAction="#agregarCliente" styleClass="btn_agre" text="Agregar nuevo Cliente" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="2" />
             
-            <Button text="Archivo de clientes" onAction="#archivoclientes" styleClass="btn" 
-                    GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" />
+            <Button onAction="#archivoclientes" styleClass="btn" text="Archivo de clientes" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
          </children>
       <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" />
     <ColumnConstraints hgrow="ALWAYS" />
     <ColumnConstraints hgrow="SOMETIMES" />
 </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
       </GridPane>
-      
-      <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" fitToHeight="true">
-         <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
-           <columns>
-             <TableColumn fx:id="nombre" text="Nombre" styleClass="colu1" />
-             <TableColumn fx:id="apellido" text="Apellido" styleClass="colu2" />
-             <TableColumn fx:id="descuento" text="Teléfono" styleClass="colu3" />
-             <TableColumn fx:id="acciones" text="Opciones" />
-           </columns>
-           <styleClass>
-              <String fx:value="colu1" />
-              <String fx:value="column-header" />
-           </styleClass>
-         </TableView>
-      </ScrollPane>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <Pane prefWidth="200.0" />
+            
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
+                 <columns>
+                   <TableColumn fx:id="nombre" prefWidth="100.0" resizable="false" styleClass="colu1" text="Nombre" />
+                   <TableColumn fx:id="apellido" prefWidth="100.0" resizable="false" styleClass="colu2" text="Apellido" />
+                   <TableColumn fx:id="descuento" prefWidth="100.0" styleClass="colu3" text="Teléfono" />
+                   <TableColumn fx:id="acciones" prefWidth="100.0" resizable="false" text="Opciones" />
+                 </columns>
+                 <styleClass>
+                    <String fx:value="colu1" />
+                    <String fx:value="column-header" />
+                 </styleClass>
+               </TableView>
+            </ScrollPane>
+            <Pane prefWidth="200.0" />
+         </children>
+      </HBox>
    </children>
 </VBox>
