@@ -48,26 +48,36 @@
             <RowConstraints />
          </rowConstraints>
       </GridPane>
-      <HBox VBox.vgrow="ALWAYS">
+      <GridPane VBox.vgrow="ALWAYS">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Pane prefWidth="200.0" />
-            
-            <ScrollPane fitToHeight="true" fitToWidth="true">
-               <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
-                 <columns>
-                   <TableColumn fx:id="nombre" prefWidth="100.0" resizable="false" styleClass="colu1" text="Nombre" />
-                   <TableColumn fx:id="apellido" prefWidth="100.0" resizable="false" styleClass="colu2" text="Apellido" />
-                   <TableColumn fx:id="descuento" prefWidth="100.0" styleClass="colu3" text="Teléfono" />
-                   <TableColumn fx:id="acciones" prefWidth="100.0" resizable="false" text="Opciones" />
-                 </columns>
-                 <styleClass>
-                    <String fx:value="colu1" />
-                    <String fx:value="column-header" />
-                 </styleClass>
-               </TableView>
-            </ScrollPane>
-            <Pane prefWidth="200.0" />
+            <HBox>
+               <children>
+                  <Pane prefWidth="200.0" />
+                  
+                  <ScrollPane fitToHeight="true" fitToWidth="true">
+                     <TableView fx:id="tableView" stylesheets="@../css/Styles.css">
+                       <columns>
+                         <TableColumn fx:id="nombre" prefWidth="150.0" styleClass="colu1" text="Nombre" />
+                         <TableColumn fx:id="apellido" prefWidth="150.0" styleClass="colu2" text="Apellido" />
+                         <TableColumn fx:id="descuento" prefWidth="150.0" resizable="false" styleClass="colu3" text="Teléfono" />
+                         <TableColumn fx:id="acciones" prefWidth="150.0" text="Opciones" />
+                       </columns>
+                       <styleClass>
+                          <String fx:value="colu1" />
+                          <String fx:value="column-header" />
+                       </styleClass>
+                     </TableView>
+                  </ScrollPane>
+                  <Pane prefWidth="200.0" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </GridPane>
    </children>
 </VBox>
