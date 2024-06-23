@@ -50,15 +50,23 @@ public class HomeController implements Initializable {
 
     @FXML
     public void cerrar() {
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.close();
+        Stage currentStage = (Stage) root.getScene().getWindow();
+        currentStage.close();
+        
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
+            
+            Stage loginStage = new Stage();
+            Scene scene = new Scene(root, 675, 480);
+            
+            loginStage.setScene(scene);
+            loginStage.setResizable(false);
+            loginStage.setMaximized(false);
+            loginStage.setFullScreen(false);
+            
+            loginStage.centerOnScreen();
+            loginStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
