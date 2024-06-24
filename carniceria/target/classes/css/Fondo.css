@@ -175,7 +175,7 @@
     -fx-font-size: 30px;
 }
 
-#atras{
+.atras{
     -fx-text-fill:#ffffff;
     -fx-font-family: "Arial";
     -fx-font-size: 20px;
@@ -184,7 +184,7 @@
     -fx-background-radius: 15px;
 }
 
-#atras:hover{
+.atras:hover{
     -fx-text-fill: black;
     -fx-font-family: "Arial";
     -fx-font-size: 15px;
