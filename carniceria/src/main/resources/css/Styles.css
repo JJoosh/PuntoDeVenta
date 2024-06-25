@@ -153,6 +153,7 @@
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
     -fx-background-color:  #98D3E9;
+    -fx-text-fill: black;
 }
 
 .btn_habi{

@@ -9,7 +9,7 @@
 .button-1:hover {
     -fx-background-color: #FFA500;
     -fx-text-fill: #FFFFFF;
-    -fx-font-size: 20px;
+    -fx-font-size: 12px;
 }
 
 
@@ -194,6 +194,9 @@
 
 .Devo{
     -fx-text-fill:black;
+    -fx-background-radius:15px;
+    -fx-border-radius:15px;
+    -fx-border-color: black;
     -fx-font-family: "Arial";
     -fx-font-size: 15px;
     -fx-font-weight: bold;

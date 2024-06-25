@@ -23,31 +23,17 @@
             <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
          <children>
-            <Label styleClass="label-conte" text="Nombre de usuario:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="lblNombre" promptText="Ingresa el nombre del nuevo usuario" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
+            <Label styleClass="label-conte" text="Nombre de usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="lblNombre" promptText="Ingresa el nombre del nuevo usuario" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
             
-            <Label styleClass="label-conte" text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="lblPassword" promptText="Ingresa su contraseña" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Label styleClass="label-conte" text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="lblPassword" promptText="Ingresa su contraseña" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
             
-            <Label styleClass="label-conte" text="Rol:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <ComboBox fx:id="boxRoles" promptText="Selecciona un rol" style="-fx-background-color: D3EAF3; -fx-border-color: gray;" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+            <Label styleClass="label-conte" text="Rol:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ComboBox fx:id="boxRoles" promptText="Selecciona un rol" styleClass="letra_text" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
             
-            <Button onAction="#agregar" styleClass="btn_agre" text="Agregar usuario" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-            <Button onAction="#archivousuarios" styleClass="btn" text="Archivo de usuarios" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-            <Label style="-fx-border-color: black; -fx-alignment: center; -fx-background-color: D4F3D3;" styleClass="label-conte" text="Nuevo Usuario" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets left="55.0" right="55.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets bottom="10.0" />
-               </GridPane.margin>
-            </Label>
+            <Button onAction="#agregar" styleClass="btn_agre" text="Agregar usuario" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+            <Button onAction="#archivousuarios" styleClass="btn" text="Archivo de usuarios" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" />
@@ -55,7 +41,6 @@
             <ColumnConstraints hgrow="SOMETIMES" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
@@ -64,7 +49,7 @@
 
       <StackPane VBox.vgrow="ALWAYS">
          <padding>
-            <Insets bottom="20" left="20" right="20" />
+            <Insets left="20" right="20" bottom="20" />
          </padding>
          <ScrollPane fitToHeight="true" fitToWidth="true">
             <TableView fx:id="tableUsuarios" stylesheets="@../css/Styles.css">

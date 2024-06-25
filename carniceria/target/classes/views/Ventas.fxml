@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -13,31 +13,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1385.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
+<VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
-      <Label layoutX="39.0" layoutY="129.0" prefHeight="41.0" prefWidth="391.0" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Código o nombre del producto:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" layoutX="441.0" layoutY="136.0" prefHeight="28.0" prefWidth="421.0" style="-fx-background-color: F5D6D8; -fx-border-color: black;" />
-      <Label layoutX="37.0" layoutY="186.0" prefHeight="41.0" prefWidth="302.0" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Ingresa la cantidad(Kg):">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnbuscarcode1" layoutX="43.0" layoutY="264.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="46.0" prefWidth="162.0" style="-fx-font-size: 18;" styleClass="btn_agre" stylesheets="@../css/styles.css" text="Agregar   F5" />
-      <Label layoutX="665.0" layoutY="817.0" prefHeight="67.0" prefWidth="192.0" style="-fx-font-weight: bold;" styleClass="label-conte" stylesheets="@../css/Fondo.css" text="Importe Total:" />
-      <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" layoutX="285.0" layoutY="817.0" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="223.0" style="-fx-font-size: 18px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Cobrar   F6" />
-      <Button id="bventas_cancelar" fx:id="borrarArticulo" layoutX="222.0" layoutY="264.0" mnemonicParsing="false" onAction="#borrarArticulo" prefHeight="46.0" prefWidth="162.0" style="-fx-font-size: 18;" styleClass="btn_eli" stylesheets="@../css/styles.css" text="Cancelar   F8" />
-      <Button fx:id="btnbuscarcode1" layoutX="399.0" layoutY="264.0" mnemonicParsing="false" onAction="#obtenerPesoBascula" prefHeight="46.0" prefWidth="185.0" style="-fx-font-size: 18;" styleClass="btn_peso" stylesheets="@../css/styles.css" text="Obtener peso   F7" />
-      <TextField id="v_ingreso_cant" fx:id="pesoTextField" layoutX="359.0" layoutY="197.0" prefHeight="28.0" prefWidth="507.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-      <Label id="importe_total" fx:id="totalImporteLabel" layoutX="866.0" layoutY="825.0" prefHeight="50.0" prefWidth="496.0" style="-fx-border-color: gray;" stylesheets="@../css/Fondo.css" text="0.0" />
-      <Label id="Titulo_modulo" prefHeight="105.0" prefWidth="1385.0" style="-fx-background-color: black;" text="Ventas de productos">
+      <Label id="Titulo_modulo" maxWidth="Infinity" style="-fx-background-color: black;" text="Ventas de productos">
          <font>
             <Font size="35.0" />
          </font>
@@ -46,47 +33,121 @@
             <URL value="@../css/Fondo.css" />
          </stylesheets>
       </Label>
-      <Button fx:id="imprimirticket" layoutX="43.0" layoutY="817.0" mnemonicParsing="false" onAction="#abrirVentasHechas" prefHeight="55.0" prefWidth="223.0" style="-fx-font-size: 18px; -fx-background-radius: 10px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Reimprimir Ticket" />
-      <TextField id="v_ingreso_cliente" fx:id="txtCliente" layoutX="1147.0" layoutY="243.0" prefHeight="28.0" prefWidth="223.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-      <ListView fx:id="clienteListView" layoutX="1145.0" layoutY="274.0" prefHeight="275.0" prefWidth="223.0" visible="false" />
-      <Button layoutX="1001.0" layoutY="125.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="340.0" style="-fx-font-size: 18px;" styleClass="btn" stylesheets="@../css/styles.css" text="Archivo de productos" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <TextField id="v_ingreso_cliente" fx:id="txtPorcentaje" alignment="CENTER_RIGHT" layoutX="1333.0" layoutY="206.0" prefHeight="28.0" prefWidth="39.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" text="\%" />
-      <Slider fx:id="slider" layoutX="1141.0" layoutY="213.0" prefHeight="14.0" prefWidth="185.0" />
-      <ToggleButton fx:id="clienteCheckBox" layoutX="1003.0" layoutY="211.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="129.0" stylesheets="@../css/styles.css" text="Seleccionar cliente">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ToggleButton>
-<TabPane fx:id="tabpane" layoutX="65.0" layoutY="321.0" prefHeight="476.0" prefWidth="1255.0" tabClosingPolicy="ALL_TABS">       
- <tabs>
-          <Tab text="Ticket 1">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="427.0" prefWidth="1060.0">
-                     <children>
-                        <ScrollPane layoutY="23.0" prefHeight="389.0" prefWidth="967.0">
-                           <content>
-                              <TableView fx:id="tablaProductos" id="tablaProductos" prefHeight="371.0" prefWidth="1131.0" stylesheets="@../css/styles.css">
-                                 <columns>
-                                    <TableColumn fx:id="Cbarra" editable="false" prefWidth="260.0" resizable="false" text="Código de barras" />
-                                    <TableColumn fx:id="Descriptions" editable="false" maxWidth="7000.0" prefWidth="230.0" resizable="false" text="Descripción producto" />
-                                    <TableColumn fx:id="PrecioV" editable="false" maxWidth="7000.0" prefWidth="241.0" resizable="false" text="Precio de venta" />
-                                    <TableColumn fx:id="Cantidad" editable="false" prefWidth="252.0" resizable="false" text="Cantidad" />
-                                    <TableColumn fx:id="ColumAcciones" prefWidth="135.0" text="Opciones" />
-                                 </columns>
-                              </TableView>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
+
+      <GridPane hgap="10" prefHeight="201.0" prefWidth="1033.0" vgap="10">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+         </columnConstraints>
+         <padding>
+            <Insets bottom="20" left="20" right="20" top="20" />
+         </padding>
+         <children>
+            <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+               <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Código o nombre del producto:">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Label>
+               <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Ingresa la cantidad (Kg):">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Label>
+            </VBox>
+
+            <VBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+               <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" promptText="Ingrese el codigo o el nombre" style="-fx-border-color: black;" />
+               <TextField id="v_ingreso_cant" fx:id="pesoTextField" promptText="Ingrese la cantidad en Kg" style="-fx-border-color: black;" />
+               <ListView fx:id="listProductos" prefHeight="67.0" VBox.vgrow="ALWAYS" />
+            </VBox>
+
+            <VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
+               <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="232.0" style="-fx-font-size: 10px;" styleClass="btn" text="Archivo de productos" textFill="WHITE">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Button>
+               <HBox prefHeight="15.0" prefWidth="379.0" spacing="10">
+                  <ToggleButton fx:id="clienteCheckBox" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" text="Seleccionar cliente">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ToggleButton>
+                  <Slider fx:id="slider" />
+                  <TextField id="v_ingreso_cliente" fx:id="txtPorcentaje" alignment="CENTER_RIGHT" prefWidth="39.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" text="\%" />
+               </HBox>
+               <TextField id="v_ingreso_cliente" fx:id="txtCliente" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
+               <ListView fx:id="clienteListView" visible="false" VBox.vgrow="ALWAYS" />
+            </VBox>
+
+            <HBox spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <Button fx:id="btnbuscarcode1" onAction="#agregarProducto" prefHeight="37.0" prefWidth="143.0" style="-fx-font-size: 16px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar   F5" />
+               <Button id="bventas_cancelar" fx:id="borrarArticulo" onAction="#borrarArticulo" style="-fx-font-size: 16px;" styleClass="btn_eli" stylesheets="@../css/Styles.css" text="Cancelar   F8" />
+               <Button fx:id="btnbuscarcode2" onAction="#obtenerPesoBascula" style="-fx-font-size: 16px;" styleClass="btn_peso" stylesheets="@../css/Styles.css" text="Obtener peso   F7" />
+               <Button onAction="#addNewTicket" style="-fx-font-size: 16px;" styleClass="btn_cont" stylesheets="@../css/Styles.css" text="Agregar nuevo ticket" />
+            </HBox>
+         </children>
+         <rowConstraints>
+            <RowConstraints maxHeight="124.66668701171875" minHeight="69.33334350585938" prefHeight="103.66666666666667" />
+            <RowConstraints maxHeight="82.66665649414062" minHeight="27.33331298828125" prefHeight="47.0" />
+         </rowConstraints>
+      </GridPane>
+
+      <TabPane fx:id="tabpane" prefHeight="354.0" prefWidth="1033.0" tabClosingPolicy="ALL_TABS" VBox.vgrow="ALWAYS">       
+         <tabs>
+            <Tab text="Ticket 1">
+               <content>
+                  <TableView id="tablaProductos" fx:id="tablaProductos">
+                     <columns>
+                        <TableColumn fx:id="Cbarra" text="Código de barras">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="codigoBarras" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="Descriptions" text="Descripción producto">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="descripcionProducto" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="PrecioV" text="Precio de venta">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="precioVenta" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="Cantidad" text="Cantidad">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="cantidad" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="ColumAcciones" text="Opciones">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="opciones" />
+                           </cellValueFactory>
+                        </TableColumn>
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </content>
+            </Tab>
+         </tabs>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
       </TabPane>
-      <Button layoutX="637.0" layoutY="265.0" mnemonicParsing="false" onAction="#addNewTicket" style="-fx-font-size: 18px;" styleClass="btn_cont" text="Agregar nuevo ticket" />
-      <ListView fx:id="listProductos" layoutX="441.0" layoutY="164.0" prefHeight="67.0" prefWidth="421.0" />
+
+      <HBox alignment="CENTER_LEFT" spacing="20">
+         <padding>
+            <Insets bottom="20" left="20" right="20" top="20" />
+         </padding>
+         <Button fx:id="imprimirticket" onAction="#abrirVentasHechas" style="-fx-font-size: 15px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Reimprimir Ticket" />
+         <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" onAction="#cobrar" style="-fx-font-size: 15px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Cobrar   F6" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Label styleClass="label-conte" text="Importe Total:" />
+         <Label id="importe_total" fx:id="totalImporteLabel" prefHeight="39.0" prefWidth="431.0" style="-fx-border-color: gray; -fx-font-size: 30px;" stylesheets="@../css/Fondo.css" text="0.0" />
+      </HBox>
    </children>
-</Pane>
+</VBox>

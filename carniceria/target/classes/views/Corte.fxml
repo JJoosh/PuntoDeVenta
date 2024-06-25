@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.corte.FXMLCorte">
    <children>
@@ -28,9 +28,9 @@
             <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
          <children>
-            <Label style="-fx-font-weight: bold; -fx-font-size: 35px;" styleClass="label-conte" text="Buscar:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <DatePicker fx:id="datePicker" prefHeight="44.0" prefWidth="425.0" promptText="Consulta una fecha" style="-fx-background-color: white; -fx-border-color: gray;" styleClass="label-conte" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
-            <Button onAction="#corte" style="-fx-font-size: 20px;" styleClass="btn_cont" text="Realizar corte de caja         F7" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" />
+            <Label styleClass="label-conte" text="Buscar:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-font-size: 35px;" />
+            <DatePicker fx:id="datePicker" promptText="Consulta una fecha de corte" styleClass="label-conte" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" style="-fx-background-color: white; -fx-border-color: gray;" />
+            <Button onAction="#corte" styleClass="btn_cont" text="Realizar corte de caja         F7" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" style="-fx-font-size: 20px;" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" />
@@ -44,13 +44,13 @@
 
       <StackPane VBox.vgrow="ALWAYS">
          <padding>
-            <Insets bottom="20" left="20" right="20" />
+            <Insets left="20" right="20" bottom="20" />
          </padding>
          <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../css/styles.css">
             <content>
                <TableView fx:id="Corte" stylesheets="@../css/styles.css">
                   <columns>
-                     <TableColumn fx:id="Ticket" style="-fx-text-fill: black;" text="Ticket" />
+                     <TableColumn fx:id="Ticket" text="Ticket" style="-fx-text-fill: black;" />
                      <TableColumn fx:id="Producto" text="ID PRODUCTO" />
                      <TableColumn fx:id="Nombre" text="NOMBRE" />
                      <TableColumn fx:id="cantidad" text="CANTIDAD" />
