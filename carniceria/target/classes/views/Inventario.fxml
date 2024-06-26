@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="1136.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXMLInventarioController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Inventario.FXMLInventarioController">
    <children>
       <Label prefHeight="32.0" prefWidth="1385.0" style="-fx-background-color: black;" styleClass="Label-titulos" text="Reporte de Inventario">
          <stylesheets>
@@ -28,8 +28,8 @@
       
       <GridPane alignment="CENTER" hgap="10" prefHeight="150.0" prefWidth="1305.0" vgap="10">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" percentWidth="21.0" />
-            <ColumnConstraints hgrow="SOMETIMES" percentWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="17.0" />
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="39.0" />
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="43.989999999999995" />
          </columnConstraints>
          <rowConstraints>
@@ -54,7 +54,7 @@
                </GridPane.margin>
             </ComboBox>
             
-            <Label style="-fx-font-size: 16px;" text="Cantidad de productos en el inventario:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label prefHeight="20.0" prefWidth="175.0" style="-fx-font-size: 16px;" text="Cantidad de productos:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                <font>
                   <Font size="22.0" />
                </font>
@@ -118,7 +118,7 @@
       </GridPane>
       
       <HBox alignment="CENTER" spacing="10">
-         <Button mnemonicParsing="false" onAction="#addInventario" style="-fx-font-size: 12px;" styleClass="btn_agre" text="Agregar producto">
+         <Button mnemonicParsing="false" onAction="#addInventario" style="-fx-font-size: 10px;" styleClass="btn_agre" text="Agregar producto">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor>
@@ -130,7 +130,7 @@
                <URL value="@../css/styles.css" />
             </stylesheets>
          </Button>
-         <Button mnemonicParsing="false" onAction="#Exportar" style="-fx-font-size: 12px;" styleClass="Devo" text="Exportar excel">
+         <Button mnemonicParsing="false" onAction="#Exportar" style="-fx-font-size: 10px;" styleClass="Devo" text="Exportar excel">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor>
@@ -141,8 +141,11 @@
             <HBox.margin>
                <Insets left="50.0" right="50.0" />
             </HBox.margin>
+            <padding>
+               <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+            </padding>
          </Button>
-         <Button onAction="#archivoproductos" styleClass="btn" stylesheets="@../css/Styles.css" text="Archivo de productos" />
+         <Button onAction="#archivoproductos" style="-fx-font-size: 10px;" styleClass="btn" stylesheets="@../css/Styles.css" text="Archivo de productos" />
       </HBox>
       
       <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">

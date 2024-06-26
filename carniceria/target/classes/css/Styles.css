@@ -106,7 +106,6 @@
     -fx-background-color: #6fc764;
     -fx-background-radius: 15px;
     -fx-text-fill: #000;
-    -fx-padding: 8px 16px; 
     -fx-border-radius: 15px;
     -fx-border-color: #141418; 
     -fx-font-weight: bold; /* Texto en negritas */
@@ -191,7 +190,6 @@
 
 .btn{
     -fx-background-radius: 15px;
-    -fx-padding: 8px 16px; 
     -fx-border-radius: 5px;
     -fx-border-radius: 15px;
     -fx-border-color: #000000; 
