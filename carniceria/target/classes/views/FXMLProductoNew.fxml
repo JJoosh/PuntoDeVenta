@@ -34,54 +34,54 @@
         </padding>
 
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
-            <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Código de barras:">
+            <Label style="-fx-font-size: 22px;" styleClass="label-conte" text="Código de barras:">
             <HBox.margin>
                <Insets left="20.0" />
             </HBox.margin></Label>
-            <TextField fx:id="layout1" promptText="Ingrese el código del nuevo producto" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="layout1" promptText="Ingrese el código del nuevo producto" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin></TextField>
         </HBox>
 
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
-            <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Descripción:">
+            <Label style="-fx-font-size: 22px;" styleClass="label-conte" text="Descripción:">
             <HBox.margin>
                <Insets left="20.0" />
             </HBox.margin></Label>
-            <TextField fx:id="layout2" promptText="Ingrese la descripción del nuevo producto" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="layout2" promptText="Ingrese la descripción del nuevo producto" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin></TextField>
         </HBox>
 
-        <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
+        <HBox alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-font-size: 22px;">
             <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Precio costo:" />
             <Spinner fx:id="spinner1" editable="true" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
-            <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Precio venta:" />
-            <Spinner fx:id="spinner2" editable="true" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
+            <Label style="-fx-font-size: 22px;" styleClass="label-conte" text="Precio venta:" />
+            <Spinner fx:id="spinner2" editable="true" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
-            <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Categoría:" />
-            <ComboBox fx:id="categorias" promptText="Cerdo" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
+            <Label style="-fx-font-size: 22px;" styleClass="label-conte" text="Categoría:" />
+            <ComboBox fx:id="categorias" promptText="Cerdo" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
         </HBox>
 
-        <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
+        <HBox alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-font-size: 22px;">
             <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Cantidad mínima:" />
             <Spinner fx:id="spinner3" editable="true" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
-            <Label fx:id="lblCantidad" style="-fx-font-size: 20px;" styleClass="label-conte" text="Cantidad ingresada:" />
-            <TextField fx:id="txtcantEntrante" promptText="ingrese una cantidad" style="-fx-font-size: 20px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
-            <Label fx:id="lblCantidad1" style="-fx-font-size: 20px;" styleClass="label-conte" text="Cantidad ingresada:" />
+            <Label fx:id="lblCantidad" style="-fx-font-size: 22px;" styleClass="label-conte" text="Cantidad ingresada:" />
+            <TextField fx:id="txtcantEntrante" promptText="ingrese una cantidad" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblCantidad1" style="-fx-font-size: 22px;" styleClass="label-conte" text="Cantidad ingresada:" />
         </HBox>
 
-        <Button maxWidth="Infinity" onAction="#agregar" styleClass="btn_agre" stylesheets="@../css/styles.css" text="Ingresar el producto">
+        <Button maxWidth="Infinity" onAction="#agregar" style="-fx-font-size: 22px;" styleClass="btn_agre" stylesheets="@../css/styles.css" text="Ingresar el producto">
             <VBox.margin>
                 <Insets top="20" />
             </VBox.margin>
