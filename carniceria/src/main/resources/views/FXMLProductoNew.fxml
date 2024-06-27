@@ -28,7 +28,7 @@
         </Label>
     </HBox>
 
-    <VBox alignment="CENTER" spacing="20">
+    <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
         <padding>
             <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
@@ -78,7 +78,7 @@
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="10">
             <Label fx:id="lblCantidad" style="-fx-font-size: 22px;" styleClass="label-conte" text="Cantidad ingresada:" />
             <TextField fx:id="txtcantEntrante" promptText="ingrese una cantidad" style="-fx-font-size: 22px;" styleClass="label-conte" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS" />
-            <Label fx:id="lblCantidad1" style="-fx-font-size: 22px;" styleClass="label-conte" text="Cantidad ingresada:" />
+            <Label fx:id="lblCantidad1" style="-fx-font-size: 22px;" styleClass="label-conte" text="Cantidad ingresada" />
         </HBox>
 
         <Button maxWidth="Infinity" onAction="#agregar" style="-fx-font-size: 22px;" styleClass="btn_agre" stylesheets="@../css/styles.css" text="Ingresar el producto">
@@ -86,6 +86,9 @@
                 <Insets top="20" />
             </VBox.margin>
         </Button>
+      <VBox.margin>
+         <Insets bottom="10.0" top="10.0" />
+      </VBox.margin>
     </VBox>
    <stylesheets>
       <URL value="@../Documents/GitHub/PuntoDeVenta/carniceria/src/main/resources/css/Fondo.css" />
