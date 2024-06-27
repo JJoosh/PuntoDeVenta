@@ -34,7 +34,7 @@
          </stylesheets>
       </Label>
 
-      <GridPane hgap="10" prefHeight="201.0" prefWidth="1033.0" vgap="10">
+      <GridPane hgap="10" prefHeight="250.0" prefWidth="1033.0" vgap="10">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
@@ -60,17 +60,17 @@
             <VBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
                <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" promptText="Ingrese el codigo o el nombre" style="-fx-border-color: black;" />
                <TextField id="v_ingreso_cant" fx:id="pesoTextField" promptText="Ingrese la cantidad en Kg" style="-fx-border-color: black;" />
-               <ListView fx:id="listProductos" prefHeight="67.0" VBox.vgrow="ALWAYS" />
+               <ListView fx:id="listProductos" prefHeight="120.0" prefWidth="249.0" VBox.vgrow="ALWAYS" />
             </VBox>
 
-            <VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
+            <VBox prefHeight="153.0" prefWidth="489.0" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
                <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="232.0" style="-fx-font-size: 10px;" styleClass="btn" text="Archivo de productos" textFill="WHITE">
                   <font>
                      <Font size="18.0" />
                   </font>
                </Button>
                <HBox prefHeight="15.0" prefWidth="379.0" spacing="10">
-                  <ToggleButton fx:id="clienteCheckBox" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" text="Seleccionar cliente">
+                  <ToggleButton fx:id="clienteCheckBox" mnemonicParsing="false" prefHeight="20.0" prefWidth="141.0" style="-fx-font-size: 10px;" text="Seleccionar cliente">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -78,28 +78,32 @@
                   <Slider fx:id="slider" />
                   <TextField id="v_ingreso_cliente" fx:id="txtPorcentaje" alignment="CENTER_RIGHT" prefWidth="39.0" style="-fx-background-color: DFABAE; -fx-border-color: black;" text="\%" />
                </HBox>
-               <TextField id="v_ingreso_cliente" fx:id="txtCliente" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
-               <ListView fx:id="clienteListView" visible="false" VBox.vgrow="ALWAYS" />
+               <VBox prefHeight="120.0" prefWidth="489.0" VBox.vgrow="ALWAYS">
+                  <children>
+                     <TextField id="v_ingreso_cliente" fx:id="txtCliente" style="-fx-background-color: DFABAE; -fx-border-color: black; -fx-font-size: 10px;" />
+                     <ListView fx:id="clienteListView" prefHeight="100.0" prefWidth="489.0" visible="false" VBox.vgrow="ALWAYS" />
+                  </children>
+               </VBox>
             </VBox>
 
-            <HBox spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="1">
-               <Button fx:id="btnbuscarcode1" onAction="#agregarProducto" prefHeight="37.0" prefWidth="143.0" style="-fx-font-size: 16px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar   F5" />
-               <Button id="bventas_cancelar" fx:id="borrarArticulo" onAction="#borrarArticulo" style="-fx-font-size: 16px;" styleClass="btn_eli" stylesheets="@../css/Styles.css" text="Cancelar   F8" />
-               <Button fx:id="btnbuscarcode2" onAction="#obtenerPesoBascula" style="-fx-font-size: 16px;" styleClass="btn_peso" stylesheets="@../css/Styles.css" text="Obtener peso   F7" />
-               <Button onAction="#addNewTicket" style="-fx-font-size: 16px;" styleClass="btn_cont" stylesheets="@../css/Styles.css" text="Agregar nuevo ticket" />
+            <HBox prefHeight="18.0" prefWidth="1033.0" spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <Button fx:id="btnbuscarcode1" onAction="#agregarProducto" prefHeight="34.0" prefWidth="106.0" style="-fx-font-size: 10px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar   F5" HBox.hgrow="ALWAYS" />
+               <Button id="bventas_cancelar" fx:id="borrarArticulo" onAction="#borrarArticulo" style="-fx-font-size: 10px;" styleClass="btn_eli" stylesheets="@../css/Styles.css" text="Cancelar   F8" HBox.hgrow="ALWAYS" />
+               <Button fx:id="btnbuscarcode2" onAction="#obtenerPesoBascula" style="-fx-font-size: 10px;" styleClass="btn_peso" stylesheets="@../css/Styles.css" text="Obtener peso   F7" HBox.hgrow="ALWAYS" />
+               <Button onAction="#addNewTicket" style="-fx-font-size: 10px;" styleClass="btn_cont" stylesheets="@../css/Styles.css" text="Agregar nuevo ticket" HBox.hgrow="ALWAYS" />
             </HBox>
          </children>
          <rowConstraints>
-            <RowConstraints maxHeight="124.66668701171875" minHeight="69.33334350585938" prefHeight="103.66666666666667" />
-            <RowConstraints maxHeight="82.66665649414062" minHeight="27.33331298828125" prefHeight="47.0" />
+            <RowConstraints maxHeight="220.0" minHeight="69.33334350585938" prefHeight="220.0" />
+            <RowConstraints maxHeight="82.66665649414062" minHeight="12.0" prefHeight="12.0" />
          </rowConstraints>
       </GridPane>
 
-      <TabPane fx:id="tabpane" prefHeight="354.0" prefWidth="1033.0" tabClosingPolicy="ALL_TABS" VBox.vgrow="ALWAYS">       
+      <TabPane fx:id="tabpane" prefHeight="304.0" prefWidth="1033.0" tabClosingPolicy="ALL_TABS" VBox.vgrow="ALWAYS">       
          <tabs>
             <Tab text="Ticket 1">
                <content>
-                  <TableView id="tablaProductos" fx:id="tablaProductos">
+                  <TableView id="tablaProductos" fx:id="tablaProductos" prefWidth="1033.0">
                      <columns>
                         <TableColumn fx:id="Cbarra" text="Código de barras">
                            <cellValueFactory>

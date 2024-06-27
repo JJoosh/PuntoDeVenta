@@ -11,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -18,11 +19,20 @@
 
 <VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Clientes.FXMLClienteEliminados">
     <children>
-        <Label maxWidth="Infinity" style="-fx-background-color: #551994;" styleClass="Label-arc" text="Archivo de Clientes" VBox.vgrow="NEVER">
-            <font>
-                <Font size="35.0" />
-            </font>
-        </Label>
+      <HBox style="-fx-background-color: #551994;" VBox.vgrow="NEVER">
+         <children>
+            <ImageView accessibleRole="BUTTON" fitHeight="72.0" fitWidth="87.0" onMouseClicked="#atras" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/regresarb.png" />
+               </image>
+            </ImageView>
+              <Label maxWidth="Infinity" style="-fx-background-color: #551994;" styleClass="Label-arc" text="Archivo de Clientes" HBox.hgrow="ALWAYS">
+                  <font>
+                      <Font size="35.0" />
+                  </font>
+              </Label>
+         </children>
+      </HBox>
 
         <GridPane hgap="10" vgap="10" VBox.vgrow="NEVER">
             <padding>
