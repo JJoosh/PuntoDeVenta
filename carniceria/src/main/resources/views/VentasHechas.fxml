@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasHechas" alignment="CENTER">
+<VBox fx:id="rootPane" alignment="CENTER" style="-fx-background-color: white;" stylesheets="@../css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasHechas">
     <children>
         <GridPane alignment="CENTER" hgap="10" style="-fx-background-color: black;" stylesheets="@../css/Styles.css" vgap="10" VBox.vgrow="NEVER">
             <padding>
@@ -27,19 +27,19 @@
                         <Image url="@../img/regresarb.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" maxWidth="Infinity" style="-fx-background-color: black; -fx-text-fill: white;" styleClass="Label-arc" text="Ventas realizadas" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label alignment="CENTER" maxWidth="Infinity" style="-fx-background-color: black; -fx-text-fill: white; -fx-alignment: center;" styleClass="Label-arc" text="Ventas realizadas" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0">
                     <font>
                         <Font size="35.0" />
                     </font>
-                    <padding>
-                        <Insets top="20" />
-                    </padding>
+               <GridPane.margin>
+                  <Insets left="50.0" />
+               </GridPane.margin>
                 </Label>
                 <TextField fx:id="buscarTextField" promptText="Ingrese nombre o ID de la venta" style="-fx-border-color: gray;" styleClass="letra_text" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
             </children>
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
                 <ColumnConstraints hgrow="ALWAYS" />
                 <ColumnConstraints hgrow="SOMETIMES" />
                 <ColumnConstraints hgrow="SOMETIMES" />
@@ -67,13 +67,19 @@
                         </columnResizePolicy>
                     </TableView>
                 </content>
+            <StackPane.margin>
+               <Insets top="10.0" />
+            </StackPane.margin>
             </ScrollPane>
         </StackPane>
 
-        <Button fx:id="compra_finalizar" alignment="CENTER" onAction="#imprimirTicket" prefHeight="68.0" style="-fx-font-size: 28px;" styleClass="btn_habi" stylesheets="@../css/Styles.css" text="Imprimir" VBox.vgrow="NEVER">
+        <Button fx:id="compra_finalizar" alignment="CENTER" onAction="#imprimirTicket" prefHeight="68.0" style="-fx-font-size: 28px;" styleClass="btn_habi" stylesheets="@../css/Styles.css" text="Imprimir ticket" textAlignment="CENTER" VBox.vgrow="NEVER">
             <font>
                 <Font size="28.0" />
             </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
         </Button>
     </children>
 </VBox>

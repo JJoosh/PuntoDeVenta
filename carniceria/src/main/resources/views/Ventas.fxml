@@ -3,11 +3,24 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox fx:id="rootPane" style="-fx-background-color: white;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.controllers.Ventas.VentasController">
    <children>
@@ -21,23 +34,23 @@
          </stylesheets>
       </Label>
 
-      <GridPane hgap="10" vgap="10">
+      <GridPane hgap="10" prefHeight="201.0" prefWidth="1033.0" vgap="10">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
          </columnConstraints>
          <padding>
-            <Insets top="20" right="20" bottom="20" left="20" />
+            <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
          <children>
             <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
-               <Label styleClass="label-conte" text="Código o nombre del producto:">
+               <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Código o nombre del producto:">
                   <font>
                      <Font size="20.0" />
                   </font>
                </Label>
-               <Label styleClass="label-conte" text="Ingresa la cantidad (Kg):">
+               <Label style="-fx-font-size: 20px;" styleClass="label-conte" text="Ingresa la cantidad (Kg):">
                   <font>
                      <Font size="20.0" />
                   </font>
@@ -45,19 +58,19 @@
             </VBox>
 
             <VBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
-               <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" style="-fx-background-color: F5D6D8; -fx-border-color: black;" />
-               <TextField id="v_ingreso_cant" fx:id="pesoTextField" style="-fx-background-color: DFABAE; -fx-border-color: black;" />
+               <TextField id="v_ingreso_cod" fx:id="codigoProductoTextField" promptText="Ingrese el codigo o el nombre" style="-fx-border-color: black;" />
+               <TextField id="v_ingreso_cant" fx:id="pesoTextField" promptText="Ingrese la cantidad en Kg" style="-fx-border-color: black;" />
                <ListView fx:id="listProductos" prefHeight="67.0" VBox.vgrow="ALWAYS" />
             </VBox>
 
             <VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
-               <Button mnemonicParsing="false" prefHeight="49.0" styleClass="btn" text="Archivo de productos" textFill="WHITE">
+               <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="232.0" style="-fx-font-size: 10px;" styleClass="btn" text="Archivo de productos" textFill="WHITE">
                   <font>
                      <Font size="18.0" />
                   </font>
                </Button>
-               <HBox spacing="10">
-                  <ToggleButton fx:id="clienteCheckBox" mnemonicParsing="false" text="Seleccionar cliente">
+               <HBox prefHeight="15.0" prefWidth="379.0" spacing="10">
+                  <ToggleButton fx:id="clienteCheckBox" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" text="Seleccionar cliente">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -70,19 +83,23 @@
             </VBox>
 
             <HBox spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="1">
-               <Button fx:id="btnbuscarcode1" onAction="#agregarProducto" styleClass="btn_agre" text="Agregar   F5" />
-               <Button id="bventas_cancelar" fx:id="borrarArticulo" onAction="#borrarArticulo" styleClass="btn_eli" text="Cancelar   F8" />
-               <Button fx:id="btnbuscarcode2" onAction="#obtenerPesoBascula" styleClass="btn_peso" text="Obtener peso   F7" />
-               <Button onAction="#addNewTicket" styleClass="btn_cont" text="Agregar nuevo ticket" />
+               <Button fx:id="btnbuscarcode1" onAction="#agregarProducto" prefHeight="37.0" prefWidth="143.0" style="-fx-font-size: 16px;" styleClass="btn_agre" stylesheets="@../css/Styles.css" text="Agregar   F5" />
+               <Button id="bventas_cancelar" fx:id="borrarArticulo" onAction="#borrarArticulo" style="-fx-font-size: 16px;" styleClass="btn_eli" stylesheets="@../css/Styles.css" text="Cancelar   F8" />
+               <Button fx:id="btnbuscarcode2" onAction="#obtenerPesoBascula" style="-fx-font-size: 16px;" styleClass="btn_peso" stylesheets="@../css/Styles.css" text="Obtener peso   F7" />
+               <Button onAction="#addNewTicket" style="-fx-font-size: 16px;" styleClass="btn_cont" stylesheets="@../css/Styles.css" text="Agregar nuevo ticket" />
             </HBox>
          </children>
+         <rowConstraints>
+            <RowConstraints maxHeight="124.66668701171875" minHeight="69.33334350585938" prefHeight="103.66666666666667" />
+            <RowConstraints maxHeight="82.66665649414062" minHeight="27.33331298828125" prefHeight="47.0" />
+         </rowConstraints>
       </GridPane>
 
-      <TabPane fx:id="tabpane" VBox.vgrow="ALWAYS" tabClosingPolicy="ALL_TABS">       
+      <TabPane fx:id="tabpane" prefHeight="354.0" prefWidth="1033.0" tabClosingPolicy="ALL_TABS" VBox.vgrow="ALWAYS">       
          <tabs>
             <Tab text="Ticket 1">
                <content>
-                  <TableView fx:id="tablaProductos" id="tablaProductos">
+                  <TableView id="tablaProductos" fx:id="tablaProductos">
                      <columns>
                         <TableColumn fx:id="Cbarra" text="Código de barras">
                            <cellValueFactory>
@@ -117,17 +134,20 @@
                </content>
             </Tab>
          </tabs>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
       </TabPane>
 
       <HBox alignment="CENTER_LEFT" spacing="20">
          <padding>
-            <Insets top="20" right="20" bottom="20" left="20" />
+            <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
-         <Button fx:id="imprimirticket" onAction="#abrirVentasHechas" styleClass="button-1" text="Reimprimir Ticket" />
-         <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" onAction="#cobrar" styleClass="button-1" text="Cobrar   F6" />
+         <Button fx:id="imprimirticket" onAction="#abrirVentasHechas" style="-fx-font-size: 15px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Reimprimir Ticket" />
+         <Button id="bventas_cobrar" fx:id="btnFinalizarVenta" onAction="#cobrar" style="-fx-font-size: 15px;" styleClass="button-1" stylesheets="@../css/Fondo.css" text="Cobrar   F6" />
          <Region HBox.hgrow="ALWAYS" />
          <Label styleClass="label-conte" text="Importe Total:" />
-         <Label id="importe_total" fx:id="totalImporteLabel" text="0.0" style="-fx-border-color: gray;" />
+         <Label id="importe_total" fx:id="totalImporteLabel" prefHeight="39.0" prefWidth="431.0" style="-fx-border-color: gray; -fx-font-size: 30px;" stylesheets="@../css/Fondo.css" text="0.0" />
       </HBox>
    </children>
 </VBox>
